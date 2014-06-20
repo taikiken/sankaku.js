@@ -1,0 +1,348 @@
+{
+    "project": {},
+    "files": {
+        "_build_tool/delaunay/src/util/Iro.js": {
+            "name": "_build_tool/delaunay/src/util/Iro.js",
+            "modules": {},
+            "classes": {
+                "Iro": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "_build_tool/delaunay/src/Sankaku.js": {
+            "name": "_build_tool/delaunay/src/Sankaku.js",
+            "modules": {},
+            "classes": {
+                "Triangle": 1,
+                "Sankaku": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Iro": {
+            "name": "Iro",
+            "shortname": "Iro",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 18,
+            "is_constructor": 1
+        },
+        "Triangle": {
+            "name": "Triangle",
+            "shortname": "Triangle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 27,
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "c",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "is_constructor": 1
+        },
+        "Sankaku": {
+            "name": "Sankaku",
+            "shortname": "Sankaku",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 97,
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 28,
+            "itemtype": "method",
+            "name": "rgb2hsl",
+            "static": 1,
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "g",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "H: number, s: number, l: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 67,
+            "itemtype": "method",
+            "name": "hsl2rgb",
+            "static": 1,
+            "params": [
+                {
+                    "name": "h",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "s",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "l",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "R: number, g: number, b: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 109,
+            "itemtype": "method",
+            "name": "rgb2hsv",
+            "static": 1,
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "g",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "H: number, s: number, v: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 144,
+            "itemtype": "method",
+            "name": "hsv2rgb",
+            "static": 1,
+            "params": [
+                {
+                    "name": "h",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "s",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "R: number, g: number, b: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 176,
+            "itemtype": "method",
+            "name": "hex2rgb",
+            "static": 1,
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "",
+                    "type": "String|int"
+                }
+            ],
+            "return": {
+                "description": "}",
+                "type": "R: number, g: number, b: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 1,
+            "license": "inazumatv.com",
+            "author": "(at)taikiken / http://inazumatv.com",
+            "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay",
+            "class": "Triangle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 76,
+            "itemtype": "method",
+            "name": "draw",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasContext"
+                }
+            ],
+            "class": "Triangle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 107,
+            "itemtype": "method",
+            "name": "byX",
+            "static": 1,
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Sankaku"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 118,
+            "itemtype": "method",
+            "name": "dedup",
+            "static": 1,
+            "params": [
+                {
+                    "name": "edges",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "class": "Sankaku"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 148,
+            "itemtype": "method",
+            "name": "triangulate",
+            "static": 1,
+            "params": [
+                {
+                    "name": "vertices",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "Sankaku"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:28"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:67"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:109"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:144"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:176"
+        },
+        {
+            "message": "unknown tag: license",
+            "line": " _build_tool/delaunay/src/Sankaku.js:1"
+        },
+        {
+            "message": "unknown tag: date",
+            "line": " _build_tool/delaunay/src/Sankaku.js:1"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/Sankaku.js:107"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/Sankaku.js:148"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/util/Iro.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _build_tool/delaunay/src/Sankaku.js:1"
+        }
+    ]
+}

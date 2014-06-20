@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project default="concat" basedir=".">
+
+    <property name="compiler" value="../compiler.jar"/>
+
+    <property name="dist" value="./dist"/>
+    <property name="concat" value="./concat"/>
+    <property name="src" value="./src"/>
+
+    <!--<property name="docs" value="../../docs"/>-->
+    <property name="doc2src" value="_build_tool/delaunay/src"/>
+
+    <property name="concatenated" value="${concat}/sankaku.js"/>
+
+    <property name="libs" value="../../libs"/>
+
+    <target name="sankaku">
+
+        <mkdir dir="${concat}" />
+        <mkdir dir="${dist}" />
+        <mkdir dir="${libs}" />
+
+        <!-- concat -->
+        <echo message="Building ${concatenated}" />
+
+        <filelist id="file-list" dir="${src}">
+            <file name="Sankaku.js"/>
+
+            <file name="util/Iro.js"/>
+        </filelist>
+
+        <concat destfile="${concatenated}" encoding="UTF-8" outputencoding="UTF-8" fixlastline="true">
+            <filelist refid="file-list" />
+        </concat>
+
+        <apply executable="java" parallel="false" verbose="true" dest="${dist}">
+            <fileset dir="${concat}">
+                <include name="*.js" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${compiler}" />
+            <arg value="--warning_level" />
+            <arg value="QUIET" />
+            <arg value="--js_output_file" />
+            <targetfile />
+            <arg value="--js" />
+            <mapper type="glob" from="*.js" to="*.min.js" />
+        </apply>
+
+        <copy todir="${libs}">
+            <fileset dir="${concat}" />
+        </copy>
+
+        <copy todir="${libs}">
+            <fileset dir="${dist}" />
+        </copy>
+
+        <exec executable="bash" dir="../../">
+            <arg value="-c" />
+            <arg value="yuidoc ${doc2src} -o ./docs" />
+        </exec>
+
+    </target>
+
+</project>
