@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>WebCam test 01</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<script type="text/javascript" src="libs/inazumatv.util.js"></script>
+<script type="text/javascript" src="libs/jsfeat-min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+<style type="text/css">
+#triangles {
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    display: block;
+}
+</style>
+</head>
+<body>
+<video width="640" height="480" src="" id="web_cam"></video>
+<canvas id="features" width="640" height="480" style="display: inline;"></canvas>
+<canvas id="triangles" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+    var document = window.document,
+        navigator = window.navigator,
+
+        requestAnimationFrame = window.self.requestAnimationFrame,
+        cancelAnimationFrame = window.self.cancelAnimationFrame,
+
+        Sankaku = window.Sankaku,
+        triangulate = Sankaku.triangulate,
+        rgb2hsl = Sankaku.Iro.rgb2hsl,
+
+        video = document.getElementById( "web_cam"),
+        features = document.getElementById( "features"),
+        triangles = document.getElementById( "triangles"),
+
+        jsfeat = window.jsfeat,
+        Delaunay = window.Delaunay,
+
+        triangles_ctx,
+        features_ctx,
+        img_u8,
+        corners,
+        count,
+        capture_image_data,
+        capture_base64,
+
+        loop_id
+    ;
+
+    // http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+
+//    function rgb2hsl( r, g, b ){
+//        r /= 255;
+//        g /= 255;
+//        b /= 255;
+//
+//        var max = Math.max( r, g, b ),
+//            min = Math.min( r, g, b ),
+//            h, s, l, d;
+//
+//        l = ( max + min ) / 2;
+//
+//        if ( max === min ) {
+//
+//            h = s = 0; // achromatic
+//        } else {
+//
+//            d = max - min;
+//            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+//
+//            switch( max ){
+//                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+//                case g: h = (b - r) / d + 2; break;
+//                case b: h = (r - g) / d + 4; break;
+//            }
+//
+//            h /= 6;
+//        }
+//
+//        return { h: h, s: s, l: l };
+//    }
+
+    function drawTriangles () {
+        var vertices, i, corner, w, h, length, triangle,
+            pixel, r, g, b, t, data, hsv, centroid;
+        // clear
+//        triangles_ctx.clearRect( 0, 0, triangles.width, triangles.height );
+
+        // draw
+//        triangles_ctx.drawImage( video,0, 0, 640, 480 );
+
+        vertices = new Array( count + 4 );
+        for ( i = 0; i < count; i++ ) {
+            corner = corners[ i ];
+
+            vertices[ i ] = {
+                x: corner.x,
+                y: corner.y
+            };
+        }
+
+        w = triangles.width;
+        h = triangles.height;
+
+        vertices[ i++ ] = {
+            x: 0,
+            y: 0
+        };
+        vertices[ i++ ] = {
+            x: w,
+            y: 0
+        };
+        vertices[ i++ ] = {
+            x: w,
+            y: h
+        };
+        vertices[ i++ ] = {
+            x: 0,
+            y: h
+        };
+
+        // triangle
+//        triangle = Delaunay.triangulate( vertices );
+//        triangle = triangulate( vertices );
+        triangle = triangulate( vertices );
+        i = triangle.length;
+
+        data = capture_image_data.data;
+
+        while ( i > 0 ) {
+            --i;
+
+            t = triangle[ i ];
+            centroid = t.centroid();
+
+            pixel = ( centroid.y * w + centroid.x ) * 4;
+
+            r = data[ pixel ];
+            g = data[ pixel + 1 ];
+            b = data[ pixel + 2 ];
+
+            hsv = rgb2hsl( r, g, b );
+
+//            triangles_ctx.lineWidth = 0;
+            triangles_ctx.fillStyle = 'hsl(' + (((hsv.h * 360) + 0) % 360) + ',' + hsv.s * 100 + '%,' + hsv.l * 100 + '%)';
+            t.draw( triangles_ctx );
+            triangles_ctx.fill();
+        }
+
+//        cancelAnimationFrame( loop_id );
+    }
+
+    function drawCorners ( corners, count, img, step ) {
+        var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00,
+            i, x, y, off, corner;
+
+        for ( i = 0; i < count; ++i ) {
+
+            corner = corners[ i ];
+            x = corner.x;
+            y = corner.y;
+
+            off = x + y * step;
+
+            img[ off ] = pix;
+            img[ off - 1 ] = pix;
+            img[ off + 1 ] = pix;
+            img[ off - step ] = pix;
+            img[ off + step ] = pix;
+        }
+    }
+
+    function loop () {
+        var features_data,
+            data_u32;
+
+        loop_id = requestAnimationFrame( loop );
+
+        if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
+
+            features_ctx.drawImage(video, 0, 0, 640, 480);
+            capture_image_data = features_ctx.getImageData( 0, 0, 640, 480 );
+            capture_base64 = features.toDataURL();
+
+            // jsfeat
+            jsfeat.imgproc.grayscale( capture_image_data.data, img_u8.data );
+
+            jsfeat.yape06.laplacian_threshold = 40;
+            jsfeat.yape06.min_eigen_value_threshold = 40;
+            count = jsfeat.yape06.detect( img_u8, corners );
+
+            features_data = features_ctx.createImageData( capture_image_data.width, capture_image_data.height );
+            features_data.data.set( capture_image_data.data );
+
+            data_u32 = new Uint32Array( features_data.data.buffer );
+            drawCorners( corners, count, data_u32, 640 );
+            features_ctx.putImageData( features_data, 0, 0 );
+
+            // triangle
+            drawTriangles();
+        }
+    }
+
+    function init ( video ) {
+        var i;
+
+        video.play();
+
+        features_ctx = features.getContext( "2d" );
+        triangles_ctx = triangles.getContext( "2d" );
+
+        img_u8 = new jsfeat.matrix_t( 640, 480, jsfeat.U8_t | jsfeat.C1_t );
+
+        corners = [];
+        i = 640*480;
+        while(--i >= 0) {
+            corners[i] = new jsfeat.point2d_t(0,0,0,0);
+        }
+
+        // flip
+//        video.translate( 640, 0 );
+//        video.scale( -1, 1 );
+
+        video.style.cssText += "transform: rotateY(180deg);-webkit-transform:rotateY(180deg);-moz-transform:rotateY(180deg);-ms-transform:rotateY(180deg);";
+
+        // animate
+        loop();
+    }
+
+    // web cam access
+    navigator.getUserMedia(
+        { video: true },
+        function ( stream ) {
+
+            if ( typeof video.mozSrcObject !== "undefined" ) {
+                // moz
+                video.mozSrcObject = stream;
+            } else {
+                // others
+                video.src = ( window.URL && window.URL.createObjectURL( stream ) ) || stream;
+            }
+
+            // 初期処理
+            init( video );
+        },
+        function ( error ) {
+
+            throw new Error( error );
+        }
+    );
+
+}( window ) );
+</script>
+</body>
+</html>

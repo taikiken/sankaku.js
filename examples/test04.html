@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Test 04</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<script type="text/javascript" src="libs/TweenMax.min.js"></script>
+<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        inazumatv = window.inazumatv,
+        FPSManager = inazumatv.FPSManager,
+        random = inazumatv.random,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        TweenMax = window.TweenMax,
+        TimelineMax = window.TimelineMax,
+        Power3 = window.Power3,
+
+        PI = Math.PI,
+        R360 = PI / 180 * 360,
+        ONE_DEGREE = PI / 180,
+        _cos = Math.cos,
+        _sin = Math.sin,
+//        i,
+//        cw, ch,
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+//        x, y , points, vertices, count,
+        circles = []
+    ;
+
+    var Circle = ( function (){
+        // @class Circle
+        function Circle ( x, y, ctx ) {
+            this.x = x;
+            this.y = y;
+            this._ctx = ctx;
+        }
+
+        var p = Circle.prototype;
+
+        p.draw = function () {
+            var x = this.x,
+                y = this.y,
+                ctx = this._ctx;
+
+            ctx.beginPath();
+            ctx.arc( x, y, 4, 0, R360, false );
+//            ctx.fillStyle = "#ff0000";
+            ctx.fill();
+            ctx.closePath();
+        };
+
+        p.position = function () {
+            return { x: this.x, y: this.y };
+        };
+
+        p.move = function () {
+            var fps = new FPSManager( 24),
+                cx, cy,
+                w, h,
+                a;
+
+            w = window.innerWidth;
+            h = window.innerHeight;
+
+            a = Math.min( w, h );
+
+            fps.addEventListener( FPSManager.FPS_FRAME, this.update.bind( this ) );
+
+            cx = random( this.x - 120, this.x + 120 );
+            cy = random( this.y - 120, this.y + 120 );
+
+//            if ( cx < 0 ) {
+//
+//                cx = Math.abs( cx ) + 60;
+//
+//            } else if ( cx > w ) {
+//
+//                cx -= w;
+//            }
+//
+//            if ( cy < 0 ) {
+//
+//                cy = Math.abs( cy ) + 60;
+//            } else if ( cy > h ) {
+//
+//                cy -= h;
+//            }
+
+            this._r = random( 10, a * 0.5 );
+            this._degree = 0;
+            this._center = {
+                x: cx,
+                y: cy
+            };
+            this._speed = random( 3, 11 ) * 0.1 * ( random( 1 ) ? 1 : -1 );
+
+            this._ax = random( 1, 10 ) * 0.1;
+            this._ay = random( 1, 10 ) * 0.1;
+
+            fps.start();
+        };
+
+        p.update = function () {
+            var radian = ONE_DEGREE * this._degree,
+                center = this._center,
+                radius = this._r,
+                speed = this._speed;
+
+            this.x = center.x + radius * _cos( radian ) * this._ax;
+            this.y = center.y + radius * _sin( radian ) * this._ay;
+
+            this._degree += speed;
+        };
+
+        return Circle;
+    }() );
+
+    function size () {
+        ww = window.innerWidth;
+        wh = window.innerHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw () {
+        var count = circles.length,
+            vertices = inazumatv.List.word( count, "" ),
+            circle, position,
+            i,
+            triangles;
+
+        for ( i = 0; i < count; i++ ) {
+            circle = circles[ i ];
+            position = circle.position();
+
+            vertices[ i ] = {
+                x: position.x,
+                y: position.y
+            };
+
+            circle.draw();
+        }
+
+        // triangle
+        triangles = Sankaku.triangulate( vertices );
+
+        i = triangles.length;
+
+        while( i ) {
+            --i;
+
+            var triangle = triangles[ i ];
+
+            triangle.draw( ctx );
+            ctx.stroke();
+        }
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw();
+    }
+
+
+    function init () {
+        var i, x, y, circle,
+            w = window.innerWidth,
+            h = window.innerHeight,
+            sw = w * 0.45,
+            sh = h * 0.45;
+
+        for ( i = 0; i < 666; i++ ) {
+
+//            x = random( 12, window.innerWidth - 12 );
+//            y = random( 12, window.innerHeight - 12 );
+            x = random( sw, w - sw );
+            y = random( sh, h - sh );
+
+            circle = new Circle( x, y, ctx );
+            circles.push( circle );
+            circle.move();
+
+        }
+
+        loop();
+    }
+
+    init();
+
+}( window ) );
+</script>
+</body>
+</html>

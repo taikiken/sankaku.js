@@ -1,6 +1,13 @@
 {
     "project": {},
     "files": {
+        "_build_tool/delaunay/src/boids/Boids_XX.js": {
+            "name": "_build_tool/delaunay/src/boids/Boids_XX.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/util/Iro.js": {
             "name": "_build_tool/delaunay/src/util/Iro.js",
             "modules": {},
@@ -44,7 +51,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 27,
+            "line": 28,
             "params": [
                 {
                     "name": "a",
@@ -73,11 +80,17 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 97,
+            "line": 111,
             "is_constructor": 1
         }
     },
     "classitems": [
+        {
+            "file": "_build_tool/delaunay/src/boids/Boids_XX.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/21 - 14:29\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\nhttps://gist.github.com/enjalot/1569370",
+            "class": "Iro"
+        },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
             "line": 1,
@@ -86,7 +99,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 28,
+            "line": 30,
             "itemtype": "method",
             "name": "rgb2hsl",
             "static": 1,
@@ -115,7 +128,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 67,
+            "line": 69,
             "itemtype": "method",
             "name": "hsl2rgb",
             "static": 1,
@@ -144,7 +157,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 109,
+            "line": 111,
             "itemtype": "method",
             "name": "rgb2hsv",
             "static": 1,
@@ -173,7 +186,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 144,
+            "line": 146,
             "itemtype": "method",
             "name": "hsv2rgb",
             "static": 1,
@@ -202,20 +215,68 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 176,
+            "line": 179,
             "itemtype": "method",
             "name": "hex2rgb",
             "static": 1,
             "params": [
                 {
                     "name": "hex",
-                    "description": "",
-                    "type": "String|int"
+                    "description": "#NNN",
+                    "type": "String"
                 }
             ],
             "return": {
                 "description": "}",
                 "type": "R: number, g: number, b: number"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 205,
+            "itemtype": "method",
+            "name": "rgb2hex",
+            "static": 1,
+            "params": [
+                {
+                    "name": "r",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "g",
+                    "description": "",
+                    "type": "Int"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "Iro"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Iro.js",
+            "line": 222,
+            "itemtype": "method",
+            "name": "int2hex",
+            "static": 1,
+            "params": [
+                {
+                    "name": "num",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
             },
             "class": "Iro"
         },
@@ -229,21 +290,32 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 76,
+            "line": 77,
             "itemtype": "method",
             "name": "draw",
             "params": [
                 {
                     "name": "ctx",
                     "description": "",
-                    "type": "CanvasContext"
+                    "type": "CanvasRenderingContext2D"
                 }
             ],
             "class": "Triangle"
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 107,
+            "line": 93,
+            "itemtype": "method",
+            "name": "centroid",
+            "return": {
+                "description": "}",
+                "type": "X: number, y: number"
+            },
+            "class": "Triangle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 121,
             "itemtype": "method",
             "name": "byX",
             "static": 1,
@@ -267,7 +339,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 118,
+            "line": 132,
             "itemtype": "method",
             "name": "dedup",
             "static": 1,
@@ -282,7 +354,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 148,
+            "line": 162,
             "itemtype": "method",
             "name": "triangulate",
             "static": 1,
@@ -302,23 +374,31 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:28"
+            "line": " _build_tool/delaunay/src/util/Iro.js:30"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:67"
+            "line": " _build_tool/delaunay/src/util/Iro.js:69"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:109"
+            "line": " _build_tool/delaunay/src/util/Iro.js:111"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:144"
+            "line": " _build_tool/delaunay/src/util/Iro.js:146"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:176"
+            "line": " _build_tool/delaunay/src/util/Iro.js:179"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:205"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:222"
         },
         {
             "message": "unknown tag: license",
@@ -330,11 +410,19 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:107"
+            "line": " _build_tool/delaunay/src/Sankaku.js:93"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:148"
+            "line": " _build_tool/delaunay/src/Sankaku.js:121"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/Sankaku.js:162"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/21 - 14:29\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\nhttps://gist.github.com/enjalot/1569370",
+            "line": " _build_tool/delaunay/src/boids/Boids_XX.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

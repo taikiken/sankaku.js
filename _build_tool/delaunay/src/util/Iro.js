@@ -25,6 +25,8 @@
 
         var iro = Iro;
 
+        // https://github.com/less/less.js/blob/master/lib/less/functions.js
+        // http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
         /**
          * @method rgb2hsl
          * @static
@@ -173,31 +175,74 @@
             };
         };
 
+        // http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
         /**
          * @method hex2rgb
          * @static
-         * @param {string|int} hex
+         * @param {string} hex #NNN
          * @returns {{r: number, g: number, b: number}}
          */
         iro.hex2rgb = function ( hex ) {
-            var r, g, b;
-
-            if ( typeof hex === "string" ) {
-                // convert to 0x
-                hex.split( "#" ).join( "0x" );
+            if ( typeof hex !== "string" ) {
+                // order string
+                return null;
             }
 
-            hex = Math.floor( hex );
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function( m, r, g, b ) {
+                return r + r + g + g + b + b;
+            });
 
-            r = ( hex >> 16 & 255 ) / 255;
-            g = ( hex >> 8 & 255 ) / 255;
-            b = ( hex & 255 ) / 255;
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        };
 
-            return {
-                r: r * 255,
-                g: g * 255,
-                b: b * 255
-            };
+        /**
+         * @method rgb2hex
+         * @static
+         * @param {int} r
+         * @param {int} g
+         * @param {int} b
+         * @returns {string}
+         */
+        iro.rgb2hex = function ( r, g, b ) {
+            function componentToHex(c) {
+                var hex = c.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }
+
+            return "#" + componentToHex( r ) + componentToHex( g ) + componentToHex( b );
+        };
+
+        /**
+         * @method int2hex
+         * @static
+         * @param {number} num
+         * @returns {string}
+         */
+        iro.int2hex = function ( num ) {
+            num = Math.floor( num );
+
+            var hex = num.toString( 16 );
+
+            if ( hex.length < 3 ) {
+
+                var i = hex.length,
+                    sub = 3 - i;
+
+                while( sub ) {
+
+                    hex = "0" + hex;
+                    --sub;
+                }
+            }
+
+            return "#" + hex;
         };
 
         return Iro;

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Test 01</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+    var document = window.document,
+
+        inazumatv = window.inazumatv,
+        random = inazumatv.random,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        PI = Math.PI,
+        r360 = PI / 180 * 360,
+        i,
+        w, h,
+        x, y , points, vertices, count
+    ;
+
+    w = canvas.width - 12;
+    h = canvas.height - 12;
+    points = [];
+
+    for ( i = 0; i < 10; i++ ) {
+
+        x = random( 12, w );
+        y = random( 12, h );
+        points.push( { x: x, y: y } );
+        ctx.beginPath();
+        ctx.arc( x, y, 6, 0, r360, false );
+        ctx.fillStyle = "#ff0000";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    // -----------------------------------------
+    // triangle
+    count = points.length;
+//    vertices = new Array( count + 4 );
+//    vertices = new Array( count );
+    vertices = inazumatv.List.word( count, "" );
+
+    for ( i = 0; i < count; i++ ) {
+        var point = points[ i ];
+
+        vertices[ i ] = {
+            x: point.x,
+            y: point.y
+        };
+    }
+//
+//    vertices[ i++ ] = {
+//        x: 0,
+//        y: 0
+//    };
+//    vertices[ i++ ] = {
+//        x: w + 12,
+//        y: 0
+//    };
+//    vertices[ i++ ] = {
+//        x: w + 12,
+//        y: h
+//    };
+//    vertices[ i++ ] = {
+//        x: 0,
+//        y: h + 12
+//    };
+
+    var triangles = Sankaku.triangulate( vertices );
+
+    console.log( vertices, triangles );
+
+    i = triangles.length;
+
+    while( i ) {
+        --i;
+
+        var triangle = triangles[ i ],
+            centroid = triangle.centroid();
+
+        console.log( "centroid ", i, centroid );
+
+//        ctx.lineWidth = 1;
+//        ctx.arc( centroid.x, centroid.y, 6, 0, r360, false );
+//        ctx.strokeStyle = "#000000";
+//        ctx.strokeRect( centroid.x, centroid.y, 6, 6 );
+
+        triangle.draw( ctx );
+        ctx.stroke();
+    }
+
+}( window ) );
+</script>
+</body>
+</html>

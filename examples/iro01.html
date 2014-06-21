@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>IRO 01</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var int2hex = function ( int ) {
+        var hex = int.toString( 16 );
+
+        if ( hex.length < 3 ) {
+
+            var i = hex.length,
+                    sub = 3 - i;
+
+            while( sub ) {
+
+                hex = "0" + hex;
+                --sub;
+            }
+        }
+
+        return "#" + hex;
+    };
+
+    for ( var i = 0, limit = 999; i < limit; i++ ) {
+        var c = Math.floor( 0xffffff * Math.random() ),
+            hex = int2hex( c );
+
+        console.log( "c ",i, c, hex );
+    }
+
+
+
+//    console.log( Sankaku.Iro.hex2rgb( 0xffffff ) );
+//    console.log( Sankaku.Iro.hex2rgb( 0xff0000 ) );
+//    console.log( Sankaku.Iro.hex2rgb( 0x00ff00 ) );
+//    console.log( Sankaku.Iro.hex2rgb( 0x0000ff ) );
+
+//    var c = 0xffffff & inazumatv.random( 255 ),
+//        hex = c.toString( 16 );
+//
+//    console.log( "hex raw ", hex  );
+//    if ( hex.length < 3 ) {
+//
+//        var i = hex.length,
+//            sub = 3 - i;
+//
+//        while( sub ) {
+//
+//            hex = "0" + hex;
+//            --sub;
+//        }
+//    }
+//
+//    hex = "#" + hex;
+//
+//    console.log( c, Math.floor( c ) );
+//    console.log( "c hex ", c, hex );
+//    console.log( "c ", c, Sankaku.Iro.hex2rgb( hex ) );
+}( window ) );
+</script>
+</body>
+</html>

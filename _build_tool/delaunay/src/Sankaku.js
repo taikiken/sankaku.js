@@ -20,7 +20,8 @@ var Sankaku = { version: "0.0.1" };
 
     var _abs = Math.abs,
         _min = Math.min,
-        _max = Math.max;
+        _max = Math.max,
+        _round = Math.round;
 
     var Triangle = ( function (){
         //
@@ -75,7 +76,7 @@ var Sankaku = { version: "0.0.1" };
 
         /**
          * @method draw
-         * @param {CanvasContext} ctx
+         * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
             var a = this.a,
@@ -87,7 +88,20 @@ var Sankaku = { version: "0.0.1" };
             ctx.lineTo( b.x, b.y );
             ctx.lineTo( c.x, c.y );
             ctx.closePath();
-            ctx.stroke();
+        };
+
+        /**
+         * @method centroid
+         * @returns {{x: number, y: number}}
+         */
+        p.centroid = function() {
+
+            return (
+                {
+                    x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
+                    y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
+                }
+            );
         };
 
         return Triangle;
@@ -157,12 +171,9 @@ var Sankaku = { version: "0.0.1" };
                 return [];
             }
 
-            // Ensure the vertex array is in order of descending X coordinate
-            // (which is needed to ensure a subquadratic runtime), and then find
-            // the bounding box around the points.
-            vertices.sort( s.byX );
-
-            var vertex,
+            var byX = s.byX,
+                dedup = s.dedup,
+                vertex,
                 i,
                 x_min, x_max,
                 y_min, y_max,
@@ -178,6 +189,12 @@ var Sankaku = { version: "0.0.1" };
                 j, a, b,
                 open_j;
 
+            // Ensure the vertex array is in order of descending X coordinate
+            // (which is needed to ensure a subquadratic runtime), and then find
+            // the bounding box around the points.
+            vertices.sort( byX );
+
+
             i = vertices.length - 1;
             vertex = vertices[ i ];
 
@@ -185,6 +202,17 @@ var Sankaku = { version: "0.0.1" };
             x_max = vertices[ 0 ].x;
             y_min = vertex.y;
             y_max = y_min;
+
+            while( i-- ) {
+                if ( vertex.y < y_min) {
+
+                    y_min = vertex.y;
+                }
+                if ( vertex.y > y_max ) {
+
+                    y_max = vertex.y;
+                }
+            }
 
             // Find a super triangle, which is a triangle that surrounds all the vertices.
             // This is used like something of a sentinel value to remove
@@ -219,18 +247,27 @@ var Sankaku = { version: "0.0.1" };
 
                 j = open.length;
 
-                // If this point is to the right of this triangle's circumcircle,
-                // then this triangle should never get checked again. Remove it
-                // from the open list, add it to the closed list, and skip.
-
                 vertex = vertices[ i ];
 
                 while( j-- ) {
 
                     open_j = open[ j ];
-                    dy = vertex.y - open_j.y;
+
+                    // If this point is to the right of this triangle's circumcircle,
+                    // then this triangle should never get checked again. Remove it
+                    // from the open list, add it to the closed list, and skip.
+                    dx = vertex.x - open_j.x;
+
+                    if( dx > 0 && dx * dx > open_j.r ) {
+
+                        closed.push( open_j );
+                        open.splice( j, 1 );
+                        continue;
+                    }
 
                     // If not, skip this triangle.
+                    dy = vertex.y - open_j.y;
+
                     if ( dx * dx + dy * dy > open_j.r ) {
                         // skip
                         continue;
@@ -247,7 +284,7 @@ var Sankaku = { version: "0.0.1" };
                 }// while j
 
                 // Remove any doubled edges.
-                s.dedup( edges );
+                dedup( edges );
 
                 // Add a new triangle for each edge.
                 j = edges.length;
@@ -273,6 +310,7 @@ var Sankaku = { version: "0.0.1" };
             while( i-- ) {
 
                 close_i = closed[ i ];
+
                 if(
                     close_i.a.__sentinel ||
                     close_i.b.__sentinel ||
