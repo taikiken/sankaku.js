@@ -51,7 +51,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 28,
+            "line": 31,
             "params": [
                 {
                     "name": "a",
@@ -80,7 +80,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 111,
+            "line": 114,
             "is_constructor": 1
         }
     },
@@ -285,12 +285,12 @@
             "line": 1,
             "license": "inazumatv.com",
             "author": "(at)taikiken / http://inazumatv.com",
-            "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay",
+            "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay\n\nhosted on\nhttps://github.com/taikiken/sankaku.js",
             "class": "Triangle"
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 77,
+            "line": 80,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -304,7 +304,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 93,
+            "line": 96,
             "itemtype": "method",
             "name": "centroid",
             "return": {
@@ -315,7 +315,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 121,
+            "line": 124,
             "itemtype": "method",
             "name": "byX",
             "static": 1,
@@ -339,7 +339,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 132,
+            "line": 135,
             "itemtype": "method",
             "name": "dedup",
             "static": 1,
@@ -354,7 +354,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 162,
+            "line": 165,
             "itemtype": "method",
             "name": "triangulate",
             "static": 1,
@@ -410,15 +410,15 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:93"
+            "line": " _build_tool/delaunay/src/Sankaku.js:96"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:121"
+            "line": " _build_tool/delaunay/src/Sankaku.js:124"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:162"
+            "line": " _build_tool/delaunay/src/Sankaku.js:165"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/21 - 14:29\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\nhttps://gist.github.com/enjalot/1569370",

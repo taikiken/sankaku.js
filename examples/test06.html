@@ -2,9 +2,23 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Test 05</title>
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Delaunay Practise Note 06 | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
-<script type="text/javascript" src="libs/TweenMax.min.js"></script>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+}
+.mobile body {
+    min-height: 1280px;
+}
+</style>
 <script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
 <script type="text/javascript" src="../libs/sankaku.js"></script>
 </head>
@@ -18,30 +32,20 @@
         requestAnimationFrame = self.requestAnimationFrame,
 
         inazumatv = window.inazumatv,
-        FPSManager = inazumatv.FPSManager,
         random = inazumatv.random,
 
         Sankaku = window.Sankaku,
-        hex2rgb = Sankaku.Iro.hex2rgb,
-        int2hex = Sankaku.Iro.int2hex,
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
 
         canvas = document.getElementById( "canvas"),
         ctx = canvas.getContext( "2d"),
-
-        TweenMax = window.TweenMax,
-        TimelineMax = window.TimelineMax,
-        Power3 = window.Power3,
 
         PI = Math.PI,
         R360 = PI / 180 * 360,
         ONE_DEGREE = PI / 180,
         _cos = Math.cos,
         _sin = Math.sin,
-
-        color1 = "#cecece",
-        color2 = "#8e8e8e",
-        color_select = -1,
-
         ww, wh,
         prev_ww = -1,
         prev_wh = -1,
@@ -64,8 +68,7 @@
                 ctx = this._ctx;
 
             ctx.beginPath();
-            ctx.arc( x, y, 4, 0, R360, false );
-            ctx.fillStyle = "#ff0000";
+            ctx.arc( x, y, 3, 0, R360, false );
             ctx.fill();
             ctx.closePath();
         };
@@ -74,58 +77,67 @@
             return { x: this.x, y: this.y };
         };
 
-        p.move = function () {
-            var fps = new FPSManager( 24),
+        p.move = function ( w, h ) {
+            var x = this.x,
+                y = this.y,
                 cx, cy,
-                w, h,
+                dx, dy,
+                w4,
                 a;
 
-            w = window.innerWidth;
-            h = window.innerHeight;
-
             a = Math.min( w, h );
+            w4 = a * 0.25   ;
 
-            fps.addEventListener( FPSManager.FPS_FRAME, this.update.bind( this ) );
+            cx = random( x - w4, x + w4 );
+            cy = random( y - w4, y + w4 );
 
-            cx = random( this.x - 120, this.x + 120 );
-            cy = random( this.y - 120, this.y + 120 );
+            dx = x - cx;
+            dy = y - cy;
 
-            if ( cx < 0 ) {
-
-                cx = Math.abs( cx ) + 60;
-
-            } else if ( cx > w ) {
-
-                cx -= w;
-            }
-
-            if ( cy < 0 ) {
-
-                cy = Math.abs( cy ) + 60;
-            } else if ( cy > h ) {
-
-                cy -= h;
-            }
-
-            this._r = random( 10, a * 0.5 );
+            this._r = Math.sqrt( dx * dx + dy * dy );
             this._degree = 0;
             this._center = {
                 x: cx,
                 y: cy
             };
-            this._speed = random( 3, 11 ) * 0.3 * ( random( 1 ) ? 1 : -1 );
+            this._speed = random( 3, 11 ) * 0.25 * ( random( 1 ) ? 1 : -1 );
 
-            fps.start();
+            this._ax = random( 1, 10 ) * 0.1;
+            this._ay = random( 1, 10 ) * 0.1;
         };
 
-        p.update = function () {
+        p.update = function ( rect ) {
             var radian = ONE_DEGREE * this._degree,
                 center = this._center,
                 radius = this._r,
-                speed = this._speed;
+                speed = this._speed,
+                w, h,
+                x, y;
 
-            this.x = center.x + radius * _cos( radian );
-            this.y = center.y + radius * _sin( radian ) * 0.5;
+            w = rect.w;
+            h = rect.h;
+
+            x = center.x + radius * _cos( radian ) * this._ax;
+            y = center.y + radius * _sin( radian ) * this._ay;
+
+            if ( x < 0 ) {
+
+                x = 0;
+            } else if ( x > w ) {
+
+                x = w;
+            }
+
+            if ( y < 0 ) {
+
+                y = 0;
+            } else if ( y > h ) {
+
+                y = h;
+            }
+
+            this.x = x;
+            this.y = y;
 
             this._degree += speed;
         };
@@ -134,8 +146,8 @@
     }() );
 
     function size () {
-        ww = window.innerWidth;
-        wh = window.innerHeight;
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
 
         if ( prev_ww !== ww ) {
 
@@ -152,52 +164,40 @@
         return { w: canvas.width, h: canvas.height };
     }
 
-    function draw () {
+    function draw ( rect ) {
         var count = circles.length,
             vertices = inazumatv.List.word( count, "" ),
             circle, position,
             i,
             triangles,
-            rgb,
-            even;
+            triangle;
 
         for ( i = 0; i < count; i++ ) {
             circle = circles[ i ];
+
+            circle.update( rect );
+            circle.draw();
+
             position = circle.position();
 
             vertices[ i ] = {
                 x: position.x,
                 y: position.y
             };
-
-//            circle.draw();
         }
 
         // triangle
         triangles = Sankaku.triangulate( vertices );
 
         i = triangles.length;
-        even = i % 2;
 
         while( i ) {
             --i;
 
-            var triangle = triangles[ i ],
-                hex;
+            triangle = triangles[ i ];
 
-            if ( even ) {
-
-                hex = i % 2 ? color1 : color2;
-            } else {
-
-                hex = i % 2 ? color2 : color1;
-            }
-
-//            console.log( hex );
-            ctx.fillStyle = hex;
             triangle.draw( ctx );
-//            ctx.stroke();
-            ctx.fill();
+            ctx.stroke();
         }
     }
 
@@ -208,28 +208,25 @@
 
         ctx.clearRect( 0, 0, rect.w, rect.h );
 
-        draw();
+        draw( rect );
     }
-
 
     function init () {
         var i, x, y, circle,
             w = window.innerWidth,
             h = window.innerHeight,
-            sw = w * 0.25,
-            sh = h * 0.25;
+            sw = w * 0.4,
+            sh = h * 0.4,
+            limit = Sagen.hasClass( element, "other" ) ? 1111 : 222;
 
-        for ( i = 0; i < 666; i++ ) {
+        for ( i = 0; i < limit; i++ ) {
 
-//            x = random( 12, window.innerWidth - 12 );
-//            y = random( 12, window.innerHeight - 12 );
             x = random( sw, w - sw );
             y = random( sh, h - sh );
 
             circle = new Circle( x, y, ctx );
             circles.push( circle );
-            circle.move();
-
+            circle.move( w, h );
         }
 
         loop();

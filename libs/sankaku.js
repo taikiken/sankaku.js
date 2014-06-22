@@ -12,6 +12,9 @@
  *
  * delaunay
  * original: https://github.com/ironwallaby/delaunay
+ *
+ * hosted on
+ * https://github.com/taikiken/sankaku.js
  */
 var Sankaku = { version: "0.0.1" };
 
