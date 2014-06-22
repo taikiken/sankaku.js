@@ -27,6 +27,11 @@
             <file name="Sankaku.js"/>
 
             <file name="util/Iro.js"/>
+
+            <file name="math/Vector2D.js"/>
+
+            <file name="vehicle/Vehicle.js"/>
+
         </filelist>
 
         <concat destfile="${concatenated}" encoding="UTF-8" outputencoding="UTF-8" fixlastline="true">

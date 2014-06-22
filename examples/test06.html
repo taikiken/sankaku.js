@@ -20,7 +20,7 @@ body {
 }
 </style>
 <script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
-<script type="text/javascript" src="../libs/sankaku.js"></script>
+<script type="text/javascript" src="../libs/sankaku.min.js"></script>
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
@@ -86,7 +86,7 @@ body {
                 a;
 
             a = Math.min( w, h );
-            w4 = a * 0.25   ;
+            w4 = a * 0.25;
 
             cx = random( x - w4, x + w4 );
             cy = random( y - w4, y + w4 );
@@ -102,8 +102,8 @@ body {
             };
             this._speed = random( 3, 11 ) * 0.25 * ( random( 1 ) ? 1 : -1 );
 
-            this._ax = random( 1, 10 ) * 0.1;
-            this._ay = random( 1, 10 ) * 0.1;
+            this._ax = random( 1, 19 ) * 0.05;
+            this._ay = random( 1, 13 ) * 0.05;
         };
 
         p.update = function ( rect ) {

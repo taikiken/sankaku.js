@@ -47,6 +47,10 @@
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
+                <li><a href="../classes/Vector2D.html">Vector2D</a></li>
+            
+                <li><a href="../classes/Vehicle.html">Vehicle</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -285,7 +289,7 @@
 
                         if ( boid_distance &lt; neighborRadius ) {
 
-                            neighbor_velocity = neighbor.velocity();
+                            neighbor_velocity = neighbor._velocity();
 
                             alignment[ 0 ] += neighbor_velocity[ 0 ];
                             alignment[ 1 ] += neighbor_velocity[ 1 ];
@@ -367,7 +371,7 @@
                 return boid;
             };
 
-            boid.velocity = function ( x ) {
+            boid._velocity = function ( x ) {
                 if ( !arguments.length ) { return velocity; }
                 velocity = x;
                 return boid;

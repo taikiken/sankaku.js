@@ -16,6 +16,9 @@
 
     Sankaku.Iro = ( function (){
         /**
+         * https://github.com/less/less.js/blob/master/lib/less/functions.js
+         * <br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
+         *
          * @class Iro
          * @constructor
          */
@@ -28,12 +31,13 @@
         // https://github.com/less/less.js/blob/master/lib/less/functions.js
         // http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
         /**
+         *
          * @method rgb2hsl
          * @static
          * @param {int} r
          * @param {int} g
          * @param {int} b
-         * @returns {{h: number, s: number, l: number}}
+         * @returns {object} {h: number, s: number, l: number}
          */
         iro.rgb2hsl = function ( r, g, b ){
             r /= 255;
@@ -72,7 +76,7 @@
          * @param {number} h
          * @param {number} s
          * @param {number} l
-         * @returns {{r: number, g: number, b: number}}
+         * @returns {object} {r: number, g: number, b: number}
          */
         iro.hsl2rgb = function ( h, s, l ) {
             var r, g, b;
@@ -114,7 +118,7 @@
          * @param {int} r
          * @param {int} g
          * @param {int} b
-         * @returns {{h: number, s: number, v: number}}
+         * @returns {object} {h: number, s: number, v: number}
          */
         iro.rgb2hsv = function ( r, g, b ) {
             r /= 255;
@@ -149,7 +153,7 @@
          * @param {number} h
          * @param {number} s
          * @param {number} v
-         * @returns {{r: number, g: number, b: number}}
+         * @returns {object} {r: number, g: number, b: number}
          */
         iro.hsv2rgb = function ( h, s, v ) {
             var r, g, b,
@@ -179,8 +183,8 @@
         /**
          * @method hex2rgb
          * @static
-         * @param {string} hex #NNN
-         * @returns {{r: number, g: number, b: number}}
+         * @param {string} hex CSS 色設定文字 #ff0000
+         * @returns {object} {r: number, g: number, b: number}
          */
         iro.hex2rgb = function ( hex ) {
             if ( typeof hex !== "string" ) {

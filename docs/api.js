@@ -3,7 +3,9 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Iro",
         "Sankaku",
-        "Triangle"
+        "Triangle",
+        "Vector2D",
+        "Vehicle"
     ],
     "modules": [],
     "allModules": []

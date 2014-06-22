@@ -47,6 +47,10 @@
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
+                <li><a href="../classes/Vector2D.html">Vector2D</a></li>
+            
+                <li><a href="../classes/Vehicle.html">Vehicle</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -108,7 +112,14 @@
  * hosted on
  * https://github.com/taikiken/sankaku.js
  */
-var Sankaku = { version: &quot;0.0.1&quot; };
+var Sankaku = {};
+/**
+ * @for Sankaku
+ * @const version
+ * @static
+ * @type {string}
+ */
+Sankaku.version = &quot;0.0.1&quot;;
 
 ( function ( window ){
     &quot;use strict&quot;;
@@ -116,11 +127,13 @@ var Sankaku = { version: &quot;0.0.1&quot; };
     var _abs = Math.abs,
         _min = Math.min,
         _max = Math.max,
-        _round = Math.round;
+        _round = Math.round,
+        Sankaku = window.Sankaku;
 
     var Triangle = ( function (){
         //
         /**
+         *
          * @class Triangle
          * @param {Object} a
          * @param {Object} b
@@ -202,8 +215,12 @@ var Sankaku = { version: &quot;0.0.1&quot; };
         return Triangle;
     }() );
 
+    Sankaku.Triangle = Triangle;
+
     window.Sankaku = ( function (){
         /**
+         * https://github.com/ironwallaby/delaunay
+         *
          * @class Sankaku
          * @constructor
          */
@@ -248,7 +265,7 @@ var Sankaku = { version: &quot;0.0.1&quot; };
                         edges.splice( i, 2 );
                         j -= 2;
 
-                        continue outer
+                        continue outer;
                     }// if
                 }// while i
             }// while j
@@ -323,7 +340,7 @@ var Sankaku = { version: &quot;0.0.1&quot; };
             open = [
                 new Triangle(
                     { x: x_mid - 20 * d_max, y: y_mid -      d_max, __sentinel: true },
-                    { x: x_mid            , y: y_mid + 20 * d_max, __sentinel: true },
+                    { x: x_mid             , y: y_mid + 20 * d_max, __sentinel: true },
                     { x: x_mid + 20 * d_max, y: y_mid -      d_max, __sentinel: true }
                 )
             ];
@@ -388,7 +405,7 @@ var Sankaku = { version: &quot;0.0.1&quot; };
 
                     b = edges[ --j ];
                     a = edges[ --j ];
-                    open.push( new Triangle( a, b, vertex ) )
+                    open.push( new Triangle( a, b, vertex ) );
                 }
 
             }// while i

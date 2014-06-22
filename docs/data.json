@@ -8,6 +8,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "_build_tool/delaunay/src/math/Vector2D.js": {
+            "name": "_build_tool/delaunay/src/math/Vector2D.js",
+            "modules": {},
+            "classes": {
+                "Vector2D": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/util/Iro.js": {
             "name": "_build_tool/delaunay/src/util/Iro.js",
             "modules": {},
@@ -17,19 +26,57 @@
             "fors": {},
             "namespaces": {}
         },
+        "_build_tool/delaunay/src/vehicle/Vehicle.js": {
+            "name": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "modules": {},
+            "classes": {
+                "Vehicle": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/Sankaku.js": {
             "name": "_build_tool/delaunay/src/Sankaku.js",
             "modules": {},
             "classes": {
-                "Triangle": 1,
+                "Sankaku": 1,
+                "Triangle": 1
+            },
+            "fors": {
                 "Sankaku": 1
             },
-            "fors": {},
             "namespaces": {}
         }
     },
     "modules": {},
     "classes": {
+        "Vector2D": {
+            "name": "Vector2D",
+            "shortname": "Vector2D",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 18,
+            "description": "二次元ベクトルクラス",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number=0",
+                    "optional": true
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number=0",
+                    "optional": true
+                }
+            ],
+            "is_constructor": 1
+        },
         "Iro": {
             "name": "Iro",
             "shortname": "Iro",
@@ -40,6 +87,32 @@
             "extension_for": [],
             "file": "_build_tool/delaunay/src/util/Iro.js",
             "line": 18,
+            "description": "https://github.com/less/less.js/blob/master/lib/less/functions.js\n<br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion",
+            "is_constructor": 1
+        },
+        "Vehicle": {
+            "name": "Vehicle",
+            "shortname": "Vehicle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 26,
+            "is_constructor": 1
+        },
+        "Sankaku": {
+            "name": "Sankaku",
+            "shortname": "Sankaku",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 125,
+            "description": "https://github.com/ironwallaby/delaunay",
             "is_constructor": 1
         },
         "Triangle": {
@@ -51,7 +124,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 31,
+            "line": 39,
             "params": [
                 {
                     "name": "a",
@@ -70,18 +143,6 @@
                 }
             ],
             "is_constructor": 1
-        },
-        "Sankaku": {
-            "name": "Sankaku",
-            "shortname": "Sankaku",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 114,
-            "is_constructor": 1
         }
     },
     "classitems": [
@@ -89,7 +150,861 @@
             "file": "_build_tool/delaunay/src/boids/Boids_XX.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/21 - 14:29\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\nhttps://gist.github.com/enjalot/1569370",
-            "class": "Iro"
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 17:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 32,
+            "description": "ベクトルを可視化するのに用います\n<br>デバッグなどで使用します。",
+            "itemtype": "method",
+            "name": "draw",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasRenderingContext2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 50,
+            "description": "ベクトルのコピーを作成します",
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 59,
+            "description": "ベクトルのx, yの値を 0 にします",
+            "itemtype": "method",
+            "name": "zero",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 71,
+            "description": "ベクトルの値が x, y 共 0 かどうかを判定します",
+            "itemtype": "method",
+            "name": "isZero",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 80,
+            "description": "ベクトルへ値を設定します",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 94,
+            "description": "ベクトルの x へ値を設定します",
+            "itemtype": "method",
+            "name": "setX",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 106,
+            "description": "ベクトルの y へ値を設定します",
+            "itemtype": "method",
+            "name": "setY",
+            "params": [
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 118,
+            "description": "ベクトルへ引数ベクトルの値を複写します",
+            "itemtype": "method",
+            "name": "copy",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 131,
+            "description": "ベクトルへ引数ベクトルの値を加算します",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 144,
+            "description": "ベクトルへ値を加算します",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "s",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 157,
+            "description": "ベクトルへ引数ベクトルの値を加算し新しいVector2Dを作成します",
+            "itemtype": "method",
+            "name": "addNew",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 167,
+            "description": "二つのベクトルの値を加算します",
+            "itemtype": "method",
+            "name": "addVector",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 182,
+            "description": "ベクトルへ引数ベクトルの値を減算します",
+            "itemtype": "method",
+            "name": "sub",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 195,
+            "description": "ベクトルへ引数ベクトルの値を減算し新しいVector2Dを作成します",
+            "itemtype": "method",
+            "name": "subNew",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 205,
+            "description": "二つのベクトルの値を減算します",
+            "itemtype": "method",
+            "name": "subVector",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 220,
+            "description": "ベクトルへ引数ベクトルの値を乗算します",
+            "itemtype": "method",
+            "name": "multiply",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 233,
+            "description": "ベクトルの値を乗算します",
+            "itemtype": "method",
+            "name": "multiplyScalar",
+            "params": [
+                {
+                    "name": "s",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 247,
+            "description": "ベクトルへ引数ベクトルの値を乗算し新しいVector2Dを作成します",
+            "itemtype": "method",
+            "name": "multiplyNew",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 257,
+            "description": "ベクトルへ引数ベクトルの値を除算します",
+            "itemtype": "method",
+            "name": "divide",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 270,
+            "description": "ベクトルの値を除算します",
+            "itemtype": "method",
+            "name": "divideScalar",
+            "params": [
+                {
+                    "name": "scalar",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 294,
+            "description": "ベクトルへ引数ベクトルの値を除算し新しいVector2Dを作成します",
+            "itemtype": "method",
+            "name": "divideNew",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 304,
+            "description": "ベクトルへ引数ベクトルの値と比較し小さな方の値を設定します",
+            "itemtype": "method",
+            "name": "min",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 324,
+            "description": "ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します",
+            "itemtype": "method",
+            "name": "max",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 344,
+            "description": "this.min( min_v ), this.max( max_v ) を実行します",
+            "itemtype": "method",
+            "name": "clamp",
+            "params": [
+                {
+                    "name": "min_v",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "max_v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 373,
+            "description": "スカラ値を使用しclampします",
+            "itemtype": "method",
+            "name": "clampScalar",
+            "params": [
+                {
+                    "name": "minVal",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "maxVal",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 392,
+            "itemtype": "method",
+            "name": "floor",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 403,
+            "itemtype": "method",
+            "name": "ceil",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 414,
+            "itemtype": "method",
+            "name": "round",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 425,
+            "itemtype": "method",
+            "name": "roundToZero",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 436,
+            "itemtype": "method",
+            "name": "negate",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 444,
+            "description": "ベクトルと引数ベクトルの内積を計算します",
+            "itemtype": "method",
+            "name": "dot",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "内積をとる Vector2D インスタンス",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 454,
+            "description": "ベクトルの大きさの２条を計算します",
+            "itemtype": "method",
+            "name": "lengthSq",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 463,
+            "description": "ベクトルの大きさの２条の平方根を計算します",
+            "itemtype": "method",
+            "name": "length",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 472,
+            "description": "ベクトルの大きさを設定します",
+            "itemtype": "method",
+            "name": "setLength",
+            "params": [
+                {
+                    "name": "l",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 489,
+            "itemtype": "method",
+            "name": "setAngle",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 505,
+            "description": "ベクトルの角度を設定します",
+            "itemtype": "method",
+            "name": "angle",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 514,
+            "description": "ベクトルの大きさを正規化（大きさを1）にします",
+            "itemtype": "method",
+            "name": "normalize",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 524,
+            "description": "ベクトルと引数ベクトル間の距離の２条を計算します",
+            "itemtype": "method",
+            "name": "distanceSq",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 537,
+            "description": "ベクトルと引数ベクトル間の距離を計算します",
+            "itemtype": "method",
+            "name": "distance",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 547,
+            "itemtype": "method",
+            "name": "lerp",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "alpha",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 560,
+            "description": "ベクトルと引数ベクトルの値が等しいかを判定します",
+            "itemtype": "method",
+            "name": "equals",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 570,
+            "description": "配列を使いベクトルを設定します",
+            "itemtype": "method",
+            "name": "fomArray",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "[x: number, y: number]",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 583,
+            "description": "ベクトルの値を配列として返します",
+            "itemtype": "method",
+            "name": "toArray",
+            "return": {
+                "description": "[x: number, y: number]",
+                "type": "[]"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 592,
+            "description": "ベクトルの値を設定した値以下にします",
+            "itemtype": "method",
+            "name": "truncate",
+            "params": [
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 603,
+            "description": "ベクトルの値を反転します",
+            "itemtype": "method",
+            "name": "reverse",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 615,
+            "description": "ベクトルが正規化されているかを判定します",
+            "itemtype": "method",
+            "name": "isNormalize",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 624,
+            "description": "このベクトルに垂直なベクトルを生成し返します",
+            "itemtype": "method",
+            "name": "prev",
+            "return": {
+                "description": "このベクトルに垂直なベクトル",
+                "type": "Vector2D"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 633,
+            "description": "引数ベクトルが、このベクトルの左側にあるか右側かを判定します",
+            "itemtype": "method",
+            "name": "sign",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "-1: 左側, 1: 右側",
+                "type": "Number"
+            },
+            "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/math/Vector2D.js",
+            "line": 644,
+            "description": "２つのベクトル間の角度を計算します",
+            "itemtype": "method",
+            "name": "angleBetween",
+            "static": 1,
+            "params": [
+                {
+                    "name": "v1",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "v2",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vector2D"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
@@ -99,7 +1014,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 30,
+            "line": 33,
             "itemtype": "method",
             "name": "rgb2hsl",
             "static": 1,
@@ -121,14 +1036,14 @@
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "H: number, s: number, l: number"
+                "description": "{h: number, s: number, l: number}",
+                "type": "Object"
             },
             "class": "Iro"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 69,
+            "line": 73,
             "itemtype": "method",
             "name": "hsl2rgb",
             "static": 1,
@@ -150,14 +1065,14 @@
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "R: number, g: number, b: number"
+                "description": "{r: number, g: number, b: number}",
+                "type": "Object"
             },
             "class": "Iro"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 111,
+            "line": 115,
             "itemtype": "method",
             "name": "rgb2hsv",
             "static": 1,
@@ -179,14 +1094,14 @@
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "H: number, s: number, v: number"
+                "description": "{h: number, s: number, v: number}",
+                "type": "Object"
             },
             "class": "Iro"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 146,
+            "line": 150,
             "itemtype": "method",
             "name": "hsv2rgb",
             "static": 1,
@@ -208,33 +1123,33 @@
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "R: number, g: number, b: number"
+                "description": "{r: number, g: number, b: number}",
+                "type": "Object"
             },
             "class": "Iro"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 179,
+            "line": 183,
             "itemtype": "method",
             "name": "hex2rgb",
             "static": 1,
             "params": [
                 {
                     "name": "hex",
-                    "description": "#NNN",
+                    "description": "CSS 色設定文字 #ff0000",
                     "type": "String"
                 }
             ],
             "return": {
-                "description": "}",
-                "type": "R: number, g: number, b: number"
+                "description": "{r: number, g: number, b: number}",
+                "type": "Object"
             },
             "class": "Iro"
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 205,
+            "line": 209,
             "itemtype": "method",
             "name": "rgb2hex",
             "static": 1,
@@ -263,7 +1178,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 222,
+            "line": 226,
             "itemtype": "method",
             "name": "int2hex",
             "static": 1,
@@ -281,16 +1196,294 @@
             "class": "Iro"
         },
         {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 21:01\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 38,
+            "itemtype": "property",
+            "name": "x",
+            "type": "{number}",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 43,
+            "itemtype": "property",
+            "name": "y",
+            "type": "{number}",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 53,
+            "itemtype": "property",
+            "name": "WRAP",
+            "final": "",
+            "static": 1,
+            "type": "{string}",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 59,
+            "itemtype": "property",
+            "name": "BOUNCE",
+            "final": "",
+            "static": 1,
+            "type": "{string}",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 66,
+            "description": "質量を設定します",
+            "itemtype": "method",
+            "name": "mass",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 75,
+            "itemtype": "method",
+            "name": "getMass",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 83,
+            "description": "最大スピードを設定します",
+            "itemtype": "method",
+            "name": "speed",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 92,
+            "itemtype": "method",
+            "name": "getSpeed",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 100,
+            "itemtype": "method",
+            "name": "behavior",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 108,
+            "itemtype": "method",
+            "name": "getBehavior",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 116,
+            "itemtype": "method",
+            "name": "position",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 126,
+            "itemtype": "method",
+            "name": "getPosition",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 134,
+            "itemtype": "method",
+            "name": "velocity",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 142,
+            "itemtype": "method",
+            "name": "getVelocity",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 150,
+            "itemtype": "method",
+            "name": "setX",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 159,
+            "itemtype": "method",
+            "name": "setY",
+            "params": [
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 168,
+            "itemtype": "method",
+            "name": "draw",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasRenderingContext2D"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 203,
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "w",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "h",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 232,
+            "itemtype": "method",
+            "name": "wrap",
+            "params": [
+                {
+                    "name": "w",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "h",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 259,
+            "itemtype": "method",
+            "name": "bounce",
+            "params": [
+                {
+                    "name": "w",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "h",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Vehicle"
+        },
+        {
             "file": "_build_tool/delaunay/src/Sankaku.js",
             "line": 1,
             "license": "inazumatv.com",
             "author": "(at)taikiken / http://inazumatv.com",
             "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay\n\nhosted on\nhttps://github.com/taikiken/sankaku.js",
-            "class": "Triangle"
+            "class": "Sankaku"
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 80,
+            "line": 20,
+            "itemtype": "property",
+            "name": "version",
+            "final": "",
+            "static": 1,
+            "type": "{string}",
+            "class": "Sankaku"
+        },
+        {
+            "file": "_build_tool/delaunay/src/Sankaku.js",
+            "line": 89,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -304,7 +1497,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 96,
+            "line": 105,
             "itemtype": "method",
             "name": "centroid",
             "return": {
@@ -315,7 +1508,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 124,
+            "line": 137,
             "itemtype": "method",
             "name": "byX",
             "static": 1,
@@ -339,7 +1532,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 135,
+            "line": 148,
             "itemtype": "method",
             "name": "dedup",
             "static": 1,
@@ -354,7 +1547,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 165,
+            "line": 178,
             "itemtype": "method",
             "name": "triangulate",
             "static": 1,
@@ -374,31 +1567,247 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:30"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:32"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:69"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:50"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:111"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:59"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:146"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:71"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:179"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:80"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:205"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:94"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/util/Iro.js:222"
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:106"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:118"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:131"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:144"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:157"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:167"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:182"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:195"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:205"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:220"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:233"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:247"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:257"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:270"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:294"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:304"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:324"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:344"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:373"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:392"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:403"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:414"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:425"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:436"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:444"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:454"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:463"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:472"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:489"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:505"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:514"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:524"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:537"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:547"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:560"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:570"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:583"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:592"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:603"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:615"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:624"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:633"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:644"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:33"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:73"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:115"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:150"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:183"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:209"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/util/Iro.js:226"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:75"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:92"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:108"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:126"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:142"
         },
         {
             "message": "unknown tag: license",
@@ -410,23 +1819,31 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:96"
+            "line": " _build_tool/delaunay/src/Sankaku.js:105"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:124"
+            "line": " _build_tool/delaunay/src/Sankaku.js:137"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/Sankaku.js:165"
+            "line": " _build_tool/delaunay/src/Sankaku.js:178"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/21 - 14:29\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\nhttps://gist.github.com/enjalot/1569370",
             "line": " _build_tool/delaunay/src/boids/Boids_XX.js:1"
         },
         {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 17:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/math/Vector2D.js:1"
+        },
+        {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/util/Iro.js:1"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 21:01\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:1"
         },
         {
             "message": "Missing item type",

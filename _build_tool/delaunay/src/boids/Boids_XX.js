@@ -193,7 +193,7 @@
 
                         if ( boid_distance < neighborRadius ) {
 
-                            neighbor_velocity = neighbor.velocity();
+                            neighbor_velocity = neighbor._velocity();
 
                             alignment[ 0 ] += neighbor_velocity[ 0 ];
                             alignment[ 1 ] += neighbor_velocity[ 1 ];
@@ -275,7 +275,7 @@
                 return boid;
             };
 
-            boid.velocity = function ( x ) {
+            boid._velocity = function ( x ) {
                 if ( !arguments.length ) { return velocity; }
                 velocity = x;
                 return boid;

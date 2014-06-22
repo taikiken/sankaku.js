@@ -16,7 +16,14 @@
  * hosted on
  * https://github.com/taikiken/sankaku.js
  */
-var Sankaku = { version: "0.0.1" };
+var Sankaku = {};
+/**
+ * @for Sankaku
+ * @const version
+ * @static
+ * @type {string}
+ */
+Sankaku.version = "0.0.1";
 
 ( function ( window ){
     "use strict";
@@ -24,11 +31,13 @@ var Sankaku = { version: "0.0.1" };
     var _abs = Math.abs,
         _min = Math.min,
         _max = Math.max,
-        _round = Math.round;
+        _round = Math.round,
+        Sankaku = window.Sankaku;
 
     var Triangle = ( function (){
         //
         /**
+         *
          * @class Triangle
          * @param {Object} a
          * @param {Object} b
@@ -110,8 +119,12 @@ var Sankaku = { version: "0.0.1" };
         return Triangle;
     }() );
 
+    Sankaku.Triangle = Triangle;
+
     window.Sankaku = ( function (){
         /**
+         * https://github.com/ironwallaby/delaunay
+         *
          * @class Sankaku
          * @constructor
          */
@@ -156,7 +169,7 @@ var Sankaku = { version: "0.0.1" };
                         edges.splice( i, 2 );
                         j -= 2;
 
-                        continue outer
+                        continue outer;
                     }// if
                 }// while i
             }// while j
@@ -231,7 +244,7 @@ var Sankaku = { version: "0.0.1" };
             open = [
                 new Triangle(
                     { x: x_mid - 20 * d_max, y: y_mid -      d_max, __sentinel: true },
-                    { x: x_mid            , y: y_mid + 20 * d_max, __sentinel: true },
+                    { x: x_mid             , y: y_mid + 20 * d_max, __sentinel: true },
                     { x: x_mid + 20 * d_max, y: y_mid -      d_max, __sentinel: true }
                 )
             ];
@@ -296,7 +309,7 @@ var Sankaku = { version: "0.0.1" };
 
                     b = edges[ --j ];
                     a = edges[ --j ];
-                    open.push( new Triangle( a, b, vertex ) )
+                    open.push( new Triangle( a, b, vertex ) );
                 }
 
             }// while i
