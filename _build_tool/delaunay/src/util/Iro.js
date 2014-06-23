@@ -37,7 +37,7 @@
          * @param {int} r
          * @param {int} g
          * @param {int} b
-         * @returns {object} {h: number, s: number, l: number}
+         * @return {object} {h: number, s: number, l: number}
          */
         iro.rgb2hsl = function ( r, g, b ){
             r /= 255;
@@ -76,7 +76,7 @@
          * @param {number} h
          * @param {number} s
          * @param {number} l
-         * @returns {object} {r: number, g: number, b: number}
+         * @return {object} {r: number, g: number, b: number}
          */
         iro.hsl2rgb = function ( h, s, l ) {
             var r, g, b;
@@ -118,7 +118,7 @@
          * @param {int} r
          * @param {int} g
          * @param {int} b
-         * @returns {object} {h: number, s: number, v: number}
+         * @return {object} {h: number, s: number, v: number}
          */
         iro.rgb2hsv = function ( r, g, b ) {
             r /= 255;
@@ -153,7 +153,7 @@
          * @param {number} h
          * @param {number} s
          * @param {number} v
-         * @returns {object} {r: number, g: number, b: number}
+         * @return {object} {r: number, g: number, b: number}
          */
         iro.hsv2rgb = function ( h, s, v ) {
             var r, g, b,
@@ -184,7 +184,7 @@
          * @method hex2rgb
          * @static
          * @param {string} hex CSS 色設定文字 #ff0000
-         * @returns {object} {r: number, g: number, b: number}
+         * @return {object} {r: number, g: number, b: number}
          */
         iro.hex2rgb = function ( hex ) {
             if ( typeof hex !== "string" ) {
@@ -212,7 +212,7 @@
          * @param {int} r
          * @param {int} g
          * @param {int} b
-         * @returns {string}
+         * @return {string}
          */
         iro.rgb2hex = function ( r, g, b ) {
             function componentToHex(c) {
@@ -227,7 +227,7 @@
          * @method int2hex
          * @static
          * @param {number} num
-         * @returns {string}
+         * @return {string}
          */
         iro.int2hex = function ( num ) {
             num = Math.floor( num );

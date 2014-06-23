@@ -41,9 +41,21 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Delaunay.html">Delaunay</a></li>
+            
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
+                <li><a href="../classes/List.html">List</a></li>
+            
+                <li><a href="../classes/Matrix2D.html">Matrix2D</a></li>
+            
+                <li><a href="../classes/Num.html">Num</a></li>
+            
+                <li><a href="../classes/Point.html">Point</a></li>
+            
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
+            
+                <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
@@ -54,6 +66,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Sankaku.html">Sankaku</a></li>
             
             </ul>
         </div>
@@ -95,6 +109,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
+ * @module Sankaku
  * @license inazumatv.com
  * @author (at)taikiken / http://inazumatv.com
  * @date 2014/06/20 - 11:55
@@ -119,324 +134,192 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = &quot;0.0.1&quot;;
+Sankaku.version = &quot;0.1.0&quot;;
+
+// polyfill
+( function ( self ){
+    &quot;use strict&quot;;
+
+    // console
+    if ( !self.console ) {
+        self.console = {
+            info: function (){},
+            log: function  (){},
+            debug: function (){},
+            warn: function (){},
+            error: function (){},
+            table: function (){}
+        };
+    }
+
+    // Date.now
+    if ( !Date.now ) {
+        Date.now = function now() {
+            return new Date().getTime();
+        };
+    }
+
+    ( function() {
+        // requestAnimationFrame
+        // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+        // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+        var lastTime = 0;
+        var vendors = [ &#x27;ms&#x27;, &#x27;moz&#x27;, &#x27;webkit&#x27;, &#x27;o&#x27; ];
+
+        for ( var x = 0; x &lt; vendors.length &amp;&amp; !self.requestAnimationFrame; ++ x ) {
+
+            self.requestAnimationFrame = self[ vendors[ x ] + &#x27;RequestAnimationFrame&#x27; ];
+            self.cancelAnimationFrame = self[ vendors[ x ] + &#x27;CancelAnimationFrame&#x27; ] || self[ vendors[ x ] + &#x27;CancelRequestAnimationFrame&#x27; ];
+        }
+
+        if ( self.requestAnimationFrame === undefined &amp;&amp; self.setTimeout !== undefined ) {
+
+            self.requestAnimationFrame = function ( callback ) {
+
+                var currTime = Date.now(), timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
+                var id = self.setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        }
+
+        if( self.cancelAnimationFrame === undefined &amp;&amp; self.clearTimeout !== undefined ) {
+
+            self.cancelAnimationFrame = function ( id ) { self.clearTimeout( id ); };
+        }
+
+        // Object.create
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+        if (!Object.create) {
+            Object.create = (function(){
+                function F(){}
+
+                return function(o){
+                    if (arguments.length !== 1) {
+                        throw new Error(&#x27;Object.create implementation only accepts one parameter.&#x27;);
+                    }
+                    F.prototype = o;
+                    return new F();
+                };
+            })();
+        }
+
+        // Array.isArray
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
+        if(!Array.isArray) {
+            Array.isArray = function (vArg) {
+                return Object.prototype.toString.call(vArg) === &quot;[object Array]&quot;;
+            };
+        }
+
+        // Array.indexOf
+        // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+        if (!Array.prototype.indexOf) {
+            Array.prototype.indexOf = function (searchElement , fromIndex) {
+                var i,
+                    pivot = (fromIndex) ? fromIndex : 0,
+                    length;
+
+                if (!this) {
+                    throw new TypeError();
+                }
+
+                length = this.length;
+
+                if (length === 0 || pivot &gt;= length) {
+                    return -1;
+                }
+
+                if (pivot &lt; 0) {
+                    pivot = length - Math.abs(pivot);
+                }
+
+                for (i = pivot; i &lt; length; i++) {
+                    if (this[i] === searchElement) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+        }
+
+        // Array.forEach
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+        if (!Array.prototype.forEach) {
+            Array.prototype.forEach = function (fn, scope) {
+                var i, len;
+                for (i = 0, len = this.length; i &lt; len; ++i) {
+                    if (i in this) {
+                        fn.call(scope, this[i], i, this);
+                    }
+                }
+            };
+        }
+
+        // Function.prototype.bind
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+        if (!Function.prototype.bind) {
+            Function.prototype.bind = function (oThis) {
+                if (typeof this !== &quot;function&quot;) {
+                    // closest thing possible to the ECMAScript 5 internal IsCallable function
+                    throw new TypeError(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
+                }
+
+                var aArgs = Array.prototype.slice.call(arguments, 1),
+                    fToBind = this,
+                    fNOP = function () {},
+                    fBound = function () {
+                        return fToBind.apply(this instanceof fNOP &amp;&amp; oThis ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
+                    };
+
+                fNOP.prototype = this.prototype;
+                fBound.prototype = new fNOP();
+
+                return fBound;
+            };
+        }
+
+        // trim
+        // three.js
+        String.prototype.trim = String.prototype.trim || function () {
+
+            return this.replace( /^\s+|\s+$/g, &#x27;&#x27; );
+
+        };
+
+        // getUserMedia
+        navigator.getUserMedia =
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+
+        // URL
+        window.URL = window.URL ||
+            window.webkitURL ||
+            window.mozURL ||
+            window.msURL;
+    }());
+
+}( window.self ) );
 
 ( function ( window ){
     &quot;use strict&quot;;
+    var Sankaku = window.Sankaku;
 
-    var _abs = Math.abs,
-        _min = Math.min,
-        _max = Math.max,
-        _round = Math.round,
-        Sankaku = window.Sankaku;
-
-    var Triangle = ( function (){
-        //
-        /**
-         *
-         * @class Triangle
-         * @param {Object} a
-         * @param {Object} b
-         * @param {Object} c
-         * @constructor
-         */
-        function Triangle ( a, b, c ) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-
-            var A = b.x - a.x,
-                B = b.y - a.y,
-                C = c.x - a.x,
-                D = c.y - a.y,
-                E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
-                F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
-                G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
-                minx, miny, dx, dy,
-                x, y;
-
-            // If the points of the triangle are collinear, then just find the
-            // extremes and use the midpoint as the center of the circumcircle.
-            if( _abs( G ) &lt; 0.000001 ) {
-                // under
-                minx = _min( a.x, b.x, c.x );
-                miny = _min( a.y, b.y, c.y );
-                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
-                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
-
-                this.x = minx + dx;
-                this.y = miny + dy;
-                this.r = dx * dx + dy * dy;
-            } else {
-                // over
-                x = ( D*E - B*F ) / G;
-                y = ( A*F - C*E ) / G;
-                dx = x - a.x;
-                dy = y - a.y;
-
-                this.x = x;
-                this.y = y;
-                this.r = dx * dx + dy * dy;
-            }
-        }
-
-        var p = Triangle.prototype;
-
-        /**
-         * @method draw
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.draw = function ( ctx ) {
-            var a = this.a,
-                b = this.b,
-                c = this.c;
-
-            ctx.beginPath();
-            ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y );
-            ctx.lineTo( c.x, c.y );
-            ctx.closePath();
-        };
-
-        /**
-         * @method centroid
-         * @returns {{x: number, y: number}}
-         */
-        p.centroid = function() {
-
-            return (
-                {
-                    x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
-                    y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
-                }
-            );
-        };
-
-        return Triangle;
-    }() );
-
-    Sankaku.Triangle = Triangle;
-
-    window.Sankaku = ( function (){
-        /**
-         * https://github.com/ironwallaby/delaunay
-         *
-         * @class Sankaku
-         * @constructor
-         */
-        function Sankaku () {
-            throw new Error( &quot;Sankaku can&#x27;t create instance.&quot; );
-        }
-
-        var s = Sankaku;
-
-        /**
-         * @method byX
-         * @static
-         * @param {object} a
-         * @param {object} b
-         * @returns {number}
-         */
-        s.byX = function ( a, b ) {
-            return b.x - a.x;
-        };
-
-        /**
-         * @method dedup
-         * @static
-         * @param {Array} edges
-         */
-        s.dedup = function ( edges ) {
-            var j = edges.length,
-                a, b, i, m, n;
-
-            outer: while( j ) {
-                b = edges[ --j ];
-                a = edges[ --j ];
-                i = j;
-
-                while( i ) {
-                    n = edges[ --i ];
-                    m = edges[ --i ];
-
-                    if( ( a === m &amp;&amp; b === n ) || ( a === n &amp;&amp; b === m ) ) {
-
-                        edges.splice( j, 2 );
-                        edges.splice( i, 2 );
-                        j -= 2;
-
-                        continue outer;
-                    }// if
-                }// while i
-            }// while j
-        };
-
-        /**
-         * @method triangulate
-         * @static
-         * @param vertices
-         * @returns {Array}
-         */
-        s.triangulate = function ( vertices ) {
-            // if there aren&#x27;t enough vertices to form any triangles.
-            if(vertices.length &lt; 3) {
-                return [];
-            }
-
-            var byX = s.byX,
-                dedup = s.dedup,
-                vertex,
-                i,
-                x_min, x_max,
-                y_min, y_max,
-
-                dx, dy,
-                d_max,
-                x_mid,
-                y_mid,
-                open,
-                closed,
-                close_i,
-                edges,
-                j, a, b,
-                open_j;
-
-            // Ensure the vertex array is in order of descending X coordinate
-            // (which is needed to ensure a subquadratic runtime), and then find
-            // the bounding box around the points.
-            vertices.sort( byX );
-
-
-            i = vertices.length - 1;
-            vertex = vertices[ i ];
-
-            x_min = vertex.x;
-            x_max = vertices[ 0 ].x;
-            y_min = vertex.y;
-            y_max = y_min;
-
-            while( i-- ) {
-                if ( vertex.y &lt; y_min) {
-
-                    y_min = vertex.y;
-                }
-                if ( vertex.y &gt; y_max ) {
-
-                    y_max = vertex.y;
-                }
-            }
-
-            // Find a super triangle, which is a triangle that surrounds all the vertices.
-            // This is used like something of a sentinel value to remove
-            // cases in the main algorithm, and is removed before we return any results.
-            //
-            // Once found, put it in the &quot;open&quot; list.
-            // (The &quot;open&quot; list is for triangles who may still need to be considered; the &quot;closed&quot; list is for triangles which do not.)
-            dx = x_max - x_min;
-            dy = y_max - y_min;
-            d_max = ( dx &gt; dy ) ? dx : dy;
-            x_mid = ( x_max + x_min ) * 0.5;
-            y_mid = ( y_max + y_min ) * 0.5;
-            open = [
-                new Triangle(
-                    { x: x_mid - 20 * d_max, y: y_mid -      d_max, __sentinel: true },
-                    { x: x_mid             , y: y_mid + 20 * d_max, __sentinel: true },
-                    { x: x_mid + 20 * d_max, y: y_mid -      d_max, __sentinel: true }
-                )
-            ];
-            closed = [];
-            edges = [];
-
-            // Incrementally add each vertex to the mesh.
-            i = vertices.length;
-
-            // For each open triangle, check to see if the current point is
-            // inside it&#x27;s circumcircle. If it is, remove the triangle and add
-            // it&#x27;s edges to an edge list.
-            while( i-- ) {
-
-                edges.length = 0;
-
-                j = open.length;
-
-                vertex = vertices[ i ];
-
-                while( j-- ) {
-
-                    open_j = open[ j ];
-
-                    // If this point is to the right of this triangle&#x27;s circumcircle,
-                    // then this triangle should never get checked again. Remove it
-                    // from the open list, add it to the closed list, and skip.
-                    dx = vertex.x - open_j.x;
-
-                    if( dx &gt; 0 &amp;&amp; dx * dx &gt; open_j.r ) {
-
-                        closed.push( open_j );
-                        open.splice( j, 1 );
-                        continue;
-                    }
-
-                    // If not, skip this triangle.
-                    dy = vertex.y - open_j.y;
-
-                    if ( dx * dx + dy * dy &gt; open_j.r ) {
-                        // skip
-                        continue;
-                    }
-
-                    // Remove the triangle and add it&#x27;s edges to the edge list.
-                    edges.push(
-                        open_j.a, open_j.b,
-                        open_j.b, open_j.c,
-                        open_j.c, open_j.a
-                    );
-
-                    open.splice( j, 1 );
-                }// while j
-
-                // Remove any doubled edges.
-                dedup( edges );
-
-                // Add a new triangle for each edge.
-                j = edges.length;
-
-                while(j) {
-
-                    b = edges[ --j ];
-                    a = edges[ --j ];
-                    open.push( new Triangle( a, b, vertex ) );
-                }
-
-            }// while i
-
-            // Copy any remaining open triangles to the closed list, and then
-            // remove any triangles that share a vertex with the super triangle.
-
-            // http://qiita.com/kaz2ngt/items/6e08acc537fd77273cff
-            // 配列の連結
-            Array.prototype.push.apply( closed, open );
-
-            i = closed.length;
-
-            while( i-- ) {
-
-                close_i = closed[ i ];
-
-                if(
-                    close_i.a.__sentinel ||
-                    close_i.b.__sentinel ||
-                    close_i.c.__sentinel ) {
-
-                    closed.splice( i, 1 );
-                }
-            }// while
-
-            return closed;
-        };
-
-        return Sankaku;
-    }() );
+    /**
+     * 継承に使用します
+     * @for Sankaku
+     * @method extend
+     * @static
+     * @param {Function} P 親クラス
+     * @param {Function} C 子クラス
+     */
+    Sankaku.extend = function ( P, C ) {
+        C.prototype = Object.create( P.prototype );
+        C.prototype.constructor = C;
+    };
 
 }( window ) );
     </pre>

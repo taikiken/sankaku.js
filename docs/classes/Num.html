@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Sankaku</title>
+    <title>Num</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -104,12 +104,16 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Sankaku Class</h1>
+                        <h1>Num Class</h1>
 <div class="box meta">
     
 
     
 
+    
+        <div class="foundat">
+            Defined in: <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l22"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:22</code></a>
+        </div>
     
 
     
@@ -124,9 +128,67 @@
 
 
 <div class="box intro">
+    <p>数値ヘルパー</p>
+
+</div>
+
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_Num" class="method item">
+    <h3 class="name"><code>Num</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l22"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:22</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
     
 </div>
 
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -136,8 +198,6 @@
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
-        
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -154,7 +214,16 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_extend">extend</a>
+                                <a href="#method_is">is</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_random">random</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -166,23 +235,6 @@
                 </div>
             
 
-            
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                        
-                            <li class="index-item property">
-                                <a href="#property_version">version</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
             
 
             
@@ -195,8 +247,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_extend" class="method item">
-    <h3 class="name"><code>extend</code></h3>
+                    <div id="method_is" class="method item">
+    <h3 class="name"><code>is</code></h3>
 
     
         <div class="args">
@@ -204,13 +256,7 @@
             
                 <li class="arg">
                     
-                        <code>P</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>C</code>
+                        <code>obj</code>
                     
                 </li>
             
@@ -218,6 +264,10 @@
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
     
 
     
@@ -245,7 +295,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_Sankaku.js.html#l201"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;Sankaku.js:201</code></a>
+        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l33"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:33</code></a>
         
         </p>
 
@@ -256,7 +306,7 @@
     </div>
 
     <div class="description">
-        <p>継承に使用します</p>
+        <p>数値か否かをチェックします</p>
 
     </div>
 
@@ -268,31 +318,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">P</code>
-                        <span class="type">Function</span>
+                        <code class="param-name">obj</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>親クラス</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">C</code>
-                        <span class="type">Function</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>子クラス</p>
-
+                         
                     </div>
 
                     
@@ -303,33 +336,66 @@
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <p>true: 数値</p>
+
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-            </div>
-        
+                    <div id="method_random" class="method item">
+    <h3 class="name"><code>random</code></h3>
 
-        
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>min</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[max]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
 
-                
-                    <div id="property_version" class="property item">
-    <h3 class="name"><code>version</code></h3>
-    <span class="type">String</span>
-
+    
+        <span class="returns-inline">
+            <span class="type">Int</span>
+        </span>
     
 
     
 
     
-        <span class="flag final">final</span>
+
     
 
     
         <span class="flag static">static</span>
+    
+
+    
+
     
 
     <div class="meta">
@@ -343,9 +409,10 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_Sankaku.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;Sankaku.js:21</code></a>
+        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l44"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:44</code></a>
         
         </p>
+
 
         
 
@@ -353,11 +420,67 @@
     </div>
 
     <div class="description">
-        
+        <p>範囲指定し乱数を生成します
+<br>結果は int になります
+<br>max 省略時は 0 ~ min 間の乱数を発生させます</p>
+
     </div>
 
     
+        <div class="params">
+            <h4>Parameters:</h4>
 
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">min</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[max]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Int</span>:
+                    
+                    <p>乱数を返します</p>
+
+                
+            </div>
+        </div>
     
 
     
@@ -365,6 +488,8 @@
 
                 
             </div>
+        
+
         
 
         

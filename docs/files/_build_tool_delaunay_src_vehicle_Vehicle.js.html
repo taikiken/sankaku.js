@@ -41,9 +41,21 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Delaunay.html">Delaunay</a></li>
+            
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
+                <li><a href="../classes/List.html">List</a></li>
+            
+                <li><a href="../classes/Matrix2D.html">Matrix2D</a></li>
+            
+                <li><a href="../classes/Num.html">Num</a></li>
+            
+                <li><a href="../classes/Point.html">Point</a></li>
+            
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
+            
+                <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
@@ -54,6 +66,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Sankaku.html">Sankaku</a></li>
             
             </ul>
         </div>
@@ -108,14 +122,15 @@
  */
 ( function ( window ){
     &quot;use strict&quot;;
-    var document = window.document,
-
-        Sankaku = window.Sankaku,
+    var Sankaku = window.Sankaku,
         Vector2D = Sankaku.Vector2D,
+        Matrix2D = Sankaku.Matrix2D,
+        Point = Sankaku.Point,
 
         _cos = Math.cos,
         _sin = Math.sin,
         PI = Math.PI,
+        PI2 = PI * 2,
         ONE_RADIAN = 180 / PI;
 
     Sankaku.Vehicle = ( function (){
@@ -141,10 +156,22 @@
              * @type {number}
              */
             this.y = 0;
+            /**
+             * @property rotation
+             * @type {number}
+             */
             this.rotation = 0;
+            /**
+            * @property width
+            * @type {number}
+            */
+            this.width = 20;
+            /**
+             * @property height
+             * @type {number}
+             */
+            this.height = 10;
         }
-
-        var p = Vehicle.prototype;
 
         /**
          * @const WRAP
@@ -159,6 +186,8 @@
          */
         Vehicle.BOUNCE = &quot;vehicle_bounce&quot;;
 
+        var p = Vehicle.prototype;
+
         /**
          * 質量を設定します
          * @method mass
@@ -170,7 +199,7 @@
 
         /**
          * @method getMass
-         * @returns {number}
+         * @return {number}
          */
         p.getMass = function () {
             return this._mass;
@@ -187,7 +216,7 @@
 
         /**
          * @method getSpeed
-         * @returns {number}
+         * @return {number}
          */
         p.getSpeed = function () {
             return this._speed;
@@ -203,7 +232,7 @@
 
         /**
          * @method getBehavior
-         * @returns {string}
+         * @return {string}
          */
         p.getBehavior = function () {
             return this._behavior;
@@ -221,7 +250,7 @@
 
         /**
          * @method getPosition
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.getPosition = function () {
             return this._position;
@@ -237,7 +266,7 @@
 
         /**
          * @method getVelocity
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.getVelocity = function () {
             return this._velocity;
@@ -262,38 +291,97 @@
         };
 
         /**
+         * @method bounding
+         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
+         */
+        p.bounding = function () {
+            var x = this.x,
+                y = this.y,
+                w2 = this.width * 0.5,
+                h2 = this.height * 0.5,
+                rotation = this.rotation,
+                a, b, c, d,
+                ax, ay,
+                bx,
+                cy,
+                sin, cos,
+
+                cos_ax,
+                cos_ay,
+                sin_ay,
+                sin_ax,
+                cos_bx,
+                cos_cy,
+                sin_bx,
+                sin_cy;
+
+            sin = _sin( rotation );
+            cos = _cos( rotation );
+
+            ax = -w2;
+            ay = -h2;
+            bx = w2;
+            cy = h2;
+
+            cos_ax = cos * ax;
+            cos_ay = cos * ay;
+            sin_ay = sin * ay;
+            sin_ax = sin * ax;
+            cos_bx = cos * bx;
+            cos_cy = cos * cy;
+            sin_bx = sin * bx;
+            sin_cy = sin * cy;
+
+            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
+            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
+            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
+            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
+
+            return { a: a, b: b, c: c, d:d };
+        };
+
+//        /**
+//         * @method draw
+//         * @param {CanvasRenderingContext2D} ctx
+//         */
+//        p.draw = function ( ctx ) {
+//            var x = this.x,
+//                y = this.y;
+//
+//            ctx.beginPath();
+//
+//            ctx.moveTo( x + 10, y );
+//            ctx.lineTo( x - 10, y + 5 );
+//            ctx.lineTo( x - 10, y - 5 );
+//            ctx.lineTo( x + 10, y );
+//
+//            ctx.closePath();
+//        };
+
+        /**
          * @method draw
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
-            var x = this.x,
-                y = this.y,
-                rotation = this.rotation,
-                x10, y5, x10_, y5_,
-                rx, ry;
+            var bounding = this.bounding(),
+                a, b, c, d;
 
-//            x10 = x + 10;
-//            y5 = y + 5;
-//            x10_ = x - 10;
-//            y5_ = y - 5;
-//
-//            rx = x * _cos( rotation ) - y * _sin( rotation );
-//            ry = x * _sin( rotation ) + y * _cos( rotation );
-//            ctx.save();
+            a = bounding.a;
+            b = bounding.b;
+            c = bounding.c;
+            d = bounding.d;
 
-//            ctx.rotate( rotation );
+            // rect
             ctx.beginPath();
-            ctx.moveTo( x + 10, y );
-            ctx.lineTo( x - 10, y + 5 );
-            ctx.lineTo( x - 10, y - 5 );
 
-//            ctx.lineTo( ( x - x10_ ) * _cos( rotation ) - ( y - y5 ) * _sin( rotation ) + x10_, ( x - x10_ ) * _sin( rotation ) - ( y - y5 ) * _cos( rotation ) + y5 );
-//            ctx.lineTo( ( x - x10_ ) * _cos( rotation ) - ( y - y5_ ) * _sin( rotation ) + x10_, ( x - x10_ ) * _sin( rotation ) - ( y - y5_ ) * _cos( rotation ) + y5_ );
+            ctx.moveTo( a.x, a.y );
+//            ctx.lineTo( b.x, b.y );
+//            ctx.lineTo( c.x, c.y );
+            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+            ctx.lineTo( d.x, d.y );
+            ctx.lineTo( a.x, a.y );
 
-            ctx.lineTo( x + 10, y );
             ctx.closePath();
-
-//            ctx.restore();
         };
 
         /**
@@ -302,11 +390,22 @@
          * @param {number} h
          */
         p.update = function ( w, h ) {
+            this._update( w, h );
+        };
+
+        /**
+         * @method _update
+         * @param {number} w
+         * @param {number} h
+         * @protected
+         */
+        p._update = function ( w, h ) {
             var velocity = this._velocity,
                 position = this._position;
 
             velocity.truncate( this._speed );
             position.add( velocity );
+
             switch ( this._behavior ) {
 
                 case Vehicle.WRAP:
@@ -320,8 +419,7 @@
 
             this.x = position.x;
             this.y = position.y;
-//            this.rotation = velocity.angle() * ONE_RADIAN;
-            // rotation is radian
+
             this.rotation = velocity.angle();
         };
 

@@ -27,10 +27,19 @@
             <file name="Sankaku.js"/>
 
             <file name="util/Iro.js"/>
+            <file name="util/List.js"/>
+            <file name="util/Num.js"/>
 
-            <file name="math/Vector2D.js"/>
+            <file name="geom/Triangle.js"/>
+            <file name="geom/Delaunay.js"/>
+
+            <file name="geom/Vector2D.js"/>
+
+            <!--<file name="geom/Point.js"/>-->
+            <!--<file name="geom/Matrix2D.js"/>-->
 
             <file name="vehicle/Vehicle.js"/>
+            <file name="vehicle/SteeredVehicle.js"/>
 
         </filelist>
 
@@ -60,10 +69,10 @@
             <fileset dir="${dist}" />
         </copy>
 
-        <exec executable="bash" dir="../../">
-            <arg value="-c" />
-            <arg value="yuidoc ${doc2src} -o ./docs" />
-        </exec>
+        <!--<exec executable="bash" dir="../../">-->
+            <!--<arg value="-c" />-->
+            <!--<arg value="yuidoc ${doc2src} -o ./docs" />-->
+        <!--</exec>-->
 
     </target>
 

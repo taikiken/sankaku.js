@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Sankaku</title>
+    <title>Delaunay</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -104,12 +104,16 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Sankaku Class</h1>
+                        <h1>Delaunay Class</h1>
 <div class="box meta">
     
 
     
 
+    
+        <div class="foundat">
+            Defined in: <a href="../files/_build_tool_delaunay_src_geom_Delaunay.js.html#l19"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;geom&#x2F;Delaunay.js:19</code></a>
+        </div>
     
 
     
@@ -124,9 +128,67 @@
 
 
 <div class="box intro">
+    <p><a href="https://github.com/ironwallaby/delaunay">https://github.com/ironwallaby/delaunay</a></p>
+
+</div>
+
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_Delaunay" class="method item">
+    <h3 class="name"><code>Delaunay</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_geom_Delaunay.js.html#l19"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;geom&#x2F;Delaunay.js:19</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
     
 </div>
 
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -136,8 +198,6 @@
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
-        
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -154,7 +214,7 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_extend">extend</a>
+                                <a href="#method_triangulate">triangulate</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -166,23 +226,6 @@
                 </div>
             
 
-            
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                        
-                            <li class="index-item property">
-                                <a href="#property_version">version</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
             
 
             
@@ -195,8 +238,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_extend" class="method item">
-    <h3 class="name"><code>extend</code></h3>
+                    <div id="method_triangulate" class="method item">
+    <h3 class="name"><code>triangulate</code></h3>
 
     
         <div class="args">
@@ -204,13 +247,7 @@
             
                 <li class="arg">
                     
-                        <code>P</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>C</code>
+                        <code>vertices</code>
                     
                 </li>
             
@@ -218,6 +255,10 @@
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
     
 
     
@@ -245,7 +286,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_Sankaku.js.html#l201"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;Sankaku.js:201</code></a>
+        <a href="../files/_build_tool_delaunay_src_geom_Delaunay.js.html#l72"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;geom&#x2F;Delaunay.js:72</code></a>
         
         </p>
 
@@ -256,8 +297,7 @@
     </div>
 
     <div class="description">
-        <p>継承に使用します</p>
-
+        
     </div>
 
     
@@ -268,31 +308,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">P</code>
-                        <span class="type">Function</span>
+                        <code class="param-name">vertices</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>親クラス</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">C</code>
-                        <span class="type">Function</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>子クラス</p>
-
+                         
                     </div>
 
                     
@@ -303,6 +326,18 @@
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Array</span>:
+                    
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -311,60 +346,6 @@
             </div>
         
 
-        
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-                
-                    <div id="property_version" class="property item">
-    <h3 class="name"><code>version</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_Sankaku.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;Sankaku.js:21</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-            </div>
         
 
         

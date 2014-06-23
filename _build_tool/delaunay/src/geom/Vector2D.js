@@ -1,99 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>_build_tool/delaunay/src/math/Vector2D.js</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
-    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
-    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
-</head>
-<body class="yui3-skin-sam">
-
-<div id="doc">
-    <div id="hd" class="yui3-g header">
-        <div class="yui3-u-3-4">
-            
-                <h1><img src="../assets/css/logo.png" title=""></h1>
-            
-        </div>
-        <div class="yui3-u-1-4 version">
-            <em>API Docs for: </em>
-        </div>
-    </div>
-    <div id="bd" class="yui3-g">
-
-        <div class="yui3-u-1-4">
-            <div id="docs-sidebar" class="sidebar apidocs">
-                <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="../classes/Iro.html">Iro</a></li>
-            
-                <li><a href="../classes/Sankaku.html">Sankaku</a></li>
-            
-                <li><a href="../classes/Triangle.html">Triangle</a></li>
-            
-                <li><a href="../classes/Vector2D.html">Vector2D</a></li>
-            
-                <li><a href="../classes/Vehicle.html">Vehicle</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
-            </div>
-        </div>
-        <div class="yui3-u-3-4">
-                <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
-            <div class="apidocs">
-                <div id="docs-main">
-                    <div class="content">
-                        <h1 class="file-heading">File: _build_tool/delaunay/src/math/Vector2D.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
@@ -107,7 +11,7 @@
  * This notice shall be included in all copies or substantial portions of the Software.
  */
 ( function ( window ){
-    &quot;use strict&quot;;
+    "use strict";
     var Sankaku = window.Sankaku;
 
     Sankaku.Vector2D = ( function (){
@@ -127,11 +31,11 @@
 
         /**
          * ベクトルを可視化するのに用います
-         * &lt;br&gt;デバッグなどで使用します。
+         * <br>デバッグなどで使用します。
          *
          * @method draw
          * @param {CanvasRenderingContext2D} ctx
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.draw = function ( ctx ) {
 
@@ -146,7 +50,7 @@
         /**
          * ベクトルのコピーを作成します
          * @method clone
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.clone = function () {
             return new Vector2D( this.x, this.y );
@@ -155,7 +59,7 @@
         /**
          * ベクトルのx, yの値を 0 にします
          * @method zero
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.zero = function () {
             this.x = 0;
@@ -167,10 +71,10 @@
         /**
          * ベクトルの値が x, y 共 0 かどうかを判定します
          * @method isZero
-         * @returns {boolean}
+         * @return {boolean}
          */
         p.isZero = function () {
-            return this.x === 0 &amp;&amp; this.y === 0;
+            return this.x === 0 && this.y === 0;
         };
 
         /**
@@ -178,7 +82,7 @@
          * @method set
          * @param {number} x
          * @param {number} y
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.set = function ( x, y ) {
             this.x = x;
@@ -191,7 +95,7 @@
          * ベクトルの x へ値を設定します
          * @method setX
          * @param {number} x
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.setX = function ( x ) {
             this.x = x;
@@ -203,7 +107,7 @@
          * ベクトルの y へ値を設定します
          * @method setY
          * @param {number} y
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.setY = function ( y ) {
             this.y = y;
@@ -215,7 +119,7 @@
          * ベクトルへ引数ベクトルの値を複写します
          * @method copy
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.copy = function ( v ) {
             this.x = v.x;
@@ -228,7 +132,7 @@
          * ベクトルへ引数ベクトルの値を加算します
          * @method add
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.add = function ( v ) {
             this.x += v.x;
@@ -241,7 +145,7 @@
          * ベクトルへ値を加算します
          * @method add
          * @param {number} s
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.addScalar = function ( s ) {
             this.x += s;
@@ -254,7 +158,7 @@
          * ベクトルへ引数ベクトルの値を加算し新しいVector2Dを作成します
          * @method addNew
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.addNew = function ( v ) {
             return new Vector2D( this.x + v.x, this.y + v.y );
@@ -265,7 +169,7 @@
          * @method addVector
          * @param {Vector2D} a
          * @param {Vector2D} b
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.addVector = function ( a, b ) {
 
@@ -279,7 +183,7 @@
          * ベクトルへ引数ベクトルの値を減算します
          * @method sub
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.sub = function ( v ) {
             this.x -= v.x;
@@ -292,7 +196,7 @@
          * ベクトルへ引数ベクトルの値を減算し新しいVector2Dを作成します
          * @method subNew
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.subNew = function ( v ) {
             return new Vector2D( this.x - v.x, this.y - v.y );
@@ -303,7 +207,7 @@
          * @method subVector
          * @param {Vector2D} a
          * @param {Vector2D} b
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.subVector = function ( a, b ) {
 
@@ -317,7 +221,7 @@
          * ベクトルへ引数ベクトルの値を乗算します
          * @method multiply
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.multiply = function ( v ) {
             this.x *= v.x;
@@ -330,7 +234,7 @@
          * ベクトルの値を乗算します
          * @method multiplyScalar
          * @param {number} s
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.multiplyScalar = function ( s ) {
 
@@ -344,7 +248,7 @@
          * ベクトルへ引数ベクトルの値を乗算し新しいVector2Dを作成します
          * @method multiplyNew
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.multiplyNew = function ( v ) {
             return new Vector2D( this.x * v.x, this.y * v.y );
@@ -354,7 +258,7 @@
          * ベクトルへ引数ベクトルの値を除算します
          * @method divide
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.divide = function ( v ) {
             this.x /= v.x;
@@ -367,7 +271,7 @@
          * ベクトルの値を除算します
          * @method divideScalar
          * @param {number} scalar
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.divideScalar = function ( scalar ) {
             if ( scalar !== 0 ) {
@@ -391,7 +295,7 @@
          * ベクトルへ引数ベクトルの値を除算し新しいVector2Dを作成します
          * @method divideNew
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.divideNew = function ( v ) {
             return new Vector2D( this.x / v.x, this.y / v.y );
@@ -401,15 +305,15 @@
          * ベクトルへ引数ベクトルの値と比較し小さな方の値を設定します
          * @method min
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.min = function ( v ) {
-            if ( this.x &gt; v.x ) {
+            if ( this.x > v.x ) {
 
                 this.x = v.x;
             }
 
-            if ( this.y &gt; v.y ) {
+            if ( this.y > v.y ) {
 
                 this.y = v.y;
             }
@@ -421,15 +325,15 @@
          * ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します
          * @method max
          * @param {Vector2D} v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.max = function ( v ) {
-            if ( this.x &lt; v.x ) {
+            if ( this.x < v.x ) {
 
                 this.x = v.x;
             }
 
-            if ( this.y &lt; v.y ) {
+            if ( this.y < v.y ) {
 
                 this.y = v.y;
             }
@@ -442,21 +346,21 @@
          * @method clamp
          * @param {Vector2D} min_v
          * @param {Vector2D} max_v
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.clamp = function ( min_v, max_v ) {
-//            if ( this.x &lt; min.x ) {
+//            if ( this.x < min.x ) {
 //
 //                this.x = min.x;
-//            } else if ( this.x &gt; max.x ) {
+//            } else if ( this.x > max.x ) {
 //
 //                this.x = max.x;
 //            }
 //
-//            if ( this.y &lt; min.y ) {
+//            if ( this.y < min.y ) {
 //
 //                this.y = min.y;
-//            } else if ( this.y &gt; max.y ) {
+//            } else if ( this.y > max.y ) {
 //
 //                this.y = max.y;
 //            }
@@ -471,7 +375,7 @@
          * @method clampScalar
          * @param {number} minVal
          * @param {number} maxVal
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.clampScalar = function ( minVal, maxVal ) {
             var min, max;
@@ -487,7 +391,7 @@
 
         /**
          * @method floor
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.floor = function () {
             this.x = Math.floor( this.x );
@@ -498,7 +402,7 @@
 
         /**
          * @method ceil
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.ceil = function () {
             this.x = Math.ceil( this.x );
@@ -509,7 +413,7 @@
 
         /**
          * @method round
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.round = function () {
             this.x = Math.round( this.x );
@@ -520,18 +424,18 @@
 
         /**
          * @method roundToZero
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.roundToZero = function () {
-            this.x = ( this.x &lt; 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
-            this.y = ( this.y &lt; 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
+            this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
+            this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
 
             return this;
         };
 
         /**
          * @method negate
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.negate = function () {
             return this.multiplyScalar( - 1 );
@@ -541,7 +445,7 @@
          * ベクトルと引数ベクトルの内積を計算します
          * @method dot
          * @param {Vector2D} v 内積をとる Vector2D インスタンス
-         * @returns {number}
+         * @return {number}
          */
         p.dot = function ( v ) {
             return this.x * v.x + this.y * v.y;
@@ -550,7 +454,7 @@
         /**
          * ベクトルの大きさの２条を計算します
          * @method lengthSq
-         * @returns {number}
+         * @return {number}
          */
         p.lengthSq = function () {
             return this.x * this.x + this.y * this.y;
@@ -559,7 +463,7 @@
         /**
          * ベクトルの大きさの２条の平方根を計算します
          * @method length
-         * @returns {number}
+         * @return {number}
          */
         p.length = function () {
             return Math.sqrt( this.lengthSq() );
@@ -569,12 +473,12 @@
          * ベクトルの大きさを設定します
          * @method setLength
          * @param {number} l
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.setLength = function ( l ) {
             var oldLength = this.length();
 
-            if ( oldLength !== 0 &amp;&amp; l !== oldLength ) {
+            if ( oldLength !== 0 && l !== oldLength ) {
 
                 this.multiplyScalar( l / oldLength );
             }
@@ -585,7 +489,7 @@
         /**
          * @method setAngle
          * @param {number} value
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.setAngle = function ( value ) {
             var len = this.length();
@@ -601,7 +505,7 @@
         /**
          * ベクトルの角度を設定します
          * @method angle
-         * @returns {number}
+         * @return {number}
          */
         p.angle = function () {
             return Math.atan2( this.y, this.x );
@@ -611,7 +515,7 @@
          * ベクトルの大きさを正規化（大きさを1）にします
          *
          * @method normalize
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.normalize = function () {
             return this.divideScalar( this.length() );
@@ -621,7 +525,7 @@
          * ベクトルと引数ベクトル間の距離の２条を計算します
          * @method distanceSq
          * @param {Vector2D} v
-         * @returns {number}
+         * @return {number}
          */
         p.distanceSq = function ( v ) {
             var dx = this.x - v.x,
@@ -634,7 +538,7 @@
          * ベクトルと引数ベクトル間の距離を計算します
          * @method distance
          * @param {Vector2D} v
-         * @returns {number}
+         * @return {number}
          */
         p.distance = function ( v ) {
             return Math.sqrt( this.distanceSq( v ) );
@@ -644,7 +548,7 @@
          * @method lerp
          * @param {Vector2D} v
          * @param {number} alpha
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.lerp = function ( v, alpha ) {
             this.x += ( v.x - this.x ) * alpha;
@@ -657,17 +561,17 @@
          * ベクトルと引数ベクトルの値が等しいかを判定します
          * @method equals
          * @param {Vector2D} v
-         * @returns {boolean}
+         * @return {boolean}
          */
         p.equals = function ( v ) {
-            return ( ( v.x === this.x ) &amp;&amp; ( v.y === this.y ) );
+            return ( ( v.x === this.x ) && ( v.y === this.y ) );
         };
 
         /**
          * 配列を使いベクトルを設定します
          * @method fomArray
          * @param {Array} array [x: number, y: number]
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.fomArray = function ( array ) {
             this.x = array[ 0 ];
@@ -679,7 +583,7 @@
         /**
          * ベクトルの値を配列として返します
          * @method toArray
-         * @returns {[]} [x: number, y: number]
+         * @return {[]} [x: number, y: number]
          */
         p.toArray = function () {
             return [ this.x, this.y ];
@@ -689,7 +593,7 @@
          * ベクトルの値を設定した値以下にします
          * @method truncate
          * @param {number} max
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.truncate = function ( max ) {
             var min = Math.min( max, this.length() );
@@ -699,7 +603,7 @@
         /**
          * ベクトルの値を反転します
          * @method reverse
-         * @returns {Vector2D}
+         * @return {Vector2D}
          */
         p.reverse = function () {
             this.x *= -1;
@@ -711,7 +615,7 @@
         /**
          * ベクトルが正規化されているかを判定します
          * @method isNormalize
-         * @returns {boolean}
+         * @return {boolean}
          */
         p.isNormalize = function () {
             return this.length() === 1;
@@ -720,7 +624,7 @@
         /**
          * このベクトルに垂直なベクトルを生成し返します
          * @method prev
-         * @returns {Vector2D} このベクトルに垂直なベクトル
+         * @return {Vector2D} このベクトルに垂直なベクトル
          */
         p.prev = function () {
             return new Vector2D( -this.y, this.x );
@@ -731,10 +635,10 @@
          *
          * @method sign
          * @param {Vector2D} v
-         * @returns {number} -1: 左側, 1: 右側
+         * @return {number} -1: 左側, 1: 右側
          */
         p.sign = function ( v ) {
-            return this.prev().dot( v ) &lt; 0 ? -1 : 1;
+            return this.prev().dot( v ) < 0 ? -1 : 1;
         };
 
         /**
@@ -743,7 +647,7 @@
          * @static
          * @param {Vector2D} v1
          * @param {Vector2D} v2
-         * @returns {number}
+         * @return {number}
          */
         Vector2D.angleBetween = function ( v1, v2 ) {
 
@@ -762,22 +666,3 @@
         return Vector2D;
     }() );
 }( window ) );
-    </pre>
-</div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="../assets/vendor/prettify/prettify-min.js"></script>
-<script>prettyPrint();</script>
-<script src="../assets/js/yui-prettify.js"></script>
-<script src="../assets/../api.js"></script>
-<script src="../assets/js/api-filter.js"></script>
-<script src="../assets/js/api-list.js"></script>
-<script src="../assets/js/api-search.js"></script>
-<script src="../assets/js/apidocs.js"></script>
-</body>
-</html>

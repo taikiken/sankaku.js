@@ -1,7 +1,7 @@
 /**
- * @license inazumatv.com
- * @author (at)taikiken / http://inazumatv.com
- * @date 2014/06/20 - 11:55
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/23 - 15:55
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -9,177 +9,71 @@
  * http://www.opensource.org/licenses/mit-license.html
  *
  * This notice shall be included in all copies or substantial portions of the Software.
- *
- * delaunay
- * original: https://github.com/ironwallaby/delaunay
- *
- * hosted on
- * https://github.com/taikiken/sankaku.js
  */
-var Sankaku = {};
-/**
- * @for Sankaku
- * @const version
- * @static
- * @type {string}
- */
-Sankaku.version = "0.0.1";
-
 ( function ( window ){
     "use strict";
+    var Sankaku = window.Sankaku,
+        Triangle = Sankaku.Triangle;
 
-    var _abs = Math.abs,
-        _min = Math.min,
-        _max = Math.max,
-        _round = Math.round,
-        Sankaku = window.Sankaku;
-
-    var Triangle = ( function (){
-        //
-        /**
-         *
-         * @class Triangle
-         * @param {Object} a
-         * @param {Object} b
-         * @param {Object} c
-         * @constructor
-         */
-        function Triangle ( a, b, c ) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-
-            var A = b.x - a.x,
-                B = b.y - a.y,
-                C = c.x - a.x,
-                D = c.y - a.y,
-                E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
-                F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
-                G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
-                minx, miny, dx, dy,
-                x, y;
-
-            // If the points of the triangle are collinear, then just find the
-            // extremes and use the midpoint as the center of the circumcircle.
-            if( _abs( G ) < 0.000001 ) {
-                // under
-                minx = _min( a.x, b.x, c.x );
-                miny = _min( a.y, b.y, c.y );
-                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
-                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
-
-                this.x = minx + dx;
-                this.y = miny + dy;
-                this.r = dx * dx + dy * dy;
-            } else {
-                // over
-                x = ( D*E - B*F ) / G;
-                y = ( A*F - C*E ) / G;
-                dx = x - a.x;
-                dy = y - a.y;
-
-                this.x = x;
-                this.y = y;
-                this.r = dx * dx + dy * dy;
-            }
-        }
-
-        var p = Triangle.prototype;
-
-        /**
-         * @method draw
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.draw = function ( ctx ) {
-            var a = this.a,
-                b = this.b,
-                c = this.c;
-
-            ctx.beginPath();
-            ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y );
-            ctx.lineTo( c.x, c.y );
-            ctx.closePath();
-        };
-
-        /**
-         * @method centroid
-         * @returns {{x: number, y: number}}
-         */
-        p.centroid = function() {
-
-            return (
-                {
-                    x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
-                    y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
-                }
-            );
-        };
-
-        return Triangle;
-    }() );
-
-    Sankaku.Triangle = Triangle;
-
-    window.Sankaku = ( function (){
+    Sankaku.Delaunay = ( function (){
         /**
          * https://github.com/ironwallaby/delaunay
          *
-         * @class Sankaku
+         * @class Delaunay
          * @constructor
          */
-        function Sankaku () {
+        function Delaunay () {
             throw new Error( "Sankaku can't create instance." );
         }
 
-        var s = Sankaku;
-
-        /**
-         * @method byX
-         * @static
-         * @param {object} a
-         * @param {object} b
-         * @returns {number}
-         */
-        s.byX = function ( a, b ) {
-            return b.x - a.x;
-        };
-
-        /**
-         * @method dedup
-         * @static
-         * @param {Array} edges
-         */
-        s.dedup = function ( edges ) {
-            var j = edges.length,
-                a, b, i, m, n;
-
-            outer: while( j ) {
-                b = edges[ --j ];
-                a = edges[ --j ];
-                i = j;
-
-                while( i ) {
-                    n = edges[ --i ];
-                    m = edges[ --i ];
-
-                    if( ( a === m && b === n ) || ( a === n && b === m ) ) {
-
-                        edges.splice( j, 2 );
-                        edges.splice( i, 2 );
-                        j -= 2;
-
-                        continue outer;
-                    }// if
-                }// while i
-            }// while j
-        };
+        var s = Delaunay;
+//
+//        /**
+//         * @method byX
+//         * @static
+//         * @param {object} a
+//         * @param {object} b
+//         * @return {number}
+//         */
+//        s.byX = function ( a, b ) {
+//            return b.x - a.x;
+//        };
+//
+//        /**
+//         * @method dedup
+//         * @static
+//         * @param {Array} edges
+//         */
+//        s.dedup = function ( edges ) {
+//            var j = edges.length,
+//                a, b, i, m, n;
+//
+//            outer: while( j ) {
+//                b = edges[ --j ];
+//                a = edges[ --j ];
+//                i = j;
+//
+//                while( i ) {
+//                    n = edges[ --i ];
+//                    m = edges[ --i ];
+//
+//                    if( ( a === m && b === n ) || ( a === n && b === m ) ) {
+//
+//                        edges.splice( j, 2 );
+//                        edges.splice( i, 2 );
+//                        j -= 2;
+//
+//                        continue outer;
+//                    }// if
+//                }// while i
+//            }// while j
+//        };
 
         /**
          * @method triangulate
          * @static
          * @param vertices
-         * @returns {Array}
+         * @return {Array}
          */
         s.triangulate = function ( vertices ) {
             // if there aren't enough vertices to form any triangles.
@@ -187,9 +81,7 @@ Sankaku.version = "0.0.1";
                 return [];
             }
 
-            var byX = s.byX,
-                dedup = s.dedup,
-                vertex,
+            var vertex,
                 i,
                 x_min, x_max,
                 y_min, y_max,
@@ -204,6 +96,35 @@ Sankaku.version = "0.0.1";
                 edges,
                 j, a, b,
                 open_j;
+
+            var byX = function ( a, b ) {
+                return b.x - a.x;
+            };
+
+            var dedup = function ( edges ) {
+                var j = edges.length,
+                    a, b, i, m, n;
+
+                outer: while( j ) {
+                    b = edges[ --j ];
+                    a = edges[ --j ];
+                    i = j;
+
+                    while( i ) {
+                        n = edges[ --i ];
+                        m = edges[ --i ];
+
+                        if( ( a === m && b === n ) || ( a === n && b === m ) ) {
+
+                            edges.splice( j, 2 );
+                            edges.splice( i, 2 );
+                            j -= 2;
+
+                            continue outer;
+                        }// if
+                    }// while i
+                }// while j
+            };
 
             // Ensure the vertex array is in order of descending X coordinate
             // (which is needed to ensure a subquadratic runtime), and then find
@@ -339,7 +260,7 @@ Sankaku.version = "0.0.1";
             return closed;
         };
 
-        return Sankaku;
+        return Delaunay;
     }() );
 
 }( window ) );

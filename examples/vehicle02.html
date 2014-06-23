@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=980">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
-<title>Vehicle 01</title>
+<title>Vehicle 02</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
     html, body {
@@ -19,7 +19,7 @@
         min-height: 1280px;
     }
 </style>
-<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>
+<!--<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>-->
 <script type="text/javascript" src="../libs/sankaku.js"></script>
 </head>
 <body>
@@ -34,10 +34,11 @@
         cancelAnimationFrame = self.cancelAnimationFrame,
         loop_id = 0,
 
-        inazumatv = window.inazumatv,
-        random = inazumatv.random,
+//        inazumatv = window.inazumatv,
+//        random = inazumatv.random,
 
         Sankaku = window.Sankaku,
+
         Sagen = window.Sagen,
         element = Sagen.Device.getElement(),
 
@@ -54,7 +55,8 @@
         ww, wh,
         prev_ww = -1,
         prev_wh = -1,
-        circles = [];
+        circles = [],
+        mouse = {};
 
 
 
@@ -82,14 +84,22 @@
     }
 
     function draw ( rect ) {
-        vehicle.update( rect.w, rect.h );
 
+        vehicle.seek( new Sankaku.Vector2D( mouse.x, mouse.y ) );
+        vehicle.update( rect.w, rect.h );
+//        console.log( "x y ", vehicle.x, vehicle.y );
         vehicle.draw( ctx );
         ctx.stroke();
+
+//        mouse = {};
     }
 
     function loop () {
         loop_id = requestAnimationFrame( loop );
+//        console.log( "mouse", mouse );
+        if ( typeof mouse.x === "undefined" ) {
+            return;
+        }
 
         var rect = size();
 
@@ -98,17 +108,25 @@
         draw( rect );
     }
 
+    function onMouseMove ( e ) {
+
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    }
+
     function init () {
-        vehicle = new Sankaku.Vehicle();
+        vehicle = new Sankaku.SteeredVehicle();
 //        vehicle.init();
 
         vehicle.position( new Sankaku.Vector2D( 100, 100 ) );
-        var velocity = vehicle.getVelocity();
+//        var velocity = vehicle.getVelocity();
+//
+//        console.log( "velocity ", velocity );
+//        velocity.setLength( 5 );
+//        velocity.setAngle( Math.PI / 6 );
+//        console.log( "velocity ", velocity );
 
-        console.log( "velocity ", velocity );
-        velocity.setLength( 5 );
-        velocity.setAngle( Math.PI / 6 );
-        console.log( "velocity ", velocity );
+        window.addEventListener( "mousemove", onMouseMove, false );
 
         loop();
 //        setTimeout( stop, 5000 );
