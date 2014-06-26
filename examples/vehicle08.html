@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Vehicle 08</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        min-width: 980px;
+        min-height: 600px;
+    }
+    .mobile body {
+        min-height: 1280px;
+    }
+</style>
+<!--<script type="text/javascript" src="libs/inazumatv.util.min.js"></script>-->
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+        cancelAnimationFrame = self.cancelAnimationFrame,
+        loop_id = 0,
+
+//        inazumatv = window.inazumatv,
+//        random = inazumatv.random,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+//        seeker,
+        pursuer,
+        evader,
+
+        PI = Math.PI,
+        R360 = PI / 180 * 360,
+        ONE_DEGREE = PI / 180,
+        _cos = Math.cos,
+        _sin = Math.sin,
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        circles = [],
+        mouse = {};
+
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function stop () {
+        cancelAnimationFrame( loop_id );
+    }
+
+    function draw ( rect ) {
+
+        rect.w -= 10;
+        rect.h -= 10;
+
+//        seeker.seek( evade.getPosition() );
+//        seeker.update( rect.w, rect.h );
+
+        pursuer.pursue( evader );
+        pursuer.update( rect.w, rect.h );
+
+        evader.evade( pursuer );
+//        target.seek( pursuer.getPosition() );
+        evader.update( rect.w, rect.h );
+
+        ctx.strokeStyle = "#00ff00";
+        evader.draw( ctx );
+        ctx.stroke();
+
+//        ctx.strokeStyle = "#000000";
+//        seeker.draw( ctx );
+//        ctx.stroke();
+
+        ctx.strokeStyle = "#ff0000";
+        pursuer.draw( ctx );
+        ctx.stroke();
+
+    }
+
+    function loop () {
+        loop_id = requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function onMouseMove ( e ) {
+
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    }
+
+    function init () {
+        var speed = 4,
+            behavior = Sankaku.Vehicle.BOUNCE;
+
+//        seeker = new Sankaku.SteeredVehicle();
+//
+//        seeker.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+////        seeker.setX( 400 );
+//        seeker.behavior( behavior );
+//        seeker.speed( speed * 0.98 );
+//        seeker.left = 10;
+//        seeker.top = 10;
+
+        pursuer = new Sankaku.SteeredVehicle();
+
+        pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//        pursuer.setX( 400 );
+//        pursuer.setY( 400 );
+        pursuer.behavior( behavior );
+//        pursuer.speed( speed * 0.94 );
+        pursuer.left = 10;
+        pursuer.top = 10;
+
+        evader = new Sankaku.SteeredVehicle();
+
+        evader.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        evader.behavior( behavior );
+//        evade.speed( speed * 1.05 );
+        evader.left = 10;
+        evader.top = 10;
+
+//        var velocity = evade.getVelocity();
+//        velocity.setLength( 15 );
+//        velocity.setAngle( Math.PI / 6 );
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Shape 01</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        circle;
+
+    circle = new Sankaku.Circle( 100, 50 );
+
+    circle.draw( ctx );
+
+}( window ) );
+</script>
+</body>
+</html>

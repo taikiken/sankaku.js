@@ -448,10 +448,10 @@ Sankaku.version = "0.1.0";
 
             var hex = num.toString( 16 );
 
-            if ( hex.length < 3 ) {
+            if ( hex.length < 6 ) {
 
                 var i = hex.length,
-                    sub = 3 - i;
+                    sub = 6 - i;
 
                 while( sub ) {
 
@@ -604,6 +604,8 @@ Sankaku.version = "0.1.0";
 
         var n = Num;
 
+        n.ONE_DEG = Math.PI / 180;
+
         /**
          * 数値か否かをチェックします
          * @method is
@@ -634,8 +636,75 @@ Sankaku.version = "0.1.0";
             return min + _floor( _rand() * ( max - min + 1 ) );
         };
 
+        /**
+         * degree を radian へ変換します
+         * @method deg2rad
+         * @param {number} degree degree 0 ~ 360
+         * @return {number} radian 0 ~ 2 * PI
+         */
+        n.deg2rad = function ( degree ) {
+            return degree * n.ONE_DEG;
+        };
+
         return Num;
     }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/26 - 11:40
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku;
+
+    Sankaku.Distribute = ( function (){
+        var _sqrt = Math.sqrt,
+            _sin = Math.sin,
+            _cos = Math.cos,
+            _rand = Math.random,
+            PI2 = Math.PI * 2;
+
+        /**
+         * @class Distribute
+         * @constructor
+         */
+        function Distribute () {
+            throw new Error( "Distribute can't create instance" );
+        }
+
+        var d = Distribute;
+
+        /**
+         * @method circle
+         * @static
+         * @param {int} n 乱数 max 値
+         * @param {number} w 分布幅
+         * @param {number} h 分布高
+         * @return {{x: number, y: number}}
+         */
+        d.circle = function ( n, w, h ) {
+            var radius, angle;
+
+            radius = _sqrt( _rand() ) * n;
+            angle = _rand() * PI2;
+
+            return {
+                x: w * 0.5 + _cos( angle ) * radius,
+                y: h * 0.5 + _sin( angle ) * radius
+            };
+        };
+
+        return Distribute;
+    }() );
+
 }( window ) );
 /**
  * license inazumatv.com
@@ -1185,7 +1254,6 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.addVector = function ( a, b ) {
-
             this.x = a.x + b.x;
             this.y = a.y + b.y;
 
@@ -1501,16 +1569,18 @@ Sankaku.version = "0.1.0";
 
         /**
          * @method setAngle
-         * @param {number} value
+         * @param {number} value radian
          * @return {Vector2D}
          */
         p.setAngle = function ( value ) {
             var len = this.length();
 
-//            this.x = Math.cos( value ) * len;
-//            this.y = Math.sin( value ) * len;
-            this.x = Math.cos( value );
-            this.y = Math.sin( value );
+            len = len || 0.001;
+
+            this.x = Math.cos( value ) * len;
+            this.y = Math.sin( value ) * len;
+//            this.x = Math.cos( value );
+//            this.y = Math.sin( value );
 
             return this;
         };
@@ -1619,8 +1689,9 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.reverse = function () {
-            this.x *= -1;
-            this.y *= -1;
+//            this.x *= -1;
+//            this.y *= -1;
+            this.negate();
 
             return this;
         };
@@ -1682,7 +1753,7 @@ Sankaku.version = "0.1.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/22 - 21:01
+ * date 2014/06/25 - 11:19
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -1690,32 +1761,31 @@ Sankaku.version = "0.1.0";
  * http://www.opensource.org/licenses/mit-license.html
  *
  * This notice shall be included in all copies or substantial portions of the Software.
+ *
+ * for display object
  */
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
         Vector2D = Sankaku.Vector2D,
-        Matrix2D = Sankaku.Matrix2D,
-        Point = Sankaku.Point,
+        Num = Sankaku.Num
+    ;
 
-        _cos = Math.cos,
-        _sin = Math.sin,
-        PI = Math.PI,
-        PI2 = PI * 2,
-        ONE_RADIAN = 180 / PI;
+    Sankaku.Object2D = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin;
 
-    Sankaku.Vehicle = ( function (){
         /**
-         * @class Vehicle
+         * @class Object2D
          * @constructor
          */
-        function Vehicle () {
+        function Object2D () {
+            /**
+             * @property _position
+             * @type {Vector2D}
+             * @protected
+             */
             this._position = new Vector2D();
-            this._velocity = new Vector2D();
-
-            this._mass = 1.0;
-            this._speed = 10;
-            this._behavior = Vehicle.BOUNCE;
 
             /**
              * @property x
@@ -1728,14 +1798,15 @@ Sankaku.version = "0.1.0";
              */
             this.y = 0;
             /**
+             * radian
              * @property rotation
              * @type {number}
              */
             this.rotation = 0;
             /**
-            * @property width
-            * @type {number}
-            */
+             * @property width
+             * @type {number}
+             */
             this.width = 20;
             /**
              * @property height
@@ -1744,70 +1815,8 @@ Sankaku.version = "0.1.0";
             this.height = 10;
         }
 
-        /**
-         * @const WRAP
-         * @static
-         * @type {string}
-         */
-        Vehicle.WRAP = "vehicle_wrap";
-        /**
-         * @const BOUNCE
-         * @static
-         * @type {string}
-         */
-        Vehicle.BOUNCE = "vehicle_bounce";
+        var p = Object2D.prototype;
 
-        var p = Vehicle.prototype;
-
-        /**
-         * 質量を設定します
-         * @method mass
-         * @param {number} n
-         */
-        p.mass = function ( n ) {
-            this._mass = n;
-        };
-
-        /**
-         * @method getMass
-         * @return {number}
-         */
-        p.getMass = function () {
-            return this._mass;
-        };
-
-        /**
-         * 最大スピードを設定します
-         * @method speed
-         * @param {number} n
-         */
-        p.speed = function ( n ) {
-            this._speed = n;
-        };
-
-        /**
-         * @method getSpeed
-         * @return {number}
-         */
-        p.getSpeed = function () {
-            return this._speed;
-        };
-
-        /**
-         * @method behavior
-         * @param {string} str
-         */
-        p.behavior = function ( str ) {
-            this._behavior = str;
-        };
-
-        /**
-         * @method getBehavior
-         * @return {string}
-         */
-        p.getBehavior = function () {
-            return this._behavior;
-        };
 
         /**
          * @method position
@@ -1825,22 +1834,6 @@ Sankaku.version = "0.1.0";
          */
         p.getPosition = function () {
             return this._position;
-        };
-
-        /**
-         * @method velocity
-         * @param {Vector2D} v
-         */
-        p.velocity = function ( v ) {
-            this._velocity = v;
-        };
-
-        /**
-         * @method getVelocity
-         * @return {Vector2D}
-         */
-        p.getVelocity = function () {
-            return this._velocity;
         };
 
         /**
@@ -1911,6 +1904,639 @@ Sankaku.version = "0.1.0";
             return { a: a, b: b, c: c, d:d };
         };
 
+        /**
+         * 角度を degree を元に radian 設定します
+         * @method rotate
+         * @param {number} degree 0 ~ 360
+         */
+        p.rotate = function ( degree ) {
+            this.rotation = Num.deg2rad( degree );
+        };
+
+        /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            return this._clone();
+        };
+
+        /**
+         * @method _clone
+         * @return {Object2D}
+         * @protected
+         */
+        p._clone = function () {
+            var clone = new Object2D();
+            clone.position( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
+
+            return clone;
+        };
+
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.draw = function ( ctx ) {
+
+        };
+
+        return Object2D;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/25 - 12:19
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Object2D = Sankaku.Object2D,
+        Vector2D = Sankaku.Vector2D,
+        Num = Sankaku.Num
+    ;
+
+    Sankaku.Shape = ( function (){
+
+        /**
+         * @class Shape
+         * @extend Object2D
+         * @param {number} x
+         * @param {number} y
+         * @param {number=20} [width]
+         * @param {number=10} [height]
+         * @param {String} [color] default #000000
+         * @param {boolean=false} [fill] fill or stroke, true: fill, false: stroke
+         * @constructor
+         */
+        function Shape ( x, y, width, height, color, fill ) {
+            Object2D.call( this );
+
+            this.setX( x );
+            this.setY( y );
+
+            if ( Num.is( width ) ) {
+
+                this.width = width;
+            }
+
+            if ( Num.is( height ) ) {
+
+                this.height = height;
+            }
+
+            /**
+             * @property _color
+             * @type {String|string}
+             * @protected
+             */
+            this._color = color || "#000000";
+            /**
+             * @property _fill
+             * @type {boolean}
+             * @protected
+             */
+            this._fill = !!fill;
+
+            /**
+             * @property _line
+             * @type {number}
+             * @protected
+             */
+            this._line = 1;
+
+            /**
+             * @property border
+             * @type {{width: number, color: string}}
+             */
+            this.border = {
+                width: 0,
+                color: "#000000"
+            };
+        }
+
+        Sankaku.extend( Object2D, Shape );
+
+        var p = Shape.prototype;
+
+        /**
+         * @method getRadius
+         * @return {number}
+         */
+        p.getRadius = function () {
+            var bounding = this.bounding(),
+                a = bounding.a,
+                c = bounding.c;
+
+            return new Vector2D( a.x, a.y ).distance( c );
+        };
+
+        /**
+         * @method clone
+         * @override
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = this._clone();
+
+            clone._color = this._color;
+            clone._fill = this._fill;
+            clone._line = this._line;
+            clone._border = Object.create( this._border );
+
+            return clone;
+
+//            return new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
+        };
+
+        /**
+         * @method mode
+         * @param fill
+         */
+        p.mode = function ( fill ) {
+            this._fill = !!fill;
+        };
+        /**
+         * @method getMode
+         * @return {boolean}
+         */
+        p.getMode = function () {
+            return this._fill;
+        };
+
+        /**
+         * @method line
+         * @param {number} n
+         */
+        p.line = function ( n ) {
+            this._line = n;
+        };
+
+        /**
+         * @method getLine
+         * @return {number}
+         */
+        p.getLine = function () {
+            return this._line;
+        };
+
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.draw = function ( ctx ) {
+            var border = this.border;
+
+            if ( this._fill ) {
+
+                this.fill( ctx, this._color );
+
+                if ( border.width > 0  ) {
+                    // border
+                    this.stroke( ctx, border.width, border.color );
+                }
+            } else {
+
+                this.stroke( ctx, this._line, this._color );
+            }
+        };
+
+        /**
+         * @method fill
+         * @param {CanvasRenderingContext2D} ctx
+         * @param {string} color
+         */
+        p.fill = function ( ctx, color ) {
+            ctx.fillStyle = color;
+
+            this.paint( ctx );
+
+            ctx.fill();
+        };
+
+        /**
+         * @method stroke
+         * @param {CanvasRenderingContext2D} ctx
+         * @param {number} line
+         * @param {string} color
+         */
+        p.stroke = function ( ctx, line, color ) {
+            ctx.lineWidth = line;
+            ctx.strokeStyle = color;
+
+            this.paint( ctx );
+
+            ctx.stroke();
+        };
+
+        /**
+         * @method paint
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.paint = function ( ctx ) {
+            var bounding = this.bounding(),
+                a = bounding.a,
+                b = bounding.b,
+                c = bounding.c,
+                d = bounding.d;
+
+            ctx.beginPath();
+
+            // rect
+            ctx.moveTo( a.x, a.y );
+            ctx.lineTo( b.x, b.y );
+            ctx.lineTo( c.x, c.y );
+            ctx.lineTo( d.x, d.y );
+            ctx.lineTo( a.x, a.y );
+
+            ctx.closePath();
+        };
+
+
+        return Shape;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/25 - 16:22
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Shape = Sankaku.Shape
+    ;
+
+    Sankaku.Circle = ( function (){
+        var PI2 = Math.PI * 2;
+
+        /**
+         * @class Circle
+         * @extend Shape
+         * @param {number} x
+         * @param {number} y
+         * @param {number=20} [radius]
+         * @param {strong} [color] default #000000
+         * @param {boolean} [fill] fill or stroke, true: fill, false: stroke
+         * @constructor
+         */
+        function Circle ( x, y, radius, color, fill ) {
+            Shape.call( this, x, y, radius, radius, color, fill );
+
+            this._radius = radius || this.width;
+        }
+
+        Sankaku.extend( Shape, Circle );
+
+        var p = Circle.prototype;
+
+        /**
+         * @method getRadius
+         * @return {number}
+         */
+        p.getRadius = function () {
+            return this._radius;
+        };
+
+        /**
+         * @method clone
+         * @override
+         * @return {Circle}
+         */
+        p.clone = function () {
+
+            return new Circle( this.x, this.y, this._radius, this._color, this._fill );
+        };
+
+        /**
+         * @method paint
+         * @override
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.paint = function ( ctx ) {
+            ctx.beginPath();
+
+            ctx.arc( this.x, this.y, this._radius, 0,  PI2, false);
+
+            ctx.closePath();
+        };
+
+        return Circle;
+    }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/22 - 21:01
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Vector2D = Sankaku.Vector2D,
+        Object2D = Sankaku.Object2D;
+
+    Sankaku.Vehicle = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin,
+            _abs = Math.abs;
+
+        /**
+         * @class Vehicle
+         * @extend Object2D
+         * @constructor
+         */
+        function Vehicle () {
+            Object2D.call( this );
+
+//            this._position = new Vector2D();
+            this._velocity = new Vector2D();
+
+            this._mass = 1.0;
+            this._speed = 10;
+            this._behavior = Vehicle.BOUNCE;
+
+//            /**
+//             * @property x
+//             * @type {number}
+//             */
+//            this.x = 0;
+//            /**
+//             * @property y
+//             * @type {number}
+//             */
+//            this.y = 0;
+//            /**
+//             * @property rotation
+//             * @type {number}
+//             */
+//            this.rotation = 0;
+//            /**
+//            * @property width
+//            * @type {number}
+//            */
+//            this.width = 20;
+//            /**
+//             * @property height
+//             * @type {number}
+//             */
+//            this.height = 10;
+
+            /**
+             * padding left
+             * @property left
+             * @type {number}
+             */
+            this.left = 0;
+            /**
+             * padding top
+             * @property top
+             * @type {number}
+             */
+            this.top = 0;
+            /**
+             * padding right
+             * @property right
+             * @type {number}
+             */
+            this.right = 0;
+            /**
+             * padding bottom
+             * @property bottom
+             * @type {number}
+             */
+            this.bottom = 0;
+        }
+
+        Sankaku.extend( Object2D, Vehicle );
+
+        /**
+         * @const WRAP
+         * @static
+         * @type {string}
+         */
+        Vehicle.WRAP = "vehicle_wrap";
+        /**
+         * @const BOUNCE
+         * @static
+         * @type {string}
+         */
+        Vehicle.BOUNCE = "vehicle_bounce";
+
+        var p = Vehicle.prototype;
+
+        /**
+         * @method clone
+         * @override
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = this._clone();
+
+            clone._velocity = this._velocity.clone();
+            clone._mass = this._mass;
+            clone._speed = this._speed;
+            clone._behavior = this._behavior;
+
+            return clone;
+        };
+
+        /**
+         * @method padding
+         * @param {number} top
+         * @param {number} [right]
+         * @param {number} [bottom]
+         * @param {number} [left]
+         */
+        p.padding = function ( top, right, bottom, left ) {
+            right = right || top;
+            bottom = bottom || top;
+            left = left || top;
+
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+            this.left = left;
+        };
+
+        /**
+         * 質量を設定します
+         * @method mass
+         * @param {number} n
+         */
+        p.mass = function ( n ) {
+            this._mass = n;
+        };
+
+        /**
+         * @method getMass
+         * @return {number}
+         */
+        p.getMass = function () {
+            return this._mass;
+        };
+
+        /**
+         * 最大スピードを設定します
+         * @method speed
+         * @param {number} n
+         */
+        p.speed = function ( n ) {
+            this._speed = n;
+        };
+
+        /**
+         * @method getSpeed
+         * @return {number}
+         */
+        p.getSpeed = function () {
+            return this._speed;
+        };
+
+        /**
+         * @method behavior
+         * @param {string} str
+         */
+        p.behavior = function ( str ) {
+            this._behavior = str;
+        };
+
+        /**
+         * @method getBehavior
+         * @return {string}
+         */
+        p.getBehavior = function () {
+            return this._behavior;
+        };
+
+//        /**
+//         * @method position
+//         * @param {Vector2D} v
+//         */
+//        p.position = function ( v ) {
+//            this._position = v;
+//            this.x = v.x;
+//            this.y = v.y;
+//        };
+//
+//        /**
+//         * @method getPosition
+//         * @return {Vector2D}
+//         */
+//        p.getPosition = function () {
+//            return this._position;
+//        };
+
+        /**
+         * @method velocity
+         * @param {Vector2D} v
+         */
+        p.velocity = function ( v ) {
+            this._velocity = v;
+        };
+
+        /**
+         * @method getVelocity
+         * @return {Vector2D}
+         */
+        p.getVelocity = function () {
+            return this._velocity;
+        };
+//
+//        /**
+//         * @method setX
+//         * @param {number} x
+//         */
+//        p.setX = function ( x ) {
+//            this.x = x;
+//            this._position.x = x;
+//        };
+//
+//        /**
+//         * @method setY
+//         * @param {number} y
+//         */
+//        p.setY = function ( y ) {
+//            this.y = y;
+//            this._position.y = y;
+//        };
+
+//        /**
+//         * @method bounding
+//         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
+//         */
+//        p.bounding = function () {
+//            var x = this.x,
+//                y = this.y,
+//                w2 = this.width * 0.5,
+//                h2 = this.height * 0.5,
+//                rotation = this.rotation,
+//                a, b, c, d,
+//                ax, ay,
+//                bx,
+//                cy,
+//                sin, cos,
+//
+//                cos_ax,
+//                cos_ay,
+//                sin_ay,
+//                sin_ax,
+//                cos_bx,
+//                cos_cy,
+//                sin_bx,
+//                sin_cy;
+//
+//            sin = _sin( rotation );
+//            cos = _cos( rotation );
+//
+//            ax = -w2;
+//            ay = -h2;
+//            bx = w2;
+//            cy = h2;
+//
+//            cos_ax = cos * ax;
+//            cos_ay = cos * ay;
+//            sin_ay = sin * ay;
+//            sin_ax = sin * ax;
+//            cos_bx = cos * bx;
+//            cos_cy = cos * cy;
+//            sin_bx = sin * bx;
+//            sin_cy = sin * cy;
+//
+//            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
+//            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
+//            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
+//            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
+//
+//            return { a: a, b: b, c: c, d:d };
+//        };
+
 //        /**
 //         * @method draw
 //         * @param {CanvasRenderingContext2D} ctx
@@ -1942,7 +2568,7 @@ Sankaku.version = "0.1.0";
             c = bounding.c;
             d = bounding.d;
 
-            // rect
+            // triangle
             ctx.beginPath();
 
             ctx.moveTo( a.x, a.y );
@@ -1974,7 +2600,10 @@ Sankaku.version = "0.1.0";
             var velocity = this._velocity,
                 position = this._position;
 
-            velocity.truncate( this._speed );
+            w -= this.right;
+            h -= this.bottom;
+
+            velocity.truncate( _abs( this._speed ) );
             position.add( velocity );
 
             switch ( this._behavior ) {
@@ -2000,25 +2629,44 @@ Sankaku.version = "0.1.0";
          * @param {number} h
          */
         p.wrap = function ( w, h ) {
-            var position = this._position;
+            var position = this._position,
+                is = false,
+                left = this.left,
+                top = this.top;
 
             if ( position.x > w ) {
 
-                position.x = 0;
+                position.x = left;
+                is = true;
             }
-            if ( position.x < 0 ) {
+            if ( position.x < left ) {
 
                 position.x = w;
+                is = true;
             }
 
             if ( position.y > h ) {
 
-                position.y = 0;
+                position.y = top;
+                is = true;
             }
-            if ( position.y < 0 ) {
+            if ( position.y < top ) {
 
                 position.y = h;
+                is = true;
             }
+
+            if ( is ) {
+                // wrap event
+                this.onWrap();
+            }
+        };
+
+        /**
+         * @method onWrap
+         */
+        p.onWrap  =function () {
+
         };
 
         /**
@@ -2028,27 +2676,46 @@ Sankaku.version = "0.1.0";
          */
         p.bounce = function ( w, h ) {
             var velocity = this._velocity,
-                position = this._position;
+                position = this._position,
+                is = false,
+                left = this.left,
+                top = this.top;
 
             if ( position.x > w ) {
 
                 position.x = w;
                 velocity.x *= -1;
-            } else if ( position.x < 0 ) {
+                is = true;
+            } else if ( position.x < left ) {
 
-                position.x = 0;
+                position.x = left;
                 velocity.x *= -1;
+                is = true;
             }
 
             if ( position.y > h ) {
 
                 position.y = h;
                 velocity.y *= -1;
-            } else if ( position.y < 0 ) {
+                is = true;
+            } else if ( position.y < top ) {
 
-                position.y = 0;
+                position.y = top;
                 velocity.y *= -1;
+                is = true;
             }
+
+            if ( is ) {
+                // wrap event
+                this.onBounce();
+            }
+        };
+
+        /**
+         * @method onBounce
+         */
+        p.onBounce = function () {
+
         };
 
         return Vehicle;
@@ -2074,6 +2741,8 @@ Sankaku.version = "0.1.0";
     ;
 
     Sankaku.SteeredVehicle = ( function (){
+        var PI_05 = Math.PI * 0.5;
+
         /**
          * @class SteeredVehicle
          * @extend Vehicle
@@ -2083,19 +2752,155 @@ Sankaku.version = "0.1.0";
             Vehicle.call( this );
 
             this._force = new Vector2D();
-            this._max = 1;
+            // max force
+            this._max = 1.0;
+            this._arrival = 100;
+
+            // for avoid
+            this._avoid_distance = 300;
+            this._buffer = 20;
+            this._insight = 200;
+            this._close = 60;
         }
 
         Sankaku.extend( Vehicle, SteeredVehicle );
 
         var p = SteeredVehicle.prototype;
 
+        /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = this._clone();
+
+            // vehicle
+            clone._velocity = this._velocity.clone();
+            clone._mass = this._mass;
+            clone._speed = this._speed;
+            clone._behavior = this._behavior;
+            clone._force = this._behavior;
+
+            // myself
+            clone._force = this._force.clone();
+            clone._max = this._max;
+            clone._arrival = this._arrival;
+            clone._avoid_distance = this._avoid_distance;
+            clone._buffer = this._buffer;
+            clone._insight = this._insight;
+            clone._close = this._close;
+
+            return clone;
+        };
+
+        /**
+         * @method getMax
+         * @return {number} SteeredVehicle._max
+         */
         p.getMax = function () {
             return this._max;
         };
 
+        /**
+         * @method max
+         * @param {number} n
+         */
         p.max = function ( n ) {
             this._max = n;
+        };
+
+        /**
+         * @method getArrival
+         * @return {number} SteeredVehicle._arrival
+         */
+        p.getArrival = function () {
+            return this._arrival;
+        };
+
+        /**
+         * @method arrival
+         * @param {number} n
+         */
+        p.arrival = function ( n ) {
+            this._arrival = n;
+        };
+
+        /**
+         * @method force
+         * @param {Vector2D} v
+         */
+        p.force = function ( v ) {
+            this._force = v;
+        };
+
+        /**
+         * @method getForce
+         * @return {Vector2D|SteeredVehicle._force}
+         *
+         */
+        p.getForce = function () {
+            return this._force;
+        };
+
+        /**
+         * @method buffer
+         * @param {number} n
+         */
+        p.buffer = function ( n ) {
+            this._buffer = n;
+        };
+        /**
+         * @method getBuffer
+         * @return {number|*}
+         */
+        p.getBuffer = function () {
+            return this._buffer;
+        };
+
+        /**
+         * @method insight
+         * @param {number} n
+         */
+        p.insight = function ( n ) {
+            this._insight = n;
+        };
+        /**
+         * @method getInsight
+         * @return {number|*}
+         */
+        p.getInsight = function () {
+            return this._insight;
+        };
+
+        /**
+         * @method close
+         * @param {number} n
+         */
+        p.close = function ( n ) {
+            this._close = n;
+        };
+        /**
+         * @method getClose
+         * @return {number|*}
+         */
+        p.getClose = function () {
+            return this._close;
+        };
+
+        /**
+         * @method avoidDistance
+         * @param {number} n
+         */
+        p.avoidDistance = function ( n ) {
+            this._avoid_distance = n;
+        };
+
+        /**
+         * @method getAvoidDistance
+         * @return {number|*}
+         */
+        p.getAvoidDistance = function () {
+            return this._avoid_distance;
         };
 
         /**
@@ -2105,12 +2910,10 @@ Sankaku.version = "0.1.0";
          * @param {number} h
          */
         p.update = function ( w, h ) {
-            var force = this._force,
-                velocity = this._velocity;
+            this._force.truncate( this._max ).divideScalar( this._mass );
+            this._velocity.add( this._force );
 
-            force.truncate( this._max ).divideScalar( this.getMass() );
-            velocity.add( force );
-
+            this._force = new Vector2D();
             this._update( w, h );
         };
 
@@ -2119,14 +2922,10 @@ Sankaku.version = "0.1.0";
          * @param {Vector2D} target
          */
         p.seek = function ( target ) {
-            var desired_velocity = target.subNew( this._position ),
-                force;
+            var force = target.subNew( this._position );
 
-            desired_velocity.normalize().multiplyScalar( this._speed );
+            force.normalize().multiplyScalar( this._speed ).sub( this._velocity );
 
-            force = desired_velocity.subNew( this._velocity );
-
-            this._force = new Vector2D();
             this._force.add( force );
         };
 
@@ -2135,18 +2934,408 @@ Sankaku.version = "0.1.0";
          * @param {Vector2D} target
          */
         p.flee = function ( target ) {
-            var desired_velocity = target.subNew( this._position ),
-                force;
+            var force = target.subNew( this._position );
 
-            desired_velocity.normalize().multiplyScalar( this._speed );
+            force.normalize().multiplyScalar( this._speed ).sub( this._velocity );
 
-            force = desired_velocity.subNew( this._velocity );
-
-            this._force = new Vector2D();
             this._force.sub( force );
+        };
+
+        /**
+         * @method arrive
+         * @param {Vector2D} target
+         */
+        p.arrive = function ( target ) {
+            var force = target.subNew( this._position ),
+                arrival = this._arrival,
+                distance;
+
+            force.normalize();
+            distance = this._position.distance( target );
+
+            if ( distance > arrival ) {
+                // far
+                force.multiplyScalar( this._speed );
+            } else {
+                // near
+                force.multiplyScalar( this._speed * distance / arrival );
+            }
+
+            force.sub( this._velocity );
+            this._force.add( force );
+        };
+
+        /**
+         * @method pursue
+         * @param {Vehicle} target
+         */
+        p.pursue = function ( target ) {
+            var look = this._position.distance( target.getPosition() ),
+                clone = target.getPosition().clone();
+
+            clone.add( target._velocity.multiplyNew( look ) );
+
+            this.seek( clone );
+        };
+
+        /**
+         * @method evade
+         * @param {Vehicle} target
+         */
+        p.evade = function ( target ) {
+            var look = this._position.distance( target.getPosition() ) / this._speed,
+                clone = target.getPosition().clone();
+
+            clone.sub( target._velocity.multiplyNew( look ) );
+
+            this.flee( clone );
+        };
+
+        /**
+         * @method avoid
+         * @param {Array} targets
+         */
+        p.avoid = function ( targets ) {
+            var target,
+                heading,
+                difference,
+                prod,
+                distance,
+                feeler,
+                projection,
+                force,
+                prf,
+                i, limit;
+
+            for ( i = 0, limit = targets.length; i < limit; i++ ) {
+
+                target = targets[ i ];
+                heading = this._velocity.clone().normalize();
+                difference = target.getPosition().subNew( this._position );
+                prod = difference.dot( heading );
+
+                if ( prod > 0 ) {
+                    // 前
+                    feeler = heading.clone();
+                    feeler.multiplyScalar( this._avoid_distance );
+
+                    projection = heading.clone();
+                    projection.multiplyScalar( prod );
+
+                    distance = projection.subNew( difference ).length();
+
+                    if (
+                        distance < target.getRadius() + this._buffer &&
+                        projection.length() < feeler.length()
+                       ) {
+
+                        force = heading.clone();
+                        force.multiplyScalar( this._speed );
+                        force.setAngle( difference.sign( this._velocity ) * PI_05 );
+
+                        prf = projection.length() / feeler.length();
+                        force.multiplyScalar( 1 - prf );
+
+                        this._force.add( force );
+                        this._velocity.multiplyScalar( prf );
+                    }// if
+                }// prod > 0
+            }
         };
 
         return SteeredVehicle;
     }() );
 
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/24 - 20:37
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        SteeredVehicle = Sankaku.SteeredVehicle,
+        Vector2D = Sankaku.Vector2D;
+
+    Sankaku.Wander = ( function (){
+        var _rand = Math.random;
+
+        /**
+         * @class Wander
+         * @extend SteeredVehicle
+         * @constructor
+         */
+        function Wander () {
+            SteeredVehicle.call( this );
+
+            this._angle = 0;
+            this._distance = 10;
+            this._radius = 5;
+            this._range = 1;
+        }
+
+        Sankaku.extend( SteeredVehicle, Wander );
+
+        var p = Wander.prototype;
+
+        /**
+         * @method angle
+         * @param {number} n
+         */
+        p.angle = function ( n ) {
+            this._angle = n;
+        };
+
+        /**
+         * @method getAngle
+         * @return {number}
+         */
+        p.getAngle = function () {
+            return this._angle;
+        };
+
+        /**
+         * @method distance
+         * @param {number} n
+         */
+        p.distance = function ( n ) {
+            this._distance = n;
+        };
+
+        /**
+         * @method getDistance
+         * @return {number}
+         */
+        p.getDistance = function () {
+            return this._distance;
+        };
+
+        /**
+         * @method radius
+         * @param {number} n
+         */
+        p.radius = function ( n ) {
+            this._radius = n;
+        };
+
+        /**
+         * @method getRadius
+         * @return {number}
+         */
+        p.getRadius = function () {
+            return this._radius;
+        };
+
+        /**
+         * @method range
+         * @param {number} n
+         */
+        p.range = function ( n ) {
+            this._range = n;
+        };
+
+        /**
+         * @method getRange
+         * @return {number}
+         */
+        p.getRange = function () {
+            return this._range;
+        };
+
+        /**
+         * @method wander
+         */
+        p.wander = function () {
+            var center = this._velocity.clone().normalize().multiplyScalar( this._distance ),
+                offset = new Vector2D();
+
+            offset.setLength( this._radius );
+            offset.setAngle( this._angle );
+
+            this._angle = _rand() * this._range - this._range * 0.5;
+//            this._angle = _rand() * this._range * 2 - this._range;
+
+            center.add( offset );
+            this._force.add( center );
+        };
+
+        return Wander;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/25 - 21:12
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        SteeredVehicle = Sankaku.SteeredVehicle,
+        Vector2D = Sankaku.Vector2D
+    ;
+
+    Sankaku.Flock = ( function (){
+        //
+        /**
+         * @class Flock
+         * @extend SteeredVehicle
+         * @constructor
+         */
+        function Flock () {
+            SteeredVehicle.call( this );
+
+            // for flock
+            this._flock_insight = 200;
+            this._flock_close = 60;
+        }
+
+        Sankaku.extend( SteeredVehicle, Flock );
+
+        var p = Flock.prototype;
+
+        /**
+         * @clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = this._clone();
+
+            // vehicle
+            clone._velocity = this._velocity.clone();
+            clone._mass = this._mass;
+            clone._speed = this._speed;
+            clone._behavior = this._behavior;
+            clone._force = this._behavior;
+
+            // myself
+            clone._force = this._force.clone();
+            clone._max = this._max;
+            clone._arrival = this._arrival;
+            clone._avoid_distance = this._avoid_distance;
+            clone._buffer = this._buffer;
+            clone._insight = this._insight;
+            clone._close = this._close;
+
+            // for flock
+            clone._flock_insight = this._flock_insight;
+            clone._flock_close = this._flock_close;
+
+            return clone;
+        };
+
+        /**
+         * @method flockInsight
+         * @param {number} n
+         */
+        p.flockInsight = function ( n ) {
+            this._flock_insight = n;
+        };
+        /**
+         * @method getFlockInsight
+         * @return {number|*}
+         */
+        p.getFlockInsight = function () {
+            return this._flock_insight;
+        };
+
+        /**
+         * @method flockClose
+         * @param {number} n
+         */
+        p.flockClose = function ( n ) {
+            this._flock_close = n;
+        };
+        /**
+         * @method getFlockInsight
+         * @return {number|*}
+         */
+        p.getFlockInsight = function () {
+            return this._flock_close;
+        };
+
+        /**
+         * @method flock
+         * @param {Array} targets
+         */
+        p.flock = function ( targets ) {
+            var average_velocity = this._velocity.clone(),
+                average_position = new Vector2D(),
+                count = 0,
+                vehicle,
+                i, limit;
+
+            for ( i = 0, limit = targets.length; i < limit; i++ ) {
+
+                vehicle = targets[ i ];
+
+                if ( vehicle !== this && this.tooInsight( vehicle ) ) {
+
+                    average_velocity.add( vehicle.getVelocity() );
+                    average_position.add( vehicle.getPosition() );
+
+                    if ( this.tooClose( vehicle ) ) {
+
+                        this.flee( vehicle.getPosition() );
+                    }
+
+                    ++count;
+                }
+            }// for
+
+            if ( count > 0 ) {
+                // count 0 over
+                average_velocity.divideScalar( count );
+                average_position.divideScalar( count );
+
+                this.seek( average_position );
+                this._force.add( average_velocity.sub( this._velocity ) );
+            }
+        };
+
+        /**
+         * @method tooInsight
+         * @param {Vehicle} v
+         * @return {boolean}
+         */
+        p.tooInsight = function ( v ) {
+            var heading, difference, prod;
+
+            if ( this._position.distance( v._position ) > this._flock_insight ) {
+
+                return false;
+            }
+
+            heading = this._velocity.clone().normalize();
+            difference = v._position.subNew( this._position );
+            prod = difference.dot( heading );
+
+            return prod < 0;
+        };
+
+        /**
+         * @method tooClose
+         * @param {Vehicle} v
+         */
+        p.tooClose = function ( v ) {
+            return this._position.distance( v._position ) < this._flock_close;
+        };
+
+        return Flock;
+    }() );
 }( window ) );

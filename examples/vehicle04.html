@@ -46,7 +46,8 @@
         ctx = canvas.getContext( "2d"),
 
         seeker,
-        fleer,
+        seeker2,
+        flee,
 
         PI = Math.PI,
         R360 = PI / 180 * 360,
@@ -86,20 +87,29 @@
 
     function draw ( rect ) {
 
-        seeker.seek( new Sankaku.Vector2D( fleer.getPosition() ) );
-//        seeker.flee( new Sankaku.Vector2D( mouse.x, mouse.y ) );
-        fleer.flee( new Sankaku.Vector2D( seeker.getPosition() ) );
+        seeker.seek( flee.getPosition() );
+//        seeker2.seek( flee.getPosition() );
+
+        flee.flee( seeker.getPosition() );
 
         seeker.update( rect.w, rect.h );
-        fleer.update( rect.w, rect.h );
-//        console.log( "x y ", vehicle.x, vehicle.y );
+//        seeker2.update( rect.w, rect.h );
+
+        flee.update( rect.w, rect.h );
+
+//        flee.flee( seeker2.getPosition() );
+//        flee.update( rect.w, rect.h );
 
         ctx.strokeStyle = "#000000";
         seeker.draw( ctx );
         ctx.stroke();
+//
+//        seeker2.draw( ctx );
+//        ctx.stroke();
+
 
         ctx.strokeStyle = "#ff0000";
-        fleer.draw( ctx );
+        flee.draw( ctx );
         ctx.stroke();
 
 
@@ -109,10 +119,6 @@
 
     function loop () {
         loop_id = requestAnimationFrame( loop );
-//        console.log( "mouse", mouse );
-//        if ( typeof mouse.x === "undefined" ) {
-//            return;
-//        }
 
         var rect = size();
 
@@ -130,17 +136,23 @@
     function init () {
         seeker = new Sankaku.SteeredVehicle();
 
-        seeker.position( new Sankaku.Vector2D( 100, 100 ) );
+        seeker.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
         seeker.behavior( Sankaku.Vehicle.BOUNCE );
-        seeker.speed( 5 );
+        seeker.speed( 7 );
 
-        fleer = new Sankaku.SteeredVehicle();
+//        seeker2 = new Sankaku.SteeredVehicle();
+//
+//        seeker2.position( new Sankaku.Vector2D( window.innerWidth * 0.3, window.innerHeight * 0.7 ) );
+//        seeker2.behavior( Sankaku.Vehicle.BOUNCE );
+//        seeker2.speed( 6 );
 
-        fleer.position( new Sankaku.Vector2D( 400, 300 ) );
-        fleer.behavior( Sankaku.Vehicle.BOUNCE );
-        fleer.speed( 3 );
+        flee = new Sankaku.SteeredVehicle();
 
-        window.addEventListener( "mousemove", onMouseMove, false );
+        flee.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        flee.behavior( Sankaku.Vehicle.BOUNCE );
+        flee.speed( 7 );
+
+//        window.addEventListener( "mousemove", onMouseMove, false );
 
         loop();
     }

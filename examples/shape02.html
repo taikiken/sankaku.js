@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Shape 02</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+}
+.mobile body {
+    min-height: 1280px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var Sankaku = window.Sankaku,
+
+        Iro = Sankaku.Iro,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        prev_ww = -1,
+        prev_wh = -1,
+        ww, wh;
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function init () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+
+            i, circle;
+
+        for ( i = 0; i < 100; i++ ) {
+            circle = new Sankaku.Circle( random( rect.w ), random( rect.h ), random( 5, 30 ), Iro.int2hex( random( 0xffffff ) ) );
+
+            circle.draw( ctx );
+        }
+    }
+
+
+    init();
+
+
+}( window ) );
+</script>
+</body>
+</html>

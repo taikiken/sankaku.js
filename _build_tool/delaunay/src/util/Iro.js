@@ -234,10 +234,10 @@
 
             var hex = num.toString( 16 );
 
-            if ( hex.length < 3 ) {
+            if ( hex.length < 6 ) {
 
                 var i = hex.length,
-                    sub = 3 - i;
+                    sub = 6 - i;
 
                 while( sub ) {
 

@@ -172,7 +172,6 @@
          * @return {Vector2D}
          */
         p.addVector = function ( a, b ) {
-
             this.x = a.x + b.x;
             this.y = a.y + b.y;
 
@@ -488,16 +487,18 @@
 
         /**
          * @method setAngle
-         * @param {number} value
+         * @param {number} value radian
          * @return {Vector2D}
          */
         p.setAngle = function ( value ) {
             var len = this.length();
 
-//            this.x = Math.cos( value ) * len;
-//            this.y = Math.sin( value ) * len;
-            this.x = Math.cos( value );
-            this.y = Math.sin( value );
+            len = len || 0.001;
+
+            this.x = Math.cos( value ) * len;
+            this.y = Math.sin( value ) * len;
+//            this.x = Math.cos( value );
+//            this.y = Math.sin( value );
 
             return this;
         };
@@ -606,8 +607,9 @@
          * @return {Vector2D}
          */
         p.reverse = function () {
-            this.x *= -1;
-            this.y *= -1;
+//            this.x *= -1;
+//            this.y *= -1;
+            this.negate();
 
             return this;
         };

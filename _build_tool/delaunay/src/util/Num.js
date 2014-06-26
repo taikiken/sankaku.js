@@ -30,6 +30,8 @@
 
         var n = Num;
 
+        n.ONE_DEG = Math.PI / 180;
+
         /**
          * 数値か否かをチェックします
          * @method is
@@ -58,6 +60,16 @@
                 min = 0;
             }
             return min + _floor( _rand() * ( max - min + 1 ) );
+        };
+
+        /**
+         * degree を radian へ変換します
+         * @method deg2rad
+         * @param {number} degree degree 0 ~ 360
+         * @return {number} radian 0 ~ 2 * PI
+         */
+        n.deg2rad = function ( degree ) {
+            return degree * n.ONE_DEG;
         };
 
         return Num;

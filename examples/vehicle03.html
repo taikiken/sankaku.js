@@ -56,7 +56,10 @@
         prev_ww = -1,
         prev_wh = -1,
         circles = [],
-        mouse = {};
+        mouse = {
+            x: window.innerWidth * 0.5,
+            y: window.innerHeight * 0.5
+        };
 
 
 
@@ -84,7 +87,7 @@
     }
 
     function draw ( rect ) {
-
+//        console.log( "mouse ", mouse.x, mouse.y );
         vehicle.flee( new Sankaku.Vector2D( mouse.x, mouse.y ) );
         vehicle.update( rect.w, rect.h );
 //        console.log( "x y ", vehicle.x, vehicle.y );
@@ -117,7 +120,7 @@
     function init () {
         vehicle = new Sankaku.SteeredVehicle();
 
-        vehicle.position( new Sankaku.Vector2D( 100, 100 ) );
+        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.behavior( Sankaku.Vehicle.BOUNCE );
 
         window.addEventListener( "mousemove", onMouseMove, false );

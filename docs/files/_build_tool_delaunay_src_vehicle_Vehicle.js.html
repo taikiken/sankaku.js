@@ -41,7 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Circle.html">Circle</a></li>
+            
                 <li><a href="../classes/Delaunay.html">Delaunay</a></li>
+            
+                <li><a href="../classes/Distribute.html">Distribute</a></li>
+            
+                <li><a href="../classes/Flock.html">Flock</a></li>
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
@@ -51,9 +57,13 @@
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
+                <li><a href="../classes/Object2D.html">Object2D</a></li>
+            
                 <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
+            
+                <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
@@ -62,6 +72,8 @@
                 <li><a href="../classes/Vector2D.html">Vector2D</a></li>
             
                 <li><a href="../classes/Vehicle.html">Vehicle</a></li>
+            
+                <li><a href="../classes/Wander.html">Wander</a></li>
             
             </ul>
 
@@ -124,54 +136,81 @@
     &quot;use strict&quot;;
     var Sankaku = window.Sankaku,
         Vector2D = Sankaku.Vector2D,
-        Matrix2D = Sankaku.Matrix2D,
-        Point = Sankaku.Point,
-
-        _cos = Math.cos,
-        _sin = Math.sin,
-        PI = Math.PI,
-        PI2 = PI * 2,
-        ONE_RADIAN = 180 / PI;
+        Object2D = Sankaku.Object2D;
 
     Sankaku.Vehicle = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin,
+            _abs = Math.abs;
+
         /**
          * @class Vehicle
+         * @extend Object2D
          * @constructor
          */
         function Vehicle () {
-            this._position = new Vector2D();
+            Object2D.call( this );
+
+//            this._position = new Vector2D();
             this._velocity = new Vector2D();
 
             this._mass = 1.0;
             this._speed = 10;
             this._behavior = Vehicle.BOUNCE;
 
+//            /**
+//             * @property x
+//             * @type {number}
+//             */
+//            this.x = 0;
+//            /**
+//             * @property y
+//             * @type {number}
+//             */
+//            this.y = 0;
+//            /**
+//             * @property rotation
+//             * @type {number}
+//             */
+//            this.rotation = 0;
+//            /**
+//            * @property width
+//            * @type {number}
+//            */
+//            this.width = 20;
+//            /**
+//             * @property height
+//             * @type {number}
+//             */
+//            this.height = 10;
+
             /**
-             * @property x
+             * padding left
+             * @property left
              * @type {number}
              */
-            this.x = 0;
+            this.left = 0;
             /**
-             * @property y
+             * padding top
+             * @property top
              * @type {number}
              */
-            this.y = 0;
+            this.top = 0;
             /**
-             * @property rotation
+             * padding right
+             * @property right
              * @type {number}
              */
-            this.rotation = 0;
+            this.right = 0;
             /**
-            * @property width
-            * @type {number}
-            */
-            this.width = 20;
-            /**
-             * @property height
+             * padding bottom
+             * @property bottom
              * @type {number}
              */
-            this.height = 10;
+            this.bottom = 0;
         }
+
+        Sankaku.extend( Object2D, Vehicle );
 
         /**
          * @const WRAP
@@ -187,6 +226,40 @@
         Vehicle.BOUNCE = &quot;vehicle_bounce&quot;;
 
         var p = Vehicle.prototype;
+
+        /**
+         * @method clone
+         * @override
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = this._clone();
+
+            clone._velocity = this._velocity.clone();
+            clone._mass = this._mass;
+            clone._speed = this._speed;
+            clone._behavior = this._behavior;
+
+            return clone;
+        };
+
+        /**
+         * @method padding
+         * @param {number} top
+         * @param {number} [right]
+         * @param {number} [bottom]
+         * @param {number} [left]
+         */
+        p.padding = function ( top, right, bottom, left ) {
+            right = right || top;
+            bottom = bottom || top;
+            left = left || top;
+
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+            this.left = left;
+        };
 
         /**
          * 質量を設定します
@@ -238,23 +311,23 @@
             return this._behavior;
         };
 
-        /**
-         * @method position
-         * @param {Vector2D} v
-         */
-        p.position = function ( v ) {
-            this._position = v;
-            this.x = v.x;
-            this.y = v.y;
-        };
-
-        /**
-         * @method getPosition
-         * @return {Vector2D}
-         */
-        p.getPosition = function () {
-            return this._position;
-        };
+//        /**
+//         * @method position
+//         * @param {Vector2D} v
+//         */
+//        p.position = function ( v ) {
+//            this._position = v;
+//            this.x = v.x;
+//            this.y = v.y;
+//        };
+//
+//        /**
+//         * @method getPosition
+//         * @return {Vector2D}
+//         */
+//        p.getPosition = function () {
+//            return this._position;
+//        };
 
         /**
          * @method velocity
@@ -271,74 +344,74 @@
         p.getVelocity = function () {
             return this._velocity;
         };
+//
+//        /**
+//         * @method setX
+//         * @param {number} x
+//         */
+//        p.setX = function ( x ) {
+//            this.x = x;
+//            this._position.x = x;
+//        };
+//
+//        /**
+//         * @method setY
+//         * @param {number} y
+//         */
+//        p.setY = function ( y ) {
+//            this.y = y;
+//            this._position.y = y;
+//        };
 
-        /**
-         * @method setX
-         * @param {number} x
-         */
-        p.setX = function ( x ) {
-            this.x = x;
-            this._position.x = x;
-        };
-
-        /**
-         * @method setY
-         * @param {number} y
-         */
-        p.setY = function ( y ) {
-            this.y = y;
-            this._position.y = y;
-        };
-
-        /**
-         * @method bounding
-         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
-         */
-        p.bounding = function () {
-            var x = this.x,
-                y = this.y,
-                w2 = this.width * 0.5,
-                h2 = this.height * 0.5,
-                rotation = this.rotation,
-                a, b, c, d,
-                ax, ay,
-                bx,
-                cy,
-                sin, cos,
-
-                cos_ax,
-                cos_ay,
-                sin_ay,
-                sin_ax,
-                cos_bx,
-                cos_cy,
-                sin_bx,
-                sin_cy;
-
-            sin = _sin( rotation );
-            cos = _cos( rotation );
-
-            ax = -w2;
-            ay = -h2;
-            bx = w2;
-            cy = h2;
-
-            cos_ax = cos * ax;
-            cos_ay = cos * ay;
-            sin_ay = sin * ay;
-            sin_ax = sin * ax;
-            cos_bx = cos * bx;
-            cos_cy = cos * cy;
-            sin_bx = sin * bx;
-            sin_cy = sin * cy;
-
-            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
-            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
-            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
-            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
-
-            return { a: a, b: b, c: c, d:d };
-        };
+//        /**
+//         * @method bounding
+//         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
+//         */
+//        p.bounding = function () {
+//            var x = this.x,
+//                y = this.y,
+//                w2 = this.width * 0.5,
+//                h2 = this.height * 0.5,
+//                rotation = this.rotation,
+//                a, b, c, d,
+//                ax, ay,
+//                bx,
+//                cy,
+//                sin, cos,
+//
+//                cos_ax,
+//                cos_ay,
+//                sin_ay,
+//                sin_ax,
+//                cos_bx,
+//                cos_cy,
+//                sin_bx,
+//                sin_cy;
+//
+//            sin = _sin( rotation );
+//            cos = _cos( rotation );
+//
+//            ax = -w2;
+//            ay = -h2;
+//            bx = w2;
+//            cy = h2;
+//
+//            cos_ax = cos * ax;
+//            cos_ay = cos * ay;
+//            sin_ay = sin * ay;
+//            sin_ax = sin * ax;
+//            cos_bx = cos * bx;
+//            cos_cy = cos * cy;
+//            sin_bx = sin * bx;
+//            sin_cy = sin * cy;
+//
+//            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
+//            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
+//            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
+//            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
+//
+//            return { a: a, b: b, c: c, d:d };
+//        };
 
 //        /**
 //         * @method draw
@@ -371,7 +444,7 @@
             c = bounding.c;
             d = bounding.d;
 
-            // rect
+            // triangle
             ctx.beginPath();
 
             ctx.moveTo( a.x, a.y );
@@ -403,7 +476,10 @@
             var velocity = this._velocity,
                 position = this._position;
 
-            velocity.truncate( this._speed );
+            w -= this.right;
+            h -= this.bottom;
+
+            velocity.truncate( _abs( this._speed ) );
             position.add( velocity );
 
             switch ( this._behavior ) {
@@ -429,25 +505,44 @@
          * @param {number} h
          */
         p.wrap = function ( w, h ) {
-            var position = this._position;
+            var position = this._position,
+                is = false,
+                left = this.left,
+                top = this.top;
 
             if ( position.x &gt; w ) {
 
-                position.x = 0;
+                position.x = left;
+                is = true;
             }
-            if ( position.x &lt; 0 ) {
+            if ( position.x &lt; left ) {
 
                 position.x = w;
+                is = true;
             }
 
             if ( position.y &gt; h ) {
 
-                position.y = 0;
+                position.y = top;
+                is = true;
             }
-            if ( position.y &lt; 0 ) {
+            if ( position.y &lt; top ) {
 
                 position.y = h;
+                is = true;
             }
+
+            if ( is ) {
+                // wrap event
+                this.onWrap();
+            }
+        };
+
+        /**
+         * @method onWrap
+         */
+        p.onWrap  =function () {
+
         };
 
         /**
@@ -457,27 +552,46 @@
          */
         p.bounce = function ( w, h ) {
             var velocity = this._velocity,
-                position = this._position;
+                position = this._position,
+                is = false,
+                left = this.left,
+                top = this.top;
 
             if ( position.x &gt; w ) {
 
                 position.x = w;
                 velocity.x *= -1;
-            } else if ( position.x &lt; 0 ) {
+                is = true;
+            } else if ( position.x &lt; left ) {
 
-                position.x = 0;
+                position.x = left;
                 velocity.x *= -1;
+                is = true;
             }
 
             if ( position.y &gt; h ) {
 
                 position.y = h;
                 velocity.y *= -1;
-            } else if ( position.y &lt; 0 ) {
+                is = true;
+            } else if ( position.y &lt; top ) {
 
-                position.y = 0;
+                position.y = top;
                 velocity.y *= -1;
+                is = true;
             }
+
+            if ( is ) {
+                // wrap event
+                this.onBounce();
+            }
+        };
+
+        /**
+         * @method onBounce
+         */
+        p.onBounce = function () {
+
         };
 
         return Vehicle;

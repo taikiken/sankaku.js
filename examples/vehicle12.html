@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Vehicle 12 Flock</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+}
+.mobile body {
+    min-height: 1280px;
+}
+#debug {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
+    overflow: hidden;
+}
+
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<div id="debug">
+    <label for="debug_on">DEBUG ON<input type="checkbox" name="debug_on" id="debug_on" value="yes" /></label>
+</div>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        vehicle,
+        pursuer2,
+
+        flocks = [],
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 120,
+        jams = [],
+        debug_mode = false;
+
+
+    // debug button
+    document.getElementById( "debug_on" ).addEventListener( "change", function () {
+
+        debug_mode = !debug_mode;
+    }, false );
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        vehicle.wander();
+        vehicle.avoid( jams );
+        vehicle.update( rect.w, rect.h );
+
+//        pursuer2.pursue( vehicle );
+//        pursuer2.update( rect.w, rect.h );
+
+        var i, limit, flock;
+
+        if ( debug_mode ) {
+            for ( i = 0, limit = jams.length; i < limit; i++ ) {
+                var jam = jams[ i ];
+                jam.draw( ctx );
+            }
+
+            ctx.strokeStyle = "#ff0000";
+            vehicle.draw( ctx );
+            ctx.stroke();
+
+//            ctx.strokeStyle = "#ff00ff";
+//            pursuer2.draw( ctx );
+//            ctx.stroke();
+        }
+
+        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
+            flock = flocks[ i ];
+
+            flock.flock( flocks );
+            flock.update( rect.w, rect.h );
+
+            flock.pursue( vehicle );
+//            flock.pursue( pursuer2 );
+
+            flock.draw( ctx );
+            ctx.fill();
+        }
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            i, circle;
+
+        for ( i = 0; i < 38; i++ ) {
+            circle = new Sankaku.Circle( random( padding, rect.w - padding ), random( padding, rect.h - padding ), random( 10, 30 ), Iro.int2hex( random( 0xffffff ) ) );
+
+            jams.push( circle );
+        }
+    }
+
+    function init () {
+        hurdle();
+
+        var rect = size(),
+            speed = 5,
+            i, flock;
+
+        vehicle = new Sankaku.Wander();
+        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.speed( speed );
+        vehicle.mass( 0.01 );
+        vehicle.padding( padding );
+        vehicle.avoidDistance( 120 );
+
+//        pursuer2 = new Sankaku.SteeredVehicle();
+//        pursuer2.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//        pursuer2.speed( speed * 4 );
+//        pursuer2.behavior( Sankaku.Vehicle.WRAP );
+
+        for ( i = 0; i < 555; i++ ) {
+
+            flock = new Sankaku.Flock();
+            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
+            flock.speed( speed * 1.5 );
+            flock.mass( 2 );
+            flock.behavior( Sankaku.Vehicle.WRAP );
+            flock.width = 10;
+            flock.height = 5;
+            flock.flockInsight( 400 );
+            flock.flockClose( 15 );
+
+
+            flocks.push( flock );
+        }
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

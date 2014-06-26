@@ -41,7 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Circle.html">Circle</a></li>
+            
                 <li><a href="../classes/Delaunay.html">Delaunay</a></li>
+            
+                <li><a href="../classes/Distribute.html">Distribute</a></li>
+            
+                <li><a href="../classes/Flock.html">Flock</a></li>
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
@@ -51,9 +57,13 @@
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
+                <li><a href="../classes/Object2D.html">Object2D</a></li>
+            
                 <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
+            
+                <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
@@ -62,6 +72,8 @@
                 <li><a href="../classes/Vector2D.html">Vector2D</a></li>
             
                 <li><a href="../classes/Vehicle.html">Vehicle</a></li>
+            
+                <li><a href="../classes/Wander.html">Wander</a></li>
             
             </ul>
 
@@ -116,7 +128,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:21</code></a>
+            Defined in: <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l23"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:23</code></a>
         </div>
     
 
@@ -170,7 +182,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:21</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l23"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:23</code></a>
         
         </p>
 
@@ -219,7 +231,42 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method protected inherited">
+                                <a href="#method__clone">_clone</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method protected inherited">
                                 <a href="#method__update">_update</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_arrival">arrival</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_arrive">arrive</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_avoid">avoid</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_avoidDistance">avoidDistance</a>
 
                                 
                                 
@@ -246,8 +293,64 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_buffer">buffer</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
+                                <a href="#method_clone">clone</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_close">close</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_draw">draw</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_evade">evade</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_flee">flee</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_force">force</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getArrival">getArrival</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getAvoidDistance">getAvoidDistance</a>
 
                                 
                                 
@@ -260,8 +363,43 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_getBuffer">getBuffer</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getClose">getClose</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getForce">getForce</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getInsight">getInsight</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_getMass">getMass</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getMax">getMax</a>
 
                                 
                                 
@@ -288,6 +426,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_insight">insight</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_mass">mass</a>
 
@@ -295,8 +440,50 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_max">max</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_onBounce">onBounce</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_onWrap">onWrap</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_padding">padding</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_position">position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_pursue">pursue</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_rotate">rotate</a>
 
                                 
                                 
@@ -361,6 +548,20 @@
 
                     <ul class="index-list properties extends">
                         
+                            <li class="index-item property protected inherited">
+                                <a href="#property__position">_position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_bottom">bottom</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item property inherited">
                                 <a href="#property_height">height</a>
 
@@ -369,7 +570,28 @@
                             </li>
                         
                             <li class="index-item property inherited">
+                                <a href="#property_left">left</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_right">right</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
                                 <a href="#property_rotation">rotation</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_top">top</a>
 
                                 
                                 
@@ -408,6 +630,75 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__clone" class="method item protected inherited">
+    <h3 class="name"><code>_clone</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method__clone">Object2D</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l172"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:172</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method__update" class="method item protected inherited">
@@ -457,7 +748,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l286"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:286</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l347"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:347</code></a>
         
         </p>
 
@@ -486,7 +777,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -501,7 +792,355 @@
                     
 
                     <div class="param-description">
-                         
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_arrival" class="method item">
+    <h3 class="name"><code>arrival</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l97"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:97</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_arrive" class="method item">
+    <h3 class="name"><code>arrive</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>target</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l221"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:221</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_avoid" class="method item">
+    <h3 class="name"><code>avoid</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>targets</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l271"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:271</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">targets</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_avoidDistance" class="method item">
+    <h3 class="name"><code>avoidDistance</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l167"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:167</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
                     </div>
 
                     
@@ -556,7 +1195,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l115"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:115</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l176"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:176</code></a>
         
         </p>
 
@@ -585,7 +1224,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -646,7 +1285,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l343"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:343</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l426"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:426</code></a>
         
         </p>
 
@@ -675,7 +1314,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -690,7 +1329,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -735,11 +1374,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#method_bounding">Vehicle</a>:
+                <a href="../classes/Object2D.html#method_bounding">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l183"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:183</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l105"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:105</code></a>
         
         </p>
 
@@ -769,6 +1408,250 @@
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_buffer" class="method item">
+    <h3 class="name"><code>buffer</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l122"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:122</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_clone" class="method item">
+    <h3 class="name"><code>clone</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="../classes/Object2D.html#method_clone">
+                Object2D
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l47"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:47</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_close" class="method item">
+    <h3 class="name"><code>close</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l152"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:152</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -808,13 +1691,16 @@
 
     <div class="meta">
         
+            <p>Inherited from
+            <a href="../classes/Object2D.html#method_draw">
+                Object2D
+            </a>
             
-                <p>Inherited from
-                <a href="../classes/Vehicle.html#method_draw">Vehicle</a>:
+            but overwritten in
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l251"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:251</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l312"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:312</code></a>
         
         </p>
 
@@ -843,7 +1729,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -853,6 +1739,409 @@
         </div>
     
 
+    
+
+    
+</div>
+
+                
+                    <div id="method_evade" class="method item">
+    <h3 class="name"><code>evade</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>target</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l258"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:258</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_flee" class="method item">
+    <h3 class="name"><code>flee</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>target</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l209"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:209</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_force" class="method item">
+    <h3 class="name"><code>force</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>v</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l105"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:105</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">v</code>
+                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_getArrival" class="method item">
+    <h3 class="name"><code>getArrival</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l89"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:89</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                    <p>SteeredVehicle._arrival</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getAvoidDistance" class="method item">
+    <h3 class="name"><code>getAvoidDistance</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number | </span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l175"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:175</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number | </span>:
+                    
+                
+            </div>
+        </div>
     
 
     
@@ -892,7 +2181,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l123"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:123</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l184"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:184</code></a>
         
         </p>
 
@@ -916,6 +2205,286 @@
                 
                     
                         <span class="type">String</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getBuffer" class="method item">
+    <h3 class="name"><code>getBuffer</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number | </span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l129"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:129</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number | </span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getClose" class="method item">
+    <h3 class="name"><code>getClose</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number | </span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l159"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:159</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number | </span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getForce" class="method item">
+    <h3 class="name"><code>getForce</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a> | SteeredVehicle._force</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l113"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:113</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a> | SteeredVehicle._force</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getInsight" class="method item">
+    <h3 class="name"><code>getInsight</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number | </span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l144"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:144</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number | </span>:
                     
                 
             </div>
@@ -959,7 +2528,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l90"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:90</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l151"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:151</code></a>
         
         </p>
 
@@ -984,6 +2553,78 @@
                     
                         <span class="type">Number</span>:
                     
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getMax" class="method item">
+    <h3 class="name"><code>getMax</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l73"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:73</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                    <p>SteeredVehicle._max</p>
+
                 
             </div>
         </div>
@@ -1022,11 +2663,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#method_getPosition">Vehicle</a>:
+                <a href="../classes/Object2D.html#method_getPosition">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l141"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:141</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l79"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:79</code></a>
         
         </p>
 
@@ -1093,7 +2734,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l107"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:107</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l168"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:168</code></a>
         
         </p>
 
@@ -1160,7 +2801,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l157"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:157</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l218"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:218</code></a>
         
         </p>
 
@@ -1188,6 +2829,93 @@
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_insight" class="method item">
+    <h3 class="name"><code>insight</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l137"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:137</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -1233,7 +2961,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l81"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:81</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l142"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:142</code></a>
         
         </p>
 
@@ -1263,7 +2991,346 @@
                     
 
                     <div class="param-description">
-                         
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_max" class="method item">
+    <h3 class="name"><code>max</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>n</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l81"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:81</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">n</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onBounce" class="method item inherited">
+    <h3 class="name"><code>onBounce</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#method_onBounce">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l468"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:468</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onWrap" class="method item inherited">
+    <h3 class="name"><code>onWrap</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#method_onWrap">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l419"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:419</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_padding" class="method item inherited">
+    <h3 class="name"><code>padding</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>top</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[right]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[bottom]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[left]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#method_padding">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l124"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:124</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">top</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[right]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[bottom]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[left]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
                     </div>
 
                     
@@ -1314,11 +3381,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#method_position">Vehicle</a>:
+                <a href="../classes/Object2D.html#method_position">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l131"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:131</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l69"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:69</code></a>
         
         </p>
 
@@ -1348,6 +3415,179 @@
 
                     <div class="param-description">
                          
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_pursue" class="method item">
+    <h3 class="name"><code>pursue</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>target</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l245"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:245</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_rotate" class="method item inherited">
+    <h3 class="name"><code>rotate</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>degree</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_rotate">Object2D</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l155"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:155</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>角度を degree を元に radian 設定します</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">degree</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>0 ~ 360</p>
+
                     </div>
 
                     
@@ -1405,7 +3645,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l65"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:65</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l197"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:197</code></a>
         
         </p>
 
@@ -1434,7 +3674,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1485,11 +3725,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#method_setX">Vehicle</a>:
+                <a href="../classes/Object2D.html#method_setX">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l165"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:165</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l87"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:87</code></a>
         
         </p>
 
@@ -1569,11 +3809,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#method_setY">Vehicle</a>:
+                <a href="../classes/Object2D.html#method_setY">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l174"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:174</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l96"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:96</code></a>
         
         </p>
 
@@ -1657,7 +3897,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l98"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:98</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l159"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:159</code></a>
         
         </p>
 
@@ -1687,7 +3927,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1751,7 +3991,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l45"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:45</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_SteeredVehicle.js.html#l183"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;SteeredVehicle.js:183</code></a>
         
         </p>
 
@@ -1780,7 +4020,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1795,7 +4035,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1850,7 +4090,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l149"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:149</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l210"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:210</code></a>
         
         </p>
 
@@ -1879,7 +4119,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1940,7 +4180,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l316"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:316</code></a>
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l380"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:380</code></a>
         
         </p>
 
@@ -1969,7 +4209,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -1984,7 +4224,7 @@
                     
 
                     <div class="param-description">
-                         
+                        
                     </div>
 
                     
@@ -2008,6 +4248,91 @@
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property__position" class="property item protected inherited">
+    <h3 class="name"><code>_position</code></h3>
+    <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property__position">Object2D</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l31"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:31</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bottom" class="property item inherited">
+    <h3 class="name"><code>bottom</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#property_bottom">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l83"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:83</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>padding bottom</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_height" class="property item inherited">
     <h3 class="name"><code>height</code></h3>
     <span class="type">Number</span>
@@ -2024,11 +4349,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#property_height">Vehicle</a>:
+                <a href="../classes/Object2D.html#property_height">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l59"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:59</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l59"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:59</code></a>
         
         </p>
 
@@ -2039,6 +4364,90 @@
 
     <div class="description">
         
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_left" class="property item inherited">
+    <h3 class="name"><code>left</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#property_left">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l65"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:65</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>padding left</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_right" class="property item inherited">
+    <h3 class="name"><code>right</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#property_right">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l77"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:77</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>padding right</p>
+
     </div>
 
     
@@ -2065,11 +4474,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#property_rotation">Vehicle</a>:
+                <a href="../classes/Object2D.html#property_rotation">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l49"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:49</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l48"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:48</code></a>
         
         </p>
 
@@ -2079,7 +4488,50 @@
     </div>
 
     <div class="description">
+        <p>radian</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_top" class="property item inherited">
+    <h3 class="name"><code>top</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
         
+            
+                <p>Inherited from
+                <a href="../classes/Vehicle.html#property_top">Vehicle</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l71"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:71</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>padding top</p>
+
     </div>
 
     
@@ -2106,11 +4558,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#property_width">Vehicle</a>:
+                <a href="../classes/Object2D.html#property_width">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l54"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:54</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l54"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:54</code></a>
         
         </p>
 
@@ -2147,11 +4599,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#property_x">Vehicle</a>:
+                <a href="../classes/Object2D.html#property_x">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l39"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:39</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l38"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:38</code></a>
         
         </p>
 
@@ -2188,11 +4640,11 @@
         
             
                 <p>Inherited from
-                <a href="../classes/Vehicle.html#property_y">Vehicle</a>:
+                <a href="../classes/Object2D.html#property_y">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l44"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:44</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l43"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:43</code></a>
         
         </p>
 

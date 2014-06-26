@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Vehicle 09 Wander</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        min-width: 980px;
+        min-height: 600px;
+    }
+    .mobile body {
+        min-height: 1280px;
+    }
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        vehicle,
+        pursuer,
+        pursuer2,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 100;
+
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        vehicle.wander();
+        vehicle.update( rect.w, rect.h );
+
+        pursuer.pursue( vehicle );
+        pursuer.update( rect.w, rect.h );
+
+        pursuer2.pursue( vehicle );
+        pursuer2.update( rect.w, rect.h );
+
+        ctx.strokeStyle = "#000000";
+        vehicle.draw( ctx );
+        ctx.stroke();
+
+        ctx.strokeStyle = "#ff0000";
+        pursuer.draw( ctx );
+        ctx.stroke();
+
+        ctx.strokeStyle = "#ff00ff";
+        pursuer2.draw( ctx );
+        ctx.stroke();
+
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function init () {
+        var speed = 8,
+            force = new Sankaku.Vector2D( Math.random() * 2 - 1, Math.random() * 2 - 1 ),
+            mass = Math.random() + 1;
+
+        vehicle = new Sankaku.Wander();
+
+        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.speed( speed );
+        vehicle.mass( mass );
+//        vehicle.force( force );
+        vehicle.onBounce = function () {
+//            vehicle.force( force.reverse() );
+//            vehicle.force( new Sankaku.Vector2D( Math.random() * 2 - 1, Math.random() * 2 - 1 ) );
+            vehicle.mass( Math.random() + 1 );
+//            vehicle.speed( Sankaku.Num.random( 3, 16 ) );
+        };
+
+        vehicle.padding( 120 );
+//        vehicle.behavior( Sankaku.Vehicle.WRAP );
+
+        pursuer = new Sankaku.SteeredVehicle();
+        pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        pursuer.speed( speed * 4.5 );
+//        pursuer.behavior( Sankaku.Vehicle.WRAP );
+
+        pursuer2 = new Sankaku.SteeredVehicle();
+        pursuer2.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        pursuer2.speed( speed * 4 );
+//        pursuer2.behavior( Sankaku.Vehicle.WRAP );
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

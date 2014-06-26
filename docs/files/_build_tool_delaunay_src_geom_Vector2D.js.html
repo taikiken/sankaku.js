@@ -41,7 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Circle.html">Circle</a></li>
+            
                 <li><a href="../classes/Delaunay.html">Delaunay</a></li>
+            
+                <li><a href="../classes/Distribute.html">Distribute</a></li>
+            
+                <li><a href="../classes/Flock.html">Flock</a></li>
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
@@ -51,9 +57,13 @@
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
+                <li><a href="../classes/Object2D.html">Object2D</a></li>
+            
                 <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
+            
+                <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
@@ -62,6 +72,8 @@
                 <li><a href="../classes/Vector2D.html">Vector2D</a></li>
             
                 <li><a href="../classes/Vehicle.html">Vehicle</a></li>
+            
+                <li><a href="../classes/Wander.html">Wander</a></li>
             
             </ul>
 
@@ -282,7 +294,6 @@
          * @return {Vector2D}
          */
         p.addVector = function ( a, b ) {
-
             this.x = a.x + b.x;
             this.y = a.y + b.y;
 
@@ -598,16 +609,18 @@
 
         /**
          * @method setAngle
-         * @param {number} value
+         * @param {number} value radian
          * @return {Vector2D}
          */
         p.setAngle = function ( value ) {
             var len = this.length();
 
-//            this.x = Math.cos( value ) * len;
-//            this.y = Math.sin( value ) * len;
-            this.x = Math.cos( value );
-            this.y = Math.sin( value );
+            len = len || 0.001;
+
+            this.x = Math.cos( value ) * len;
+            this.y = Math.sin( value ) * len;
+//            this.x = Math.cos( value );
+//            this.y = Math.sin( value );
 
             return this;
         };
@@ -716,8 +729,9 @@
          * @return {Vector2D}
          */
         p.reverse = function () {
-            this.x *= -1;
-            this.y *= -1;
+//            this.x *= -1;
+//            this.y *= -1;
+            this.negate();
 
             return this;
         };
