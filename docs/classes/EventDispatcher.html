@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Num</title>
+    <title>EventDispatcher</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -120,7 +120,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Num Class</h1>
+                        <h1>EventDispatcher Class</h1>
 <div class="box meta">
     
 
@@ -128,7 +128,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l22"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:22</code></a>
+            Defined in: <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l5"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:5</code></a>
         </div>
     
 
@@ -144,15 +144,24 @@
 
 
 <div class="box intro">
-    <p>数値ヘルパー</p>
+    <p>カスタム Event を管理します<br>
+必要なClassでmixinします<br>
+mixin 後下記の4関数が使用できるようになります<br>
+addEventListener<br>
+hasEventListener<br>
+removeEventListener<br>
+dispatchEvent<br></p>
+<pre class="code prettyprint"><code> function SomeClass () {}
+ // mixin
+ Sankaku.EventDispatcher.initialize( SomeClass.prototype );</code></pre>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Num" class="method item">
-    <h3 class="name"><code>Num</code></h3>
+        <div id="method_EventDispatcher" class="method item">
+    <h3 class="name"><code>EventDispatcher</code></h3>
 
     
         <span class="paren">()</span>
@@ -183,7 +192,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l22"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:22</code></a>
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l5"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:5</code></a>
         
         </p>
 
@@ -230,14 +239,28 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_deg2rad">deg2rad</a>
+                                <a href="#method_addEventListener">addEventListener</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_is">is</a>
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_hasEventListener">hasEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_initialize">initialize</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -246,10 +269,8 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_random">random</a>
+                                <a href="#method_removeEventListener">removeEventListener</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -270,8 +291,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_deg2rad" class="method item">
-    <h3 class="name"><code>deg2rad</code></h3>
+                    <div id="method_addEventListener" class="method item">
+    <h3 class="name"><code>addEventListener</code></h3>
 
     
         <div class="args">
@@ -279,7 +300,13 @@
             
                 <li class="arg">
                     
-                        <code>degree</code>
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
                     
                 </li>
             
@@ -287,10 +314,6 @@
         </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Number</span>
-        </span>
     
 
     
@@ -316,7 +339,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l65"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:65</code></a>
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l29"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:29</code></a>
         
         </p>
 
@@ -327,7 +350,23 @@
     </div>
 
     <div class="description">
-        <p>degree を radian へ変換します</p>
+        <p>イベントにハンドラを登録します<br>
+ハンドラ内のthisはイベント発生元になるので注意が必要です<br>
+this参照を変えないために bind を使用する方法があります</p>
+<pre class="code prettyprint"><code> function EventReceive () {
+     var example = new ExampleClass();
+
+     example.addEventListener( &quot;other&quot;, onOtherHandler );
+     example.addEventListener( &quot;example&quot;, this.onBoundHandler.bind( this ) );
+ }
+
+ EventReceive.prototype.onOtherHandler ( event ) {
+     console.log( this );// ExampleClass
+ }
+
+ EventReceive.prototype.onBoundHandler ( event ) {
+     console.log( this );// EventReceive
+ }</code></pre>
 
     </div>
 
@@ -339,14 +378,30 @@
             
                 <li class="param">
                     
-                        <code class="param-name">degree</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>degree 0 ~ 360</p>
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
 
                     </div>
 
@@ -358,27 +413,13 @@
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Number</span>:
-                    
-                    <p>radian 0 ~ 2 * PI</p>
-
-                
-            </div>
-        </div>
-    
 
     
 </div>
 
                 
-                    <div id="method_is" class="method item">
-    <h3 class="name"><code>is</code></h3>
+                    <div id="method_dispatchEvent" class="method item">
+    <h3 class="name"><code>dispatchEvent</code></h3>
 
     
         <div class="args">
@@ -386,7 +427,102 @@
             
                 <li class="arg">
                     
-                        <code>obj</code>
+                        <code>event</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l123"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:123</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>event発生をlistenerに通知します</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">event</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>require event.type:String, { type: &quot;some_event&quot;, [currentTarget: this] }</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_hasEventListener" class="method item">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
                     
                 </li>
             
@@ -407,8 +543,6 @@
     
 
     
-        <span class="flag static">static</span>
-    
 
     
 
@@ -425,7 +559,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l35"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:35</code></a>
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l73"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:73</code></a>
         
         </p>
 
@@ -436,8 +570,7 @@
     </div>
 
     <div class="description">
-        <p>数値か否かをチェックします</p>
-
+        
     </div>
 
     
@@ -448,14 +581,31 @@
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
+
                     </div>
 
                     
@@ -474,7 +624,7 @@
                     
                         <span class="type">Boolean</span>:
                     
-                    <p>true: 数値</p>
+                    <p>event type へ listener 登録が有るか無いかの真偽値を返します</p>
 
                 
             </div>
@@ -485,8 +635,8 @@
 </div>
 
                 
-                    <div id="method_random" class="method item">
-    <h3 class="name"><code>random</code></h3>
+                    <div id="method_initialize" class="method item">
+    <h3 class="name"><code>initialize</code></h3>
 
     
         <div class="args">
@@ -494,13 +644,7 @@
             
                 <li class="arg">
                     
-                        <code>min</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[max]</code>
+                        <code>object</code>
                     
                 </li>
             
@@ -508,10 +652,6 @@
         </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Int</span>
-        </span>
     
 
     
@@ -539,7 +679,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_util_Num.js.html#l46"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;util&#x2F;Num.js:46</code></a>
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l152"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:152</code></a>
         
         </p>
 
@@ -550,9 +690,19 @@
     </div>
 
     <div class="description">
-        <p>範囲指定し乱数を生成します
-<br>結果は int になります
-<br>max 省略時は 0 ~ min 間の乱数を発生させます</p>
+        <p>EventDispatcher mixin <br></p>
+<p>addEventListener<br>
+hasEventListener<br>
+removeEventListener<br>
+dispatchEvent<br>
+をobjectへ追加します</p>
+<pre class="code prettyprint"><code> function SomeClass () {}
+ // mixin
+ Sankaku.EventDispatcher.initialize( SomeClass.prototype );
+
+ var someObject = {};
+ // mixin
+ Sankaku.EventDispatcher.initialize( someObject );</code></pre>
 
     </div>
 
@@ -564,24 +714,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">min</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[max]</code>
-                        <span class="type">Number</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                        <code class="param-name">object</code>
+                        <span class="type">Object</span>
                     
 
                     
@@ -598,19 +732,117 @@
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
 
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Int</span>:
-                    
-                    <p>乱数を返します</p>
+    
+</div>
 
                 
-            </div>
+                    <div id="method_removeEventListener" class="method item">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
         </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l94"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:94</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>event type から listener を削除します<br>
+メモリーリークの原因になるので不要になったlistenerは必ずremoveEventListenerを実行します</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     

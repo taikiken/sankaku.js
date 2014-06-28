@@ -15,6 +15,15 @@
     var Sankaku = window.Sankaku;
 
     Sankaku.Vector2D = ( function (){
+        var _floor = Math.floor,
+            _ceil = Math.ceil,
+            _round = Math.round,
+            _cos = Math.cos,
+            _sin = Math.sin,
+            _atan2 = Math.atan2,
+            _sqrt = Math.sqrt,
+            _min = Math.min,
+            _acos = Math.acos;
         /**
          * 二次元ベクトルクラス
          * @class Vector2D
@@ -28,6 +37,8 @@
         }
 
         var p = Vector2D.prototype;
+
+        p.constructor = Vector2D;
 
         /**
          * ベクトルを可視化するのに用います
@@ -393,8 +404,8 @@
          * @return {Vector2D}
          */
         p.floor = function () {
-            this.x = Math.floor( this.x );
-            this.y = Math.floor( this.y );
+            this.x = _floor( this.x );
+            this.y = _floor( this.y );
 
             return this;
         };
@@ -404,8 +415,8 @@
          * @return {Vector2D}
          */
         p.ceil = function () {
-            this.x = Math.ceil( this.x );
-            this.y = Math.ceil( this.y );
+            this.x = _ceil( this.x );
+            this.y = _ceil( this.y );
 
             return this;
         };
@@ -415,8 +426,8 @@
          * @return {Vector2D}
          */
         p.round = function () {
-            this.x = Math.round( this.x );
-            this.y = Math.round( this.y );
+            this.x = _round( this.x );
+            this.y = _round( this.y );
 
             return this;
         };
@@ -426,8 +437,8 @@
          * @return {Vector2D}
          */
         p.roundToZero = function () {
-            this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
-            this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
+            this.x = ( this.x < 0 ) ? _ceil( this.x ) : _floor( this.x );
+            this.y = ( this.y < 0 ) ? _ceil( this.y ) : _floor( this.y );
 
             return this;
         };
@@ -465,7 +476,7 @@
          * @return {number}
          */
         p.length = function () {
-            return Math.sqrt( this.lengthSq() );
+            return _sqrt( this.lengthSq() );
         };
 
         /**
@@ -495,10 +506,8 @@
 
             len = len || 0.001;
 
-            this.x = Math.cos( value ) * len;
-            this.y = Math.sin( value ) * len;
-//            this.x = Math.cos( value );
-//            this.y = Math.sin( value );
+            this.x = _cos( value ) * len;
+            this.y = _sin( value ) * len;
 
             return this;
         };
@@ -509,7 +518,7 @@
          * @return {number}
          */
         p.angle = function () {
-            return Math.atan2( this.y, this.x );
+            return _atan2( this.y, this.x );
         };
 
         /**
@@ -542,7 +551,7 @@
          * @return {number}
          */
         p.distance = function ( v ) {
-            return Math.sqrt( this.distanceSq( v ) );
+            return _sqrt( this.distanceSq( v ) );
         };
 
         /**
@@ -597,7 +606,7 @@
          * @return {Vector2D}
          */
         p.truncate = function ( max ) {
-            var min = Math.min( max, this.length() );
+            var min = _min( max, this.length() );
             return this.setLength( min );
         };
 
@@ -662,7 +671,7 @@
                 v2 = v2.clone().normalize();
             }
 
-            return Math.acos( v1.dot( v2 ) );
+            return _acos( v1.dot( v2 ) );
         };
 
         return Vector2D;

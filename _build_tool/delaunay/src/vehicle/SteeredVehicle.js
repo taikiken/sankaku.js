@@ -44,6 +44,8 @@
 
         var p = SteeredVehicle.prototype;
 
+        p.constructor = SteeredVehicle;
+
         /**
          * @method clone
          * @return {Object2D}
@@ -195,6 +197,7 @@
         };
 
         /**
+         * 追求
          * @method seek
          * @param {Vector2D} target
          */
@@ -207,6 +210,7 @@
         };
 
         /**
+         * 逃避
          * @method flee
          * @param {Vector2D} target
          */
@@ -219,6 +223,7 @@
         };
 
         /**
+         * 到着
          * @method arrive
          * @param {Vector2D} target
          */
@@ -243,6 +248,7 @@
         };
 
         /**
+         * 追跡
          * @method pursue
          * @param {Vehicle} target
          */
@@ -256,6 +262,7 @@
         };
 
         /**
+         * 回避
          * @method evade
          * @param {Vehicle} target
          */
@@ -269,6 +276,7 @@
         };
 
         /**
+         * 物体回避
          * @method avoid
          * @param {Array} targets
          */

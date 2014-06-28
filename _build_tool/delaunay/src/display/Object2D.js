@@ -65,6 +65,7 @@
 
         var p = Object2D.prototype;
 
+        p.constructor = Object2D;
 
         /**
          * @method position

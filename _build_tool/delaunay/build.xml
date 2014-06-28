@@ -26,6 +26,8 @@
         <filelist id="file-list" dir="${src}">
             <file name="Sankaku.js"/>
 
+            <file name="events/EventDispatcher.js"/>
+
             <file name="util/Iro.js"/>
             <file name="util/List.js"/>
             <file name="util/Num.js"/>
@@ -48,6 +50,7 @@
             <file name="vehicle/SteeredVehicle.js"/>
             <file name="vehicle/Wander.js"/>
             <file name="vehicle/Flock.js"/>
+            <file name="vehicle/FollowPath.js"/>
 
         </filelist>
 

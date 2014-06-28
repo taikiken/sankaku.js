@@ -17,9 +17,7 @@
         Object2D = Sankaku.Object2D;
 
     Sankaku.Vehicle = ( function (){
-        var _cos = Math.cos,
-            _sin = Math.sin,
-            _abs = Math.abs;
+        var _abs = Math.abs;
 
         /**
          * @class Vehicle
@@ -29,38 +27,11 @@
         function Vehicle () {
             Object2D.call( this );
 
-//            this._position = new Vector2D();
             this._velocity = new Vector2D();
 
             this._mass = 1.0;
             this._speed = 10;
             this._behavior = Vehicle.BOUNCE;
-
-//            /**
-//             * @property x
-//             * @type {number}
-//             */
-//            this.x = 0;
-//            /**
-//             * @property y
-//             * @type {number}
-//             */
-//            this.y = 0;
-//            /**
-//             * @property rotation
-//             * @type {number}
-//             */
-//            this.rotation = 0;
-//            /**
-//            * @property width
-//            * @type {number}
-//            */
-//            this.width = 20;
-//            /**
-//             * @property height
-//             * @type {number}
-//             */
-//            this.height = 10;
 
             /**
              * padding left
@@ -104,6 +75,8 @@
         Vehicle.BOUNCE = "vehicle_bounce";
 
         var p = Vehicle.prototype;
+
+        p.constructor = Vehicle;
 
         /**
          * @method clone

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=980">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
-<title>Canvas Note - boids | イナヅマTV</title>
+<title>Canvas Note - 16 Follow | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -14,6 +14,7 @@ html, body {
 body {
     min-width: 980px;
     min-height: 600px;
+    background-color: #282b33;
 }
 .mobile body {
     min-height: 1280px;
@@ -37,9 +38,7 @@ body {
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
-<div id="debug">
-    <label for="debug_on">DEBUG ON<input type="checkbox" name="debug_on" id="debug_on" value="yes" /></label>
-</div>
+
 <script type="text/javascript">
 ( function ( window ){
     "use strict";
@@ -55,21 +54,15 @@ body {
 
         vehicle,
 
-        flocks = [],
+        paths = [],
+        pursuers = [],
 
         ww, wh,
         prev_ww = -1,
         prev_wh = -1,
-        padding = 15,
+        padding = 100,
         jams = [],
         debug_mode = false;
-
-    // debug button
-    document.getElementById( "debug_on" ).addEventListener( "change", function () {
-
-        debug_mode = !debug_mode;
-    }, false );
-
 
     function size () {
         ww = document.body.clientWidth;
@@ -91,33 +84,31 @@ body {
     }
 
     function draw ( rect ) {
-        vehicle.wander();
-        vehicle.avoid( jams );
+        vehicle.follow( paths, true );
         vehicle.update( rect.w, rect.h );
 
-        var i, limit, flock;
+//        ctx.strokeStyle = "#ff0000";
+//        vehicle.draw( ctx );
+//        ctx.stroke();
 
-        if ( debug_mode ) {
-            for ( i = 0, limit = jams.length; i < limit; i++ ) {
-                var jam = jams[ i ];
-                jam.draw( ctx );
-            }
+        var i, limit;
 
-            ctx.strokeStyle = "#ff0000";
-            vehicle.draw( ctx );
-            ctx.stroke();
-        }
+//        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+//            var jam = jams[ i ];
+//            jam.draw( ctx );
+//        }
 
-        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
-            flock = flocks[ i ];
+        for ( i = 0, limit = pursuers.length; i < limit; i++ ) {
+            var p = pursuers[ i ];
 
-            flock.pursue( vehicle );
-            flock.flock( flocks );
-            flock.update( rect.w, rect.h );
+            p.pursue( vehicle );
+            p.update( rect.w, rect.h );
 
-            flock.draw( ctx );
+            ctx.fillStyle = p.color;
+            p.draw( ctx );
             ctx.fill();
         }
+
     }
 
     function loop () {
@@ -135,7 +126,7 @@ body {
             random = Sankaku.Num.random,
             Iro = Sankaku.Iro,
 
-            limit = 45,
+            limit = 30,
             i, circle,
             position,
             max_r;
@@ -143,10 +134,11 @@ body {
         max_r = Math.min( rect.w, rect.h ) * 0.5;
 
         for ( i = 0; i < limit; i++ ) {
-            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            circle = new Sankaku.Circle( position.x, position.y, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+            position = Sankaku.Distribute.circle( max_r, rect.w - padding * 2, rect.h - padding * 2 );
+            circle = new Sankaku.Circle( position.x + padding, position.y + padding, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
 
             jams.push( circle );
+            paths.push( new Sankaku.Vector2D( position.x + padding, position.y + padding ) );
         }
     }
 
@@ -155,29 +147,27 @@ body {
 
         var rect = size(),
             speed = 7,
-            i, flock;
+            i, pursuer;
 
-        vehicle = new Sankaku.Wander();
+        vehicle = new Sankaku.FollowPath();
         vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.speed( speed );
-        vehicle.mass( 0.00001 );
-        vehicle.padding( padding );
-        vehicle.avoidDistance( 25 );
+        vehicle.behavior( Sankaku.Vehicle.WRAP );
+//        vehicle.speed( speed );
+//        vehicle.mass( 0.00001 );
+//        vehicle.padding( padding );
+//        vehicle.avoidDistance( 25 );
 
-        for ( i = 0; i < 666; i++ ) {
+        for ( i = 0; i < 888; i++ ) {
 
-            flock = new Sankaku.Flock();
-            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.speed( speed );
-            flock.mass( 1.5 );
-            flock.behavior( Sankaku.Vehicle.WRAP );
-            flock.width = 6;
-            flock.height = 3;
-            flock.flockClose( 12 );
+            pursuer = new Sankaku.SteeredVehicle();
+            pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.speed( speed * Sankaku.Num.random( 150, 300 ) * 0.01 );
+            pursuer.width *= 0.4;
+            pursuer.height *= 0.4;
+            pursuer.behavior( Sankaku.Vehicle.WRAP );
+            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
 
-
-            flocks.push( flock );
+            pursuers.push( pursuer );
         }
 
         loop();

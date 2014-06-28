@@ -18,8 +18,8 @@
     ;
 
     Sankaku.Flock = ( function (){
-        //
         /**
+         * 群行動
          * @class Flock
          * @extend SteeredVehicle
          * @constructor
@@ -35,6 +35,8 @@
         Sankaku.extend( SteeredVehicle, Flock );
 
         var p = Flock.prototype;
+
+        p.constructor = Flock;
 
         /**
          * @clone

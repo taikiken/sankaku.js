@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Canvas Note - 17 Follow | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 1280px;
+    min-height: 600px;
+    background-color: #282b33;
+}
+.mobile body {
+    min-height: 640px;
+}
+#debug {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
+    overflow: hidden;
+}
+
+</style>
+<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        vehicle,
+
+        paths = [],
+        jams = [],
+        pursuers = [],
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 100,
+        debug_mode = false;
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+//        vehicle.follow( paths, true );
+//        vehicle.update( rect.w, rect.h );
+//
+//        ctx.strokeStyle = "#ff0000";
+//        vehicle.draw( ctx );
+//        ctx.stroke();
+
+        var i, limit;
+
+//        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+//            var jam = jams[ i ];
+//            jam.draw( ctx );
+//        }
+
+        for ( i = 0, limit = pursuers.length; i < limit; i++ ) {
+            var p = pursuers[ i ];
+
+//            p.pursue( vehicle );
+            p.follow( paths, true );
+            p.update( rect.w, rect.h );
+
+            ctx.fillStyle = p.color;
+            p.draw( ctx );
+            ctx.fill();
+        }
+
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            limit = 30,
+            i, circle,
+            position,
+            max_r;
+
+        max_r = Math.min( rect.w, rect.h ) * 0.5;
+
+//        for ( i = 0; i < 22; i++ ) {
+//            position = Sankaku.Distribute.circle( max_r, rect.w - padding * 2, rect.h - padding * 2 );
+//            circle = new Sankaku.Circle( position.x + padding, position.y + padding, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+//
+//            jams.push( circle );
+//            paths.push( new Sankaku.Vector2D( position.x + padding, position.y + padding ) );
+//        }
+
+        var h2 = document.body.clientHeight * 0.5,
+            x, y;
+
+        i = 0;
+        x = 10;
+        y = h2;
+        // 0
+//        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+//        jams[ i++ ] = circle;
+
+        x = 30;
+        y = h2;
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x = 40;
+        // 1 I
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 2
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 80;
+        // 3 N
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 4
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        x += 100;
+        // 5
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 6
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0;
+        // 7 A
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 8
+        circle = new Sankaku.Circle( x + 80, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 9
+        circle = new Sankaku.Circle( x + 80 + 80, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 10
+        circle = new Sankaku.Circle( x + 40, y - 80, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 11
+        circle = new Sankaku.Circle( x + 40 + 80, y - 80, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 80 + 80, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 40 + 160;
+        // z 12
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x - 40, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0 + 100;
+        // u
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0 + 100;
+        // M
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 50, y - 110, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0 + 100;
+        // 7 A
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 8
+        circle = new Sankaku.Circle( x + 80, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 9
+        circle = new Sankaku.Circle( x + 80 + 80, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 10
+        circle = new Sankaku.Circle( x + 40, y - 80, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        // 11
+        circle = new Sankaku.Circle( x + 40 + 80, y - 80, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 80 + 80, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0 + 160;
+        // T
+        circle = new Sankaku.Circle( x + 50, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 50, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+        x += 0 + 100;
+        // V
+        circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 50, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 100, y - 160, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+        circle = new Sankaku.Circle( x + 50, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
+
+
+        // last
+        circle = new Sankaku.Circle( 1270, h2, 4, "#cccccc" );
+        jams[ i ] = circle;
+        circle = new Sankaku.Circle( 1270, h2 + 10, 4, "#cccccc" );
+        jams[ i ] = circle;
+
+        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+
+            var jam = jams[ i ];
+            paths.push( new Sankaku.Vector2D( jam.x, jam.y ) );
+        }
+    }
+
+    function init () {
+        hurdle();
+
+        var rect = size(),
+            speed = 5,
+            i, pursuer;
+
+        var h2 = document.body.clientHeight * 0.5;
+
+//        vehicle = new Sankaku.FollowPath();
+//        vehicle.position( new Sankaku.Vector2D( 0, h2 ) );
+//        vehicle.behavior( Sankaku.Vehicle.WRAP );
+//        vehicle.speed( speed );
+//        vehicle.mass( 0.00001 );
+//        vehicle.padding( padding );
+//        vehicle.avoidDistance( 25 );
+
+        for ( i = 0; i < 3333; i++ ) {
+
+//            pursuer = new Sankaku.SteeredVehicle();
+            pursuer = new Sankaku.FollowPath();
+//            pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.position( new Sankaku.Vector2D( 0, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//            pursuer.speed( speed * Sankaku.Num.random( 120, 150 ) * 0.01 );
+            pursuer.speed( Math.random() * speed + speed * 0.5 );
+//            pursuer.speed( speed );
+            pursuer.width *= 0.4;
+            pursuer.height *= 0.4;
+            pursuer.behavior( Sankaku.Vehicle.WRAP );
+            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+
+            pursuers.push( pursuer );
+        }
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

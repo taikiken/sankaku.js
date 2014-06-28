@@ -212,6 +212,189 @@ Sankaku.version = "0.1.0";
     };
 
 }( window ) );
+( function ( Sankaku ){
+    "use strict";
+
+    Sankaku.EventDispatcher = ( function (){
+        /**
+         * カスタム Event を管理します<br>
+         * 必要なClassでmixinします<br>
+         * mixin 後下記の4関数が使用できるようになります<br>
+         * addEventListener<br>
+         * hasEventListener<br>
+         * removeEventListener<br>
+         * dispatchEvent<br>
+         *
+         *      function SomeClass () {}
+         *      // mixin
+         *      Sankaku.EventDispatcher.initialize( SomeClass.prototype );
+         *
+         * @class EventDispatcher
+         * @constructor
+         */
+        function EventDispatcher () {
+//            this._listeners = {};
+        }
+
+        var p = EventDispatcher.prototype;
+
+        p.constructor = Sankaku.EventDispatcher;
+
+        /**
+         * イベントにハンドラを登録します<br>
+         * ハンドラ内のthisはイベント発生元になるので注意が必要です<br>
+         * this参照を変えないために bind を使用する方法があります
+         *
+         *      function EventReceive () {
+         *          var example = new ExampleClass();
+         *
+         *          example.addEventListener( "other", onOtherHandler );
+         *          example.addEventListener( "example", this.onBoundHandler.bind( this ) );
+         *      }
+         *
+         *      EventReceive.prototype.onOtherHandler ( event ) {
+         *          console.log( this );// ExampleClass
+         *      }
+         *
+         *      EventReceive.prototype.onBoundHandler ( event ) {
+         *          console.log( this );// EventReceive
+         *      }
+         *
+         * @method addEventListener
+         * @param {string} type event type
+         * @param {function} listener event handler
+         */
+        p.addEventListener = function ( type, listener ) {
+
+            if ( typeof this._listeners === "undefined") {
+
+                this._listeners = {};
+            }
+
+            var listeners = this._listeners;
+
+            if ( typeof listeners[ type ] === "undefined" ) {
+
+                listeners[ type ] = [];
+            }
+
+            if ( listeners[ type ].indexOf( listener ) === - 1 ) {
+
+                listeners[ type ].push( listener );
+            }
+        };
+
+        /**
+         * @method hasEventListener
+         * @param {string} type event type
+         * @param {function} listener event handler
+         * @return {boolean} event type へ listener 登録が有るか無いかの真偽値を返します
+         */
+        p.hasEventListener = function ( type, listener ) {
+
+            var listeners = this._listeners;
+
+            if ( typeof listeners === "undefined") {
+
+                return false;
+            } else if ( typeof listener[ type ] !== "undefined" && listeners[ type ].indexOf( listener ) !== - 1 ) {
+
+                return true;
+            }
+
+            return false;
+        };
+
+        /**
+         * event type から listener を削除します<br>
+         * メモリーリークの原因になるので不要になったlistenerは必ずremoveEventListenerを実行します
+         *
+         * @method removeEventListener
+         * @param {string} type event type
+         * @param {function} listener event handler
+         */
+        p.removeEventListener = function ( type, listener ) {
+            if ( typeof this._listeners === "undefined") {
+
+                return;
+            }
+
+            var listeners = this._listeners,
+                listeners_types = listeners[ type ],
+                index;
+
+            if ( typeof listeners_types !== "undefined" ) {
+
+                index = listeners_types.indexOf( listener );
+
+                if ( index !== -1 ) {
+
+                    listeners_types.splice( index, 1 );
+                }
+            }
+        };
+
+        /**
+         * event発生をlistenerに通知します
+         *
+         * @method dispatchEvent
+         * @param {Object} event require event.type:String, { type: "some_event", [currentTarget: this] }
+         */
+        p.dispatchEvent = function ( event ) {
+            var listeners = this._listeners,
+                listeners_types,
+                i, limit;
+
+            if ( typeof listeners === "undefined" || typeof event.type === "undefined" ) {
+
+                return;
+            }
+
+            listeners_types = listeners[ event.type ];
+
+            if ( typeof listeners_types !== "undefined" ) {
+
+                event.target = this;
+
+                for ( i = 0, limit = listeners_types.length; i < limit; i++ ) {
+
+                    listeners_types[ i ].call( this, event );
+                }
+            }
+        };
+
+        /**
+         * EventDispatcher mixin <br>
+         *
+         * addEventListener<br>
+         * hasEventListener<br>
+         * removeEventListener<br>
+         * dispatchEvent<br>
+         * をobjectへ追加します
+         *
+         *      function SomeClass () {}
+         *      // mixin
+         *      Sankaku.EventDispatcher.initialize( SomeClass.prototype );
+         *
+         *      var someObject = {};
+         *      // mixin
+         *      Sankaku.EventDispatcher.initialize( someObject );
+         *
+         * @method initialize
+         * @param {Object} object
+         * @static
+         */
+        EventDispatcher.initialize = function ( object ) {
+            object.addEventListener = p.addEventListener;
+            object.hasEventListener = p.hasEventListener;
+            object.removeEventListener = p.removeEventListener;
+            object.dispatchEvent = p.dispatchEvent;
+        };
+
+        return EventDispatcher;
+    }() );
+
+}( window.Sankaku ) );
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
@@ -729,7 +912,6 @@ Sankaku.version = "0.1.0";
         Sankaku = window.Sankaku;
 
     Sankaku.Triangle = ( function (){
-        //
         /**
          *
          * @class Triangle
@@ -779,6 +961,8 @@ Sankaku.version = "0.1.0";
         }
 
         var p = Triangle.prototype;
+
+        p.constructor = Triangle;
 
         /**
          * @method draw
@@ -1097,6 +1281,15 @@ Sankaku.version = "0.1.0";
     var Sankaku = window.Sankaku;
 
     Sankaku.Vector2D = ( function (){
+        var _floor = Math.floor,
+            _ceil = Math.ceil,
+            _round = Math.round,
+            _cos = Math.cos,
+            _sin = Math.sin,
+            _atan2 = Math.atan2,
+            _sqrt = Math.sqrt,
+            _min = Math.min,
+            _acos = Math.acos;
         /**
          * 二次元ベクトルクラス
          * @class Vector2D
@@ -1110,6 +1303,8 @@ Sankaku.version = "0.1.0";
         }
 
         var p = Vector2D.prototype;
+
+        p.constructor = Vector2D;
 
         /**
          * ベクトルを可視化するのに用います
@@ -1475,8 +1670,8 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.floor = function () {
-            this.x = Math.floor( this.x );
-            this.y = Math.floor( this.y );
+            this.x = _floor( this.x );
+            this.y = _floor( this.y );
 
             return this;
         };
@@ -1486,8 +1681,8 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.ceil = function () {
-            this.x = Math.ceil( this.x );
-            this.y = Math.ceil( this.y );
+            this.x = _ceil( this.x );
+            this.y = _ceil( this.y );
 
             return this;
         };
@@ -1497,8 +1692,8 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.round = function () {
-            this.x = Math.round( this.x );
-            this.y = Math.round( this.y );
+            this.x = _round( this.x );
+            this.y = _round( this.y );
 
             return this;
         };
@@ -1508,8 +1703,8 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.roundToZero = function () {
-            this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
-            this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
+            this.x = ( this.x < 0 ) ? _ceil( this.x ) : _floor( this.x );
+            this.y = ( this.y < 0 ) ? _ceil( this.y ) : _floor( this.y );
 
             return this;
         };
@@ -1547,7 +1742,7 @@ Sankaku.version = "0.1.0";
          * @return {number}
          */
         p.length = function () {
-            return Math.sqrt( this.lengthSq() );
+            return _sqrt( this.lengthSq() );
         };
 
         /**
@@ -1577,10 +1772,8 @@ Sankaku.version = "0.1.0";
 
             len = len || 0.001;
 
-            this.x = Math.cos( value ) * len;
-            this.y = Math.sin( value ) * len;
-//            this.x = Math.cos( value );
-//            this.y = Math.sin( value );
+            this.x = _cos( value ) * len;
+            this.y = _sin( value ) * len;
 
             return this;
         };
@@ -1591,7 +1784,7 @@ Sankaku.version = "0.1.0";
          * @return {number}
          */
         p.angle = function () {
-            return Math.atan2( this.y, this.x );
+            return _atan2( this.y, this.x );
         };
 
         /**
@@ -1624,7 +1817,7 @@ Sankaku.version = "0.1.0";
          * @return {number}
          */
         p.distance = function ( v ) {
-            return Math.sqrt( this.distanceSq( v ) );
+            return _sqrt( this.distanceSq( v ) );
         };
 
         /**
@@ -1679,7 +1872,7 @@ Sankaku.version = "0.1.0";
          * @return {Vector2D}
          */
         p.truncate = function ( max ) {
-            var min = Math.min( max, this.length() );
+            var min = _min( max, this.length() );
             return this.setLength( min );
         };
 
@@ -1744,7 +1937,7 @@ Sankaku.version = "0.1.0";
                 v2 = v2.clone().normalize();
             }
 
-            return Math.acos( v1.dot( v2 ) );
+            return _acos( v1.dot( v2 ) );
         };
 
         return Vector2D;
@@ -1817,6 +2010,7 @@ Sankaku.version = "0.1.0";
 
         var p = Object2D.prototype;
 
+        p.constructor = Object2D;
 
         /**
          * @method position
@@ -2031,6 +2225,8 @@ Sankaku.version = "0.1.0";
 
         var p = Shape.prototype;
 
+        p.constructor = Shape;
+
         /**
          * @method getRadius
          * @return {number}
@@ -2210,6 +2406,8 @@ Sankaku.version = "0.1.0";
 
         var p = Circle.prototype;
 
+        p.constructor = Circle;
+
         /**
          * @method getRadius
          * @return {number}
@@ -2263,9 +2461,7 @@ Sankaku.version = "0.1.0";
         Object2D = Sankaku.Object2D;
 
     Sankaku.Vehicle = ( function (){
-        var _cos = Math.cos,
-            _sin = Math.sin,
-            _abs = Math.abs;
+        var _abs = Math.abs;
 
         /**
          * @class Vehicle
@@ -2275,38 +2471,11 @@ Sankaku.version = "0.1.0";
         function Vehicle () {
             Object2D.call( this );
 
-//            this._position = new Vector2D();
             this._velocity = new Vector2D();
 
             this._mass = 1.0;
             this._speed = 10;
             this._behavior = Vehicle.BOUNCE;
-
-//            /**
-//             * @property x
-//             * @type {number}
-//             */
-//            this.x = 0;
-//            /**
-//             * @property y
-//             * @type {number}
-//             */
-//            this.y = 0;
-//            /**
-//             * @property rotation
-//             * @type {number}
-//             */
-//            this.rotation = 0;
-//            /**
-//            * @property width
-//            * @type {number}
-//            */
-//            this.width = 20;
-//            /**
-//             * @property height
-//             * @type {number}
-//             */
-//            this.height = 10;
 
             /**
              * padding left
@@ -2350,6 +2519,8 @@ Sankaku.version = "0.1.0";
         Vehicle.BOUNCE = "vehicle_bounce";
 
         var p = Vehicle.prototype;
+
+        p.constructor = Vehicle;
 
         /**
          * @method clone
@@ -2767,6 +2938,8 @@ Sankaku.version = "0.1.0";
 
         var p = SteeredVehicle.prototype;
 
+        p.constructor = SteeredVehicle;
+
         /**
          * @method clone
          * @return {Object2D}
@@ -3080,11 +3253,14 @@ Sankaku.version = "0.1.0";
             this._distance = 10;
             this._radius = 5;
             this._range = 1;
+            this._range2 = this._range * 0.5;
         }
 
         Sankaku.extend( SteeredVehicle, Wander );
 
         var p = Wander.prototype;
+
+        p.constructor = Wander;
 
         /**
          * @method angle
@@ -3140,6 +3316,7 @@ Sankaku.version = "0.1.0";
          */
         p.range = function ( n ) {
             this._range = n;
+            this._range2 = n * 0.5;
         };
 
         /**
@@ -3160,8 +3337,7 @@ Sankaku.version = "0.1.0";
             offset.setLength( this._radius );
             offset.setAngle( this._angle );
 
-            this._angle = _rand() * this._range - this._range * 0.5;
-//            this._angle = _rand() * this._range * 2 - this._range;
+            this._angle = _rand() * this._range - this._range2;
 
             center.add( offset );
             this._force.add( center );
@@ -3208,6 +3384,8 @@ Sankaku.version = "0.1.0";
         Sankaku.extend( SteeredVehicle, Flock );
 
         var p = Flock.prototype;
+
+        p.constructor = Flock;
 
         /**
          * @clone
@@ -3338,4 +3516,81 @@ Sankaku.version = "0.1.0";
 
         return Flock;
     }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/27 - 21:21
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        SteeredVehicle = Sankaku.SteeredVehicle;
+
+    Sankaku.FollowPath = ( function (){
+        /**
+         * @class FollowPath
+         * @extends SteeredVehicle
+         * @constructor
+         */
+        function FollowPath () {
+            SteeredVehicle.call( this );
+
+            this._index = 0;
+            this._threshold = 20;
+        }
+
+        Sankaku.extend( SteeredVehicle, FollowPath );
+
+        var p = FollowPath.prototype;
+
+        p.constructor = Sankaku.FollowPath;
+
+        /**
+         * @method follow
+         * @param {Array} paths
+         * @param {boolean=false} [loop]
+         */
+        p.follow = function ( paths, loop ) {
+            loop = !!loop;
+
+            var point = paths[ this._index ];
+            if ( !point ) {
+                return;
+            }
+
+            if ( this._position.distance( point ) < this._threshold ) {
+                // under _threshold
+
+                if ( this._index >= paths.length - 1 ) {
+                    // end
+                    if ( loop ) {
+                        // is loop
+                        this._index = 0;
+                    }
+                } else {
+
+                    this._index++;
+                }
+            }
+
+            if ( this._index > paths.length - 1 && !loop ) {
+
+                this.arrive( point );
+            } else {
+
+                this.seek( point );
+            }
+        };
+
+        return FollowPath;
+    }() );
+
 }( window ) );

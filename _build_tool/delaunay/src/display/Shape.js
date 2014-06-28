@@ -81,6 +81,8 @@
 
         var p = Shape.prototype;
 
+        p.constructor = Shape;
+
         /**
          * @method getRadius
          * @return {number}

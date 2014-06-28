@@ -39,6 +39,8 @@
 
         var p = Circle.prototype;
 
+        p.constructor = Circle;
+
         /**
          * @method getRadius
          * @return {number}

@@ -21,7 +21,6 @@
         Sankaku = window.Sankaku;
 
     Sankaku.Triangle = ( function (){
-        //
         /**
          *
          * @class Triangle
@@ -71,6 +70,8 @@
         }
 
         var p = Triangle.prototype;
+
+        p.constructor = Triangle;
 
         /**
          * @method draw

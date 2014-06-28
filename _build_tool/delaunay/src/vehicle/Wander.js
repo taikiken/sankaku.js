@@ -20,6 +20,7 @@
         var _rand = Math.random;
 
         /**
+         * 徘徊
          * @class Wander
          * @extend SteeredVehicle
          * @constructor
@@ -31,11 +32,14 @@
             this._distance = 10;
             this._radius = 5;
             this._range = 1;
+            this._range2 = this._range * 0.5;
         }
 
         Sankaku.extend( SteeredVehicle, Wander );
 
         var p = Wander.prototype;
+
+        p.constructor = Wander;
 
         /**
          * @method angle
@@ -91,6 +95,7 @@
          */
         p.range = function ( n ) {
             this._range = n;
+            this._range2 = n * 0.5;
         };
 
         /**
@@ -111,8 +116,7 @@
             offset.setLength( this._radius );
             offset.setAngle( this._angle );
 
-            this._angle = _rand() * this._range - this._range * 0.5;
-//            this._angle = _rand() * this._range * 2 - this._range;
+            this._angle = _rand() * this._range - this._range2;
 
             center.add( offset );
             this._force.add( center );
