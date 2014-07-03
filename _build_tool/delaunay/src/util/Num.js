@@ -30,6 +30,11 @@
 
         var n = Num;
 
+        /**
+         * @const ONE_DEG
+         * @type {number}
+         * @default Math.PI / 180
+         */
         n.ONE_DEG = Math.PI / 180;
 
         /**

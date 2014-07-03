@@ -15,7 +15,8 @@
     var Sankaku = window.Sankaku,
         Object2D = Sankaku.Object2D,
         Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num
+        Num = Sankaku.Num,
+        Iro = Sankaku.Iro
     ;
 
     Sankaku.Shape = ( function (){
@@ -28,7 +29,7 @@
          * @param {number=20} [width]
          * @param {number=10} [height]
          * @param {String} [color] default #000000
-         * @param {boolean=false} [fill] fill or stroke, true: fill, false: stroke
+         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
         function Shape ( x, y, width, height, color, fill ) {
@@ -48,19 +49,12 @@
             }
 
             /**
-             * @property _color
-             * @type {String}
-             * @default #000000
-             * @protected
-             */
-            this._color = color || "#000000";
-            /**
              * @property _fill
-             * @type {boolean}
-             * @default false
+             * @type {string}
+             * @default stroke
              * @protected
              */
-            this._fill = !!fill;
+            this._fill = fill || Shape.STROKE;
 
             /**
              * @property _line
@@ -70,18 +64,44 @@
              */
             this._line = 1;
 
+//            /**
+//             * @property border
+//             * @default { width: 0, color: "#000000" }
+//             * @type {{width: number, color: string}}
+//             */
+//            this.border = {
+//                width: 0,
+//                color: "#000000"
+//            };
+
+
             /**
-             * @property border
-             * @default { width: 0, color: "#000000" }
-             * @type {{width: number, color: string}}
+             * @property _alpha
+             * @type {number}
+             * @default 1
+             * @protected
              */
-            this.border = {
-                width: 0,
-                color: "#000000"
-            };
+            this._alpha = 1;
+
+            this._rgb = {};
+
+            /**
+             * @property _color
+             * @type {String}
+             * @default #000000
+             * @protected
+             */
+            this._color = color || "#000000";
+            this.color( this._color );
+
+            this.border( this.line, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
+
+        Shape.FILL = "shape_fill";
+        Shape.STROKE = "shape_stroke";
+        Shape.BOTH = "shape_both";
 
         var p = Shape.prototype;
 
@@ -104,25 +124,61 @@
          * @return {Object2D}
          */
         p.clone = function () {
-            var clone = this._clone();
+            var clone = new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
 
-            clone._color = this._color;
-            clone._fill = this._fill;
+            clone.position( this._position.clone() );
+//            clone.width = this.width;
+//            clone.height = this.height;
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone._alpha = this._alpha;
+            clone._rgb = this._rgb;
+
             clone._line = this._line;
             clone._border = {
-                width: this._border.width,
-                color: this._border.color
+                line: this._border.line,
+                rgb: this._border.rgb
             };
 
             return clone;
         };
 
+        p.border = function ( line, color ) {
+            var rgb = Iro.hex2rgb( color );
+            rgb.a = this._alpha;
+
+            this._border = {
+                line: line,
+                rgb: rgb
+            };
+        };
+
+        /**
+         * @method color
+         * @param {String} hex
+         */
+        p.color = function ( hex ) {
+            this._color = hex;
+
+            this._rgb = Iro.hex2rgb( hex );
+            this._rgb.a = this._alpha;
+        };
+
+        /**
+         * @method alpha
+         * @param {Number} n
+         */
+        p.alpha = function ( n ) {
+            this._alpha = n;
+            this.color( this._color );
+        };
+
         /**
          * @method mode
-         * @param fill
+         * @param {string} fill
          */
         p.mode = function ( fill ) {
-            this._fill = !!fill;
+            this._fill = fill;
         };
         /**
          * @method getMode
@@ -153,29 +209,31 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
-            var border = this.border;
 
-            if ( this._fill ) {
+            switch ( this._fill ) {
 
-                this.fill( ctx, this._color );
+                case Shape.STROKE:
+                    this.stroke( ctx, this._line, this._rgb );
+                    break;
 
-                if ( border.width > 0  ) {
-                    // border
-                    this.stroke( ctx, border.width, border.color );
-                }
-            } else {
+                case Shape.FILL:
+                    this.fill( ctx, this._rgb );
+                    break;
 
-                this.stroke( ctx, this._line, this._color );
+                case Shape.BOTH:
+                    this.fill( ctx, this._rgb );
+                    this.stroke( ctx, this._line, this._rgb );
+                    break;
             }
         };
 
         /**
          * @method fill
          * @param {CanvasRenderingContext2D} ctx
-         * @param {string} color
+         * @param {object} color
          */
         p.fill = function ( ctx, color ) {
-            ctx.fillStyle = color;
+            ctx.fillStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
             this.paint( ctx );
 
@@ -186,11 +244,11 @@
          * @method stroke
          * @param {CanvasRenderingContext2D} ctx
          * @param {number} line
-         * @param {string} color
+         * @param {object} color
          */
         p.stroke = function ( ctx, line, color ) {
             ctx.lineWidth = line;
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
             this.paint( ctx );
 

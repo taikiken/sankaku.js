@@ -114,6 +114,7 @@
             clone.width = this.width;
             clone.height = this.height;
             clone.rotation = this.rotation;
+            clone.scale = this.scale;
 
             clone._velocity = this._velocity.clone();
             clone._mass = this._mass;

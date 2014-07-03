@@ -195,6 +195,13 @@
              * @default 10
              */
             this.height = 10;
+
+            /**
+             * @property scale
+             * @type {number}
+             * @default 1
+             */
+            this.scale = 1;
         }
 
         var p = Object2D.prototype;
@@ -244,8 +251,10 @@
         p.bounding = function () {
             var x = this.x,
                 y = this.y,
-                w2 = this.width * 0.5,
-                h2 = this.height * 0.5,
+                w1 = this.width * this.scale,
+                h1 = this.height * this.scale,
+                w2 = w1 * 0.5,
+                h2 = h1 * 0.5,
                 rotation = this.rotation,
                 a, b, c, d,
                 ax, ay,
@@ -264,6 +273,12 @@
 
             sin = _sin( rotation );
             cos = _cos( rotation );
+
+            //  a    b
+            //  ------
+            //  |    |
+            //  ------
+            //  d    c
 
             ax = -w2;
             ay = -h2;
@@ -315,6 +330,7 @@
             clone.width = this.width;
             clone.height = this.height;
             clone.rotation = this.rotation;
+            clone.scale = this.scale;
 
             return clone;
         };

@@ -30,6 +30,14 @@
         p.constructor = Zanzo;
 
         /**
+         * @method limit
+         * @param {int} n
+         */
+        p.limit = function ( n ) {
+            this._limit = n;
+        };
+
+        /**
          * @method add
          * @param {Array} set [ Object2D, [] ]
          */
@@ -55,7 +63,8 @@
         /**
          * @method draw
          * @param {CanvasRenderingContext2D} ctx
-         * @param {Function} paint
+         * @param {Function} [paint]
+         *
          */
         p.draw = function ( ctx, paint ) {
             var objects = this._objects,
@@ -82,7 +91,7 @@
                     object = one[ n ];
 
                     object.draw( ctx );
-                    paint.call( ctx );
+                    paint && paint.call( ctx );
                 }
             }
 

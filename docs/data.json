@@ -290,7 +290,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 23,
+            "line": 24,
             "extends": "Object2D",
             "params": [
                 {
@@ -323,8 +323,8 @@
                 },
                 {
                     "name": "fill",
-                    "description": "fill or stroke, true: fill, false: stroke",
-                    "type": "Boolean=false",
+                    "description": "fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH",
+                    "type": "String=stroke",
                     "optional": true
                 }
             ],
@@ -763,7 +763,16 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 76,
+            "line": 71,
+            "itemtype": "property",
+            "name": "scale",
+            "type": "{number}",
+            "default": "1",
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 83,
             "itemtype": "method",
             "name": "position",
             "params": [
@@ -777,7 +786,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 86,
+            "line": 93,
             "itemtype": "method",
             "name": "getPosition",
             "return": {
@@ -788,7 +797,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 94,
+            "line": 101,
             "itemtype": "method",
             "name": "setX",
             "params": [
@@ -802,7 +811,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 103,
+            "line": 110,
             "itemtype": "method",
             "name": "setY",
             "params": [
@@ -816,7 +825,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 112,
+            "line": 119,
             "itemtype": "method",
             "name": "bounding",
             "return": {
@@ -827,7 +836,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 162,
+            "line": 177,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "rotate",
@@ -842,7 +851,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 171,
+            "line": 186,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -853,7 +862,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 179,
+            "line": 194,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -866,7 +875,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 194,
+            "line": 210,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -886,29 +895,18 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 50,
-            "itemtype": "property",
-            "name": "_color",
-            "type": "{String}",
-            "default": "#000000",
-            "access": "protected",
-            "tagname": "",
-            "class": "Shape"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 57,
+            "line": 51,
             "itemtype": "property",
             "name": "_fill",
-            "type": "{boolean}",
-            "default": "false",
+            "type": "{string}",
+            "default": "stroke",
             "access": "protected",
             "tagname": "",
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 65,
+            "line": 59,
             "itemtype": "property",
             "name": "_line",
             "type": "{number}",
@@ -919,16 +917,29 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 73,
+            "line": 78,
             "itemtype": "property",
-            "name": "border",
-            "default": "{ width: 0, color: \"#000000\" }",
-            "type": "{{width: number, color: string}}",
+            "name": "_alpha",
+            "type": "{number}",
+            "default": "1",
+            "access": "protected",
+            "tagname": "",
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 90,
+            "line": 88,
+            "itemtype": "property",
+            "name": "_color",
+            "type": "{String}",
+            "default": "#000000",
+            "access": "protected",
+            "tagname": "",
+            "class": "Shape"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Shape.js",
+            "line": 110,
             "itemtype": "method",
             "name": "getRadius",
             "return": {
@@ -939,7 +950,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 102,
+            "line": 122,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -950,20 +961,49 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 120,
+            "line": 156,
             "itemtype": "method",
-            "name": "mode",
+            "name": "color",
             "params": [
                 {
-                    "name": "fill",
-                    "description": ""
+                    "name": "hex",
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 127,
+            "line": 167,
+            "itemtype": "method",
+            "name": "alpha",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Shape"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Shape.js",
+            "line": 176,
+            "itemtype": "method",
+            "name": "mode",
+            "params": [
+                {
+                    "name": "fill",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "Shape"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Shape.js",
+            "line": 183,
             "itemtype": "method",
             "name": "getMode",
             "return": {
@@ -974,7 +1014,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 135,
+            "line": 191,
             "itemtype": "method",
             "name": "line",
             "params": [
@@ -988,7 +1028,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 143,
+            "line": 199,
             "itemtype": "method",
             "name": "getLine",
             "return": {
@@ -999,7 +1039,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 151,
+            "line": 207,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1013,7 +1053,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 172,
+            "line": 230,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -1025,14 +1065,14 @@
                 {
                     "name": "color",
                     "description": "",
-                    "type": "String"
+                    "type": "Object"
                 }
             ],
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 185,
+            "line": 243,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -1049,14 +1089,14 @@
                 {
                     "name": "color",
                     "description": "",
-                    "type": "String"
+                    "type": "Object"
                 }
             ],
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 200,
+            "line": 258,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2364,6 +2404,20 @@
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
             "line": 32,
             "itemtype": "method",
+            "name": "limit",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "",
+                    "type": "Int"
+                }
+            ],
+            "class": "Zanzo"
+        },
+        {
+            "file": "_build_tool/delaunay/src/render/Zanzo.js",
+            "line": 40,
+            "itemtype": "method",
             "name": "add",
             "params": [
                 {
@@ -2376,7 +2430,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 55,
+            "line": 63,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -2388,7 +2442,8 @@
                 {
                     "name": "paint",
                     "description": "",
-                    "type": "Function"
+                    "type": "Function",
+                    "optional": true
                 }
             ],
             "class": "Zanzo"
@@ -2716,7 +2771,17 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 35,
+            "line": 33,
+            "itemtype": "property",
+            "name": "ONE_DEG",
+            "final": "",
+            "type": "{number}",
+            "default": "Math.PI / 180",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 40,
             "description": "数値か否かをチェックします",
             "itemtype": "method",
             "name": "is",
@@ -2736,7 +2801,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 46,
+            "line": 51,
             "description": "範囲指定し乱数を生成します\n<br>結果は int になります\n<br>max 省略時は 0 ~ min 間の乱数を発生させます",
             "itemtype": "method",
             "name": "random",
@@ -2762,7 +2827,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 65,
+            "line": 70,
             "description": "degree を radian へ変換します",
             "itemtype": "method",
             "name": "deg2rad",
@@ -3349,7 +3414,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 126,
+            "line": 127,
             "itemtype": "method",
             "name": "padding",
             "params": [
@@ -3381,7 +3446,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 144,
+            "line": 145,
             "description": "質量を設定します",
             "itemtype": "method",
             "name": "mass",
@@ -3396,7 +3461,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 153,
+            "line": 154,
             "itemtype": "method",
             "name": "getMass",
             "return": {
@@ -3407,7 +3472,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 161,
+            "line": 162,
             "description": "最大スピードを設定します",
             "itemtype": "method",
             "name": "speed",
@@ -3422,7 +3487,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 170,
+            "line": 171,
             "itemtype": "method",
             "name": "getSpeed",
             "return": {
@@ -3433,7 +3498,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 178,
+            "line": 179,
             "itemtype": "method",
             "name": "behavior",
             "params": [
@@ -3447,7 +3512,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 186,
+            "line": 187,
             "itemtype": "method",
             "name": "getBehavior",
             "return": {
@@ -3458,7 +3523,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 212,
+            "line": 213,
             "itemtype": "method",
             "name": "velocity",
             "params": [
@@ -3472,7 +3537,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 220,
+            "line": 221,
             "itemtype": "method",
             "name": "getVelocity",
             "return": {
@@ -3483,7 +3548,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 314,
+            "line": 315,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -3497,7 +3562,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 340,
+            "line": 341,
             "itemtype": "method",
             "name": "update",
             "params": [
@@ -3516,7 +3581,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 349,
+            "line": 350,
             "itemtype": "method",
             "name": "_update",
             "params": [
@@ -3537,7 +3602,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 382,
+            "line": 383,
             "itemtype": "method",
             "name": "wrap",
             "params": [
@@ -3556,14 +3621,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 421,
+            "line": 422,
             "itemtype": "method",
             "name": "onWrap",
             "class": "Vehicle"
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 428,
+            "line": 429,
             "itemtype": "method",
             "name": "bounce",
             "params": [
@@ -3582,7 +3647,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 470,
+            "line": 471,
             "itemtype": "method",
             "name": "onBounce",
             "class": "Vehicle"
