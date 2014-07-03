@@ -118,8 +118,11 @@ body {
         y = h2;
         circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
         jams[ i++ ] = circle;
+        x += 70
+        circle = new Sankaku.Circle( x, y, 4, "#cccccc" );
+        jams[ i++ ] = circle;
 
-        x += 10;
+//        x += 70;
         // 1 I
         circle = new Sankaku.Circle( x, y - 160, 4, "#cccccc" );
         jams[ i++ ] = circle;
@@ -237,11 +240,9 @@ body {
         circle = new Sankaku.Circle( x + 50, y, 4, "#cccccc" );
         jams[ i++ ] = circle;
 
-
+        x += 200;
         // last
-        circle = new Sankaku.Circle( 1180, h2, 4, "#cccccc" );
-        jams[ i ] = circle;
-        circle = new Sankaku.Circle( 1220, h2 + 10, 4, "#cccccc" );
+        circle = new Sankaku.Circle( x, h2, 4, "#cccccc" );
         jams[ i ] = circle;
 
 
@@ -268,6 +269,7 @@ body {
             pursuer.width *= 0.4;
             pursuer.height *= 0.4;
             pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+//            pursuer.mass( 0.8 + Math.random() * 0.5 );
 
             r = Math.sqrt( Math.random() ) * speed;
             a = Math.random() * PI2;

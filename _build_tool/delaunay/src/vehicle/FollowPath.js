@@ -36,6 +36,42 @@
         p.constructor = Sankaku.FollowPath;
 
         /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            var clone = new FollowPath();
+
+            // object 2D
+            clone.position( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
+
+            // vehicle
+            clone._velocity = this._velocity.clone();
+            clone._mass = this._mass;
+            clone._speed = this._speed;
+            clone._behavior = this._behavior;
+            clone._force = this._behavior;
+
+            // myself
+            clone._force = this._force.clone();
+            clone._force_max = this._force_max;
+            clone._force_arrival = this._force_arrival;
+            clone._avoid_distance = this._avoid_distance;
+            clone._avoid_buffer = this._avoid_buffer;
+            clone._avoid_insight = this._avoid_insight;
+            clone._avoid_close = this._avoid_close;
+
+            // follow path
+            clone._index = this._index;
+            clone._threshold = this._threshold;
+
+            return clone;
+        };
+
+        /**
          * @method follow
          * @param {Array} paths
          * @param {boolean=false} [loop]

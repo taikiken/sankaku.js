@@ -22,7 +22,7 @@
 
         /**
          * @class SteeredVehicle
-         * @extend Vehicle
+         * @extends Vehicle
          * @constructor
          */
         function SteeredVehicle () {
@@ -30,14 +30,14 @@
 
             this._force = new Vector2D();
             // max force
-            this._max = 1.0;
-            this._arrival = 100;
+            this._force_max = 1.0;
+            this._force_arrival = 100;
 
             // for avoid
             this._avoid_distance = 300;
-            this._buffer = 20;
-            this._insight = 200;
-            this._close = 60;
+            this._avoid_buffer = 20;
+            this._avoid_insight = 200;
+            this._avoid_close = 60;
         }
 
         Sankaku.extend( Vehicle, SteeredVehicle );
@@ -51,33 +51,42 @@
          * @return {Object2D}
          */
         p.clone = function () {
-            var clone = this._clone();
+//            var clone = new SteeredVehicle();
+//
+//            // object 2D
+//            clone.position( this._position.clone() );
+//            clone.width = this.width;
+//            clone.height = this.height;
+//            clone.rotation = this.rotation;
+//
+//            // vehicle
+//            clone._velocity = this._velocity.clone();
+//            clone._mass = this._mass;
+//            clone._speed = this._speed;
+//            clone._behavior = this._behavior;
+//            clone._force = this._behavior;
 
-            // vehicle
-            clone._velocity = this._velocity.clone();
-            clone._mass = this._mass;
-            clone._speed = this._speed;
-            clone._behavior = this._behavior;
-            clone._force = this._behavior;
+            var clone = Vehicle.prototype.clone.call( this );
 
             // myself
             clone._force = this._force.clone();
-            clone._max = this._max;
-            clone._arrival = this._arrival;
+            clone._force_max = this._force_max;
+            clone._force_arrival = this._force_arrival;
+
             clone._avoid_distance = this._avoid_distance;
-            clone._buffer = this._buffer;
-            clone._insight = this._insight;
-            clone._close = this._close;
+            clone._avoid_buffer = this._avoid_buffer;
+            clone._avoid_insight = this._avoid_insight;
+            clone._avoid_close = this._avoid_close;
 
             return clone;
         };
 
         /**
          * @method getMax
-         * @return {number} SteeredVehicle._max
+         * @return {number} SteeredVehicle._force_max
          */
         p.getMax = function () {
-            return this._max;
+            return this._force_max;
         };
 
         /**
@@ -85,15 +94,15 @@
          * @param {number} n
          */
         p.max = function ( n ) {
-            this._max = n;
+            this._force_max = n;
         };
 
         /**
          * @method getArrival
-         * @return {number} SteeredVehicle._arrival
+         * @return {number} SteeredVehicle._force_arrival
          */
         p.getArrival = function () {
-            return this._arrival;
+            return this._force_arrival;
         };
 
         /**
@@ -101,7 +110,7 @@
          * @param {number} n
          */
         p.arrival = function ( n ) {
-            this._arrival = n;
+            this._force_arrival = n;
         };
 
         /**
@@ -126,14 +135,14 @@
          * @param {number} n
          */
         p.buffer = function ( n ) {
-            this._buffer = n;
+            this._avoid_buffer = n;
         };
         /**
          * @method getBuffer
          * @return {number|*}
          */
         p.getBuffer = function () {
-            return this._buffer;
+            return this._avoid_buffer;
         };
 
         /**
@@ -141,14 +150,14 @@
          * @param {number} n
          */
         p.insight = function ( n ) {
-            this._insight = n;
+            this._avoid_insight = n;
         };
         /**
          * @method getInsight
          * @return {number|*}
          */
         p.getInsight = function () {
-            return this._insight;
+            return this._avoid_insight;
         };
 
         /**
@@ -156,14 +165,14 @@
          * @param {number} n
          */
         p.close = function ( n ) {
-            this._close = n;
+            this._avoid_close = n;
         };
         /**
          * @method getClose
          * @return {number|*}
          */
         p.getClose = function () {
-            return this._close;
+            return this._avoid_close;
         };
 
         /**
@@ -184,12 +193,11 @@
 
         /**
          * @method update
-         * @override
          * @param {number} w
          * @param {number} h
          */
         p.update = function ( w, h ) {
-            this._force.truncate( this._max ).divideScalar( this._mass );
+            this._force.truncate( this._force_max ).divideScalar( this._mass );
             this._velocity.add( this._force );
 
             this._force = new Vector2D();
@@ -229,7 +237,7 @@
          */
         p.arrive = function ( target ) {
             var force = target.subNew( this._position ),
-                arrival = this._arrival,
+                arrival = this._force_arrival,
                 distance;
 
             force.normalize();
@@ -310,7 +318,7 @@
                     distance = projection.subNew( difference ).length();
 
                     if (
-                        distance < target.getRadius() + this._buffer &&
+                        distance < target.getRadius() + this._avoid_buffer &&
                         projection.length() < feeler.length()
                        ) {
 

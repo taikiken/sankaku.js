@@ -21,7 +21,7 @@
         /**
          * 群行動
          * @class Flock
-         * @extend SteeredVehicle
+         * @extends SteeredVehicle
          * @constructor
          */
         function Flock () {
@@ -39,27 +39,37 @@
         p.constructor = Flock;
 
         /**
-         * @clone
+         * @method clone
          * @return {Object2D}
          */
         p.clone = function () {
-            var clone = this._clone();
+//            var clone = this._clone();
+//            var clone = new Flock();
+//
+//            // object 2D
+//            clone.position( this._position.clone() );
+//            clone.width = this.width;
+//            clone.height = this.height;
+//            clone.rotation = this.rotation;
+//
+//            // vehicle
+//            clone._velocity = this._velocity.clone();
+//            clone._mass = this._mass;
+//            clone._speed = this._speed;
+//            clone._behavior = this._behavior;
+//            clone._force = this._behavior;
+//
+//            // myself
+//            clone._force = this._force.clone();
+//            clone._force_max = this._force_max;
+//            clone._force_arrival = this._force_arrival;
+//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_buffer = this._avoid_buffer;
+//            clone._avoid_insight = this._avoid_insight;
+//            clone._avoid_close = this._avoid_close;
 
-            // vehicle
-            clone._velocity = this._velocity.clone();
-            clone._mass = this._mass;
-            clone._speed = this._speed;
-            clone._behavior = this._behavior;
-            clone._force = this._behavior;
-
-            // myself
-            clone._force = this._force.clone();
-            clone._max = this._max;
-            clone._arrival = this._arrival;
-            clone._avoid_distance = this._avoid_distance;
-            clone._buffer = this._buffer;
-            clone._insight = this._insight;
-            clone._close = this._close;
+            // super method
+            var clone = SteeredVehicle.prototype.clone.call( this );
 
             // for flock
             clone._flock_insight = this._flock_insight;
@@ -69,32 +79,32 @@
         };
 
         /**
-         * @method flockInsight
+         * @method insight
          * @param {number} n
          */
-        p.flockInsight = function ( n ) {
+        p.insight = function ( n ) {
             this._flock_insight = n;
         };
         /**
-         * @method getFlockInsight
+         * @method getInsight
          * @return {number|*}
          */
-        p.getFlockInsight = function () {
+        p.getInsight = function () {
             return this._flock_insight;
         };
 
         /**
-         * @method flockClose
+         * @method close
          * @param {number} n
          */
-        p.flockClose = function ( n ) {
+        p.close = function ( n ) {
             this._flock_close = n;
         };
         /**
-         * @method getFlockInsight
+         * @method getClose
          * @return {number|*}
          */
-        p.getFlockInsight = function () {
+        p.getClose = function () {
             return this._flock_close;
         };
 

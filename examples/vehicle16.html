@@ -146,14 +146,14 @@ body {
         hurdle();
 
         var rect = size(),
-            speed = 7,
+            speed = 10, //7,
             i, pursuer;
 
         vehicle = new Sankaku.FollowPath();
         vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.behavior( Sankaku.Vehicle.WRAP );
-//        vehicle.speed( speed );
-//        vehicle.mass( 0.00001 );
+        vehicle.speed( speed );
+        vehicle.mass( 0.1 );
 //        vehicle.padding( padding );
 //        vehicle.avoidDistance( 25 );
 
@@ -162,9 +162,10 @@ body {
             pursuer = new Sankaku.SteeredVehicle();
             pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
             pursuer.speed( speed * Sankaku.Num.random( 150, 300 ) * 0.01 );
-            pursuer.width *= 0.4;
-            pursuer.height *= 0.4;
+            pursuer.width *= 0.2;
+            pursuer.height *= 0.2;
             pursuer.behavior( Sankaku.Vehicle.WRAP );
+            pursuer.padding( -100 );
             pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
 
             pursuers.push( pursuer );

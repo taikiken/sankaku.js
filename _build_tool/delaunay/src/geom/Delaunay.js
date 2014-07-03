@@ -131,7 +131,6 @@
             // the bounding box around the points.
             vertices.sort( byX );
 
-
             i = vertices.length - 1;
             vertex = vertices[ i ];
 

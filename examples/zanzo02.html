@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=980">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
-<title>Canvas Note - boids | イナヅマTV</title>
+<title>Canvas Note - boids Zanzo 2 | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -34,7 +34,7 @@ body {
 }
 
 </style>
-<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
@@ -60,6 +60,10 @@ body {
         vehicle,
 
         flocks = [],
+        zanzo,
+
+        flocks2 = [],
+        zanzo2,
 
         ww, wh,
         prev_ww = -1,
@@ -67,6 +71,10 @@ body {
         padding = 0,
         jams = [],
         debug_mode = false;
+
+    // zanzo
+    zanzo = new Sankaku.Zanzo( 9 );
+    zanzo2 = new Sankaku.Zanzo( 21 );
 
     // debug button
     document.getElementById( "debug_on" ).addEventListener( "change", function () {
@@ -95,38 +103,39 @@ body {
     }
 
     function draw ( rect ) {
-//        vehicle.wander();
-//        vehicle.avoid( jams );
-//        vehicle.update( rect.w, rect.h );
-//
-        var i, limit, flock;
-//
-//        if ( debug_mode ) {
-//            for ( i = 0, limit = jams.length; i < limit; i++ ) {
-//                var jam = jams[ i ];
-//                jam.draw( ctx );
-//            }
-//
-//            ctx.strokeStyle = "#ff0000";
-//            vehicle.draw( ctx );
-//            ctx.stroke();
-//        }
+        var i, limit, flock,
+            clone,
+            pack;
+
+//        pack = [];
+//        ctx.fillStyle = "#efefef";
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
 
             flock.flock( flocks );
-
-//            if ( i < 50 ) {
-//                flock.pursue( vehicle );
-//            }
-
             flock.update( rect.w, rect.h );
-
-            ctx.fillStyle = "#efefef";
-            flock.draw( ctx );
-            ctx.fill();
         }
+
+        for ( i = 0, limit = flocks2.length; i < limit; i++ ) {
+            flock = flocks2[ i ];
+
+//            flock.pursue( flocks[ 0 ] );
+            flock.flock( flocks2 );
+            flock.update( rect.w, rect.h );
+        }
+
+        zanzo.add( flocks );
+        zanzo2.add( flocks2 );
+
+//        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = "#efefef";
+        zanzo.draw( ctx, ctx.fill );
+
+        ctx.fillStyle = "#f6ff00";
+        zanzo2.draw( ctx, ctx.fill );
+
+//        ctx.fill();
     }
 
     var clear = 0;
@@ -134,13 +143,16 @@ body {
     function loop () {
         requestAnimationFrame( loop );
 
-        ++clear;
-        var rect = size();
-        ctx.globalAlpha = 0.3;
+//        ++clear;
+//        var rect = size();
+//        ctx.globalAlpha = 0.3;
+//
+//        if ( clear % 3 === 0 ) {
+//            ctx.clearRect( 0, 0, rect.w, rect.h );
+//        }
 
-        if ( clear % 3 === 0 ) {
-            ctx.clearRect( 0, 0, rect.w, rect.h );
-        }
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
 
         draw( rect );
     }
@@ -170,7 +182,7 @@ body {
 
         var rect = size(),
             _other = Sagen.hasClass( element, "other" ),
-            limit = _other ? 666 : 222,
+            limit = _other ? 222 : 222,
             position,
             max_r = 6,
             speed = 3,
@@ -188,22 +200,37 @@ body {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
             flock = new Sankaku.Flock();
-//            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
             flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
             flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
             flock.speed( speed + Math.random() * speed );
             flock.mass( Math.random() * 0.5 + 1 );
-//            flock.mass( Math.random() * 0.5 + 0.5 );
-            flock.behavior( Sankaku.Vehicle.WRAP );
-            flock.width = 4;
-            flock.height = 2;
-            flock.close( 16 );
-//            flock.padding( -200 );
+            flock.width = 5;
+            flock.height = 1;
+            flock.close( 32 );
+            flock.padding( -160 );
 
 
             flocks.push( flock );
         }
 
+        for ( i = 0; i < limit; i++ ) {
+
+            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+            flock = new Sankaku.Flock();
+            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+            flock.speed( (speed + Math.random() * speed) * 0.55 );
+            flock.mass( Math.random() * 0.5 + 1 );
+            flock.width = 1;
+            flock.height = 1;
+            flock.close( 32 );
+            flock.padding( -160 );
+
+
+            flocks2.push( flock );
+        }
+
+        ctx.globalAlpha = 0.35;
         loop();
     }
 

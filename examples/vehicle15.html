@@ -144,28 +144,32 @@ body {
         hurdle();
 
         var rect = size(),
-            speed = 7,
+            speed = 10,//7,
             i, flock;
 
         vehicle = new Sankaku.FollowPath();
         vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.behavior( Sankaku.Vehicle.WRAP );
-//        vehicle.speed( speed );
-//        vehicle.mass( 0.00001 );
+        vehicle.padding( -100 );
+        vehicle.speed( speed );
+        vehicle.mass( 0.5 );
 //        vehicle.padding( padding );
 //        vehicle.avoidDistance( 25 );
 
-        for ( i = 0; i < 333; i++ ) {
+        for ( i = 0; i < 666; i++ ) {
 
             flock = new Sankaku.Flock();
             flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
             flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.speed( speed );
-            flock.mass( 1.5 );
-            flock.behavior( Sankaku.Vehicle.WRAP );
-            flock.width = 6;
-            flock.height = 3;
-            flock.flockClose( 12 );
+            flock.speed( (speed * Math.random() + speed) * 0.5 );
+            flock.mass( Math.random() * 0.5 + 1 );
+//            flock.behavior( Sankaku.Vehicle.WRAP );
+//            flock.width = 6;
+//            flock.height = 3;
+            flock.width *= 0.2;
+            flock.height *= 0.2;
+            flock.padding( -200 );
+            flock.close( 12 );
 
 
             flocks.push( flock );

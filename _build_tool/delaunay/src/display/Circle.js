@@ -21,11 +21,11 @@
 
         /**
          * @class Circle
-         * @extend Shape
+         * @extends Shape
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
-         * @param {strong} [color] default #000000
+         * @param {string} [color] default #000000
          * @param {boolean} [fill] fill or stroke, true: fill, false: stroke
          * @constructor
          */
@@ -51,7 +51,6 @@
 
         /**
          * @method clone
-         * @override
          * @return {Circle}
          */
         p.clone = function () {
@@ -61,7 +60,6 @@
 
         /**
          * @method paint
-         * @override
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {

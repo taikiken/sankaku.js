@@ -31,6 +31,7 @@
             /**
              * @property _position
              * @type {Vector2D}
+             * @default new Vector2D( 0, 0 )
              * @protected
              */
             this._position = new Vector2D();
@@ -38,27 +39,32 @@
             /**
              * @property x
              * @type {number}
+             * @default 0
              */
             this.x = 0;
             /**
              * @property y
              * @type {number}
+             * @default 0
              */
             this.y = 0;
             /**
              * radian
              * @property rotation
              * @type {number}
+             * @default 0
              */
             this.rotation = 0;
             /**
              * @property width
              * @type {number}
+             * @default 20
              */
             this.width = 20;
             /**
              * @property height
              * @type {number}
+             * @default 10
              */
             this.height = 10;
         }

@@ -79,6 +79,8 @@
             
                 <li><a href="../classes/Wander.html">Wander</a></li>
             
+                <li><a href="../classes/Zanzo.html">Zanzo</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -147,16 +149,40 @@
 
         /**
          * @class Vehicle
-         * @extend Object2D
+         * @extends Object2D
          * @constructor
          */
         function Vehicle () {
             Object2D.call( this );
 
+            /**
+             * @property _velocity
+             * @type {Vector2D}
+             * @default new Vector2D( 0, 0 )
+             * @protected
+             */
             this._velocity = new Vector2D();
 
+            /**
+             * @property _mass
+             * @type {number}
+             * @default 1.0
+             * @protected
+             */
             this._mass = 1.0;
+            /**
+             * @property _speed
+             * @type {number}
+             * @default 10
+             * @protected
+             */
             this._speed = 10;
+            /**
+             * @property _behavior
+             * @type {string}
+             * @default Vehicle.BOUNCE
+             * @protected
+             */
             this._behavior = Vehicle.BOUNCE;
 
             /**
@@ -206,11 +232,16 @@
 
         /**
          * @method clone
-         * @override
          * @return {Object2D}
          */
         p.clone = function () {
-            var clone = this._clone();
+            var clone = new Vehicle();
+
+            // object 2D
+            clone.position( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
 
             clone._velocity = this._velocity.clone();
             clone._mass = this._mass;

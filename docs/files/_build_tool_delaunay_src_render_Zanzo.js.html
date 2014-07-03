@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Sankaku</title>
+    <title>_build_tool/delaunay/src/render/Zanzo.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -122,163 +122,105 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Sankaku Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: _build_tool/delaunay/src/render/Zanzo.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/03 - 11:33
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    &quot;use strict&quot;;
+    var Sankaku = window.Sankaku;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_vehicle_Wander.js.html#l22"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Wander.js:22</code></a>
-        </div>
-    
+    Sankaku.Zanzo = ( function (){
+        /**
+         * @class Zanzo
+         * @param {int} limit
+         * @constructor
+         */
+        function Zanzo ( limit ) {
+            this._limit = limit;
+            this._objects = [];
+        }
 
-    
-</div>
+        var p = Zanzo.prototype;
 
+        p.constructor = Zanzo;
 
+        /**
+         * @method add
+         * @param {Array} set [ Object2D, [] ]
+         */
+        p.add = function ( set ) {
+            var objects = this._objects,
+                clones = [],
+                object, i, limit;
 
-<div class="box intro">
-    
-</div>
+            if ( this._limit &gt; 0 &amp;&amp; objects.length &gt;= this._limit ) {
 
+                objects.shift();
+            }
 
+            for ( i = 0, limit = set.length; i &lt; limit; i++ ) {
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+                object = set[ i ];
+                clones.push( object.clone() );
+            }
 
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Circle.html">
-                        Circle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Delaunay.html">
-                        Delaunay
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Distribute.html">
-                        Distribute
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/EventDispatcher.html">
-                        EventDispatcher
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Flock.html">
-                        Flock
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/FollowPath.html">
-                        FollowPath
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Iro.html">
-                        Iro
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/List.html">
-                        List
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Matrix2D.html">
-                        Matrix2D
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Num.html">
-                        Num
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Object2D.html">
-                        Object2D
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Point.html">
-                        Point
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Sankaku.html">
-                        Sankaku
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Shape.html">
-                        Shape
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/SteeredVehicle.html">
-                        SteeredVehicle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Triangle.html">
-                        Triangle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Vector2D.html">
-                        Vector2D
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Vehicle.html">
-                        Vehicle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Wander.html">
-                        Wander
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Zanzo.html">
-                        Zanzo
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
+            this._objects.push( clones );
+        };
 
-    <div class="yui3-u-1-2">
-        
-    </div>
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         * @param {Function} paint
+         */
+        p.draw = function ( ctx, paint ) {
+            var objects = this._objects,
+                one,
+                object,
+                step,
+                opacity,
+                i, limit,
+                n, max;
+
+            limit = objects.length;
+            step = 1 / ( limit + 1);
+
+            ctx.save();
+
+            for ( i = 0; i &lt; limit; i++ ) {
+
+                one = objects[ i ];
+                opacity = step * ( i + 1 );
+                ctx.globalAlpha = opacity;
+
+                for ( n = 0, max = one.length; n &lt; max; n++ ) {
+
+                    object = one[ n ];
+
+                    object.draw( ctx );
+                    paint.call( ctx );
+                }
+            }
+
+            ctx.restore();
+        };
+
+        return Zanzo;
+    }() );
+}( window ) );
+    </pre>
 </div>
 
                     </div>

@@ -19,7 +19,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Triangle",
         "Vector2D",
         "Vehicle",
-        "Wander"
+        "Wander",
+        "Zanzo"
     ],
     "modules": [
         "Sankaku"

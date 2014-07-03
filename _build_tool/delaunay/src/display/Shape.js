@@ -22,7 +22,7 @@
 
         /**
          * @class Shape
-         * @extend Object2D
+         * @extends Object2D
          * @param {number} x
          * @param {number} y
          * @param {number=20} [width]
@@ -49,13 +49,15 @@
 
             /**
              * @property _color
-             * @type {String|string}
+             * @type {String}
+             * @default #000000
              * @protected
              */
             this._color = color || "#000000";
             /**
              * @property _fill
              * @type {boolean}
+             * @default false
              * @protected
              */
             this._fill = !!fill;
@@ -63,12 +65,14 @@
             /**
              * @property _line
              * @type {number}
+             * @default 1
              * @protected
              */
             this._line = 1;
 
             /**
              * @property border
+             * @default { width: 0, color: "#000000" }
              * @type {{width: number, color: string}}
              */
             this.border = {
@@ -97,7 +101,6 @@
 
         /**
          * @method clone
-         * @override
          * @return {Object2D}
          */
         p.clone = function () {
@@ -106,11 +109,12 @@
             clone._color = this._color;
             clone._fill = this._fill;
             clone._line = this._line;
-            clone._border = Object.create( this._border );
+            clone._border = {
+                width: this._border.width,
+                color: this._border.color
+            };
 
             return clone;
-
-//            return new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
         };
 
         /**

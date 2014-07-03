@@ -13,6 +13,7 @@
     <property name="concatenated" value="${concat}/sankaku.js"/>
 
     <property name="libs" value="../../libs"/>
+    <property name="examples" value="../../examples/libs"/>
 
     <target name="sankaku">
 
@@ -52,6 +53,8 @@
             <file name="vehicle/Flock.js"/>
             <file name="vehicle/FollowPath.js"/>
 
+            <file name="render/Zanzo.js"/>
+
         </filelist>
 
         <concat destfile="${concatenated}" encoding="UTF-8" outputencoding="UTF-8" fixlastline="true">
@@ -77,6 +80,14 @@
         </copy>
 
         <copy todir="${libs}">
+            <fileset dir="${dist}" />
+        </copy>
+        <!--examples-->
+        <copy todir="${examples}">
+            <fileset dir="${concat}" />
+        </copy>
+
+        <copy todir="${examples}">
             <fileset dir="${dist}" />
         </copy>
 
