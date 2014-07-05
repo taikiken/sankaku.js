@@ -15,6 +15,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Point",
         "Sankaku",
         "Shape",
+        "Star",
         "SteeredVehicle",
         "Triangle",
         "Tripod",

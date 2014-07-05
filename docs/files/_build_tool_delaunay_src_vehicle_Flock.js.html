@@ -69,6 +69,8 @@
             
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
+                <li><a href="../classes/Star.html">Star</a></li>
+            
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
@@ -152,10 +154,11 @@
          * 群行動
          * @class Flock
          * @extends SteeredVehicle
+         * @params {Object2D} viewModel
          * @constructor
          */
-        function Flock () {
-            SteeredVehicle.call( this );
+        function Flock ( viewModel ) {
+            SteeredVehicle.call( this, viewModel );
 
             // for flock
             this._flock_insight = 200;

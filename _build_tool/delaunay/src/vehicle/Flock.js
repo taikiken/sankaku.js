@@ -22,10 +22,11 @@
          * 群行動
          * @class Flock
          * @extends SteeredVehicle
+         * @params {Object2D} viewModel
          * @constructor
          */
-        function Flock () {
-            SteeredVehicle.call( this );
+        function Flock ( viewModel ) {
+            SteeredVehicle.call( this, viewModel );
 
             // for flock
             this._flock_insight = 200;

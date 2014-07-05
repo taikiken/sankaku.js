@@ -1,7 +1,7 @@
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/25 - 16:22
+ * date 2014/07/05 - 17:00
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -13,49 +13,46 @@
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape
-    ;
+        Shape = Sankaku.Shape,
+        Num = Sankaku.Num;
 
-    Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2;
+    Sankaku.Star = ( function (){
+        var _sin = Math.sin,
+            _cos = Math.cos;
 
         /**
-         * @class Circle
+         * @class Star
          * @extends Shape
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
          * @param {string} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
+         * @param {int=5} [points]
+         * @param {int} [inner]
+         * @default radius * 0.475
          * @constructor
          */
-        function Circle ( x, y, radius, color, fill ) {
+        function Star ( x, y, radius, color, fill, points, inner ) {
             Shape.call( this, x, y, radius, radius, color, fill );
 
             this._radius = radius || this.width;
+            this._points = points || 5;
+            this._inner = inner || radius * 0.475;
         }
 
-        Sankaku.extend( Shape, Circle );
+        Sankaku.extend( Shape, Star );
 
-        var p = Circle.prototype;
+        var p = Star.prototype;
 
-        p.constructor = Circle;
-
-        /**
-         * @method getRadius
-         * @return {number}
-         */
-        p.getRadius = function () {
-            return this._radius;
-        };
+        p.constructor = Star;
 
         /**
          * @method clone
-         * @return {Circle}
+         * @return {Star}
          */
         p.clone = function () {
-
-            var clone =  new Circle( this.x, this.y, this._radius, this._color, this._fill );
+            var clone =  new Star( this.x, this.y, this._radius, this._color, this._fill, this._points );
 
             clone.rotation = this.rotation;
             clone.scale = this.scale;
@@ -71,18 +68,38 @@
             return clone;
         };
 
+        //http://www.fascinatedwithsoftware.com/blog/post/2012/11/03/How-to-Draw-a-Star-with-HTML5.aspx
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
+            var points = this._points,
+                limit = points * 2,
+                step = Num.ONE_EIGHTY / points,
+                ninety = Num.NINETY,
+                scale = this.scale,
+                outer = this._radius * scale,
+                inner = this._inner * scale,
+                x = this.x,
+                y = this.y,
+                rotation = this.rotation,
+                i, angle, r;
+
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
+            for ( i = 0; i <= limit; ++i ) {
+
+                angle = i * step - ninety + rotation;
+                r = i % 2 ? inner : outer;
+
+                ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+            }
 
             ctx.closePath();
         };
 
-        return Circle;
+        return Star;
     }() );
+
 }( window ) );

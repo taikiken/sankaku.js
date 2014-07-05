@@ -23,7 +23,7 @@
         /**
          * @class Vehicle
          * @extends Object2D
-         * @use EventDispatcher
+         * @uses EventDispatcher
          * @param {Object2D} [viewModel]
          * @constructor
          */

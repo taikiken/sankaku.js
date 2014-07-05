@@ -17,7 +17,8 @@
     Sankaku.Num = ( function (){
         var parseFloat = window.parseFloat,
             _rand = Math.random,
-            _floor = Math.floor;
+            _floor = Math.floor,
+            _PI = Math.PI;
 
         /**
          * 数値ヘルパー
@@ -35,7 +36,31 @@
          * @type {number}
          * @default Math.PI / 180
          */
-        n.ONE_DEG = Math.PI / 180;
+        n.ONE_DEG = _PI / 180;
+        /**
+         * @const FORTY_FIVE
+         * @type {number}
+         * @default Math.PI / 4
+         */
+        n.FORTY_FIVE = _PI / 4;
+        /**
+         * @const NINETY
+         * @type {number}
+         * @default Math.PI / 2
+         */
+        n.NINETY = _PI / 2;
+        /**
+         * @const ONE_EIGHTY
+         * @type {number}
+         * @default Math.PI
+         */
+        n.ONE_EIGHTY = _PI;
+        /**
+         * @const THREE_SIXTY
+         * @type {number}
+         * @default Math.PI * 2
+         */
+        n.THREE_SIXTY = _PI * 2;
 
         /**
          * 数値か否かをチェックします

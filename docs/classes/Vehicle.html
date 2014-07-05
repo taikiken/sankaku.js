@@ -69,6 +69,8 @@
             
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
+                <li><a href="../classes/Star.html">Star</a></li>
+            
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
@@ -126,6 +128,15 @@
                     <div class="content">
                         <h1>Vehicle Class</h1>
 <div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="EventDispatcher.html">EventDispatcher</a></li>
+                
+            </ul>
+        </div>
     
 
     
@@ -286,6 +297,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
                                 <a href="#method_behavior">behavior</a>
 
@@ -309,6 +327,13 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_clone">clone</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
 
                                 
                                 
@@ -363,6 +388,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
                                 <a href="#method_mass">mass</a>
 
@@ -379,6 +411,13 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_position">position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
 
                                 
                                 
@@ -759,6 +798,130 @@
 </div>
 
                 
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_addEventListener">EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l29"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:29</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><p>イベントにハンドラを登録します<br>
+ハンドラ内のthisはイベント発生元になるので注意が必要です<br>
+this参照を変えないために bind を使用する方法があります</p></p>
+<pre class="code prettyprint"><code> function EventReceive () {
+     var example = new ExampleClass();
+
+     example.addEventListener( &quot;other&quot;, onOtherHandler );
+     example.addEventListener( &quot;example&quot;, this.onBoundHandler.bind( this ) );
+ }
+
+ EventReceive.prototype.onOtherHandler ( event ) {
+     console.log( this );// ExampleClass
+ }
+
+ EventReceive.prototype.onBoundHandler ( event ) {
+     console.log( this );// EventReceive
+ }</code></pre>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_behavior" class="method item">
     <h3 class="name"><code>behavior</code></h3>
 
@@ -1087,6 +1250,92 @@
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>event</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_dispatchEvent">EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l123"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:123</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>event発生をlistenerに通知します</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">event</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>require event.type:String, { type: &quot;some_event&quot;, [currentTarget: this] }</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -1597,6 +1846,131 @@
 </div>
 
                 
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_hasEventListener">EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l73"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:73</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <p>event type へ listener 登録が有るか無いかの真偽値を返します</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_mass" class="method item">
     <h3 class="name"><code>mass</code></h3>
 
@@ -1906,7 +2280,116 @@
                     
 
                     <div class="param-description">
-                        
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_removeEventListener">EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l94"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:94</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>event type から listener を削除します<br>
+メモリーリークの原因になるので不要になったlistenerは必ずremoveEventListenerを実行します</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event type</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>event handler</p>
+
                     </div>
 
                     
@@ -2076,7 +2559,7 @@
                     
 
                     <div class="param-description">
-                        
+                         
                     </div>
 
                     
@@ -2160,7 +2643,7 @@
                     
 
                     <div class="param-description">
-                        
+                         
                     </div>
 
                     

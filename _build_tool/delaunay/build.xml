@@ -49,6 +49,7 @@
 
             <file name="display/Circle.js"/>
             <file name="display/Tripod.js"/>
+            <file name="display/Star.js"/>
 
             <file name="vehicle/Vehicle.js"/>
             <file name="vehicle/SteeredVehicle.js"/>
@@ -81,7 +82,7 @@
         <!--version no-->
         <copy todir="${dist}">
             <fileset dir="${dist}" />
-            <mapper type="glob" from="*.min.js" to="*-${version}.min.js" />
+            <mapper type="glob" from="sankaku.min.js" to="sankaku-${version}.min.js" />
         </copy>
 
         <copy todir="${libs}">

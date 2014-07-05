@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Canvas Note - Star | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        wanders = [],
+        zanzo,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1;
+
+    // zanzo
+    zanzo = new Sankaku.Zanzo( 16 );
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        var i, limit, wander;
+
+//        ctx.fillStyle = "#efefef";
+
+        for ( i = 0, limit = wanders.length; i < limit; i++ ) {
+            wander = wanders[ i ];
+
+            wander.wander( wanders );
+            wander.update( rect.w, rect.h );
+
+//            var clone = wander.clone();
+//            console.log( "scale", clone.scale );
+//            clone.draw( ctx );
+//            wander.draw( ctx );
+        }
+
+        zanzo.add( wanders );
+
+//        ctx.fillStyle = "#efefef";
+//        zanzo.draw( ctx, ctx.fill );
+        zanzo.draw( ctx );
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function init () {
+        var rect = size(),
+            _other = Sagen.hasClass( element, "other" ),
+            limit = _other ? 111 : 15,
+            position,
+            max_r = 60,
+            speed = 3,
+            i, wander;
+
+        for ( i = 0; i < limit; i++ ) {
+//        for ( i = 0; i < 1; i++ ) {
+
+            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+            wander = new Sankaku.Wander( new Sankaku.Star( 0, 0, 15 ) );
+//            wander = new Sankaku.Flock();
+            wander.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+//            wander.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+            wander.velocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 2 : -2 ) * Math.random() + 1, (Sankaku.Num.random( 1 ) ? 1 : -1 ) * Math.random() + 1 ) );
+//            wander.speed( ( speed + Math.random() * speed * 0.5 ) );
+            wander.speed( Sankaku.Num.random( speed, speed * 2 ) );
+            wander.mass( Math.random() * 0.5 + 0.75 );
+//            wander.width = 4;
+//            wander.height = 1;
+//            wander.close( _other ? 48 : 12 );
+//            wander.insight( 100 );
+            wander.padding( _other ? -160 : -10 );
+//            wander.behavior( Sankaku.Vehicle.WRAP );
+//            wander.view( new Sankaku.Circle( 0, 0, 15 ) );
+//            wander.scale = 1 + Math.random();
+//            wander.view( new Sankaku.Star( 0, 0, 30 ) );
+            wander.getView().color( "#ffffff" ).mode( Sankaku.Shape.STROKE ).alpha( 0.3 );//.border( 1, "#ff0000" );
+//            wander.getView().color( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) ).mode( Sankaku.Shape.STROKE ).alpha( 0.3 );//.border( 1, "#ff0000" );
+//            var view = wander.getView();
+//            view.scale = 20;
+//            wander.insight( 50 );
+//            wander.close( 300 );
+
+            wanders.push( wander );
+        }
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

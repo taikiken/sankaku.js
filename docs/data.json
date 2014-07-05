@@ -28,6 +28,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "_build_tool/delaunay/src/display/Star.js": {
+            "name": "_build_tool/delaunay/src/display/Star.js",
+            "modules": {},
+            "classes": {
+                "Star": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/display/Tripod.js": {
             "name": "_build_tool/delaunay/src/display/Tripod.js",
             "modules": {},
@@ -88,6 +97,13 @@
             "classes": {
                 "Vector2D": 1
             },
+            "fors": {},
+            "namespaces": {}
+        },
+        "_build_tool/delaunay/src/render/Stage.js": {
+            "name": "_build_tool/delaunay/src/render/Stage.js",
+            "modules": {},
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -201,6 +217,7 @@
                 "Circle": 1,
                 "Object2D": 1,
                 "Shape": 1,
+                "Star": 1,
                 "Tripod": 1,
                 "EventDispatcher": 1,
                 "Delaunay": 1,
@@ -270,8 +287,8 @@
                 },
                 {
                     "name": "fill",
-                    "description": "fill or stroke, true: fill, false: stroke",
-                    "type": "Boolean",
+                    "description": "fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH",
+                    "type": "String=stroke",
                     "optional": true
                 }
             ],
@@ -340,6 +357,63 @@
             ],
             "is_constructor": 1
         },
+        "Star": {
+            "name": "Star",
+            "shortname": "Star",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Sankaku",
+            "file": "_build_tool/delaunay/src/display/Star.js",
+            "line": 23,
+            "extends": "Shape",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "radius",
+                    "description": "",
+                    "type": "Number=20",
+                    "optional": true
+                },
+                {
+                    "name": "color",
+                    "description": "default #000000",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "fill",
+                    "description": "fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH",
+                    "type": "String=stroke",
+                    "optional": true
+                },
+                {
+                    "name": "points",
+                    "description": "",
+                    "type": "Int=5",
+                    "optional": true
+                },
+                {
+                    "name": "inner",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                }
+            ],
+            "default": "radius * 0.475",
+            "is_constructor": 1
+        },
         "Tripod": {
             "name": "Tripod",
             "shortname": "Tripod",
@@ -397,7 +471,9 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": [],
+            "extension_for": [
+                "Vehicle"
+            ],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/events/EventDispatcher.js",
             "line": 5,
@@ -626,7 +702,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 22,
+            "line": 23,
             "description": "数値ヘルパー",
             "is_constructor": 1
         },
@@ -643,6 +719,13 @@
             "line": 21,
             "description": "群行動",
             "extends": "SteeredVehicle",
+            "params": [
+                {
+                    "name": "viewModel",
+                    "description": "",
+                    "type": "Object2D"
+                }
+            ],
             "is_constructor": 1
         },
         "FollowPath": {
@@ -658,6 +741,13 @@
             "line": 19,
             "description": "経路追従",
             "extends": "SteeredVehicle",
+            "params": [
+                {
+                    "name": "viewModel",
+                    "description": "",
+                    "type": "Object2D"
+                }
+            ],
             "is_constructor": 1
         },
         "SteeredVehicle": {
@@ -672,6 +762,14 @@
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
             "line": 23,
             "extends": "Vehicle",
+            "params": [
+                {
+                    "name": "viewModel",
+                    "description": "",
+                    "type": "Object2D",
+                    "optional": true
+                }
+            ],
             "is_constructor": 1
         },
         "Vehicle": {
@@ -686,7 +784,9 @@
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
             "line": 23,
             "extends": "Object2D",
-            "use": "EventDispatcher",
+            "uses": [
+                "EventDispatcher"
+            ],
             "params": [
                 {
                     "name": "viewModel",
@@ -710,6 +810,13 @@
             "line": 22,
             "description": "徘徊",
             "extends": "SteeredVehicle",
+            "params": [
+                {
+                    "name": "viewModel",
+                    "description": "",
+                    "type": "Object2D"
+                }
+            ],
             "is_constructor": 1
         },
         "Sankaku": {
@@ -1245,6 +1352,37 @@
                 }
             ],
             "class": "Shape"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Star.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 17:00\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Star"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Star.js",
+            "line": 50,
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "Star"
+            },
+            "class": "Star"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Star.js",
+            "line": 72,
+            "itemtype": "method",
+            "name": "paint",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasRenderingContext2D"
+                }
+            ],
+            "class": "Star"
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
@@ -2564,6 +2702,12 @@
             "class": "Vector2D"
         },
         {
+            "file": "_build_tool/delaunay/src/render/Stage.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 14:03\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Zanzo"
+        },
+        {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/03 - 11:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -2940,7 +3084,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "property",
             "name": "ONE_DEG",
             "final": "",
@@ -2951,6 +3095,46 @@
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
             "line": 40,
+            "itemtype": "property",
+            "name": "FORTY_FIVE",
+            "final": "",
+            "type": "{number}",
+            "default": "Math.PI / 4",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 46,
+            "itemtype": "property",
+            "name": "NINETY",
+            "final": "",
+            "type": "{number}",
+            "default": "Math.PI / 2",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 52,
+            "itemtype": "property",
+            "name": "ONE_EIGHTY",
+            "final": "",
+            "type": "{number}",
+            "default": "Math.PI",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 58,
+            "itemtype": "property",
+            "name": "THREE_SIXTY",
+            "final": "",
+            "type": "{number}",
+            "default": "Math.PI * 2",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 65,
             "description": "数値か否かをチェックします",
             "itemtype": "method",
             "name": "is",
@@ -2970,7 +3154,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 51,
+            "line": 76,
             "description": "範囲指定し乱数を生成します\n<br>結果は int になります\n<br>max 省略時は 0 ~ min 間の乱数を発生させます",
             "itemtype": "method",
             "name": "random",
@@ -2996,7 +3180,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 70,
+            "line": 95,
             "description": "degree を radian へ変換します",
             "itemtype": "method",
             "name": "deg2rad",
@@ -3021,7 +3205,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 41,
+            "line": 42,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -3032,7 +3216,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 86,
+            "line": 87,
             "itemtype": "method",
             "name": "insight",
             "params": [
@@ -3046,7 +3230,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 93,
+            "line": 94,
             "itemtype": "method",
             "name": "getInsight",
             "return": {
@@ -3057,7 +3241,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 101,
+            "line": 102,
             "itemtype": "method",
             "name": "close",
             "params": [
@@ -3071,7 +3255,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 108,
+            "line": 109,
             "itemtype": "method",
             "name": "getClose",
             "return": {
@@ -3082,7 +3266,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 116,
+            "line": 117,
             "itemtype": "method",
             "name": "flock",
             "params": [
@@ -3096,7 +3280,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 155,
+            "line": 156,
             "itemtype": "method",
             "name": "tooInsight",
             "params": [
@@ -3114,7 +3298,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Flock.js",
-            "line": 175,
+            "line": 176,
             "itemtype": "method",
             "name": "tooClose",
             "params": [
@@ -3134,18 +3318,18 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/FollowPath.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "method",
             "name": "clone",
             "return": {
                 "description": "",
-                "type": "Object2D"
+                "type": "*|FollowPath"
             },
             "class": "FollowPath"
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/FollowPath.js",
-            "line": 74,
+            "line": 80,
             "itemtype": "method",
             "name": "follow",
             "params": [
@@ -3171,7 +3355,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 49,
+            "line": 50,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -3182,7 +3366,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 89,
+            "line": 90,
             "itemtype": "method",
             "name": "getMax",
             "return": {
@@ -3193,7 +3377,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 97,
+            "line": 98,
             "itemtype": "method",
             "name": "max",
             "params": [
@@ -3207,7 +3391,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 105,
+            "line": 106,
             "itemtype": "method",
             "name": "getArrival",
             "return": {
@@ -3218,7 +3402,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 113,
+            "line": 114,
             "itemtype": "method",
             "name": "arrival",
             "params": [
@@ -3232,7 +3416,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 121,
+            "line": 122,
             "itemtype": "method",
             "name": "force",
             "params": [
@@ -3246,7 +3430,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 129,
+            "line": 130,
             "itemtype": "method",
             "name": "getForce",
             "return": {
@@ -3257,7 +3441,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 138,
+            "line": 139,
             "itemtype": "method",
             "name": "buffer",
             "params": [
@@ -3271,7 +3455,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 145,
+            "line": 146,
             "itemtype": "method",
             "name": "getBuffer",
             "return": {
@@ -3282,7 +3466,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 153,
+            "line": 154,
             "itemtype": "method",
             "name": "insight",
             "params": [
@@ -3296,7 +3480,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 160,
+            "line": 161,
             "itemtype": "method",
             "name": "getInsight",
             "return": {
@@ -3307,7 +3491,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 168,
+            "line": 169,
             "itemtype": "method",
             "name": "close",
             "params": [
@@ -3321,7 +3505,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 175,
+            "line": 176,
             "itemtype": "method",
             "name": "getClose",
             "return": {
@@ -3332,7 +3516,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 183,
+            "line": 184,
             "itemtype": "method",
             "name": "avoidDistance",
             "params": [
@@ -3346,7 +3530,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 191,
+            "line": 192,
             "itemtype": "method",
             "name": "getAvoidDistance",
             "return": {
@@ -3357,7 +3541,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 199,
+            "line": 200,
             "itemtype": "method",
             "name": "update",
             "params": [
@@ -3376,7 +3560,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 212,
+            "line": 213,
             "description": "追求",
             "itemtype": "method",
             "name": "seek",
@@ -3391,7 +3575,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 225,
+            "line": 226,
             "description": "逃避",
             "itemtype": "method",
             "name": "flee",
@@ -3406,7 +3590,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 238,
+            "line": 239,
             "description": "到着",
             "itemtype": "method",
             "name": "arrive",
@@ -3421,7 +3605,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 263,
+            "line": 264,
             "description": "追跡",
             "itemtype": "method",
             "name": "pursue",
@@ -3436,7 +3620,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 277,
+            "line": 278,
             "description": "回避",
             "itemtype": "method",
             "name": "evade",
@@ -3451,7 +3635,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/SteeredVehicle.js",
-            "line": 291,
+            "line": 292,
             "description": "物体回避",
             "itemtype": "method",
             "name": "avoid",
@@ -3826,18 +4010,18 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 44,
+            "line": 45,
             "itemtype": "method",
             "name": "clone",
             "return": {
                 "description": "",
-                "type": "Object2D"
+                "type": "*|Object2D"
             },
             "class": "Wander"
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 83,
+            "line": 88,
             "itemtype": "method",
             "name": "angle",
             "params": [
@@ -3851,7 +4035,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 91,
+            "line": 96,
             "itemtype": "method",
             "name": "getAngle",
             "return": {
@@ -3862,7 +4046,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 99,
+            "line": 104,
             "itemtype": "method",
             "name": "distance",
             "params": [
@@ -3876,7 +4060,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 107,
+            "line": 112,
             "itemtype": "method",
             "name": "getDistance",
             "return": {
@@ -3887,7 +4071,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 115,
+            "line": 120,
             "itemtype": "method",
             "name": "radius",
             "params": [
@@ -3901,7 +4085,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 123,
+            "line": 128,
             "itemtype": "method",
             "name": "getRadius",
             "return": {
@@ -3912,7 +4096,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 131,
+            "line": 136,
             "itemtype": "method",
             "name": "range",
             "params": [
@@ -3926,7 +4110,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 140,
+            "line": 145,
             "itemtype": "method",
             "name": "getRange",
             "return": {
@@ -3937,7 +4121,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Wander.js",
-            "line": 148,
+            "line": 153,
             "itemtype": "method",
             "name": "wander",
             "class": "Wander"
@@ -3978,8 +4162,16 @@
     ],
     "warnings": [
         {
-            "message": "unknown tag: use",
-            "line": " _build_tool/delaunay/src/vehicle/Vehicle.js:23"
+            "message": "replacing incorrect tag: params with param",
+            "line": " _build_tool/delaunay/src/vehicle/Flock.js:21"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " _build_tool/delaunay/src/vehicle/FollowPath.js:19"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " _build_tool/delaunay/src/vehicle/Wander.js:22"
         },
         {
             "message": "unknown tag: license",
@@ -4000,6 +4192,10 @@
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/25 - 12:19\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/display/Shape.js:1"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 17:00\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/display/Star.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/04 - 16:54\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -4024,6 +4220,10 @@
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 17:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/geom/Vector2D.js:1"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 14:03\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/render/Stage.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/03 - 11:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

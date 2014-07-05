@@ -69,6 +69,8 @@
             
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
+                <li><a href="../classes/Star.html">Star</a></li>
+            
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
@@ -153,10 +155,11 @@
         /**
          * @class SteeredVehicle
          * @extends Vehicle
+         * @param {Object2D} [viewModel]
          * @constructor
          */
-        function SteeredVehicle () {
-            Vehicle.call( this );
+        function SteeredVehicle ( viewModel ) {
+            Vehicle.call( this, viewModel );
 
             this._force = new Vector2D();
             // max force

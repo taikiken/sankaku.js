@@ -23,10 +23,11 @@
         /**
          * @class SteeredVehicle
          * @extends Vehicle
+         * @param {Object2D} [viewModel]
          * @constructor
          */
-        function SteeredVehicle () {
-            Vehicle.call( this );
+        function SteeredVehicle ( viewModel ) {
+            Vehicle.call( this, viewModel );
 
             this._force = new Vector2D();
             // max force

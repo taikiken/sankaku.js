@@ -95,6 +95,11 @@ body {
 
             flock.flock( flocks );
             flock.update( rect.w, rect.h );
+
+//            var clone = flock.clone();
+//            console.log( "scale", clone.scale );
+//            clone.draw( ctx );
+//            flock.draw( ctx );
         }
 
         zanzo.add( flocks );
@@ -137,12 +142,15 @@ body {
 //            flock.height = 1;
 //            flock.close( _other ? 48 : 12 );
 //            flock.insight( 100 );
-            flock.padding( _other ? -160 : -10 );
+//            flock.padding( _other ? -160 : -10 );
 //            flock.behavior( Sankaku.Vehicle.WRAP );
 //            flock.view( new Sankaku.Circle( 0, 0, 15 ) );
-            flock.view( new Sankaku.Shape( 0, 0, 16, 16 ) );
+            flock.scale = 1 + Math.random();
+            flock.view( new Sankaku.Shape( 0, 0, 20, 20 ) );
             flock.getView().color( "#ffffff" ).mode( Sankaku.Shape.STROKE ).alpha( 0.3 );//.border( 1, "#ff0000" );
 //            flock.getView().color( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) ).mode( Sankaku.Shape.STROKE ).alpha( 0.3 );//.border( 1, "#ff0000" );
+//            var view = flock.getView();
+//            view.scale = 20;
 
             flocks.push( flock );
         }

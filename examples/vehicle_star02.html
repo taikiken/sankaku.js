@@ -109,13 +109,13 @@ body {
 
     function hurdle () {
         var rect = size(),
-            random = Sankaku.Num.random,
-            Iro = Sankaku.Iro,
+                random = Sankaku.Num.random,
+                Iro = Sankaku.Iro,
 
-            limit = 30,
-            i, circle,
-            position,
-            max_r;
+                limit = 30,
+                i, circle,
+                position,
+                max_r;
 
         max_r = Math.min( rect.w, rect.h ) * 0.5;
 
@@ -135,9 +135,10 @@ body {
             speed = 7,
             i, flock;
 
-        vehicle = new Sankaku.FollowPath();
+        vehicle = new Sankaku.FollowPath( new Sankaku.Star( 0, 0, 30 ) );
         vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.behavior( Sankaku.Vehicle.WRAP );
+//        vehicle.view( new Sankaku.Star( 0, 0, 30 ) );
         vehicle.getView().color( "#ff0000" );
 //        vehicle.speed( speed );
 //        vehicle.mass( 0.00001 );

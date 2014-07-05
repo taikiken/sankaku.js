@@ -774,7 +774,8 @@ Sankaku.version = "0.2.0";
     Sankaku.Num = ( function (){
         var parseFloat = window.parseFloat,
             _rand = Math.random,
-            _floor = Math.floor;
+            _floor = Math.floor,
+            _PI = Math.PI;
 
         /**
          * 数値ヘルパー
@@ -792,7 +793,31 @@ Sankaku.version = "0.2.0";
          * @type {number}
          * @default Math.PI / 180
          */
-        n.ONE_DEG = Math.PI / 180;
+        n.ONE_DEG = _PI / 180;
+        /**
+         * @const FORTY_FIVE
+         * @type {number}
+         * @default Math.PI / 4
+         */
+        n.FORTY_FIVE = _PI / 4;
+        /**
+         * @const NINETY
+         * @type {number}
+         * @default Math.PI / 2
+         */
+        n.NINETY = _PI / 2;
+        /**
+         * @const ONE_EIGHTY
+         * @type {number}
+         * @default Math.PI
+         */
+        n.ONE_EIGHTY = _PI;
+        /**
+         * @const THREE_SIXTY
+         * @type {number}
+         * @default Math.PI * 2
+         */
+        n.THREE_SIXTY = _PI * 2;
 
         /**
          * 数値か否かをチェックします
@@ -2504,7 +2529,7 @@ Sankaku.version = "0.2.0";
          * @param {number} y
          * @param {number=20} [radius]
          * @param {string} [color] default #000000
-         * @param {boolean} [fill] fill or stroke, true: fill, false: stroke
+         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
         function Circle ( x, y, radius, color, fill ) {
@@ -2556,7 +2581,7 @@ Sankaku.version = "0.2.0";
         p.paint = function ( ctx ) {
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius, 0,  PI2, false);
+            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
 
             ctx.closePath();
         };
@@ -2656,6 +2681,111 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/05 - 17:00
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Shape = Sankaku.Shape,
+        Num = Sankaku.Num;
+
+    Sankaku.Star = ( function (){
+        var _sin = Math.sin,
+            _cos = Math.cos;
+
+        /**
+         * @class Star
+         * @extends Shape
+         * @param {number} x
+         * @param {number} y
+         * @param {number=20} [radius]
+         * @param {string} [color] default #000000
+         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
+         * @param {int=5} [points]
+         * @param {int} [inner]
+         * @default radius * 0.475
+         * @constructor
+         */
+        function Star ( x, y, radius, color, fill, points, inner ) {
+            Shape.call( this, x, y, radius, radius, color, fill );
+
+            this._radius = radius || this.width;
+            this._points = points || 5;
+            this._inner = inner || radius * 0.475;
+        }
+
+        Sankaku.extend( Shape, Star );
+
+        var p = Star.prototype;
+
+        p.constructor = Star;
+
+        /**
+         * @method clone
+         * @return {Star}
+         */
+        p.clone = function () {
+            var clone =  new Star( this.x, this.y, this._radius, this._color, this._fill, this._points );
+
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone._alpha = this._alpha;
+            clone._rgb = Object.create( this._rgb );
+
+            clone._line = this._line;
+            clone._border = {
+                line: this._border.line,
+                rgb: this._border.rgb
+            };
+
+            return clone;
+        };
+
+        //http://www.fascinatedwithsoftware.com/blog/post/2012/11/03/How-to-Draw-a-Star-with-HTML5.aspx
+        /**
+         * @method paint
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.paint = function ( ctx ) {
+            var points = this._points,
+                limit = points * 2,
+                step = Num.ONE_EIGHTY / points,
+                ninety = Num.NINETY,
+                scale = this.scale,
+                outer = this._radius * scale,
+                inner = this._inner * scale,
+                x = this.x,
+                y = this.y,
+                rotation = this.rotation,
+                i, angle, r;
+
+            ctx.beginPath();
+
+            for ( i = 0; i <= limit; ++i ) {
+
+                angle = i * step - ninety + rotation;
+                r = i % 2 ? inner : outer;
+
+                ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+            }
+
+            ctx.closePath();
+        };
+
+        return Star;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
  * date 2014/06/22 - 21:01
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -2678,7 +2808,7 @@ Sankaku.version = "0.2.0";
         /**
          * @class Vehicle
          * @extends Object2D
-         * @use EventDispatcher
+         * @uses EventDispatcher
          * @param {Object2D} [viewModel]
          * @constructor
          */
@@ -3082,10 +3212,11 @@ Sankaku.version = "0.2.0";
         /**
          * @class SteeredVehicle
          * @extends Vehicle
+         * @param {Object2D} [viewModel]
          * @constructor
          */
-        function SteeredVehicle () {
-            Vehicle.call( this );
+        function SteeredVehicle ( viewModel ) {
+            Vehicle.call( this, viewModel );
 
             this._force = new Vector2D();
             // max force
@@ -3429,10 +3560,11 @@ Sankaku.version = "0.2.0";
          * 徘徊
          * @class Wander
          * @extends SteeredVehicle
+         * @params {Object2D} viewModel
          * @constructor
          */
-        function Wander () {
-            SteeredVehicle.call( this );
+        function Wander ( viewModel ) {
+            SteeredVehicle.call( this, viewModel );
 
             this._angle = 0;
             this._distance = 10;
@@ -3449,39 +3581,43 @@ Sankaku.version = "0.2.0";
 
         /**
          * @method clone
-         * @return {Object2D}
+         * @return {*|Object2D}
          */
         p.clone = function () {
-            var clone = new Wander();
-
-            // object 2D
-            clone.position( this._position.clone() );
-            clone.width = this.width;
-            clone.height = this.height;
-            clone.rotation = this.rotation;
-
-            // vehicle
-            clone._velocity = this._velocity.clone();
-            clone._mass = this._mass;
-            clone._speed = this._speed;
-            clone._behavior = this._behavior;
-            clone._force = this._behavior;
-
-            // myself
-            clone._force = this._force.clone();
-            clone._force_max = this._force_max;
-            clone._force_arrival = this._force_arrival;
-            clone._avoid_distance = this._avoid_distance;
-            clone._avoid_buffer = this._avoid_buffer;
-            clone._avoid_insight = this._avoid_insight;
-            clone._avoid_close = this._avoid_close;
-
-            // wander
-            clone._angle = this._angle;
-            clone._distance = this._distance;
-            clone._radius = this._radius;
-            clone._range = this._range;
-            clone._range2 = this._range2;
+//            var clone = new Wander();
+//
+//            // object 2D
+//            clone.position( this._position.clone() );
+//            clone.width = this.width;
+//            clone.height = this.height;
+//            clone.rotation = this.rotation;
+//
+//            // vehicle
+//            clone._velocity = this._velocity.clone();
+//            clone._mass = this._mass;
+//            clone._speed = this._speed;
+//            clone._behavior = this._behavior;
+//            clone._force = this._behavior;
+//
+//            // myself
+//            clone._force = this._force.clone();
+//            clone._force_max = this._force_max;
+//            clone._force_arrival = this._force_arrival;
+//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_buffer = this._avoid_buffer;
+//            clone._avoid_insight = this._avoid_insight;
+//            clone._avoid_close = this._avoid_close;
+//
+//            // wander
+//            clone._angle = this._angle;
+//            clone._distance = this._distance;
+//            clone._radius = this._radius;
+//            clone._range = this._range;
+//            clone._range2 = this._range2;
+//
+//            return clone;
+            var clone = Object.create( this );
+            clone.view( this._view.clone() );
 
             return clone;
         };
@@ -3595,10 +3731,11 @@ Sankaku.version = "0.2.0";
          * 群行動
          * @class Flock
          * @extends SteeredVehicle
+         * @params {Object2D} viewModel
          * @constructor
          */
-        function Flock () {
-            SteeredVehicle.call( this );
+        function Flock ( viewModel ) {
+            SteeredVehicle.call( this, viewModel );
 
             // for flock
             this._flock_insight = 200;
@@ -3778,10 +3915,11 @@ Sankaku.version = "0.2.0";
          * 経路追従
          * @class FollowPath
          * @extends SteeredVehicle
+         * @params {Object2D} viewModel
          * @constructor
          */
-        function FollowPath () {
-            SteeredVehicle.call( this );
+        function FollowPath ( viewModel ) {
+            SteeredVehicle.call( this, viewModel );
 
             this._index = 0;
             this._threshold = 20;
@@ -3795,36 +3933,41 @@ Sankaku.version = "0.2.0";
 
         /**
          * @method clone
-         * @return {Object2D}
+         * @return {*|FollowPath}
          */
         p.clone = function () {
-            var clone = new FollowPath();
+//            var clone = new FollowPath();
+//
+//            // object 2D
+//            clone.position( this._position.clone() );
+//            clone.width = this.width;
+//            clone.height = this.height;
+//            clone.rotation = this.rotation;
+//
+//            // vehicle
+//            clone._velocity = this._velocity.clone();
+//            clone._mass = this._mass;
+//            clone._speed = this._speed;
+//            clone._behavior = this._behavior;
+//            clone._force = this._behavior;
+//
+//            // myself
+//            clone._force = this._force.clone();
+//            clone._force_max = this._force_max;
+//            clone._force_arrival = this._force_arrival;
+//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_buffer = this._avoid_buffer;
+//            clone._avoid_insight = this._avoid_insight;
+//            clone._avoid_close = this._avoid_close;
+//
+//            // follow path
+//            clone._index = this._index;
+//            clone._threshold = this._threshold;
+//
+//            return clone;
 
-            // object 2D
-            clone.position( this._position.clone() );
-            clone.width = this.width;
-            clone.height = this.height;
-            clone.rotation = this.rotation;
-
-            // vehicle
-            clone._velocity = this._velocity.clone();
-            clone._mass = this._mass;
-            clone._speed = this._speed;
-            clone._behavior = this._behavior;
-            clone._force = this._behavior;
-
-            // myself
-            clone._force = this._force.clone();
-            clone._force_max = this._force_max;
-            clone._force_arrival = this._force_arrival;
-            clone._avoid_distance = this._avoid_distance;
-            clone._avoid_buffer = this._avoid_buffer;
-            clone._avoid_insight = this._avoid_insight;
-            clone._avoid_close = this._avoid_close;
-
-            // follow path
-            clone._index = this._index;
-            clone._threshold = this._threshold;
+            var clone = Object.create( this );
+            clone.view( this._view.clone() );
 
             return clone;
         };

@@ -69,6 +69,8 @@
             
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
+                <li><a href="../classes/Star.html">Star</a></li>
+            
                 <li><a href="../classes/SteeredVehicle.html">SteeredVehicle</a></li>
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
@@ -156,7 +158,7 @@
          * @param {number} y
          * @param {number=20} [radius]
          * @param {string} [color] default #000000
-         * @param {boolean} [fill] fill or stroke, true: fill, false: stroke
+         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
         function Circle ( x, y, radius, color, fill ) {
@@ -208,7 +210,7 @@
         p.paint = function ( ctx ) {
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius, 0,  PI2, false);
+            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
 
             ctx.closePath();
         };

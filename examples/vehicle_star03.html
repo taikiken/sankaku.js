@@ -2,11 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=320">
-<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
-<title>Canvas Note - boids + 残像 + 形状変更 | イナヅマTV</title>
-<link rel="author" href="https://plus.google.com/109284322876483643060/" />
-<link rel="profile" href="http://gmpg.org/xfn/11" />
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Canvas Note - Star | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -26,8 +24,9 @@ body {
 .mobile.landscape body {
     min-height: 640px;
 }
+
 </style>
-<script type="text/javascript" src="libs/sankaku.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
 <script>
 //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 //    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -64,7 +63,7 @@ body {
         prev_wh = -1;
 
     // zanzo
-    zanzo = new Sankaku.Zanzo( 24 );
+    zanzo = new Sankaku.Zanzo( 12 );
 
     function size () {
         ww = document.body.clientWidth;
@@ -111,23 +110,25 @@ body {
     function init () {
         var rect = size(),
             _other = Sagen.hasClass( element, "other" ),
-            limit = _other ? 111 : 33,
+            limit = _other ? 111 : 15,
             position,
-            max_r = 40,
-            speed = 3,
+            max_r = 60,
+            speed = 2.6,
             i, flock;
 
         for ( i = 0; i < limit; i++ ) {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            flock = new Sankaku.Flock();
+            flock = new Sankaku.Flock( new Sankaku.Star( 0, 0, 15 ) );
             flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
             flock.velocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
-            flock.speed( speed );
+            flock.speed( Sankaku.Num.random( 10, speed * 10 ) * 0.1 );
+            flock.mass( Math.random() * 0.5 + 0.75 );
+
             flock.padding( _other ? -160 : -10 );
-//            flock.scale = 1 + Math.random() * 2;
-            flock.view( new Sankaku.Circle( 0, 0, 15 ) );
             flock.getView().color( "#ffffff" ).mode( Sankaku.Shape.STROKE ).alpha( 0.3 );
+            flock.insight( 120 );
+//            flock.close( 80 );
 
             flocks.push( flock );
         }
