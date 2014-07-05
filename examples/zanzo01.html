@@ -85,7 +85,7 @@ body {
             pack;
 
         pack = [];
-        ctx.fillStyle = "#efefef";
+//        ctx.fillStyle = "#efefef";
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
@@ -93,9 +93,11 @@ body {
             flock.flock( flocks );
             flock.update( rect.w, rect.h );
 
-//            clone = flock.clone();
+            clone = flock.clone();
 //            flock.draw( ctx );
 //            clone.draw( ctx );
+//            console.log( "flock", flock );
+//            console.log( "clone", clone );
 //            ctx.fill();
 //            pack.push( flock );
         }
@@ -103,9 +105,9 @@ body {
         zanzo.add( flocks );
 
 //        ctx.globalAlpha = 0.3;
-        ctx.fillStyle = "#efefef";
+//        ctx.fillStyle = "#efefef";
 
-        zanzo.draw( ctx, ctx.fill );
+        zanzo.draw( ctx );
 
 //        ctx.fill();
     }
@@ -169,7 +171,7 @@ body {
 //        vehicle.avoidDistance( 25 );
 
         for ( i = 0; i < limit; i++ ) {
-//        for ( i = 0; i < 3; i++ ) {
+//        for ( i = 0; i < 5; i++ ) {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
             flock = new Sankaku.Flock();
@@ -184,13 +186,14 @@ body {
             flock.height = 1;
             flock.close( _other ? 32 : 12 );
             flock.padding( _other ? -160 : -10 );
-
+            flock.getView().mode( Sankaku.Shape.FILL ).color( "#efefef" );
 
             flocks.push( flock );
         }
 
 //        ctx.globalAlpha = 0.35;
         loop();
+//        draw( rect );
     }
 
     init();

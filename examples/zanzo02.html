@@ -129,11 +129,14 @@ body {
         zanzo2.add( flocks2 );
 
 //        ctx.globalAlpha = 0.3;
-        ctx.fillStyle = "#efefef";
-        zanzo.draw( ctx, ctx.fill );
+//        ctx.fillStyle = "#efefef";
+//        zanzo.draw( ctx, ctx.fill );
 
-        ctx.fillStyle = "#f6ff00";
-        zanzo2.draw( ctx, ctx.fill );
+//        ctx.fillStyle = "#f6ff00";
+//        zanzo2.draw( ctx, ctx.fill );
+
+        zanzo.draw( ctx );
+        zanzo2.draw( ctx );
 
 //        ctx.fill();
     }
@@ -208,7 +211,7 @@ body {
             flock.height = 1;
             flock.close( 32 );
             flock.padding( -160 );
-
+            flock.getView().mode( Sankaku.Shape.FILL ).color( "#efefef" );
 
             flocks.push( flock );
         }
@@ -225,12 +228,12 @@ body {
             flock.height = 1;
             flock.close( 32 );
             flock.padding( -160 );
-
+            flock.getView().mode( Sankaku.Shape.FILL ).color( "#f6ff00" );
 
             flocks2.push( flock );
         }
 
-        ctx.globalAlpha = 0.35;
+//        ctx.globalAlpha = 0.35;
         loop();
     }
 

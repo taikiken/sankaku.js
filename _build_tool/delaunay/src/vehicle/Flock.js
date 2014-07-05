@@ -40,13 +40,13 @@
 
         /**
          * @method clone
-         * @return {Object2D}
+         * @return {*|Flock}
          */
         p.clone = function () {
-//            var clone = this._clone();
-//            var clone = new Flock();
-//
-//            // object 2D
+////            var clone = this._clone();
+//            var clone = new Flock( this._view.clone() );
+
+            // object 2D
 //            clone.position( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
@@ -67,13 +67,18 @@
 //            clone._avoid_buffer = this._avoid_buffer;
 //            clone._avoid_insight = this._avoid_insight;
 //            clone._avoid_close = this._avoid_close;
-
-            // super method
-            var clone = SteeredVehicle.prototype.clone.call( this );
-
+//
+//            // super method
+////            var clone = SteeredVehicle.prototype.clone.call( this, this._view.clone() );
+//
             // for flock
-            clone._flock_insight = this._flock_insight;
-            clone._flock_close = this._flock_close;
+//            clone._flock_insight = this._flock_insight;
+//            clone._flock_close = this._flock_close;
+//
+//            return clone;
+
+            var clone = Object.create( this );
+            clone.view( this._view.clone() );
 
             return clone;
         };

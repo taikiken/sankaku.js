@@ -29,13 +29,13 @@ body {
 </style>
 <script type="text/javascript" src="libs/sankaku.min.js"></script>
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-5431264-1', 'inazumatv.com');
-ga('send', 'pageview');
+//(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+//    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+//        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+//})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+//
+//ga('create', 'UA-5431264-1', 'inazumatv.com');
+//ga('send', 'pageview');
 </script>
 </head>
 <body>
@@ -88,7 +88,7 @@ ga('send', 'pageview');
     function draw ( rect ) {
         var i, limit, flock;
 
-        ctx.fillStyle = "#efefef";
+//        ctx.fillStyle = "#efefef";
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
@@ -99,8 +99,9 @@ ga('send', 'pageview');
 
         zanzo.add( flocks );
 
-        ctx.fillStyle = "#efefef";
-        zanzo.draw( ctx, ctx.fill );
+//        ctx.fillStyle = "#efefef";
+//        zanzo.draw( ctx, ctx.fill );
+        zanzo.draw( ctx );
     }
 
     function loop () {
@@ -129,11 +130,11 @@ ga('send', 'pageview');
             flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
             flock.speed( ( speed + Math.random() * speed ) * 0.3 );
             flock.mass( Math.random() * 0.5 + 0.75 );
-            flock.width = 2;
+            flock.width = 4;
             flock.height = 1;
             flock.close( _other ? 32 : 12 );
             flock.padding( _other ? -160 : -10 );
-
+            flock.getView().color( "#ffffff" ).mode( Sankaku.Shape.FILL ).alpha( 0.6 );
 
             flocks.push( flock );
         }

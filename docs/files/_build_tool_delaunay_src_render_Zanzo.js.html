@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
+                <li><a href="../classes/Tripod.html">Tripod</a></li>
+            
                 <li><a href="../classes/Vector2D.html">Vector2D</a></li>
             
                 <li><a href="../classes/Vehicle.html">Vehicle</a></li>
@@ -201,7 +203,9 @@
                 step,
                 opacity,
                 i, limit,
-                n, max;
+                n, max,
+                _is;
+
 
             limit = objects.length;
             step = 1 / ( limit + 1);
@@ -217,7 +221,7 @@
                 for ( n = 0, max = one.length; n &lt; max; n++ ) {
 
                     object = one[ n ];
-
+                    
                     object.draw( ctx );
                     paint &amp;&amp; paint.call( ctx );
                 }

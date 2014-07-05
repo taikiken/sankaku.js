@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/Triangle.html">Triangle</a></li>
             
+                <li><a href="../classes/Tripod.html">Tripod</a></li>
+            
                 <li><a href="../classes/Vector2D.html">Vector2D</a></li>
             
                 <li><a href="../classes/Vehicle.html">Vehicle</a></li>
@@ -183,7 +185,20 @@
          */
         p.clone = function () {
 
-            return new Circle( this.x, this.y, this._radius, this._color, this._fill );
+            var clone =  new Circle( this.x, this.y, this._radius, this._color, this._fill );
+
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone._alpha = this._alpha;
+            clone._rgb = Object.create( this._rgb );
+
+            clone._line = this._line;
+            clone._border = {
+                line: this._border.line,
+                rgb: this._border.rgb
+            };
+
+            return clone;
         };
 
         /**

@@ -48,10 +48,10 @@
 
         /**
          * @method clone
-         * @return {Object2D}
+         * @return {*|SteeredVehicle}
          */
         p.clone = function () {
-//            var clone = new SteeredVehicle();
+//            var clone = new SteeredVehicle( this._view );
 //
 //            // object 2D
 //            clone.position( this._position.clone() );
@@ -65,18 +65,23 @@
 //            clone._speed = this._speed;
 //            clone._behavior = this._behavior;
 //            clone._force = this._behavior;
+////
+//////            var clone = Vehicle.prototype.clone.call( this, this._view.clone() );
+//
+//            // myself
+//            clone._force = this._force.clone();
+//            clone._force_max = this._force_max;
+//            clone._force_arrival = this._force_arrival;
+//
+//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_buffer = this._avoid_buffer;
+//            clone._avoid_insight = this._avoid_insight;
+//            clone._avoid_close = this._avoid_close;
+//
+//            return clone;
 
-            var clone = Vehicle.prototype.clone.call( this );
-
-            // myself
-            clone._force = this._force.clone();
-            clone._force_max = this._force_max;
-            clone._force_arrival = this._force_arrival;
-
-            clone._avoid_distance = this._avoid_distance;
-            clone._avoid_buffer = this._avoid_buffer;
-            clone._avoid_insight = this._avoid_insight;
-            clone._avoid_close = this._avoid_close;
+            var clone = Object.create( this );
+            clone.view( this._view.clone() );
 
             return clone;
         };

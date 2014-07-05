@@ -17,6 +17,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Shape",
         "SteeredVehicle",
         "Triangle",
+        "Tripod",
         "Vector2D",
         "Vehicle",
         "Wander",

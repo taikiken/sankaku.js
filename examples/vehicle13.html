@@ -123,9 +123,9 @@ body {
 
             flock.update( rect.w, rect.h );
 
-            ctx.fillStyle = "#efefef";
+//            ctx.fillStyle = "#efefef";
             flock.draw( ctx );
-            ctx.fill();
+//            ctx.fill();
         }
     }
 
@@ -199,7 +199,8 @@ body {
             flock.height = 2;
             flock.close( 16 );
 //            flock.padding( -200 );
-
+            flock.getView().mode( Sankaku.Shape.FILL );
+            flock.getView().color( "#efefef" );
 
             flocks.push( flock );
         }

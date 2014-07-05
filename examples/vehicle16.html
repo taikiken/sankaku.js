@@ -104,9 +104,9 @@ body {
             p.pursue( vehicle );
             p.update( rect.w, rect.h );
 
-            ctx.fillStyle = p.color;
+//            ctx.fillStyle = p.color;
             p.draw( ctx );
-            ctx.fill();
+//            ctx.fill();
         }
 
     }
@@ -162,11 +162,12 @@ body {
             pursuer = new Sankaku.SteeredVehicle();
             pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
             pursuer.speed( speed * Sankaku.Num.random( 150, 300 ) * 0.01 );
-            pursuer.width *= 0.2;
-            pursuer.height *= 0.2;
+            pursuer.width *= 0.3;
+            pursuer.height *= 0.3;
             pursuer.behavior( Sankaku.Vehicle.WRAP );
             pursuer.padding( -100 );
-            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+//            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+            pursuer.getView().mode( Sankaku.Shape.FILL ).color( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
 
             pursuers.push( pursuer );
         }

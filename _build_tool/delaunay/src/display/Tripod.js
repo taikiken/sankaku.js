@@ -1,7 +1,7 @@
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/25 - 16:22
+ * date 2014/07/04 - 16:54
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -14,48 +14,37 @@
     "use strict";
     var Sankaku = window.Sankaku,
         Shape = Sankaku.Shape
-    ;
+        ;
 
-    Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2;
+    Sankaku.Tripod = ( function (){
 
         /**
-         * @class Circle
-         * @extends Shape
+         * @class Tripod
+         * @extends Object2D
          * @param {number} x
          * @param {number} y
-         * @param {number=20} [radius]
-         * @param {string} [color] default #000000
-         * @param {boolean} [fill] fill or stroke, true: fill, false: stroke
+         * @param {number=20} [width]
+         * @param {number=10} [height]
+         * @param {String} [color] default #000000
+         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
-        function Circle ( x, y, radius, color, fill ) {
-            Shape.call( this, x, y, radius, radius, color, fill );
-
-            this._radius = radius || this.width;
+        function Tripod ( x, y, width, height, color, fill ) {
+            Shape.call( this, x, y, width, height, color, fill );
         }
 
-        Sankaku.extend( Shape, Circle );
+        Sankaku.extend( Shape, Tripod );
 
-        var p = Circle.prototype;
+        var p = Tripod.prototype;
 
-        p.constructor = Circle;
-
-        /**
-         * @method getRadius
-         * @return {number}
-         */
-        p.getRadius = function () {
-            return this._radius;
-        };
+        p.constructor = Tripod;
 
         /**
          * @method clone
-         * @return {Circle}
+         * @return {Tripod}
          */
         p.clone = function () {
-
-            var clone =  new Circle( this.x, this.y, this._radius, this._color, this._fill );
+            var clone = new Tripod( this.x, this.y, this.width, this.height, this._color, this._fill );
 
             clone.rotation = this.rotation;
             clone.scale = this.scale;
@@ -69,6 +58,8 @@
             };
 
             return clone;
+
+//            return Object.create( this );
         };
 
         /**
@@ -76,13 +67,23 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
+            var bounding = this.bounding(),
+                a = bounding.a,
+                b = bounding.b,
+                c = bounding.c,
+                d = bounding.d;
+
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius, 0,  PI2, false);
+            // triangle
+            ctx.moveTo( a.x, a.y );
+            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+            ctx.lineTo( d.x, d.y );
+            ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
         };
 
-        return Circle;
+        return Tripod;
     }() );
 }( window ) );

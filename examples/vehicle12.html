@@ -127,7 +127,7 @@ body {
 //            flock.pursue( pursuer2 );
 
             flock.draw( ctx );
-            ctx.fill();
+//            ctx.fill();
         }
     }
 
@@ -186,7 +186,8 @@ body {
             flock.height = 5;
             flock.insight( 400 );
             flock.close( 15 );
-
+            flock.getView().mode( Sankaku.Shape.FILL );
+            flock.getView().alpha( 0.5 );
 
             flocks.push( flock );
         }

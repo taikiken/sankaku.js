@@ -93,9 +93,9 @@ body {
             jam.draw( ctx );
         }
 
-        ctx.strokeStyle = "#ff0000";
+//        ctx.strokeStyle = "#ff0000";
         vehicle.draw( ctx );
-        ctx.stroke();
+//        ctx.stroke();
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
@@ -105,7 +105,7 @@ body {
             flock.update( rect.w, rect.h );
 
             flock.draw( ctx );
-            ctx.fill();
+//            ctx.fill();
         }
     }
 
@@ -153,6 +153,7 @@ body {
         vehicle.padding( -100 );
         vehicle.speed( speed );
         vehicle.mass( 0.5 );
+        vehicle.getView().color( "#ff0000" );
 //        vehicle.padding( padding );
 //        vehicle.avoidDistance( 25 );
 
@@ -170,7 +171,7 @@ body {
             flock.height *= 0.2;
             flock.padding( -200 );
             flock.close( 12 );
-
+            flock.getView().mode( Sankaku.Shape.FILL );
 
             flocks.push( flock );
         }

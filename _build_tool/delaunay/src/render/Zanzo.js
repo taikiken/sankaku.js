@@ -73,7 +73,9 @@
                 step,
                 opacity,
                 i, limit,
-                n, max;
+                n, max,
+                _is;
+
 
             limit = objects.length;
             step = 1 / ( limit + 1);
@@ -89,7 +91,7 @@
                 for ( n = 0, max = one.length; n < max; n++ ) {
 
                     object = one[ n ];
-
+                    
                     object.draw( ctx );
                     paint && paint.call( ctx );
                 }

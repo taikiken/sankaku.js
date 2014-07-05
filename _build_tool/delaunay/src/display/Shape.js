@@ -38,20 +38,13 @@
             this.setX( x );
             this.setY( y );
 
-            if ( Num.is( width ) ) {
-
-                this.width = width;
-            }
-
-            if ( Num.is( height ) ) {
-
-                this.height = height;
-            }
+            this.width = width || 20;
+            this.height = height || 10;
 
             /**
              * @property _fill
              * @type {string}
-             * @default stroke
+             * @default Shape.STROKE
              * @protected
              */
             this._fill = fill || Shape.STROKE;
@@ -99,8 +92,23 @@
 
         Sankaku.extend( Object2D, Shape );
 
+        /**
+         * @const FILL
+         * @static
+         * @type {string}
+         */
         Shape.FILL = "shape_fill";
+        /**
+         * @const STROKE
+         * @static
+         * @type {string}
+         */
         Shape.STROKE = "shape_stroke";
+        /**
+         * @const BOTH
+         * @static
+         * @type {string}
+         */
         Shape.BOTH = "shape_both";
 
         var p = Shape.prototype;
@@ -121,18 +129,18 @@
 
         /**
          * @method clone
-         * @return {Object2D}
+         * @return {Shape}
          */
         p.clone = function () {
             var clone = new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
 
-            clone.position( this._position.clone() );
+//            clone.position( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
             clone.rotation = this.rotation;
             clone.scale = this.scale;
             clone._alpha = this._alpha;
-            clone._rgb = this._rgb;
+            clone._rgb = Object.create( this._rgb );
 
             clone._line = this._line;
             clone._border = {
@@ -143,6 +151,12 @@
             return clone;
         };
 
+        /**
+         * @method border
+         * @param {number} line
+         * @param {string} color hex
+         * @return {Shape}
+         */
         p.border = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
             rgb.a = this._alpha;
@@ -151,34 +165,42 @@
                 line: line,
                 rgb: rgb
             };
+
+            return this;
         };
 
         /**
          * @method color
          * @param {String} hex
+         * @return {Shape}
          */
         p.color = function ( hex ) {
             this._color = hex;
 
             this._rgb = Iro.hex2rgb( hex );
             this._rgb.a = this._alpha;
+
+            return this;
         };
 
         /**
          * @method alpha
          * @param {Number} n
+         * @return {Shape}
          */
         p.alpha = function ( n ) {
             this._alpha = n;
-            this.color( this._color );
+            return this.color( this._color );
         };
 
         /**
          * @method mode
          * @param {string} fill
+         * @return {Shape}
          */
         p.mode = function ( fill ) {
             this._fill = fill;
+            return this;
         };
         /**
          * @method getMode
@@ -191,9 +213,11 @@
         /**
          * @method line
          * @param {number} n
+         * @return {Shape}
          */
         p.line = function ( n ) {
             this._line = n;
+            return this;
         };
 
         /**
@@ -209,7 +233,6 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
-
             switch ( this._fill ) {
 
                 case Shape.STROKE:
@@ -221,8 +244,8 @@
                     break;
 
                 case Shape.BOTH:
+                    this.stroke( ctx, this._border._line, this._border._rgb );
                     this.fill( ctx, this._rgb );
-                    this.stroke( ctx, this._line, this._rgb );
                     break;
             }
         };

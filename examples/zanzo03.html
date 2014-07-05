@@ -58,7 +58,7 @@ body {
         debug_mode = false;
 
     // zanzo
-    zanzo = new Sankaku.Zanzo( 17 );
+    zanzo = new Sankaku.Zanzo( 10 );
 //    zanzo = new Sankaku.Zanzo( 1 );
 
     function size () {
@@ -86,7 +86,7 @@ body {
             pack;
 
         pack = [];
-        ctx.fillStyle = "#efefef";
+//        ctx.fillStyle = "#efefef";
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
@@ -104,9 +104,10 @@ body {
         zanzo.add( flocks );
 
 //        ctx.globalAlpha = 0.3;
-        ctx.fillStyle = "#efefef";
+//        ctx.fillStyle = "#efefef";
 
-        zanzo.draw( ctx, ctx.fill );
+//        zanzo.draw( ctx, ctx.fill );
+        zanzo.draw( ctx );
 
 //        ctx.fill();
     }
@@ -178,6 +179,7 @@ body {
             flock.close( _other ? 32 : 12 );
             flock.padding( _other ? -160 : -10 );
             flock.scale = 1 + Math.random() * 3;
+            flock.getView().mode( Sankaku.Shape.FILL ).color( "#efefef" );
 
             flocks.push( flock );
         }

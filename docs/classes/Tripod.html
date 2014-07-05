@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Object2D</title>
+    <title>Tripod</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -124,15 +124,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Object2D Class</h1>
+                        <h1>Tripod Class</h1>
 <div class="box meta">
     
 
     
+        <div class="extends">
+            Extends <a href="../classes/Object2D.html" class="crosslink">Object2D</a>
+        </div>
+    
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l26"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:26</code></a>
+            Defined in: <a href="../files/_build_tool_delaunay_src_display_Tripod.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Tripod.js:21</code></a>
         </div>
     
 
@@ -154,11 +158,51 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Object2D" class="method item">
-    <h3 class="name"><code>Object2D</code></h3>
+        <div id="method_Tripod" class="method item">
+    <h3 class="name"><code>Tripod</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[width]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[height]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[color]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[fill]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -186,7 +230,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l26"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:26</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Tripod.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Tripod.js:21</code></a>
         
         </p>
 
@@ -200,6 +244,110 @@
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[width]</code>
+                        <span class="type">Number=20</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[height]</code>
+                        <span class="type">Number=10</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[color]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>default #000000</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[fill]</code>
+                        <span class="type">String=stroke</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -232,37 +380,37 @@
                 <div class="index-section methods">
                     <h3>Methods</h3>
 
-                    <ul class="index-list methods">
+                    <ul class="index-list methods extends">
                         
-                            <li class="index-item method protected">
+                            <li class="index-item method protected inherited">
                                 <a href="#method__clone">_clone</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_bounding">bounding</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_clone">clone</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_draw">draw</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_getPosition">getPosition</a>
 
                                 
@@ -270,27 +418,34 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_paint">paint</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
                                 <a href="#method_position">position</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_rotate">rotate</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_setX">setX</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_setY">setY</a>
 
                                 
@@ -305,51 +460,51 @@
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
-                    <ul class="index-list properties">
+                    <ul class="index-list properties extends">
                         
-                            <li class="index-item property protected">
+                            <li class="index-item property protected inherited">
                                 <a href="#property__position">_position</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_height">height</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_rotation">rotation</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_scale">scale</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_width">width</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_x">x</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_y">y</a>
 
                                 
@@ -370,7 +525,7 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method__clone" class="method item protected">
+                    <div id="method__clone" class="method item protected inherited">
     <h3 class="name"><code>_clone</code></h3>
 
     
@@ -400,11 +555,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method__clone">Object2D</a>:
             
         
         
@@ -442,7 +594,7 @@
 </div>
 
                 
-                    <div id="method_bounding" class="method item">
+                    <div id="method_bounding" class="method item inherited">
     <h3 class="name"><code>bounding</code></h3>
 
     
@@ -470,11 +622,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_bounding">Object2D</a>:
             
         
         
@@ -523,7 +672,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
+            <span class="type"><a href="../classes/Tripod.html" class="crosslink">Tripod</a></span>
         </span>
     
 
@@ -541,16 +690,16 @@
 
     <div class="meta">
         
+            <p>Inherited from
+            <a href="../classes/Object2D.html#method_clone">
+                Object2D
+            </a>
             
-                
-                <p>
-                
-                Defined in
-                
+            but overwritten in
             
         
         
-        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l186"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:186</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Tripod.js.html#l42"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Tripod.js:42</code></a>
         
         </p>
 
@@ -573,7 +722,7 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>:
+                        <span class="type"><a href="../classes/Tripod.html" class="crosslink">Tripod</a></span>:
                     
                 
             </div>
@@ -584,7 +733,7 @@
 </div>
 
                 
-                    <div id="method_draw" class="method item">
+                    <div id="method_draw" class="method item inherited">
     <h3 class="name"><code>draw</code></h3>
 
     
@@ -618,11 +767,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_draw">Object2D</a>:
             
         
         
@@ -671,7 +817,7 @@
 </div>
 
                 
-                    <div id="method_getPosition" class="method item">
+                    <div id="method_getPosition" class="method item inherited">
     <h3 class="name"><code>getPosition</code></h3>
 
     
@@ -699,11 +845,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_getPosition">Object2D</a>:
             
         
         
@@ -741,7 +884,94 @@
 </div>
 
                 
-                    <div id="method_position" class="method item">
+                    <div id="method_paint" class="method item">
+    <h3 class="name"><code>paint</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ctx</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Tripod.js.html#l65"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Tripod.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ctx</code>
+                        <span class="type">CanvasRenderingContext2D</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_position" class="method item inherited">
     <h3 class="name"><code>position</code></h3>
 
     
@@ -775,11 +1005,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_position">Object2D</a>:
             
         
         
@@ -828,7 +1055,7 @@
 </div>
 
                 
-                    <div id="method_rotate" class="method item">
+                    <div id="method_rotate" class="method item inherited">
     <h3 class="name"><code>rotate</code></h3>
 
     
@@ -862,11 +1089,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_rotate">Object2D</a>:
             
         
         
@@ -917,7 +1141,7 @@
 </div>
 
                 
-                    <div id="method_setX" class="method item">
+                    <div id="method_setX" class="method item inherited">
     <h3 class="name"><code>setX</code></h3>
 
     
@@ -951,11 +1175,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_setX">Object2D</a>:
             
         
         
@@ -1004,7 +1225,7 @@
 </div>
 
                 
-                    <div id="method_setY" class="method item">
+                    <div id="method_setY" class="method item inherited">
     <h3 class="name"><code>setY</code></h3>
 
     
@@ -1038,11 +1259,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_setY">Object2D</a>:
             
         
         
@@ -1099,7 +1317,7 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property__position" class="property item protected">
+                    <div id="property__position" class="property item protected inherited">
     <h3 class="name"><code>_position</code></h3>
     <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
 
@@ -1116,11 +1334,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property__position">Object2D</a>:
             
         
         
@@ -1147,7 +1362,7 @@
 </div>
 
                 
-                    <div id="property_height" class="property item">
+                    <div id="property_height" class="property item inherited">
     <h3 class="name"><code>height</code></h3>
     <span class="type">Number</span>
 
@@ -1162,11 +1377,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_height">Object2D</a>:
             
         
         
@@ -1193,7 +1405,7 @@
 </div>
 
                 
-                    <div id="property_rotation" class="property item">
+                    <div id="property_rotation" class="property item inherited">
     <h3 class="name"><code>rotation</code></h3>
     <span class="type">Number</span>
 
@@ -1208,11 +1420,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_rotation">Object2D</a>:
             
         
         
@@ -1240,7 +1449,7 @@
 </div>
 
                 
-                    <div id="property_scale" class="property item">
+                    <div id="property_scale" class="property item inherited">
     <h3 class="name"><code>scale</code></h3>
     <span class="type">Number</span>
 
@@ -1255,11 +1464,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_scale">Object2D</a>:
             
         
         
@@ -1286,7 +1492,7 @@
 </div>
 
                 
-                    <div id="property_width" class="property item">
+                    <div id="property_width" class="property item inherited">
     <h3 class="name"><code>width</code></h3>
     <span class="type">Number</span>
 
@@ -1301,11 +1507,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_width">Object2D</a>:
             
         
         
@@ -1332,7 +1535,7 @@
 </div>
 
                 
-                    <div id="property_x" class="property item">
+                    <div id="property_x" class="property item inherited">
     <h3 class="name"><code>x</code></h3>
     <span class="type">Number</span>
 
@@ -1347,11 +1550,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_x">Object2D</a>:
             
         
         
@@ -1378,7 +1578,7 @@
 </div>
 
                 
-                    <div id="property_y" class="property item">
+                    <div id="property_y" class="property item inherited">
     <h3 class="name"><code>y</code></h3>
     <span class="type">Number</span>
 
@@ -1393,11 +1593,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Object2D.html#property_y">Object2D</a>:
             
         
         

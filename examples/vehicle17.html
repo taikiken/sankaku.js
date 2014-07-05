@@ -105,9 +105,9 @@ body {
             p.follow( paths, true );
             p.update( rect.w, rect.h );
 
-            ctx.fillStyle = p.color;
+//            ctx.fillStyle = p.color;
             p.draw( ctx );
-            ctx.fill();
+//            ctx.fill();
         }
 
     }
@@ -318,7 +318,8 @@ body {
             pursuer.width *= 0.4;
             pursuer.height *= 0.4;
             pursuer.behavior( Sankaku.Vehicle.WRAP );
-            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+//            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+            pursuer.getView().mode( Sankaku.Shape.FILL ).color( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
 
             pursuers.push( pursuer );
         }

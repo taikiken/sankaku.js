@@ -3,6 +3,8 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
+    <property name="version" value="0.2.0"/>
+
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>
     <property name="src" value="./src"/>
@@ -46,6 +48,7 @@
             <file name="display/Shape.js"/>
 
             <file name="display/Circle.js"/>
+            <file name="display/Tripod.js"/>
 
             <file name="vehicle/Vehicle.js"/>
             <file name="vehicle/SteeredVehicle.js"/>
@@ -74,6 +77,12 @@
             <arg value="--js" />
             <mapper type="glob" from="*.js" to="*.min.js" />
         </apply>
+
+        <!--version no-->
+        <copy todir="${dist}">
+            <fileset dir="${dist}" />
+            <mapper type="glob" from="*.min.js" to="*-${version}.min.js" />
+        </copy>
 
         <copy todir="${libs}">
             <fileset dir="${concat}" />

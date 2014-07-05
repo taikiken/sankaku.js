@@ -92,9 +92,9 @@ body {
 //            jam.draw( ctx );
 //        }
 
-        ctx.strokeStyle = "#ff0000";
+//        ctx.strokeStyle = "#ff0000";
         vehicle.draw( ctx );
-        ctx.stroke();
+//        ctx.stroke();
     }
 
     function loop () {
@@ -138,6 +138,7 @@ body {
         vehicle = new Sankaku.FollowPath();
         vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.behavior( Sankaku.Vehicle.WRAP );
+        vehicle.getView().color( "#ff0000" );
 //        vehicle.speed( speed );
 //        vehicle.mass( 0.00001 );
 //        vehicle.padding( padding );
