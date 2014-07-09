@@ -135,6 +135,15 @@
         };
 
         /**
+         * @method getView
+         * @return {Shape}
+         */
+        p.getView = function () {
+            return this._view;
+        };
+
+
+        /**
          * @method clone
          * @return {Object2D}
          */
@@ -246,14 +255,6 @@
          */
         p.draw = function ( ctx ) {
             this._view.draw( ctx );
-        };
-
-        /**
-         * @method getView
-         * @return {Shape}
-         */
-        p.getView = function () {
-            return this._view;
         };
 
         /**

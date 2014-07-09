@@ -153,7 +153,7 @@ body {
         vehicle.padding( -100 );
         vehicle.speed( speed );
         vehicle.mass( 0.5 );
-        vehicle.getView().color( "#ff0000" );
+        vehicle.getView().setColor( "#ff0000" );
 //        vehicle.padding( padding );
 //        vehicle.avoidDistance( 25 );
 
@@ -171,7 +171,7 @@ body {
             flock.height *= 0.2;
             flock.padding( -200 );
             flock.close( 12 );
-            flock.getView().mode( Sankaku.Shape.FILL );
+            flock.getView().setMode( Sankaku.Shape.FILL );
 
             flocks.push( flock );
         }

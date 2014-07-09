@@ -398,6 +398,405 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/25 - 11:19
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ *
+ * for display object
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Vector2D = Sankaku.Vector2D,
+        Num = Sankaku.Num
+        ;
+
+    Sankaku.Object2D = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin;
+
+        /**
+         * @class Object2D
+         * @uses EventDispatcher
+         * @constructor
+         */
+        function Object2D () {
+            /**
+             * @property _position
+             * @type {Vector2D}
+             * @default new Vector2D( 0, 0 )
+             * @protected
+             */
+            this._position = new Vector2D();
+
+            /**
+             * @property x
+             * @type {number}
+             * @default 0
+             */
+            this.x = 0;
+            /**
+             * @property y
+             * @type {number}
+             * @default 0
+             */
+            this.y = 0;
+            /**
+             * radian
+             * @property rotation
+             * @type {number}
+             * @default 0
+             */
+            this.rotation = 0;
+            /**
+             * @property width
+             * @type {number}
+             * @default 20
+             */
+            this.width = 20;
+            /**
+             * @property height
+             * @type {number}
+             * @default 10
+             */
+            this.height = 10;
+
+            /**
+             * @property scale
+             * @type {number}
+             * @default 1
+             */
+            this.scale = 1;
+
+            /**
+             * @property scene
+             * @type {*}
+             */
+            this.scene = null;
+            /**
+             * @property parent
+             * @type {*}
+             */
+            this.parent = null;
+            /**
+             * @property children
+             * @type {Array}
+             */
+            this.children = [];
+        }
+
+        var p = Object2D.prototype;
+
+        p.constructor = Object2D;
+
+        // mixin EventDispatcher
+        Sankaku.EventDispatcher.initialize( p );
+
+        /**
+         * @method position
+         * @param {Vector2D} v
+         */
+        p.position = function ( v ) {
+            this._position = v;
+            this.x = v.x;
+            this.y = v.y;
+        };
+
+        /**
+         * @method getPosition
+         * @return {Vector2D}
+         */
+        p.getPosition = function () {
+            return this._position;
+        };
+
+        /**
+         * @method setX
+         * @param {number} x
+         */
+        p.setX = function ( x ) {
+            this.x = x;
+            this._position.x = x;
+        };
+
+        /**
+         * @method setY
+         * @param {number} y
+         */
+        p.setY = function ( y ) {
+            this.y = y;
+            this._position.y = y;
+        };
+
+        /**
+         * @method bounding
+         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
+         */
+        p.bounding = function () {
+            var x = this.x,
+                y = this.y,
+                w1 = this.width * this.scale,
+                h1 = this.height * this.scale,
+                w2 = w1 * 0.5,
+                h2 = h1 * 0.5,
+                rotation = this.rotation,
+                a, b, c, d,
+                ax, ay,
+                bx,
+                cy,
+                sin, cos,
+
+                cos_ax,
+                cos_ay,
+                sin_ay,
+                sin_ax,
+                cos_bx,
+                cos_cy,
+                sin_bx,
+                sin_cy;
+
+            sin = _sin( rotation );
+            cos = _cos( rotation );
+
+            //  a    b
+            //  ------
+            //  |    |
+            //  ------
+            //  d    c
+
+            ax = -w2;
+            ay = -h2;
+            bx = w2;
+            cy = h2;
+
+            cos_ax = cos * ax;
+            cos_ay = cos * ay;
+            sin_ay = sin * ay;
+            sin_ax = sin * ax;
+            cos_bx = cos * bx;
+            cos_cy = cos * cy;
+            sin_bx = sin * bx;
+            sin_cy = sin * cy;
+
+            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
+            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
+            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
+            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
+
+            return { a: a, b: b, c: c, d:d };
+        };
+
+        /**
+         * 角度を degree を元に radian 設定します
+         * @method rotate
+         * @param {number} degree 0 ~ 360
+         */
+        p.rotate = function ( degree ) {
+            this.rotation = Num.deg2rad( degree );
+        };
+
+        /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            return this._clone();
+        };
+
+        /**
+         * @method _clone
+         * @return {Object2D}
+         * @protected
+         */
+        p._clone = function () {
+            var clone = new Object2D();
+            clone.position( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone.parent = parent && parent.clone();
+
+
+            return clone;
+        };
+
+        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
+        /**
+         * point が bounding box 内か外かを調べます
+         * @param {Vector2D} v 調べるpoint
+         * @return {boolean} true: inside, false: outside
+         */
+        p.inside = function ( v ) {
+
+            function area ( A, B, C ) {
+                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
+            }
+
+            var bounding = this.bounding();
+
+            if (
+                area( bounding.a, v ) > 0 ||
+                area( bounding.b, v ) > 0 ||
+                area( bounding.c, v ) > 0
+                ) {
+                // outside
+                return false;
+            }
+            // inside
+            return true;
+        };
+
+        /**
+         * @method add
+         * @param {*|Object2D} target
+         */
+        p.add = function ( target ) {
+
+            if ( target === this ) {
+
+                return;
+            }
+
+            if ( !!target.parent ) {
+
+                target.parent.remove( target );
+            }
+
+            target.parent = this;
+            this.children.push( target );
+
+            // find scene and target add to scene
+            var scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene._addChild( target );
+            }
+        };
+        /**
+         * @method remove
+         * @param {*|Object2D} target
+         */
+        p.remove = function ( target ) {
+            var index, scene;
+
+            index = this.children.indexOf( target );
+
+            if ( index === -1 ) {
+
+                return;
+            }
+
+            target.parent = null;
+            this.children.splice( index, 1 );
+
+            // remove from scene
+            scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene._removeChild( target );
+            }
+        };
+
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.draw = function ( ctx ) {
+            this._draw( ctx );
+
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                children[ i ].draw( ctx );
+            }
+        };
+        /**
+         * @method _draw
+         * @param {CanvasRenderingContext2D} ctx
+         * @protected
+         */
+        p._draw = function ( ctx ) {
+
+        };
+
+        // children index change
+        p.swap = function ( o1, o2 ) {
+            var children = this.children,
+                index1 = children.indexOf( o1 ),
+                index2 = children.indexOf( o2 );
+
+            children[ index2 ] = o1;
+            children[ index1 ] = o2;
+        };
+
+        p.highest = function ( o ) {
+            var children = this.children,
+                index = children.indexOf( o );
+
+            children.splice( index, 1 );
+            children.push( o );
+        };
+
+        return Object2D;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/05 - 14:03
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var document = window.document,
+
+        Sankaku = window.Sankaku,
+        Object2D = Sankaku.Object2D
+    ;
+
+    Sankaku.Scene = ( function (){
+        // @class Scene
+        function Scene () {
+            Object2D.call( this );
+
+            this.scene = this;
+        }
+
+        var p = Scene.prototype;
+
+        p.constructor = Scene;
+
+        p._addChild = function ( target ) {
+            target.scene = this;
+        };
+
+        p._removeChild = function ( target ) {
+            target.scene = null;
+        };
+
+        return Scene;
+    }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
  * date 2014/06/20 - 18:44
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -1792,6 +2191,7 @@ Sankaku.version = "0.2.0";
         };
 
         /**
+         * ベクトルの角度を設定します
          * @method setAngle
          * @param {number} value radian
          * @return {Vector2D}
@@ -1808,7 +2208,7 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * ベクトルの角度を設定します
+         * ベクトルの角度を計算します
          * @method angle
          * @return {number}
          */
@@ -1874,11 +2274,11 @@ Sankaku.version = "0.2.0";
 
         /**
          * 配列を使いベクトルを設定します
-         * @method fomArray
+         * @method fromArray
          * @param {Array} array [x: number, y: number]
          * @return {Vector2D}
          */
-        p.fomArray = function ( array ) {
+        p.fromArray = function ( array ) {
             this.x = array[ 0 ];
             this.y = array[ 1 ];
 
@@ -1929,10 +2329,10 @@ Sankaku.version = "0.2.0";
 
         /**
          * このベクトルに垂直なベクトルを生成し返します
-         * @method prev
+         * @method perpendicular
          * @return {Vector2D} このベクトルに垂直なベクトル
          */
-        p.prev = function () {
+        p.perpendicular = function () {
             return new Vector2D( -this.y, this.x );
         };
 
@@ -1944,7 +2344,7 @@ Sankaku.version = "0.2.0";
          * @return {number} -1: 左側, 1: 右側
          */
         p.sign = function ( v ) {
-            return this.prev().dot( v ) < 0 ? -1 : 1;
+            return this.perpendicular().dot( v ) < 0 ? -1 : 1;
         };
 
         /**
@@ -1975,227 +2375,6 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/25 - 11:19
- *
- * Copyright (c) 2011-2014 inazumatv.com, inc.
- *
- * Distributed under the terms of the MIT license.
- * http://www.opensource.org/licenses/mit-license.html
- *
- * This notice shall be included in all copies or substantial portions of the Software.
- *
- * for display object
- */
-( function ( window ){
-    "use strict";
-    var Sankaku = window.Sankaku,
-        Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num
-    ;
-
-    Sankaku.Object2D = ( function (){
-        var _cos = Math.cos,
-            _sin = Math.sin;
-
-        /**
-         * @class Object2D
-         * @constructor
-         */
-        function Object2D () {
-            /**
-             * @property _position
-             * @type {Vector2D}
-             * @default new Vector2D( 0, 0 )
-             * @protected
-             */
-            this._position = new Vector2D();
-
-            /**
-             * @property x
-             * @type {number}
-             * @default 0
-             */
-            this.x = 0;
-            /**
-             * @property y
-             * @type {number}
-             * @default 0
-             */
-            this.y = 0;
-            /**
-             * radian
-             * @property rotation
-             * @type {number}
-             * @default 0
-             */
-            this.rotation = 0;
-            /**
-             * @property width
-             * @type {number}
-             * @default 20
-             */
-            this.width = 20;
-            /**
-             * @property height
-             * @type {number}
-             * @default 10
-             */
-            this.height = 10;
-
-            /**
-             * @property scale
-             * @type {number}
-             * @default 1
-             */
-            this.scale = 1;
-        }
-
-        var p = Object2D.prototype;
-
-        p.constructor = Object2D;
-
-        /**
-         * @method position
-         * @param {Vector2D} v
-         */
-        p.position = function ( v ) {
-            this._position = v;
-            this.x = v.x;
-            this.y = v.y;
-        };
-
-        /**
-         * @method getPosition
-         * @return {Vector2D}
-         */
-        p.getPosition = function () {
-            return this._position;
-        };
-
-        /**
-         * @method setX
-         * @param {number} x
-         */
-        p.setX = function ( x ) {
-            this.x = x;
-            this._position.x = x;
-        };
-
-        /**
-         * @method setY
-         * @param {number} y
-         */
-        p.setY = function ( y ) {
-            this.y = y;
-            this._position.y = y;
-        };
-
-        /**
-         * @method bounding
-         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
-         */
-        p.bounding = function () {
-            var x = this.x,
-                y = this.y,
-                w1 = this.width * this.scale,
-                h1 = this.height * this.scale,
-                w2 = w1 * 0.5,
-                h2 = h1 * 0.5,
-                rotation = this.rotation,
-                a, b, c, d,
-                ax, ay,
-                bx,
-                cy,
-                sin, cos,
-
-                cos_ax,
-                cos_ay,
-                sin_ay,
-                sin_ax,
-                cos_bx,
-                cos_cy,
-                sin_bx,
-                sin_cy;
-
-            sin = _sin( rotation );
-            cos = _cos( rotation );
-
-            //  a    b
-            //  ------
-            //  |    |
-            //  ------
-            //  d    c
-
-            ax = -w2;
-            ay = -h2;
-            bx = w2;
-            cy = h2;
-
-            cos_ax = cos * ax;
-            cos_ay = cos * ay;
-            sin_ay = sin * ay;
-            sin_ax = sin * ax;
-            cos_bx = cos * bx;
-            cos_cy = cos * cy;
-            sin_bx = sin * bx;
-            sin_cy = sin * cy;
-
-            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
-            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
-            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
-            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
-
-            return { a: a, b: b, c: c, d:d };
-        };
-
-        /**
-         * 角度を degree を元に radian 設定します
-         * @method rotate
-         * @param {number} degree 0 ~ 360
-         */
-        p.rotate = function ( degree ) {
-            this.rotation = Num.deg2rad( degree );
-        };
-
-        /**
-         * @method clone
-         * @return {Object2D}
-         */
-        p.clone = function () {
-            return this._clone();
-        };
-
-        /**
-         * @method _clone
-         * @return {Object2D}
-         * @protected
-         */
-        p._clone = function () {
-            var clone = new Object2D();
-            clone.position( this._position.clone() );
-            clone.width = this.width;
-            clone.height = this.height;
-            clone.rotation = this.rotation;
-            clone.scale = this.scale;
-
-            return clone;
-        };
-
-        /**
-         * @method draw
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.draw = function ( ctx ) {
-
-        };
-
-        return Object2D;
-    }() );
-
-}( window ) );
-/**
- * license inazumatv.com
- * author (at)taikiken / http://inazumatv.com
  * date 2014/06/25 - 12:19
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -2210,7 +2389,6 @@ Sankaku.version = "0.2.0";
     var Sankaku = window.Sankaku,
         Object2D = Sankaku.Object2D,
         Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num,
         Iro = Sankaku.Iro
     ;
 
@@ -2254,12 +2432,12 @@ Sankaku.version = "0.2.0";
 
 //            /**
 //             * @property border
-//             * @default { width: 0, color: "#000000" }
-//             * @type {{width: number, color: string}}
+//             * @default { width: 0, setColor: "#000000" }
+//             * @type {{width: number, setColor: string}}
 //             */
 //            this.border = {
 //                width: 0,
-//                color: "#000000"
+//                setColor: "#000000"
 //            };
 
 
@@ -2280,9 +2458,9 @@ Sankaku.version = "0.2.0";
              * @protected
              */
             this._color = color || "#000000";
-            this.color( this._color );
+            this.setColor( this._color );
 
-            this.border( this.line, this._color );
+            this.border( this.setLine, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -2311,15 +2489,15 @@ Sankaku.version = "0.2.0";
         p.constructor = Shape;
 
         /**
-         * @method getRadius
+         * @method radius
          * @return {number}
          */
-        p.getRadius = function () {
+        p.radius = function () {
             var bounding = this.bounding(),
                 a = bounding.a,
                 c = bounding.c;
 
-            return new Vector2D( a.x, a.y ).distance( c );
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) );
         };
 
         /**
@@ -2329,7 +2507,7 @@ Sankaku.version = "0.2.0";
         p.clone = function () {
             var clone = new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
 
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
             clone.rotation = this.rotation;
@@ -2339,7 +2517,7 @@ Sankaku.version = "0.2.0";
 
             clone._line = this._line;
             clone._border = {
-                line: this._border.line,
+                setLine: this._border.setLine,
                 rgb: this._border.rgb
             };
 
@@ -2357,7 +2535,7 @@ Sankaku.version = "0.2.0";
             rgb.a = this._alpha;
 
             this._border = {
-                line: line,
+                setLine: line,
                 rgb: rgb
             };
 
@@ -2365,11 +2543,11 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * @method color
+         * @method setColor
          * @param {String} hex
          * @return {Shape}
          */
-        p.color = function ( hex ) {
+        p.setColor = function ( hex ) {
             this._color = hex;
 
             this._rgb = Iro.hex2rgb( hex );
@@ -2379,55 +2557,56 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * @method alpha
+         * @method setAlpha
          * @param {Number} n
          * @return {Shape}
          */
-        p.alpha = function ( n ) {
+        p.setAlpha = function ( n ) {
             this._alpha = n;
-            return this.color( this._color );
+            return this.setColor( this._color );
         };
 
         /**
-         * @method mode
+         * @method setMode
          * @param {string} fill
          * @return {Shape}
          */
-        p.mode = function ( fill ) {
+        p.setMode = function ( fill ) {
             this._fill = fill;
             return this;
         };
         /**
-         * @method getMode
+         * @method mode
          * @return {boolean}
          */
-        p.getMode = function () {
+        p.mode = function () {
             return this._fill;
         };
 
         /**
-         * @method line
+         * @method setLine
          * @param {number} n
          * @return {Shape}
          */
-        p.line = function ( n ) {
+        p.setLine = function ( n ) {
             this._line = n;
             return this;
         };
 
         /**
-         * @method getLine
+         * @method line
          * @return {number}
          */
-        p.getLine = function () {
+        p.line = function () {
             return this._line;
         };
 
         /**
-         * @method draw
+         * @method _draw
+         * @protected
          * @param {CanvasRenderingContext2D} ctx
          */
-        p.draw = function ( ctx ) {
+        p._draw = function ( ctx ) {
             switch ( this._fill ) {
 
                 case Shape.STROKE:
@@ -2920,6 +3099,15 @@ Sankaku.version = "0.2.0";
         };
 
         /**
+         * @method getView
+         * @return {Shape}
+         */
+        p.getView = function () {
+            return this._view;
+        };
+
+
+        /**
          * @method clone
          * @return {Object2D}
          */
@@ -3031,14 +3219,6 @@ Sankaku.version = "0.2.0";
          */
         p.draw = function ( ctx ) {
             this._view.draw( ctx );
-        };
-
-        /**
-         * @method getView
-         * @return {Shape}
-         */
-        p.getView = function () {
-            return this._view;
         };
 
         /**

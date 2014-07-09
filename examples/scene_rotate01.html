@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=320">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
-<title>Canvas Note - boids Zanzo scale | イナヅマTV</title>
+<title>Canvas Note - boids Zanzo scale rotate | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -50,6 +50,10 @@ body {
         flocks = [],
         zanzo,
 
+        square,
+        rotation = 0,
+        step = 3,
+
         ww, wh,
         prev_ww = -1,
         prev_wh = -1,
@@ -58,7 +62,7 @@ body {
         debug_mode = false;
 
     // zanzo
-    zanzo = new Sankaku.Zanzo( 10 );
+    zanzo = new Sankaku.Zanzo( 3 );
 //    zanzo = new Sankaku.Zanzo( 1 );
 
     function size () {
@@ -81,49 +85,24 @@ body {
     }
 
     function draw ( rect ) {
-        var i, limit, flock,
-            clone,
-            pack;
+        rotation += step;
+        if ( rotation >= 360 ) {
 
-        pack = [];
-//        ctx.fillStyle = "#efefef";
-
-        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
-            flock = flocks[ i ];
-
-            flock.flock( flocks );
-            flock.update( rect.w, rect.h );
-
-//            clone = flock.clone();
-//            flock.draw( ctx );
-//            clone.draw( ctx );
-//            ctx.fill();
-//            pack.push( flock );
+            var sub = 360 - rotation;
+            rotation = sub;
         }
+        var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
 
-        zanzo.add( flocks );
+        square.scale = sin;
+        square.rotate( rotation );
 
-//        ctx.globalAlpha = 0.3;
-//        ctx.fillStyle = "#efefef";
-
-//        zanzo.draw( ctx, ctx.fill );
-        zanzo.draw( ctx );
-
-//        ctx.fill();
+        square.draw( ctx );
     }
 
     var clear = 0;
 
     function loop () {
         requestAnimationFrame( loop );
-
-//        ++clear;
-//        var rect = size();
-//        ctx.globalAlpha = 0.3;
-//
-//        if ( clear % 3 === 0 ) {
-//            ctx.clearRect( 0, 0, rect.w, rect.h );
-//        }
 
         var rect = size();
         ctx.clearRect( 0, 0, rect.w, rect.h );
@@ -152,37 +131,41 @@ body {
     }
 
     function init () {
-//        hurdle();
+////        hurdle();
+//
+//        var rect = size(),
+//            _other = Sagen.hasClass( element, "other" ),
+//            limit = _other ? 222 : 33,
+//            position,
+//            max_r = 6,
+//            speed = 3,
+//            i, flock;
+//
+//        for ( i = 0; i < limit; i++ ) {
+////        for ( i = 0; i < 3; i++ ) {
+//
+//            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+//            flock = new Sankaku.Flock();
+////            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+//            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+//            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+//            flock.speed( (speed + Math.random() * speed) * 0.3 );
+//            flock.mass( Math.random() * 0.5 + 1 );
+////            flock.mass( Math.random() * 0.5 + 0.5 );
+////            flock.behavior( Sankaku.Vehicle.WRAP );
+//            flock.width = 2;
+//            flock.height = 1;
+//            flock.close( _other ? 32 : 12 );
+//            flock.padding( _other ? -160 : -10 );
+//            flock.scale = 1 + Math.random() * 3;
+//
+//            flocks.push( flock );
+//        }
+        var rect = size();
 
-        var rect = size(),
-            _other = Sagen.hasClass( element, "other" ),
-            limit = _other ? 222 : 33,
-            position,
-            max_r = 6,
-            speed = 3,
-            i, flock;
+        square = new Sankaku.Shape( rect.w * 0.5, rect.h * 0.5, 100, 200, "#ff0000" );
 
-        for ( i = 0; i < limit; i++ ) {
-//        for ( i = 0; i < 3; i++ ) {
-
-            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            flock = new Sankaku.Flock();
-//            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
-            flock.speed( (speed + Math.random() * speed) * 0.3 );
-            flock.mass( Math.random() * 0.5 + 1 );
-//            flock.mass( Math.random() * 0.5 + 0.5 );
-//            flock.behavior( Sankaku.Vehicle.WRAP );
-            flock.width = 2;
-            flock.height = 1;
-            flock.close( _other ? 32 : 12 );
-            flock.padding( _other ? -160 : -10 );
-            flock.scale = 1 + Math.random() * 3;
-            flock.getView().setMode( Sankaku.Shape.FILL ).setColor( "#efefef" );
-
-            flocks.push( flock );
-        }
+//        zanzo.add( [square] );
 
 //        ctx.globalAlpha = 0.35;
         loop();

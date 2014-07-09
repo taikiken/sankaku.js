@@ -3,7 +3,7 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
-    <property name="version" value="0.2.0"/>
+    <property name="version" value="0.2.2"/>
 
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>
@@ -31,6 +31,9 @@
 
             <file name="events/EventDispatcher.js"/>
 
+            <file name="display/Object2D.js"/>
+            <file name="display/Scene.js"/>
+
             <file name="util/Iro.js"/>
             <file name="util/List.js"/>
             <file name="util/Num.js"/>
@@ -44,7 +47,7 @@
             <!--<file name="geom/Point.js"/>-->
             <!--<file name="geom/Matrix2D.js"/>-->
 
-            <file name="display/Object2D.js"/>
+
             <file name="display/Shape.js"/>
 
             <file name="display/Circle.js"/>

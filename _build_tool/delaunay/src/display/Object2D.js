@@ -17,7 +17,7 @@
     var Sankaku = window.Sankaku,
         Vector2D = Sankaku.Vector2D,
         Num = Sankaku.Num
-    ;
+        ;
 
     Sankaku.Object2D = ( function (){
         var _cos = Math.cos,
@@ -25,6 +25,7 @@
 
         /**
          * @class Object2D
+         * @uses EventDispatcher
          * @constructor
          */
         function Object2D () {
@@ -74,11 +75,30 @@
              * @default 1
              */
             this.scale = 1;
+
+            /**
+             * @property scene
+             * @type {*}
+             */
+            this.scene = null;
+            /**
+             * @property parent
+             * @type {*}
+             */
+            this.parent = null;
+            /**
+             * @property children
+             * @type {Array}
+             */
+            this.children = [];
         }
 
         var p = Object2D.prototype;
 
         p.constructor = Object2D;
+
+        // mixin EventDispatcher
+        Sankaku.EventDispatcher.initialize( p );
 
         /**
          * @method position
@@ -203,8 +223,89 @@
             clone.height = this.height;
             clone.rotation = this.rotation;
             clone.scale = this.scale;
+            clone.parent = parent && parent.clone();
+
 
             return clone;
+        };
+
+        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
+        /**
+         * point が bounding box 内か外かを調べます
+         * @param {Vector2D} v 調べるpoint
+         * @return {boolean} true: inside, false: outside
+         */
+        p.inside = function ( v ) {
+
+            function area ( A, B, C ) {
+                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
+            }
+
+            var bounding = this.bounding();
+
+            if (
+                area( bounding.a, v ) > 0 ||
+                area( bounding.b, v ) > 0 ||
+                area( bounding.c, v ) > 0
+                ) {
+                // outside
+                return false;
+            }
+            // inside
+            return true;
+        };
+
+        /**
+         * @method add
+         * @param {*|Object2D} target
+         */
+        p.add = function ( target ) {
+
+            if ( target === this ) {
+
+                return;
+            }
+
+            if ( !!target.parent ) {
+
+                target.parent.remove( target );
+            }
+
+            target.parent = this;
+            this.children.push( target );
+
+            // find scene and target add to scene
+            var scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene._addChild( target );
+            }
+        };
+        /**
+         * @method remove
+         * @param {*|Object2D} target
+         */
+        p.remove = function ( target ) {
+            var index, scene;
+
+            index = this.children.indexOf( target );
+
+            if ( index === -1 ) {
+
+                return;
+            }
+
+            target.parent = null;
+            this.children.splice( index, 1 );
+
+            // remove from scene
+            scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene._removeChild( target );
+            }
         };
 
         /**
@@ -212,7 +313,41 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
+            this._draw( ctx );
 
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                children[ i ].draw( ctx );
+            }
+        };
+        /**
+         * @method _draw
+         * @param {CanvasRenderingContext2D} ctx
+         * @protected
+         */
+        p._draw = function ( ctx ) {
+
+        };
+
+        // children index change
+        p.swap = function ( o1, o2 ) {
+            var children = this.children,
+                index1 = children.indexOf( o1 ),
+                index2 = children.indexOf( o2 );
+
+            children[ index2 ] = o1;
+            children[ index1 ] = o2;
+        };
+
+        p.highest = function ( o ) {
+            var children = this.children,
+                index = children.indexOf( o );
+
+            children.splice( index, 1 );
+            children.push( o );
         };
 
         return Object2D;

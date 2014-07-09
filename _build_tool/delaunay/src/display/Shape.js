@@ -15,7 +15,6 @@
     var Sankaku = window.Sankaku,
         Object2D = Sankaku.Object2D,
         Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num,
         Iro = Sankaku.Iro
     ;
 
@@ -59,12 +58,12 @@
 
 //            /**
 //             * @property border
-//             * @default { width: 0, color: "#000000" }
-//             * @type {{width: number, color: string}}
+//             * @default { width: 0, setColor: "#000000" }
+//             * @type {{width: number, setColor: string}}
 //             */
 //            this.border = {
 //                width: 0,
-//                color: "#000000"
+//                setColor: "#000000"
 //            };
 
 
@@ -85,9 +84,9 @@
              * @protected
              */
             this._color = color || "#000000";
-            this.color( this._color );
+            this.setColor( this._color );
 
-            this.border( this.line, this._color );
+            this.border( this.setLine, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -116,15 +115,15 @@
         p.constructor = Shape;
 
         /**
-         * @method getRadius
+         * @method radius
          * @return {number}
          */
-        p.getRadius = function () {
+        p.radius = function () {
             var bounding = this.bounding(),
                 a = bounding.a,
                 c = bounding.c;
 
-            return new Vector2D( a.x, a.y ).distance( c );
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) );
         };
 
         /**
@@ -134,7 +133,7 @@
         p.clone = function () {
             var clone = new Shape( this.x, this.y, this.width, this.height, this._color, this._fill );
 
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
             clone.rotation = this.rotation;
@@ -144,7 +143,7 @@
 
             clone._line = this._line;
             clone._border = {
-                line: this._border.line,
+                setLine: this._border.setLine,
                 rgb: this._border.rgb
             };
 
@@ -162,7 +161,7 @@
             rgb.a = this._alpha;
 
             this._border = {
-                line: line,
+                setLine: line,
                 rgb: rgb
             };
 
@@ -170,11 +169,11 @@
         };
 
         /**
-         * @method color
+         * @method setColor
          * @param {String} hex
          * @return {Shape}
          */
-        p.color = function ( hex ) {
+        p.setColor = function ( hex ) {
             this._color = hex;
 
             this._rgb = Iro.hex2rgb( hex );
@@ -184,55 +183,56 @@
         };
 
         /**
-         * @method alpha
+         * @method setAlpha
          * @param {Number} n
          * @return {Shape}
          */
-        p.alpha = function ( n ) {
+        p.setAlpha = function ( n ) {
             this._alpha = n;
-            return this.color( this._color );
+            return this.setColor( this._color );
         };
 
         /**
-         * @method mode
+         * @method setMode
          * @param {string} fill
          * @return {Shape}
          */
-        p.mode = function ( fill ) {
+        p.setMode = function ( fill ) {
             this._fill = fill;
             return this;
         };
         /**
-         * @method getMode
+         * @method mode
          * @return {boolean}
          */
-        p.getMode = function () {
+        p.mode = function () {
             return this._fill;
         };
 
         /**
-         * @method line
+         * @method setLine
          * @param {number} n
          * @return {Shape}
          */
-        p.line = function ( n ) {
+        p.setLine = function ( n ) {
             this._line = n;
             return this;
         };
 
         /**
-         * @method getLine
+         * @method line
          * @return {number}
          */
-        p.getLine = function () {
+        p.line = function () {
             return this._line;
         };
 
         /**
-         * @method draw
+         * @method _draw
+         * @protected
          * @param {CanvasRenderingContext2D} ctx
          */
-        p.draw = function ( ctx ) {
+        p._draw = function ( ctx ) {
             switch ( this._fill ) {
 
                 case Shape.STROKE:

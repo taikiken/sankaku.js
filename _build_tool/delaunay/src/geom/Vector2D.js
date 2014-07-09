@@ -497,6 +497,7 @@
         };
 
         /**
+         * ベクトルの角度を設定します
          * @method setAngle
          * @param {number} value radian
          * @return {Vector2D}
@@ -513,7 +514,7 @@
         };
 
         /**
-         * ベクトルの角度を設定します
+         * ベクトルの角度を計算します
          * @method angle
          * @return {number}
          */
@@ -579,11 +580,11 @@
 
         /**
          * 配列を使いベクトルを設定します
-         * @method fomArray
+         * @method fromArray
          * @param {Array} array [x: number, y: number]
          * @return {Vector2D}
          */
-        p.fomArray = function ( array ) {
+        p.fromArray = function ( array ) {
             this.x = array[ 0 ];
             this.y = array[ 1 ];
 
@@ -634,10 +635,10 @@
 
         /**
          * このベクトルに垂直なベクトルを生成し返します
-         * @method prev
+         * @method perpendicular
          * @return {Vector2D} このベクトルに垂直なベクトル
          */
-        p.prev = function () {
+        p.perpendicular = function () {
             return new Vector2D( -this.y, this.x );
         };
 
@@ -649,7 +650,7 @@
          * @return {number} -1: 左側, 1: 右側
          */
         p.sign = function ( v ) {
-            return this.prev().dot( v ) < 0 ? -1 : 1;
+            return this.perpendicular().dot( v ) < 0 ? -1 : 1;
         };
 
         /**

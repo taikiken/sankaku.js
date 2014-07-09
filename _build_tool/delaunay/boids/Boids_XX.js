@@ -177,7 +177,7 @@
 
                     if ( neighbor === _this ) { continue; }
 
-                    neighbor_position = neighbor.position();
+                    neighbor_position = neighbor.setPosition();
                     boid_distance = d3_ai_boidDistance( position, neighbor_position, size.w, size.h );
 
                     if ( boid_distance > 0 ) {
