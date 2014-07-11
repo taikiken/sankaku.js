@@ -66,7 +66,7 @@ Sankaku.version = "0.2.3";
 
             self.requestAnimationFrame = function ( callback ) {
 
-                var currTime = Date.now(), timeToCall = Math.setMax( 0, 16 - ( currTime - lastTime ) );
+                var currTime = Date.now(), timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
                 var id = self.setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
                 lastTime = currTime + timeToCall;
                 return id;

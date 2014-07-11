@@ -180,6 +180,7 @@
                 bx,
                 cy,
                 sin, cos,
+                r,
 
                 cos_ax,
                 cos_ay,
@@ -188,7 +189,8 @@
                 cos_bx,
                 cos_cy,
                 sin_bx,
-                sin_cy;
+                sin_cy,
+                parent_bounding;
 
             e = {
                 scale: this.scale,
@@ -210,6 +212,10 @@
 
                 rotation = parent.rotation + this.rotation;
 
+//                r = new Vector2D( parent.x, parent.y ).distance( new Vector2D( x, y ) ) * 0.5;
+//                x = x + _cos( parent.rotation ) * r;
+//                y = y + _sin( parent.rotation ) * r;
+                console.log( "rotation ", parent.rotation ,this.rotation );
                 e.scale = parent.scale * this.scale;
                 e.rotation = rotation;
             }
@@ -248,6 +254,30 @@
             e.y = ( a.y + c.y ) * 0.5;
 
             return { a: a, b: b, c: c, d:d, e: e };
+
+//            if ( !!parent && this.scene !== parent ) {
+//                parent_bounding = parent.bounding();
+//                a.x += parent_bounding.a.x;
+//                a.y += parent_bounding.a.y;
+//
+//                b.x += parent_bounding.b.x;
+//                b.y += parent_bounding.b.y;
+//
+//                c.x += parent_bounding.c.x;
+//                c.y += parent_bounding.c.y;
+//
+//                d.x += parent_bounding.d.x;
+//                d.y += parent_bounding.d.y;
+//
+//            }
+//            return { a: a, b: b, c: c, d:d };
+        };
+
+        p.localBounding = function () {
+            var parent_bounding = this.parent.bounding(),
+
+                pa, pb, pc, pd;
+
         };
 
         /**

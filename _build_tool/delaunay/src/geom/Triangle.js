@@ -15,7 +15,7 @@
 
     var _abs = Math.abs,
         _min = Math.min,
-        _max = Math.setMax,
+        _max = Math.max,
         _round = Math.round,
 
         Sankaku = window.Sankaku;

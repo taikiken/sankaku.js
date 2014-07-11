@@ -66,7 +66,7 @@ Sankaku.version = "0.2.3";
 
             self.requestAnimationFrame = function ( callback ) {
 
-                var currTime = Date.now(), timeToCall = Math.setMax( 0, 16 - ( currTime - lastTime ) );
+                var currTime = Date.now(), timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
                 var id = self.setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
                 lastTime = currTime + timeToCall;
                 return id;
@@ -441,7 +441,7 @@ Sankaku.version = "0.2.3";
             g /= 255;
             b /= 255;
 
-            var max = Math.setMax( r, g, b ),
+            var max = Math.max( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, l, d;
 
@@ -522,7 +522,7 @@ Sankaku.version = "0.2.3";
             g /= 255;
             b /= 255;
 
-            var max = Math.setMax( r, g, b ),
+            var max = Math.max( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, v = max,
                 d = max - min;
@@ -668,7 +668,7 @@ Sankaku.version = "0.2.3";
     Sankaku.List = ( function (){
         var _rand = Math.random,
             _floor = Math.floor,
-            _max = Math.setMax;
+            _max = Math.max;
 
         /**
          * Array ヘルパー
@@ -742,12 +742,12 @@ Sankaku.version = "0.2.3";
 
         /**
          * 配列内の最大数値を返します
-         * @method setMax
+         * @method max
          * @static
          * @param {Array} arr 検証対象の配列、内部は全部数値 [Number, [Number]]
          * @return {number} 配列内の最大数値を返します
          */
-        l.setMax = function ( arr ) {
+        l.max = function ( arr ) {
             return _max.apply( null, arr );
         };
 
@@ -1254,11 +1254,11 @@ Sankaku.version = "0.2.3";
 
         /**
          * ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します
-         * @method setMax
+         * @method max
          * @param {Vector2D} v
          * @return {Vector2D}
          */
-        p.setMax = function ( v ) {
+        p.max = function ( v ) {
             if ( this.x < v.x ) {
 
                 this.x = v.x;
@@ -1273,7 +1273,7 @@ Sankaku.version = "0.2.3";
         };
 
         /**
-         * this.min( min_v ), this.setMax( max_v ) を実行します
+         * this.min( min_v ), this.max( max_v ) を実行します
          * @method clamp
          * @param {Vector2D} min_v
          * @param {Vector2D} max_v
@@ -1283,20 +1283,20 @@ Sankaku.version = "0.2.3";
 //            if ( this.x < min.x ) {
 //
 //                this.x = min.x;
-//            } else if ( this.x > setMax.x ) {
+//            } else if ( this.x > max.x ) {
 //
-//                this.x = setMax.x;
+//                this.x = max.x;
 //            }
 //
 //            if ( this.y < min.y ) {
 //
 //                this.y = min.y;
-//            } else if ( this.y > setMax.y ) {
+//            } else if ( this.y > max.y ) {
 //
-//                this.y = setMax.y;
+//                this.y = max.y;
 //            }
             this.min( min_v );
-            this.setMax( max_v );
+            this.max( max_v );
 
             return this;
         };
@@ -1616,7 +1616,7 @@ Sankaku.version = "0.2.3";
 
     var _abs = Math.abs,
         _min = Math.min,
-        _max = Math.setMax,
+        _max = Math.max,
         _round = Math.round,
 
         Sankaku = window.Sankaku;
@@ -2155,6 +2155,7 @@ Sankaku.version = "0.2.3";
                 bx,
                 cy,
                 sin, cos,
+                r,
 
                 cos_ax,
                 cos_ay,
@@ -2163,7 +2164,8 @@ Sankaku.version = "0.2.3";
                 cos_bx,
                 cos_cy,
                 sin_bx,
-                sin_cy;
+                sin_cy,
+                parent_bounding;
 
             e = {
                 scale: this.scale,
@@ -2185,6 +2187,10 @@ Sankaku.version = "0.2.3";
 
                 rotation = parent.rotation + this.rotation;
 
+//                r = new Vector2D( parent.x, parent.y ).distance( new Vector2D( x, y ) ) * 0.5;
+//                x = x + _cos( parent.rotation ) * r;
+//                y = y + _sin( parent.rotation ) * r;
+                console.log( "rotation ", parent.rotation ,this.rotation );
                 e.scale = parent.scale * this.scale;
                 e.rotation = rotation;
             }
@@ -2223,6 +2229,30 @@ Sankaku.version = "0.2.3";
             e.y = ( a.y + c.y ) * 0.5;
 
             return { a: a, b: b, c: c, d:d, e: e };
+
+//            if ( !!parent && this.scene !== parent ) {
+//                parent_bounding = parent.bounding();
+//                a.x += parent_bounding.a.x;
+//                a.y += parent_bounding.a.y;
+//
+//                b.x += parent_bounding.b.x;
+//                b.y += parent_bounding.b.y;
+//
+//                c.x += parent_bounding.c.x;
+//                c.y += parent_bounding.c.y;
+//
+//                d.x += parent_bounding.d.x;
+//                d.y += parent_bounding.d.y;
+//
+//            }
+//            return { a: a, b: b, c: c, d:d };
+        };
+
+        p.localBounding = function () {
+            var parent_bounding = this.parent.bounding(),
+
+                pa, pb, pc, pd;
+
         };
 
         /**
@@ -3027,11 +3057,10 @@ Sankaku.version = "0.2.3";
                 x = e.x,
                 y = e.y,
                 rotation = e.rotation,
-//                rotation = e.rotation,
                 i, angle, r;
 
             ctx.beginPath();
-
+            console.log( 'STAR', rotation );
             for ( i = 0; i <= limit; ++i ) {
 
                 angle = i * step - ninety + rotation;

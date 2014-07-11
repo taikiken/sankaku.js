@@ -1093,7 +1093,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 253,
+            "line": 283,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "rotate",
@@ -1108,7 +1108,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 262,
+            "line": 292,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -1119,7 +1119,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 270,
+            "line": 300,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -1132,7 +1132,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 289,
+            "line": 319,
             "description": "point が bounding box 内か外かを調べます",
             "params": [
                 {
@@ -1149,7 +1149,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 314,
+            "line": 344,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1163,7 +1163,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 341,
+            "line": 371,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1177,7 +1177,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 367,
+            "line": 397,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1191,7 +1191,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 388,
+            "line": 418,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -2430,7 +2430,7 @@
             "line": 334,
             "description": "ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します",
             "itemtype": "method",
-            "name": "setMax",
+            "name": "max",
             "params": [
                 {
                     "name": "v",
@@ -2447,7 +2447,7 @@
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
             "line": 354,
-            "description": "this.min( min_v ), this.setMax( max_v ) を実行します",
+            "description": "this.min( min_v ), this.max( max_v ) を実行します",
             "itemtype": "method",
             "name": "clamp",
             "params": [
@@ -3216,7 +3216,7 @@
             "line": 92,
             "description": "配列内の最大数値を返します",
             "itemtype": "method",
-            "name": "setMax",
+            "name": "max",
             "static": 1,
             "params": [
                 {
@@ -4360,7 +4360,7 @@
         },
         {
             "message": "Missing item type\npoint が bounding box 内か外かを調べます",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:289"
+            "line": " _build_tool/delaunay/src/display/Object2D.js:319"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 14:03\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

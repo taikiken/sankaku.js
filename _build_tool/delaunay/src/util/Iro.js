@@ -44,7 +44,7 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.setMax( r, g, b ),
+            var max = Math.max( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, l, d;
 
@@ -125,7 +125,7 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.setMax( r, g, b ),
+            var max = Math.max( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, v = max,
                 d = max - min;

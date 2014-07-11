@@ -467,11 +467,11 @@
 
         /**
          * ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します
-         * @method setMax
+         * @method max
          * @param {Vector2D} v
          * @return {Vector2D}
          */
-        p.setMax = function ( v ) {
+        p.max = function ( v ) {
             if ( this.x &lt; v.x ) {
 
                 this.x = v.x;
@@ -486,7 +486,7 @@
         };
 
         /**
-         * this.min( min_v ), this.setMax( max_v ) を実行します
+         * this.min( min_v ), this.max( max_v ) を実行します
          * @method clamp
          * @param {Vector2D} min_v
          * @param {Vector2D} max_v
@@ -496,20 +496,20 @@
 //            if ( this.x &lt; min.x ) {
 //
 //                this.x = min.x;
-//            } else if ( this.x &gt; setMax.x ) {
+//            } else if ( this.x &gt; max.x ) {
 //
-//                this.x = setMax.x;
+//                this.x = max.x;
 //            }
 //
 //            if ( this.y &lt; min.y ) {
 //
 //                this.y = min.y;
-//            } else if ( this.y &gt; setMax.y ) {
+//            } else if ( this.y &gt; max.y ) {
 //
-//                this.y = setMax.y;
+//                this.y = max.y;
 //            }
             this.min( min_v );
-            this.setMax( max_v );
+            this.max( max_v );
 
             return this;
         };
