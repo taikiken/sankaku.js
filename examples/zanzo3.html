@@ -132,25 +132,25 @@ body {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
             flock = new Sankaku.Flock();
-            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-//            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
-            flock.velocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
-//            flock.speed( ( speed + Math.random() * speed * 0.5 ) );
-            flock.speed( speed );
-//            flock.mass( Math.random() * 0.5 + 0.75 );
+            flock.setPosition( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+            flock.setVelocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
+//            flock.setSpeed( ( setSpeed + Math.random() * setSpeed * 0.5 ) );
+            flock.setSpeed( speed );
+//            flock.setMass( Math.random() * 0.5 + 0.75 );
 //            flock.width = 4;
 //            flock.height = 1;
-//            flock.close( _other ? 48 : 12 );
-//            flock.insight( 100 );
-//            flock.padding( _other ? -160 : -10 );
-//            flock.behavior( Sankaku.Vehicle.WRAP );
-//            flock.view( new Sankaku.Circle( 0, 0, 15 ) );
+//            flock.setClose( _other ? 48 : 12 );
+//            flock.setInsight( 100 );
+//            flock.setPadding( _other ? -160 : -10 );
+//            flock.setBehavior( Sankaku.Vehicle.WRAP );
+//            flock.setView( new Sankaku.Circle( 0, 0, 15 ) );
             flock.scale = 1 + Math.random();
-            flock.view( new Sankaku.Shape( 0, 0, 20, 20 ) );
-            flock.getView().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );//.border( 1, "#ff0000" );
-//            flock.getVie.setColor(or( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );//.border( 1, "#ff0000" );
-//            var view = flock.getView();
-//            view.scale = 20;
+            flock.setView( new Sankaku.Shape( 0, 0, 20, 20 ) );
+            flock.view().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );//.setBorder( 1, "#ff0000" );
+//            flock.getVie.setColor(or( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );//.setBorder( 1, "#ff0000" );
+//            var setView = flock.view();
+//            setView.scale = 20;
 
             flocks.push( flock );
         }

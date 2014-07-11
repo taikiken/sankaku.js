@@ -159,35 +159,39 @@ body {
         hurdle();
 
         var rect = size(),
-            speed = 5,
+            speed = 10,
             i, flock;
 
         vehicle = new Sankaku.Wander();
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.speed( speed );
-        vehicle.mass( 0.01 );
-        vehicle.padding( padding );
-        vehicle.avoidDistance( 120 );
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.setSpeed( speed );
+//        vehicle.setMass( 0.01 );
+        vehicle.setMass( 0.25 );
+        vehicle.setPadding( 20 );
+        vehicle.setAvoidDistance( 10 );
+//        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
 
 //        pursuer2 = new Sankaku.SteeredVehicle();
-//        pursuer2.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-//        pursuer2.speed( speed * 4 );
-//        pursuer2.behavior( Sankaku.Vehicle.WRAP );
+//        pursuer2.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//        pursuer2.setSpeed( setSpeed * 4 );
+//        pursuer2.setBehavior( Sankaku.Vehicle.WRAP );
 
         for ( i = 0; i < 555; i++ ) {
 
             flock = new Sankaku.Flock();
-            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.speed( speed * 1.5 );
-            flock.mass( 2 );
-            flock.behavior( Sankaku.Vehicle.WRAP );
+            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
+//            flock.setSpeed( speed * 1.5 );
+            flock.setSpeed( speed * 0.5 + speed * Math.random() );
+            flock.setMass( 2 );
+            flock.setBehavior( Sankaku.Vehicle.WRAP );
             flock.width = 10;
             flock.height = 5;
-            flock.insight( 400 );
-            flock.close( 15 );
-            flock.getView().setMode( Sankaku.Shape.FILL );
-            flock.getView().setAlpha( 0.5 );
+            flock.setInsight( 400 );
+            flock.setClose( 15 );
+            flock.view().setMode( Sankaku.Shape.FILL );
+            flock.view().setAlpha( 0.5 );
+            flock.setPadding( -padding + -padding * Math.random() );
 
             flocks.push( flock );
         }

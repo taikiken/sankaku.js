@@ -14,6 +14,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Object2D",
         "Point",
         "Sankaku",
+        "Scene",
         "Shape",
         "Star",
         "SteeredVehicle",

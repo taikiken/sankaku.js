@@ -87,17 +87,17 @@
 
     function draw ( rect ) {
 
-        seeker.seek( flee.getPosition() );
-//        seeker2.seek( flee.getPosition() );
+        seeker.seek( flee.position() );
+//        seeker2.seek( flee.position() );
 
-        flee.flee( seeker.getPosition() );
+        flee.flee( seeker.position() );
 
         seeker.update( rect.w, rect.h );
 //        seeker2.update( rect.w, rect.h );
 
         flee.update( rect.w, rect.h );
 
-//        flee.flee( seeker2.getPosition() );
+//        flee.flee( seeker2.position() );
 //        flee.update( rect.w, rect.h );
 
         ctx.strokeStyle = "#000000";
@@ -136,21 +136,21 @@
     function init () {
         seeker = new Sankaku.SteeredVehicle();
 
-        seeker.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        seeker.behavior( Sankaku.Vehicle.BOUNCE );
-        seeker.speed( 7 );
+        seeker.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        seeker.setBehavior( Sankaku.Vehicle.BOUNCE );
+        seeker.setSpeed( 7 );
 
 //        seeker2 = new Sankaku.SteeredVehicle();
 //
-//        seeker2.position( new Sankaku.Vector2D( window.innerWidth * 0.3, window.innerHeight * 0.7 ) );
-//        seeker2.behavior( Sankaku.Vehicle.BOUNCE );
-//        seeker2.speed( 6 );
+//        seeker2.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.3, window.innerHeight * 0.7 ) );
+//        seeker2.setBehavior( Sankaku.Vehicle.BOUNCE );
+//        seeker2.setSpeed( 6 );
 
         flee = new Sankaku.SteeredVehicle();
 
-        flee.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        flee.behavior( Sankaku.Vehicle.BOUNCE );
-        flee.speed( 7 );
+        flee.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        flee.setBehavior( Sankaku.Vehicle.BOUNCE );
+        flee.setSpeed( 7 );
 
 //        window.addEventListener( "mousemove", onMouseMove, false );
 

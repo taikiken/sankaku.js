@@ -144,7 +144,7 @@ body {
 //            limit = _other ? 222 : 33,
 //            position,
 //            max_r = 6,
-//            speed = 3,
+//            setSpeed = 3,
 //            i, flock;
 //
 //        for ( i = 0; i < limit; i++ ) {
@@ -153,16 +153,16 @@ body {
 //            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
 //            flock = new Sankaku.Flock();
 ////            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-//            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-//            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
-//            flock.speed( (speed + Math.random() * speed) * 0.3 );
-//            flock.mass( Math.random() * 0.5 + 1 );
-////            flock.mass( Math.random() * 0.5 + 0.5 );
-////            flock.behavior( Sankaku.Vehicle.WRAP );
+//            flock.setPosition( new Sankaku.Vector2D( setPosition.x || rect.w * Math.random(), setPosition.y || rect.h * Math.random() ) );
+//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+//            flock.setSpeed( (setSpeed + Math.random() * setSpeed) * 0.3 );
+//            flock.setMass( Math.random() * 0.5 + 1 );
+////            flock.setMass( Math.random() * 0.5 + 0.5 );
+////            flock.setBehavior( Sankaku.Vehicle.WRAP );
 //            flock.width = 2;
 //            flock.height = 1;
-//            flock.close( _other ? 32 : 12 );
-//            flock.padding( _other ? -160 : -10 );
+//            flock.setClose( _other ? 32 : 12 );
+//            flock.setPadding( _other ? -160 : -10 );
 //            flock.scale = 1 + Math.random() * 3;
 //
 //            flocks.push( flock );

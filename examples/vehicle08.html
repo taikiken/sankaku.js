@@ -90,14 +90,14 @@
         rect.w -= 10;
         rect.h -= 10;
 
-//        seeker.seek( evade.getPosition() );
+//        seeker.seek( evade.position() );
 //        seeker.update( rect.w, rect.h );
 
         pursuer.pursue( evader );
         pursuer.update( rect.w, rect.h );
 
         evader.evade( pursuer );
-//        target.seek( pursuer.getPosition() );
+//        target.seek( pursuer.position() );
         evader.update( rect.w, rect.h );
 
         ctx.strokeStyle = "#00ff00";
@@ -136,34 +136,34 @@
 
 //        seeker = new Sankaku.SteeredVehicle();
 //
-//        seeker.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//        seeker.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
 ////        seeker.setX( 400 );
-//        seeker.behavior( behavior );
-//        seeker.speed( speed * 0.98 );
+//        seeker.setBehavior( setBehavior );
+//        seeker.setSpeed( setSpeed * 0.98 );
 //        seeker.left = 10;
 //        seeker.top = 10;
 
         pursuer = new Sankaku.SteeredVehicle();
 
-        pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        pursuer.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
 //        pursuer.setX( 400 );
 //        pursuer.setY( 400 );
-        pursuer.behavior( behavior );
-//        pursuer.speed( speed * 0.94 );
+        pursuer.setBehavior( behavior );
+//        pursuer.setSpeed( setSpeed * 0.94 );
         pursuer.left = 10;
         pursuer.top = 10;
 
         evader = new Sankaku.SteeredVehicle();
 
-        evader.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        evader.behavior( behavior );
-//        evade.speed( speed * 1.05 );
+        evader.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        evader.setBehavior( behavior );
+//        evade.setSpeed( setSpeed * 1.05 );
         evader.left = 10;
         evader.top = 10;
 
-//        var velocity = evade.getVelocity();
-//        velocity.setLength( 15 );
-//        velocity.setAngle( Math.PI / 6 );
+//        var setVelocity = evade.velocity();
+//        setVelocity.setLength( 15 );
+//        setVelocity.setAngle( Math.PI / 6 );
 
         loop();
     }

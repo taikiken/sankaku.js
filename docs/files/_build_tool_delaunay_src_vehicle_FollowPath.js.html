@@ -67,6 +67,8 @@
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
+                <li><a href="../classes/Scene.html">Scene</a></li>
+            
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/Star.html">Star</a></li>
@@ -204,7 +206,7 @@
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
@@ -217,15 +219,19 @@
         p.follow = function ( paths, loop ) {
             loop = !!loop;
 
-            var point = paths[ this._index ];
+            var point = paths[ this._index ],
+                last;
+
             if ( !point ) {
                 return;
             }
 
+            last = paths.length - 1;
+
             if ( this._position.distance( point ) &lt; this._threshold ) {
                 // under _threshold
 
-                if ( this._index &gt;= paths.length - 1 ) {
+                if ( this._index &gt;= last ) {
                     // end
                     if ( loop ) {
                         // is loop
@@ -237,7 +243,7 @@
                 }
             }
 
-            if ( this._index &gt; paths.length - 1 &amp;&amp; !loop ) {
+            if ( this._index &gt;= last &amp;&amp; !loop ) {
 
                 this.arrive( point );
             } else {

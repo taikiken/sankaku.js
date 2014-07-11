@@ -120,15 +120,15 @@ body {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
             flock = new Sankaku.Flock( new Sankaku.Star( 0, 0, 15 ) );
-            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-            flock.velocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
-            flock.speed( Sankaku.Num.random( 10, speed * 10 ) * 0.1 );
-            flock.mass( Math.random() * 0.5 + 0.75 );
+            flock.setPosition( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+            flock.setVelocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
+            flock.setSpeed( Sankaku.Num.random( 10, speed * 10 ) * 0.1 );
+            flock.setMass( Math.random() * 0.5 + 0.75 );
 
-            flock.padding( _other ? -160 : -10 );
-            flock.getView().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );
-            flock.insight( 120 );
-//            flock.close( 80 );
+            flock.setPadding( _other ? -160 : -10 );
+            flock.view().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );
+            flock.setInsight( 120 );
+//            flock.setClose( 80 );
 
             flocks.push( flock );
         }

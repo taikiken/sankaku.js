@@ -215,7 +215,7 @@ body {
             stage_data = stage_ctx.createImageData( capture_image_data.width, capture_image_data.height );
             stage_data.data.set( capture_image_data.data );
 
-            data_u32 = new Uint32Array( stage_data.data.buffer );
+            data_u32 = new Uint32Array( stage_data.data.setBuffer );
 
             var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00,
                 i, x, y, off, corner;

@@ -57,23 +57,14 @@
             this._line = 1;
 
 //            /**
-//             * @property border
+//             * @property setBorder
 //             * @default { width: 0, setColor: "#000000" }
 //             * @type {{width: number, setColor: string}}
 //             */
-//            this.border = {
+//            this.setBorder = {
 //                width: 0,
 //                setColor: "#000000"
 //            };
-
-
-            /**
-             * @property _alpha
-             * @type {number}
-             * @default 1
-             * @protected
-             */
-            this._alpha = 1;
 
             this._rgb = {};
 
@@ -86,7 +77,7 @@
             this._color = color || "#000000";
             this.setColor( this._color );
 
-            this.border( this.setLine, this._color );
+            this.setBorder( this.setLine, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -112,7 +103,7 @@
 
         var p = Shape.prototype;
 
-        p.constructor = Shape;
+        p.constructor = Sankaku.Shape;
 
         /**
          * @method radius
@@ -123,7 +114,7 @@
                 a = bounding.a,
                 c = bounding.c;
 
-            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) );
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
         };
 
         /**
@@ -151,12 +142,12 @@
         };
 
         /**
-         * @method border
+         * @method setBorder
          * @param {number} line
          * @param {string} color hex
          * @return {Shape}
          */
-        p.border = function ( line, color ) {
+        p.setBorder = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
             rgb.a = this._alpha;
 
@@ -180,16 +171,6 @@
             this._rgb.a = this._alpha;
 
             return this;
-        };
-
-        /**
-         * @method setAlpha
-         * @param {Number} n
-         * @return {Shape}
-         */
-        p.setAlpha = function ( n ) {
-            this._alpha = n;
-            return this.setColor( this._color );
         };
 
         /**

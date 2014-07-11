@@ -121,13 +121,13 @@ body {
 
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
             flock = new Sankaku.Flock();
-            flock.position( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-            flock.velocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
-            flock.speed( speed );
-            flock.padding( _other ? -160 : -10 );
+            flock.setPosition( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+            flock.setVelocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
+            flock.setSpeed( speed );
+            flock.setPadding( _other ? -160 : -10 );
 //            flock.scale = 1 + Math.random() * 2;
-            flock.view( new Sankaku.Circle( 0, 0, 15 ) );
-            flock.getView().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );
+            flock.setView( new Sankaku.Circle( 0, 0, 15 ) );
+            flock.view().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );
 
             flocks.push( flock );
         }

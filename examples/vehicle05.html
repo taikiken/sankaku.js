@@ -87,14 +87,14 @@
 
     function draw ( rect ) {
 
-        va.seek( vb.getPosition() );
-        va.flee( vc.getPosition() );
+        va.seek( vb.position() );
+        va.flee( vc.position() );
 
-        vb.seek( vc.getPosition() );
-        vb.flee( va.getPosition() );
+        vb.seek( vc.position() );
+        vb.flee( va.position() );
 
-        vc.seek( va.getPosition() );
-        vc.flee( vb.getPosition() );
+        vc.seek( va.position() );
+        vc.flee( vb.position() );
 
         va.update( rect.w, rect.h );
         vb.update( rect.w, rect.h );
@@ -136,21 +136,21 @@
 
         va = new Sankaku.SteeredVehicle();
 
-        va.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        va.behavior( behavior );
-        va.speed( speed );
+        va.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        va.setBehavior( behavior );
+        va.setSpeed( speed );
 
         vb = new Sankaku.SteeredVehicle();
 
-        vb.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        vb.behavior( behavior );
-        vb.speed( speed );
+        vb.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        vb.setBehavior( behavior );
+        vb.setSpeed( speed );
 
         vc = new Sankaku.SteeredVehicle();
 
-        vc.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        vc.behavior( behavior );
-        vc.speed( speed );
+        vc.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        vc.setBehavior( behavior );
+        vc.setSpeed( speed );
 
         loop();
     }

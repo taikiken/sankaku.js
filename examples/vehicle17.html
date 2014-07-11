@@ -135,11 +135,11 @@ body {
         max_r = Math.min( rect.w, rect.h ) * 0.5;
 
 //        for ( i = 0; i < 22; i++ ) {
-//            position = Sankaku.Distribute.circle( max_r, rect.w - padding * 2, rect.h - padding * 2 );
-//            circle = new Sankaku.Circle( position.x + padding, position.y + padding, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+//            setPosition = Sankaku.Distribute.circle( max_r, rect.w - setPadding * 2, rect.h - setPadding * 2 );
+//            circle = new Sankaku.Circle( setPosition.x + setPadding, setPosition.y + setPadding, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
 //
 //            jams.push( circle );
-//            paths.push( new Sankaku.Vector2D( position.x + padding, position.y + padding ) );
+//            paths.push( new Sankaku.Vector2D( setPosition.x + setPadding, setPosition.y + setPadding ) );
 //        }
 
         var h2 = document.body.clientHeight * 0.5,
@@ -299,27 +299,27 @@ body {
         var h2 = document.body.clientHeight * 0.5;
 
 //        vehicle = new Sankaku.FollowPath();
-//        vehicle.position( new Sankaku.Vector2D( 0, h2 ) );
-//        vehicle.behavior( Sankaku.Vehicle.WRAP );
-//        vehicle.speed( speed );
-//        vehicle.mass( 0.00001 );
-//        vehicle.padding( padding );
-//        vehicle.avoidDistance( 25 );
+//        vehicle.setPosition( new Sankaku.Vector2D( 0, h2 ) );
+//        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
+//        vehicle.setSpeed( setSpeed );
+//        vehicle.setMass( 0.00001 );
+//        vehicle.setPadding( setPadding );
+//        vehicle.setAvoidDistance( 25 );
 
         for ( i = 0; i < 3333; i++ ) {
 
 //            pursuer = new Sankaku.SteeredVehicle();
             pursuer = new Sankaku.FollowPath();
-//            pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-            pursuer.position( new Sankaku.Vector2D( 0, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-//            pursuer.speed( speed * Sankaku.Num.random( 120, 150 ) * 0.01 );
-            pursuer.speed( Math.random() * speed + speed * 0.5 );
-//            pursuer.speed( speed );
+//            pursuer.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.setPosition( new Sankaku.Vector2D( 0, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//            pursuer.setSpeed( setSpeed * Sankaku.Num.random( 120, 150 ) * 0.01 );
+            pursuer.setSpeed( Math.random() * speed + speed * 0.5 );
+//            pursuer.setSpeed( setSpeed );
             pursuer.width *= 0.4;
             pursuer.height *= 0.4;
-            pursuer.behavior( Sankaku.Vehicle.WRAP );
+            pursuer.setBehavior( Sankaku.Vehicle.WRAP );
 //            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
-            pursuer.getView().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
+            pursuer.view().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
 
             pursuers.push( pursuer );
         }

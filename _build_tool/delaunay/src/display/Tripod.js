@@ -37,7 +37,7 @@
 
         var p = Tripod.prototype;
 
-        p.constructor = Tripod;
+        p.constructor = Sankaku.Tripod;
 
         /**
          * @method clone
@@ -58,8 +58,6 @@
             };
 
             return clone;
-
-//            return Object.create( this );
         };
 
         /**
@@ -77,7 +75,8 @@
 
             // triangle
             ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+//            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+            ctx.lineTo( (b.x + c.x) * 0.5, ( b.y + c.y)  * 0.5 );
             ctx.lineTo( d.x, d.y );
             ctx.lineTo( a.x, a.y );
 

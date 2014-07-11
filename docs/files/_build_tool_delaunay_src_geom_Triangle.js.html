@@ -67,6 +67,8 @@
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
+                <li><a href="../classes/Scene.html">Scene</a></li>
+            
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/Star.html">Star</a></li>
@@ -147,7 +149,7 @@
 
     var _abs = Math.abs,
         _min = Math.min,
-        _max = Math.max,
+        _max = Math.setMax,
         _round = Math.round,
 
         Sankaku = window.Sankaku;
@@ -203,7 +205,7 @@
 
         var p = Triangle.prototype;
 
-        p.constructor = Triangle;
+        p.constructor = Sankaku.Triangle;
 
         /**
          * @method draw

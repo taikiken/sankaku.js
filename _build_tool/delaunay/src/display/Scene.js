@@ -19,22 +19,34 @@
     ;
 
     Sankaku.Scene = ( function (){
-        // @class Scene
+        /**
+         * @class Scene
+         * @constructor
+         */
         function Scene () {
             Object2D.call( this );
 
             this.scene = this;
         }
 
+        Sankaku.extend( Object2D, Scene );
+
         var p = Scene.prototype;
 
-        p.constructor = Scene;
+        p.constructor = Sankaku.Scene;
 
-        p._addChild = function ( target ) {
+        /**
+         * @method addChild
+         * @param {*|Object2D} target
+         */
+        p.addChild = function ( target ) {
             target.scene = this;
         };
-
-        p._removeChild = function ( target ) {
+        /**
+         * @method removeChild
+         * @param {*|Object2D} target
+         */
+        p.removeChild = function ( target ) {
             target.scene = null;
         };
 

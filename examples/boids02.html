@@ -145,24 +145,24 @@ body {
             i, flock;
 
         vehicle = new Sankaku.Wander();
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.speed( speed );
-        vehicle.mass( 0.1 );
-        vehicle.padding( -200 );
-        vehicle.avoidDistance( 10 );
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.setSpeed( speed );
+        vehicle.setMass( 0.1 );
+        vehicle.setPadding( -200 );
+        vehicle.setAvoidDistance( 10 );
 
         for ( i = 0; i < limit; i++ ) {
 
             flock = new Sankaku.Flock();
-            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.speed( speed );
-            flock.mass( 1.5 );
-            flock.behavior( Sankaku.Vehicle.WRAP );
+            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
+            flock.setSpeed( speed );
+            flock.setMass( 1.5 );
+            flock.setBehavior( Sankaku.Vehicle.WRAP );
             flock.width = 4;
             flock.height = 2;
-            flock.close( 12 );
-            flock.padding( -500 );
+            flock.setClose( 12 );
+            flock.setPadding( -500 );
 
             flocks.push( flock );
         }

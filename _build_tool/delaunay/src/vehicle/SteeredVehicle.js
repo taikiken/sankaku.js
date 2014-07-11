@@ -30,7 +30,7 @@
             Vehicle.call( this, viewModel );
 
             this._force = new Vector2D();
-            // max force
+            // setMax setForce
             this._force_max = 1.0;
             this._force_arrival = 100;
 
@@ -45,7 +45,7 @@
 
         var p = SteeredVehicle.prototype;
 
-        p.constructor = SteeredVehicle;
+        p.constructor = Sankaku.SteeredVehicle;
 
         /**
          * @method clone
@@ -55,7 +55,7 @@
 //            var clone = new SteeredVehicle( this._view );
 //
 //            // object 2D
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
 //            clone.rotation = this.rotation;
@@ -82,102 +82,102 @@
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method getMax
+         * @method max
          * @return {number} SteeredVehicle._force_max
          */
-        p.getMax = function () {
+        p.max = function () {
             return this._force_max;
         };
 
         /**
-         * @method max
+         * @method setMax
          * @param {number} n
          */
-        p.max = function ( n ) {
+        p.setMax = function ( n ) {
             this._force_max = n;
         };
 
         /**
-         * @method getArrival
+         * @method arrival
          * @return {number} SteeredVehicle._force_arrival
          */
-        p.getArrival = function () {
+        p.arrival = function () {
             return this._force_arrival;
         };
 
         /**
-         * @method arrival
+         * @method setArrival
          * @param {number} n
          */
-        p.arrival = function ( n ) {
+        p.setArrival = function ( n ) {
             this._force_arrival = n;
         };
 
         /**
-         * @method force
+         * @method setForce
          * @param {Vector2D} v
          */
-        p.force = function ( v ) {
+        p.setForce = function ( v ) {
             this._force = v;
         };
 
         /**
-         * @method getForce
+         * @method force
          * @return {Vector2D|SteeredVehicle._force}
          *
          */
-        p.getForce = function () {
+        p.force = function () {
             return this._force;
         };
 
         /**
-         * @method buffer
+         * @method setBuffer
          * @param {number} n
          */
-        p.buffer = function ( n ) {
+        p.setBuffer = function ( n ) {
             this._avoid_buffer = n;
         };
         /**
-         * @method getBuffer
+         * @method buffer
          * @return {number|*}
          */
-        p.getBuffer = function () {
+        p.buffer = function () {
             return this._avoid_buffer;
         };
 
         /**
-         * @method insight
+         * @method setInsight
          * @param {number} n
          */
-        p.insight = function ( n ) {
+        p.setInsight = function ( n ) {
             this._avoid_insight = n;
         };
         /**
-         * @method getInsight
+         * @method insight
          * @return {number|*}
          */
-        p.getInsight = function () {
+        p.insight = function () {
             return this._avoid_insight;
         };
 
         /**
-         * @method close
+         * @method setClose
          * @param {number} n
          */
-        p.close = function ( n ) {
+        p.setClose = function ( n ) {
             this._avoid_close = n;
         };
         /**
-         * @method getClose
+         * @method close
          * @return {number|*}
          */
-        p.getClose = function () {
+        p.close = function () {
             return this._avoid_close;
         };
 
@@ -185,15 +185,15 @@
          * @method avoidDistance
          * @param {number} n
          */
-        p.avoidDistance = function ( n ) {
+        p.setAvoidDistance = function ( n ) {
             this._avoid_distance = n;
         };
 
         /**
-         * @method getAvoidDistance
+         * @method avoidDistance
          * @return {number|*}
          */
-        p.getAvoidDistance = function () {
+        p.avoidDistance = function () {
             return this._avoid_distance;
         };
 
@@ -267,8 +267,8 @@
          * @param {Vehicle} target
          */
         p.pursue = function ( target ) {
-            var look = this._position.distance( target.getPosition() ),
-                clone = target.getPosition().clone();
+            var look = this._position.distance( target.position() ),
+                clone = target.position().clone();
 
             clone.add( target._velocity.multiplyNew( look ) );
 
@@ -281,8 +281,8 @@
          * @param {Vehicle} target
          */
         p.evade = function ( target ) {
-            var look = this._position.distance( target.getPosition() ) / this._speed,
-                clone = target.getPosition().clone();
+            var look = this._position.distance( target.position() ) / this._speed,
+                clone = target.position().clone();
 
             clone.sub( target._velocity.multiplyNew( look ) );
 
@@ -310,7 +310,7 @@
 
                 target = targets[ i ];
                 heading = this._velocity.clone().normalize();
-                difference = target.getPosition().subNew( this._position );
+                difference = target.position().subNew( this._position );
                 prod = difference.dot( heading );
 
                 if ( prod > 0 ) {
@@ -324,13 +324,13 @@
                     distance = projection.subNew( difference ).length();
 
                     if (
-                        distance < target.getRadius() + this._avoid_buffer &&
+                        distance < target.radius() + this._avoid_buffer &&
                         projection.length() < feeler.length()
                        ) {
 
                         force = heading.clone();
                         force.multiplyScalar( this._speed );
-                        force.setAngle( difference.sign( this._velocity ) * PI_05 );
+                        force.setAngle( force.angle() + difference.sign( this._velocity ) * PI_05 );
 
                         prf = projection.length() / feeler.length();
                         force.multiplyScalar( 1 - prf );

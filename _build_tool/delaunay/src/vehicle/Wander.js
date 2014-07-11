@@ -29,18 +29,18 @@
         function Wander ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
 
-            this._angle = 0;
-            this._distance = 10;
-            this._radius = 5;
-            this._range = 1;
-            this._range2 = this._range * 0.5;
+            this._wander_angle = 0;
+            this._wander_distance = 10;
+            this._wnder_radius = 5;
+            this._wander_range = 1;
+            this._wander_range2 = this._wander_range * 0.5;
         }
 
         Sankaku.extend( SteeredVehicle, Wander );
 
         var p = Wander.prototype;
 
-        p.constructor = Wander;
+        p.constructor = Sankaku.Wander;
 
         /**
          * @method clone
@@ -50,7 +50,7 @@
 //            var clone = new Wander();
 //
 //            // object 2D
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
 //            clone.rotation = this.rotation;
@@ -66,101 +66,101 @@
 //            clone._force = this._force.clone();
 //            clone._force_max = this._force_max;
 //            clone._force_arrival = this._force_arrival;
-//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_setWanderDistance = this._avoid_setWanderDistance;
 //            clone._avoid_buffer = this._avoid_buffer;
 //            clone._avoid_insight = this._avoid_insight;
 //            clone._avoid_close = this._avoid_close;
 //
 //            // wander
-//            clone._angle = this._angle;
-//            clone._distance = this._distance;
-//            clone._radius = this._radius;
-//            clone._range = this._range;
-//            clone._range2 = this._range2;
+//            clone._wander_angle = this._wander_angle;
+//            clone._wander_distance = this._wander_distance;
+//            clone._wnder_radius = this._wnder_radius;
+//            clone._wander_range = this._wander_range;
+//            clone._wander_range2 = this._wander_range2;
 //
 //            return clone;
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method angle
+         * @method setWanderAngle
          * @param {number} n
          */
-        p.angle = function ( n ) {
-            this._angle = n;
+        p.setWanderAngle = function ( n ) {
+            this._wander_angle = n;
         };
 
         /**
-         * @method getAngle
+         * @method wanderAngle
          * @return {number}
          */
-        p.getAngle = function () {
-            return this._angle;
+        p.wanderAngle = function () {
+            return this._wander_angle;
         };
 
         /**
-         * @method distance
+         * @method setWanderDistance
          * @param {number} n
          */
-        p.distance = function ( n ) {
-            this._distance = n;
+        p.setWanderDistance = function ( n ) {
+            this._wander_distance = n;
         };
 
         /**
-         * @method getDistance
+         * @method wanderDistance
          * @return {number}
          */
-        p.getDistance = function () {
-            return this._distance;
+        p.wanderDistance = function () {
+            return this._wander_distance;
         };
 
         /**
-         * @method radius
+         * @method setWanderRadius
          * @param {number} n
          */
-        p.radius = function ( n ) {
-            this._radius = n;
+        p.setWanderRadius = function ( n ) {
+            this._wnder_radius = n;
         };
 
         /**
-         * @method getRadius
+         * @method wanderRadius
          * @return {number}
          */
-        p.getRadius = function () {
-            return this._radius;
+        p.wanderRadius = function () {
+            return this._wnder_radius;
         };
 
         /**
-         * @method range
+         * @method setWanderRange
          * @param {number} n
          */
-        p.range = function ( n ) {
-            this._range = n;
-            this._range2 = n * 0.5;
+        p.setWanderRange = function ( n ) {
+            this._wander_range = n;
+            this._wander_range2 = n * 0.5;
         };
 
         /**
-         * @method getRange
+         * @method wanderRange
          * @return {number}
          */
-        p.getRange = function () {
-            return this._range;
+        p.wanderRange = function () {
+            return this._wander_range;
         };
 
         /**
          * @method wander
          */
         p.wander = function () {
-            var center = this._velocity.clone().normalize().multiplyScalar( this._distance ),
+            var center = this._velocity.clone().normalize().multiplyScalar( this._wander_distance ),
                 offset = new Vector2D();
 
-            offset.setLength( this._radius );
-            offset.setAngle( this._angle );
+            offset.setLength( this._wnder_radius );
+            offset.setAngle( this._wander_angle );
 
-            this._angle = _rand() * this._range - this._range2;
+            this._wander_angle += _rand() * this._wander_range - this._wander_range2;
 
             center.add( offset );
             this._force.add( center );

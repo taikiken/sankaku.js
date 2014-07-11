@@ -45,7 +45,15 @@
 
         var p = Star.prototype;
 
-        p.constructor = Star;
+        p.constructor = Sankaku.Star;
+
+        /**
+         * @method getRadius
+         * @return {number}
+         */
+        p.radius = function () {
+            return this._radius;
+        };
 
         /**
          * @method clone
@@ -74,16 +82,22 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
-            var points = this._points,
+            var bounding = this.bounding(),
+                e = bounding.e,
+                points = this._points,
                 limit = points * 2,
                 step = Num.ONE_EIGHTY / points,
                 ninety = Num.NINETY,
-                scale = this.scale,
+//                scale = this.scale,
+                scale = e.scale,
                 outer = this._radius * scale,
                 inner = this._inner * scale,
-                x = this.x,
-                y = this.y,
-                rotation = this.rotation,
+//                x = this.x,
+//                y = this.y,
+                x = e.x,
+                y = e.y,
+                rotation = e.rotation,
+//                rotation = e.rotation,
                 i, angle, r;
 
             ctx.beginPath();

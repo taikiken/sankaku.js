@@ -15,7 +15,7 @@
 
     var _abs = Math.abs,
         _min = Math.min,
-        _max = Math.max,
+        _max = Math.setMax,
         _round = Math.round,
 
         Sankaku = window.Sankaku;
@@ -71,7 +71,7 @@
 
         var p = Triangle.prototype;
 
-        p.constructor = Triangle;
+        p.constructor = Sankaku.Triangle;
 
         /**
          * @method draw

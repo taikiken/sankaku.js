@@ -17,7 +17,9 @@
     ;
 
     Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2;
+        var PI2 = Math.PI * 2,
+            _sin = Math.sin,
+            _cos = Math.cos;
 
         /**
          * @class Circle
@@ -39,13 +41,13 @@
 
         var p = Circle.prototype;
 
-        p.constructor = Circle;
+        p.constructor = Sankaku.Circle;
 
         /**
          * @method getRadius
          * @return {number}
          */
-        p.getRadius = function () {
+        p.radius = function () {
             return this._radius;
         };
 
@@ -76,9 +78,24 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
+            var bounding = this.bounding(),
+                e = bounding.e,
+                rotation = e.rotation,
+                radius = this._radius,
+
+                sin, cos,
+                x, y;
+
+//            sin = _sin( rotation );
+//            cos = _cos( rotation );
+//
+//            x = cos * ( e.x + this.x );
+//            y = cos * ( e.x + this.x );
+
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
+//            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
+            ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
         };

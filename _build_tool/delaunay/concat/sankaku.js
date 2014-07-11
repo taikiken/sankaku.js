@@ -24,7 +24,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.0";
+Sankaku.version = "0.2.3";
 
 // polyfill
 ( function ( self ){
@@ -66,7 +66,7 @@ Sankaku.version = "0.2.0";
 
             self.requestAnimationFrame = function ( callback ) {
 
-                var currTime = Date.now(), timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
+                var currTime = Date.now(), timeToCall = Math.setMax( 0, 16 - ( currTime - lastTime ) );
                 var id = self.setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
                 lastTime = currTime + timeToCall;
                 return id;
@@ -398,405 +398,6 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/25 - 11:19
- *
- * Copyright (c) 2011-2014 inazumatv.com, inc.
- *
- * Distributed under the terms of the MIT license.
- * http://www.opensource.org/licenses/mit-license.html
- *
- * This notice shall be included in all copies or substantial portions of the Software.
- *
- * for display object
- */
-( function ( window ){
-    "use strict";
-    var Sankaku = window.Sankaku,
-        Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num
-        ;
-
-    Sankaku.Object2D = ( function (){
-        var _cos = Math.cos,
-            _sin = Math.sin;
-
-        /**
-         * @class Object2D
-         * @uses EventDispatcher
-         * @constructor
-         */
-        function Object2D () {
-            /**
-             * @property _position
-             * @type {Vector2D}
-             * @default new Vector2D( 0, 0 )
-             * @protected
-             */
-            this._position = new Vector2D();
-
-            /**
-             * @property x
-             * @type {number}
-             * @default 0
-             */
-            this.x = 0;
-            /**
-             * @property y
-             * @type {number}
-             * @default 0
-             */
-            this.y = 0;
-            /**
-             * radian
-             * @property rotation
-             * @type {number}
-             * @default 0
-             */
-            this.rotation = 0;
-            /**
-             * @property width
-             * @type {number}
-             * @default 20
-             */
-            this.width = 20;
-            /**
-             * @property height
-             * @type {number}
-             * @default 10
-             */
-            this.height = 10;
-
-            /**
-             * @property scale
-             * @type {number}
-             * @default 1
-             */
-            this.scale = 1;
-
-            /**
-             * @property scene
-             * @type {*}
-             */
-            this.scene = null;
-            /**
-             * @property parent
-             * @type {*}
-             */
-            this.parent = null;
-            /**
-             * @property children
-             * @type {Array}
-             */
-            this.children = [];
-        }
-
-        var p = Object2D.prototype;
-
-        p.constructor = Object2D;
-
-        // mixin EventDispatcher
-        Sankaku.EventDispatcher.initialize( p );
-
-        /**
-         * @method position
-         * @param {Vector2D} v
-         */
-        p.position = function ( v ) {
-            this._position = v;
-            this.x = v.x;
-            this.y = v.y;
-        };
-
-        /**
-         * @method getPosition
-         * @return {Vector2D}
-         */
-        p.getPosition = function () {
-            return this._position;
-        };
-
-        /**
-         * @method setX
-         * @param {number} x
-         */
-        p.setX = function ( x ) {
-            this.x = x;
-            this._position.x = x;
-        };
-
-        /**
-         * @method setY
-         * @param {number} y
-         */
-        p.setY = function ( y ) {
-            this.y = y;
-            this._position.y = y;
-        };
-
-        /**
-         * @method bounding
-         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
-         */
-        p.bounding = function () {
-            var x = this.x,
-                y = this.y,
-                w1 = this.width * this.scale,
-                h1 = this.height * this.scale,
-                w2 = w1 * 0.5,
-                h2 = h1 * 0.5,
-                rotation = this.rotation,
-                a, b, c, d,
-                ax, ay,
-                bx,
-                cy,
-                sin, cos,
-
-                cos_ax,
-                cos_ay,
-                sin_ay,
-                sin_ax,
-                cos_bx,
-                cos_cy,
-                sin_bx,
-                sin_cy;
-
-            sin = _sin( rotation );
-            cos = _cos( rotation );
-
-            //  a    b
-            //  ------
-            //  |    |
-            //  ------
-            //  d    c
-
-            ax = -w2;
-            ay = -h2;
-            bx = w2;
-            cy = h2;
-
-            cos_ax = cos * ax;
-            cos_ay = cos * ay;
-            sin_ay = sin * ay;
-            sin_ax = sin * ax;
-            cos_bx = cos * bx;
-            cos_cy = cos * cy;
-            sin_bx = sin * bx;
-            sin_cy = sin * cy;
-
-            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
-            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
-            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
-            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
-
-            return { a: a, b: b, c: c, d:d };
-        };
-
-        /**
-         * 角度を degree を元に radian 設定します
-         * @method rotate
-         * @param {number} degree 0 ~ 360
-         */
-        p.rotate = function ( degree ) {
-            this.rotation = Num.deg2rad( degree );
-        };
-
-        /**
-         * @method clone
-         * @return {Object2D}
-         */
-        p.clone = function () {
-            return this._clone();
-        };
-
-        /**
-         * @method _clone
-         * @return {Object2D}
-         * @protected
-         */
-        p._clone = function () {
-            var clone = new Object2D();
-            clone.position( this._position.clone() );
-            clone.width = this.width;
-            clone.height = this.height;
-            clone.rotation = this.rotation;
-            clone.scale = this.scale;
-            clone.parent = parent && parent.clone();
-
-
-            return clone;
-        };
-
-        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
-        /**
-         * point が bounding box 内か外かを調べます
-         * @param {Vector2D} v 調べるpoint
-         * @return {boolean} true: inside, false: outside
-         */
-        p.inside = function ( v ) {
-
-            function area ( A, B, C ) {
-                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
-            }
-
-            var bounding = this.bounding();
-
-            if (
-                area( bounding.a, v ) > 0 ||
-                area( bounding.b, v ) > 0 ||
-                area( bounding.c, v ) > 0
-                ) {
-                // outside
-                return false;
-            }
-            // inside
-            return true;
-        };
-
-        /**
-         * @method add
-         * @param {*|Object2D} target
-         */
-        p.add = function ( target ) {
-
-            if ( target === this ) {
-
-                return;
-            }
-
-            if ( !!target.parent ) {
-
-                target.parent.remove( target );
-            }
-
-            target.parent = this;
-            this.children.push( target );
-
-            // find scene and target add to scene
-            var scene = this.scene;
-
-            if ( !!scene ) {
-
-                scene._addChild( target );
-            }
-        };
-        /**
-         * @method remove
-         * @param {*|Object2D} target
-         */
-        p.remove = function ( target ) {
-            var index, scene;
-
-            index = this.children.indexOf( target );
-
-            if ( index === -1 ) {
-
-                return;
-            }
-
-            target.parent = null;
-            this.children.splice( index, 1 );
-
-            // remove from scene
-            scene = this.scene;
-
-            if ( !!scene ) {
-
-                scene._removeChild( target );
-            }
-        };
-
-        /**
-         * @method draw
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.draw = function ( ctx ) {
-            this._draw( ctx );
-
-            var children = this.children,
-                i, limit;
-
-            for ( i = 0, limit = children.length; i < limit; i++ ) {
-
-                children[ i ].draw( ctx );
-            }
-        };
-        /**
-         * @method _draw
-         * @param {CanvasRenderingContext2D} ctx
-         * @protected
-         */
-        p._draw = function ( ctx ) {
-
-        };
-
-        // children index change
-        p.swap = function ( o1, o2 ) {
-            var children = this.children,
-                index1 = children.indexOf( o1 ),
-                index2 = children.indexOf( o2 );
-
-            children[ index2 ] = o1;
-            children[ index1 ] = o2;
-        };
-
-        p.highest = function ( o ) {
-            var children = this.children,
-                index = children.indexOf( o );
-
-            children.splice( index, 1 );
-            children.push( o );
-        };
-
-        return Object2D;
-    }() );
-
-}( window ) );
-/**
- * license inazumatv.com
- * author (at)taikiken / http://inazumatv.com
- * date 2014/07/05 - 14:03
- *
- * Copyright (c) 2011-2014 inazumatv.com, inc.
- *
- * Distributed under the terms of the MIT license.
- * http://www.opensource.org/licenses/mit-license.html
- *
- * This notice shall be included in all copies or substantial portions of the Software.
- */
-( function ( window ){
-    "use strict";
-    var document = window.document,
-
-        Sankaku = window.Sankaku,
-        Object2D = Sankaku.Object2D
-    ;
-
-    Sankaku.Scene = ( function (){
-        // @class Scene
-        function Scene () {
-            Object2D.call( this );
-
-            this.scene = this;
-        }
-
-        var p = Scene.prototype;
-
-        p.constructor = Scene;
-
-        p._addChild = function ( target ) {
-            target.scene = this;
-        };
-
-        p._removeChild = function ( target ) {
-            target.scene = null;
-        };
-
-        return Scene;
-    }() );
-}( window ) );
-/**
- * license inazumatv.com
- * author (at)taikiken / http://inazumatv.com
  * date 2014/06/20 - 18:44
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -840,7 +441,7 @@ Sankaku.version = "0.2.0";
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
+            var max = Math.setMax( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, l, d;
 
@@ -921,7 +522,7 @@ Sankaku.version = "0.2.0";
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
+            var max = Math.setMax( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, v = max,
                 d = max - min;
@@ -1067,7 +668,7 @@ Sankaku.version = "0.2.0";
     Sankaku.List = ( function (){
         var _rand = Math.random,
             _floor = Math.floor,
-            _max = Math.max;
+            _max = Math.setMax;
 
         /**
          * Array ヘルパー
@@ -1141,12 +742,12 @@ Sankaku.version = "0.2.0";
 
         /**
          * 配列内の最大数値を返します
-         * @method max
+         * @method setMax
          * @static
          * @param {Array} arr 検証対象の配列、内部は全部数値 [Number, [Number]]
          * @return {number} 配列内の最大数値を返します
          */
-        l.max = function ( arr ) {
+        l.setMax = function ( arr ) {
             return _max.apply( null, arr );
         };
 
@@ -1321,380 +922,6 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/23 - 15:57
- *
- * Copyright (c) 2011-2014 inazumatv.com, inc.
- *
- * Distributed under the terms of the MIT license.
- * http://www.opensource.org/licenses/mit-license.html
- *
- * This notice shall be included in all copies or substantial portions of the Software.
- */
-( function ( window ){
-    "use strict";
-
-    var _abs = Math.abs,
-        _min = Math.min,
-        _max = Math.max,
-        _round = Math.round,
-
-        Sankaku = window.Sankaku;
-
-    Sankaku.Triangle = ( function (){
-        /**
-         *
-         * @class Triangle
-         * @param {Object} a
-         * @param {Object} b
-         * @param {Object} c
-         * @constructor
-         */
-        function Triangle ( a, b, c ) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-
-            var A = b.x - a.x,
-                B = b.y - a.y,
-                C = c.x - a.x,
-                D = c.y - a.y,
-                E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
-                F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
-                G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
-                minx, miny, dx, dy,
-                x, y;
-
-            // If the points of the triangle are collinear, then just find the
-            // extremes and use the midpoint as the center of the circumcircle.
-            if( _abs( G ) < 0.000001 ) {
-                // under
-                minx = _min( a.x, b.x, c.x );
-                miny = _min( a.y, b.y, c.y );
-                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
-                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
-
-                this.x = minx + dx;
-                this.y = miny + dy;
-                this.r = dx * dx + dy * dy;
-            } else {
-                // over
-                x = ( D*E - B*F ) / G;
-                y = ( A*F - C*E ) / G;
-                dx = x - a.x;
-                dy = y - a.y;
-
-                this.x = x;
-                this.y = y;
-                this.r = dx * dx + dy * dy;
-            }
-        }
-
-        var p = Triangle.prototype;
-
-        p.constructor = Triangle;
-
-        /**
-         * @method draw
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.draw = function ( ctx ) {
-            var a = this.a,
-                b = this.b,
-                c = this.c;
-
-            ctx.beginPath();
-            ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y );
-            ctx.lineTo( c.x, c.y );
-            ctx.closePath();
-        };
-
-        /**
-         * @method centroid
-         * @return {{x: number, y: number}}
-         */
-        p.centroid = function() {
-
-            return (
-            {
-                x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
-                y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
-            }
-                );
-        };
-
-        return Triangle;
-    }() );
-
-}( window ) );
-/**
- * license inazumatv.com
- * author (at)taikiken / http://inazumatv.com
- * date 2014/06/23 - 15:55
- *
- * Copyright (c) 2011-2014 inazumatv.com, inc.
- *
- * Distributed under the terms of the MIT license.
- * http://www.opensource.org/licenses/mit-license.html
- *
- * This notice shall be included in all copies or substantial portions of the Software.
- */
-( function ( window ){
-    "use strict";
-    var Sankaku = window.Sankaku,
-        Triangle = Sankaku.Triangle;
-
-    Sankaku.Delaunay = ( function (){
-        /**
-         * https://github.com/ironwallaby/delaunay
-         *
-         * @class Delaunay
-         * @constructor
-         */
-        function Delaunay () {
-            throw new Error( "Sankaku can't create instance." );
-        }
-
-        var s = Delaunay;
-//
-//        /**
-//         * @method byX
-//         * @static
-//         * @param {object} a
-//         * @param {object} b
-//         * @return {number}
-//         */
-//        s.byX = function ( a, b ) {
-//            return b.x - a.x;
-//        };
-//
-//        /**
-//         * @method dedup
-//         * @static
-//         * @param {Array} edges
-//         */
-//        s.dedup = function ( edges ) {
-//            var j = edges.length,
-//                a, b, i, m, n;
-//
-//            outer: while( j ) {
-//                b = edges[ --j ];
-//                a = edges[ --j ];
-//                i = j;
-//
-//                while( i ) {
-//                    n = edges[ --i ];
-//                    m = edges[ --i ];
-//
-//                    if( ( a === m && b === n ) || ( a === n && b === m ) ) {
-//
-//                        edges.splice( j, 2 );
-//                        edges.splice( i, 2 );
-//                        j -= 2;
-//
-//                        continue outer;
-//                    }// if
-//                }// while i
-//            }// while j
-//        };
-
-        /**
-         * @method triangulate
-         * @static
-         * @param vertices
-         * @return {Array}
-         */
-        s.triangulate = function ( vertices ) {
-            // if there aren't enough vertices to form any triangles.
-            if(vertices.length < 3) {
-                return [];
-            }
-
-            var vertex,
-                i,
-                x_min, x_max,
-                y_min, y_max,
-
-                dx, dy,
-                d_max,
-                x_mid,
-                y_mid,
-                open,
-                closed,
-                close_i,
-                edges,
-                j, a, b,
-                open_j;
-
-            var byX = function ( a, b ) {
-                return b.x - a.x;
-            };
-
-            var dedup = function ( edges ) {
-                var j = edges.length,
-                    a, b, i, m, n;
-
-                outer: while( j ) {
-                    b = edges[ --j ];
-                    a = edges[ --j ];
-                    i = j;
-
-                    while( i ) {
-                        n = edges[ --i ];
-                        m = edges[ --i ];
-
-                        if( ( a === m && b === n ) || ( a === n && b === m ) ) {
-
-                            edges.splice( j, 2 );
-                            edges.splice( i, 2 );
-                            j -= 2;
-
-                            continue outer;
-                        }// if
-                    }// while i
-                }// while j
-            };
-
-            // Ensure the vertex array is in order of descending X coordinate
-            // (which is needed to ensure a subquadratic runtime), and then find
-            // the bounding box around the points.
-            vertices.sort( byX );
-
-            i = vertices.length - 1;
-            vertex = vertices[ i ];
-
-            x_min = vertex.x;
-            x_max = vertices[ 0 ].x;
-            y_min = vertex.y;
-            y_max = y_min;
-
-            while( i-- ) {
-                if ( vertex.y < y_min) {
-
-                    y_min = vertex.y;
-                }
-                if ( vertex.y > y_max ) {
-
-                    y_max = vertex.y;
-                }
-            }
-
-            // Find a super triangle, which is a triangle that surrounds all the vertices.
-            // This is used like something of a sentinel value to remove
-            // cases in the main algorithm, and is removed before we return any results.
-            //
-            // Once found, put it in the "open" list.
-            // (The "open" list is for triangles who may still need to be considered; the "closed" list is for triangles which do not.)
-            dx = x_max - x_min;
-            dy = y_max - y_min;
-            d_max = ( dx > dy ) ? dx : dy;
-            x_mid = ( x_max + x_min ) * 0.5;
-            y_mid = ( y_max + y_min ) * 0.5;
-            open = [
-                new Triangle(
-                    { x: x_mid - 20 * d_max, y: y_mid -      d_max, __sentinel: true },
-                    { x: x_mid             , y: y_mid + 20 * d_max, __sentinel: true },
-                    { x: x_mid + 20 * d_max, y: y_mid -      d_max, __sentinel: true }
-                )
-            ];
-            closed = [];
-            edges = [];
-
-            // Incrementally add each vertex to the mesh.
-            i = vertices.length;
-
-            // For each open triangle, check to see if the current point is
-            // inside it's circumcircle. If it is, remove the triangle and add
-            // it's edges to an edge list.
-            while( i-- ) {
-
-                edges.length = 0;
-
-                j = open.length;
-
-                vertex = vertices[ i ];
-
-                while( j-- ) {
-
-                    open_j = open[ j ];
-
-                    // If this point is to the right of this triangle's circumcircle,
-                    // then this triangle should never get checked again. Remove it
-                    // from the open list, add it to the closed list, and skip.
-                    dx = vertex.x - open_j.x;
-
-                    if( dx > 0 && dx * dx > open_j.r ) {
-
-                        closed.push( open_j );
-                        open.splice( j, 1 );
-                        continue;
-                    }
-
-                    // If not, skip this triangle.
-                    dy = vertex.y - open_j.y;
-
-                    if ( dx * dx + dy * dy > open_j.r ) {
-                        // skip
-                        continue;
-                    }
-
-                    // Remove the triangle and add it's edges to the edge list.
-                    edges.push(
-                        open_j.a, open_j.b,
-                        open_j.b, open_j.c,
-                        open_j.c, open_j.a
-                    );
-
-                    open.splice( j, 1 );
-                }// while j
-
-                // Remove any doubled edges.
-                dedup( edges );
-
-                // Add a new triangle for each edge.
-                j = edges.length;
-
-                while(j) {
-
-                    b = edges[ --j ];
-                    a = edges[ --j ];
-                    open.push( new Triangle( a, b, vertex ) );
-                }
-
-            }// while i
-
-            // Copy any remaining open triangles to the closed list, and then
-            // remove any triangles that share a vertex with the super triangle.
-
-            // http://qiita.com/kaz2ngt/items/6e08acc537fd77273cff
-            // 配列の連結
-            Array.prototype.push.apply( closed, open );
-
-            i = closed.length;
-
-            while( i-- ) {
-
-                close_i = closed[ i ];
-
-                if(
-                    close_i.a.__sentinel ||
-                    close_i.b.__sentinel ||
-                    close_i.c.__sentinel ) {
-
-                    closed.splice( i, 1 );
-                }
-            }// while
-
-            return closed;
-        };
-
-        return Delaunay;
-    }() );
-
-}( window ) );
-/**
- * license inazumatv.com
- * author (at)taikiken / http://inazumatv.com
  * date 2014/06/22 - 17:33
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -1732,7 +959,7 @@ Sankaku.version = "0.2.0";
 
         var p = Vector2D.prototype;
 
-        p.constructor = Vector2D;
+        p.constructor = Sankaku.Vector2D;
 
         /**
          * ベクトルを可視化するのに用います
@@ -2027,11 +1254,11 @@ Sankaku.version = "0.2.0";
 
         /**
          * ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します
-         * @method max
+         * @method setMax
          * @param {Vector2D} v
          * @return {Vector2D}
          */
-        p.max = function ( v ) {
+        p.setMax = function ( v ) {
             if ( this.x < v.x ) {
 
                 this.x = v.x;
@@ -2046,7 +1273,7 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * this.min( min_v ), this.max( max_v ) を実行します
+         * this.min( min_v ), this.setMax( max_v ) を実行します
          * @method clamp
          * @param {Vector2D} min_v
          * @param {Vector2D} max_v
@@ -2056,20 +1283,20 @@ Sankaku.version = "0.2.0";
 //            if ( this.x < min.x ) {
 //
 //                this.x = min.x;
-//            } else if ( this.x > max.x ) {
+//            } else if ( this.x > setMax.x ) {
 //
-//                this.x = max.x;
+//                this.x = setMax.x;
 //            }
 //
 //            if ( this.y < min.y ) {
 //
 //                this.y = min.y;
-//            } else if ( this.y > max.y ) {
+//            } else if ( this.y > setMax.y ) {
 //
-//                this.y = max.y;
+//                this.y = setMax.y;
 //            }
             this.min( min_v );
-            this.max( max_v );
+            this.setMax( max_v );
 
             return this;
         };
@@ -2375,6 +1602,853 @@ Sankaku.version = "0.2.0";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/23 - 15:57
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+
+    var _abs = Math.abs,
+        _min = Math.min,
+        _max = Math.setMax,
+        _round = Math.round,
+
+        Sankaku = window.Sankaku;
+
+    Sankaku.Triangle = ( function (){
+        /**
+         *
+         * @class Triangle
+         * @param {Object} a
+         * @param {Object} b
+         * @param {Object} c
+         * @constructor
+         */
+        function Triangle ( a, b, c ) {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+
+            var A = b.x - a.x,
+                B = b.y - a.y,
+                C = c.x - a.x,
+                D = c.y - a.y,
+                E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
+                F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
+                G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
+                minx, miny, dx, dy,
+                x, y;
+
+            // If the points of the triangle are collinear, then just find the
+            // extremes and use the midpoint as the center of the circumcircle.
+            if( _abs( G ) < 0.000001 ) {
+                // under
+                minx = _min( a.x, b.x, c.x );
+                miny = _min( a.y, b.y, c.y );
+                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
+                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
+
+                this.x = minx + dx;
+                this.y = miny + dy;
+                this.r = dx * dx + dy * dy;
+            } else {
+                // over
+                x = ( D*E - B*F ) / G;
+                y = ( A*F - C*E ) / G;
+                dx = x - a.x;
+                dy = y - a.y;
+
+                this.x = x;
+                this.y = y;
+                this.r = dx * dx + dy * dy;
+            }
+        }
+
+        var p = Triangle.prototype;
+
+        p.constructor = Sankaku.Triangle;
+
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.draw = function ( ctx ) {
+            var a = this.a,
+                b = this.b,
+                c = this.c;
+
+            ctx.beginPath();
+            ctx.moveTo( a.x, a.y );
+            ctx.lineTo( b.x, b.y );
+            ctx.lineTo( c.x, c.y );
+            ctx.closePath();
+        };
+
+        /**
+         * @method centroid
+         * @return {{x: number, y: number}}
+         */
+        p.centroid = function() {
+
+            return (
+            {
+                x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
+                y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
+            }
+                );
+        };
+
+        return Triangle;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/23 - 15:55
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Triangle = Sankaku.Triangle;
+
+    Sankaku.Delaunay = ( function (){
+        /**
+         * https://github.com/ironwallaby/delaunay
+         *
+         * @class Delaunay
+         * @constructor
+         */
+        function Delaunay () {
+            throw new Error( "Sankaku can't create instance." );
+        }
+
+        var s = Delaunay;
+//
+//        /**
+//         * @method byX
+//         * @static
+//         * @param {object} a
+//         * @param {object} b
+//         * @return {number}
+//         */
+//        s.byX = function ( a, b ) {
+//            return b.x - a.x;
+//        };
+//
+//        /**
+//         * @method dedup
+//         * @static
+//         * @param {Array} edges
+//         */
+//        s.dedup = function ( edges ) {
+//            var j = edges.length,
+//                a, b, i, m, n;
+//
+//            outer: while( j ) {
+//                b = edges[ --j ];
+//                a = edges[ --j ];
+//                i = j;
+//
+//                while( i ) {
+//                    n = edges[ --i ];
+//                    m = edges[ --i ];
+//
+//                    if( ( a === m && b === n ) || ( a === n && b === m ) ) {
+//
+//                        edges.splice( j, 2 );
+//                        edges.splice( i, 2 );
+//                        j -= 2;
+//
+//                        continue outer;
+//                    }// if
+//                }// while i
+//            }// while j
+//        };
+
+        /**
+         * @method triangulate
+         * @static
+         * @param vertices
+         * @return {Array}
+         */
+        s.triangulate = function ( vertices ) {
+            // if there aren't enough vertices to form any triangles.
+            if(vertices.length < 3) {
+                return [];
+            }
+
+            var vertex,
+                i,
+                x_min, x_max,
+                y_min, y_max,
+
+                dx, dy,
+                d_max,
+                x_mid,
+                y_mid,
+                open,
+                closed,
+                close_i,
+                edges,
+                j, a, b,
+                open_j;
+
+            var byX = function ( a, b ) {
+                return b.x - a.x;
+            };
+
+            var dedup = function ( edges ) {
+                var j = edges.length,
+                    a, b, i, m, n;
+
+                outer: while( j ) {
+                    b = edges[ --j ];
+                    a = edges[ --j ];
+                    i = j;
+
+                    while( i ) {
+                        n = edges[ --i ];
+                        m = edges[ --i ];
+
+                        if( ( a === m && b === n ) || ( a === n && b === m ) ) {
+
+                            edges.splice( j, 2 );
+                            edges.splice( i, 2 );
+                            j -= 2;
+
+                            continue outer;
+                        }// if
+                    }// while i
+                }// while j
+            };
+
+            // Ensure the vertex array is in order of descending X coordinate
+            // (which is needed to ensure a subquadratic runtime), and then find
+            // the bounding box around the points.
+            vertices.sort( byX );
+
+            i = vertices.length - 1;
+            vertex = vertices[ i ];
+
+            x_min = vertex.x;
+            x_max = vertices[ 0 ].x;
+            y_min = vertex.y;
+            y_max = y_min;
+
+            while( i-- ) {
+                if ( vertex.y < y_min) {
+
+                    y_min = vertex.y;
+                }
+                if ( vertex.y > y_max ) {
+
+                    y_max = vertex.y;
+                }
+            }
+
+            // Find a super triangle, which is a triangle that surrounds all the vertices.
+            // This is used like something of a sentinel value to remove
+            // cases in the main algorithm, and is removed before we return any results.
+            //
+            // Once found, put it in the "open" list.
+            // (The "open" list is for triangles who may still need to be considered; the "closed" list is for triangles which do not.)
+            dx = x_max - x_min;
+            dy = y_max - y_min;
+            d_max = ( dx > dy ) ? dx : dy;
+            x_mid = ( x_max + x_min ) * 0.5;
+            y_mid = ( y_max + y_min ) * 0.5;
+            open = [
+                new Triangle(
+                    { x: x_mid - 20 * d_max, y: y_mid -      d_max, __sentinel: true },
+                    { x: x_mid             , y: y_mid + 20 * d_max, __sentinel: true },
+                    { x: x_mid + 20 * d_max, y: y_mid -      d_max, __sentinel: true }
+                )
+            ];
+            closed = [];
+            edges = [];
+
+            // Incrementally add each vertex to the mesh.
+            i = vertices.length;
+
+            // For each open triangle, check to see if the current point is
+            // inside it's circumcircle. If it is, remove the triangle and add
+            // it's edges to an edge list.
+            while( i-- ) {
+
+                edges.length = 0;
+
+                j = open.length;
+
+                vertex = vertices[ i ];
+
+                while( j-- ) {
+
+                    open_j = open[ j ];
+
+                    // If this point is to the right of this triangle's circumcircle,
+                    // then this triangle should never get checked again. Remove it
+                    // from the open list, add it to the closed list, and skip.
+                    dx = vertex.x - open_j.x;
+
+                    if( dx > 0 && dx * dx > open_j.r ) {
+
+                        closed.push( open_j );
+                        open.splice( j, 1 );
+                        continue;
+                    }
+
+                    // If not, skip this triangle.
+                    dy = vertex.y - open_j.y;
+
+                    if ( dx * dx + dy * dy > open_j.r ) {
+                        // skip
+                        continue;
+                    }
+
+                    // Remove the triangle and add it's edges to the edge list.
+                    edges.push(
+                        open_j.a, open_j.b,
+                        open_j.b, open_j.c,
+                        open_j.c, open_j.a
+                    );
+
+                    open.splice( j, 1 );
+                }// while j
+
+                // Remove any doubled edges.
+                dedup( edges );
+
+                // Add a new triangle for each edge.
+                j = edges.length;
+
+                while(j) {
+
+                    b = edges[ --j ];
+                    a = edges[ --j ];
+                    open.push( new Triangle( a, b, vertex ) );
+                }
+
+            }// while i
+
+            // Copy any remaining open triangles to the closed list, and then
+            // remove any triangles that share a vertex with the super triangle.
+
+            // http://qiita.com/kaz2ngt/items/6e08acc537fd77273cff
+            // 配列の連結
+            Array.prototype.push.apply( closed, open );
+
+            i = closed.length;
+
+            while( i-- ) {
+
+                close_i = closed[ i ];
+
+                if(
+                    close_i.a.__sentinel ||
+                    close_i.b.__sentinel ||
+                    close_i.c.__sentinel ) {
+
+                    closed.splice( i, 1 );
+                }
+            }// while
+
+            return closed;
+        };
+
+        return Delaunay;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/06/25 - 11:19
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ *
+ * for display object
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Vector2D = Sankaku.Vector2D,
+        Num = Sankaku.Num
+        ;
+
+    Sankaku.Object2D = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin;
+
+        /**
+         * @class Object2D
+         * @uses EventDispatcher
+         * @constructor
+         */
+        function Object2D () {
+            /**
+             * @property _position
+             * @type {Vector2D}
+             * @default new Vector2D( 0, 0 )
+             * @protected
+             */
+            this._position = new Vector2D();
+
+            /**
+             * @property x
+             * @type {number}
+             * @default 0
+             */
+            this.x = 0;
+            /**
+             * @property y
+             * @type {number}
+             * @default 0
+             */
+            this.y = 0;
+            /**
+             * radian
+             * @property rotation
+             * @type {number}
+             * @default 0
+             */
+            this.rotation = 0;
+            /**
+             * @property width
+             * @type {number}
+             * @default 20
+             */
+            this.width = 20;
+            /**
+             * @property height
+             * @type {number}
+             * @default 10
+             */
+            this.height = 10;
+
+            /**
+             * @property scale
+             * @type {number}
+             * @default 1
+             */
+            this.scale = 1;
+
+            /**
+             * @property scene
+             * @type {*|Object2D}
+             */
+            this.scene = null;
+            /**
+             * @property parent
+             * @type {*}
+             */
+            this.parent = null;
+            /**
+             * @property children
+             * @type {Array}
+             */
+            this.children = [];
+            /**
+             * @property visible
+             * @type {boolean}
+             */
+            this.visible = true;
+            /**
+             * @property _alpha
+             * @type {number}
+             * @default 1
+             * @protected
+             */
+            this._alpha = 1;
+        }
+
+        var p = Object2D.prototype;
+
+        p.constructor = Sankaku.Object2D;
+
+        // mixin EventDispatcher
+        Sankaku.EventDispatcher.initialize( p );
+
+        /**
+         * @method setAlpha
+         * @param {Number} n
+         * @return {Shape}
+         */
+        p.setAlpha = function ( n ) {
+            this._alpha = n;
+            return this.setColor( this._color );
+        };
+
+        p.alpha = function () {
+            return this._alpha;
+        };
+
+        /**
+         * @method setPosition
+         * @param {Vector2D} v
+         */
+        p.setPosition = function ( v ) {
+            this._position = v;
+            this.x = v.x;
+            this.y = v.y;
+        };
+
+        /**
+         * @method position
+         * @return {Vector2D}
+         */
+        p.position = function () {
+            return this._position;
+        };
+
+        /**
+         * @method setX
+         * @param {number} x
+         */
+        p.setX = function ( x ) {
+            this.x = x;
+            this._position.x = x;
+        };
+
+        /**
+         * @method setY
+         * @param {number} y
+         */
+        p.setY = function ( y ) {
+            this.y = y;
+            this._position.y = y;
+        };
+
+        /**
+         * @method bounding
+         * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
+         */
+        p.bounding = function () {
+            var parent = this.parent,
+                x = this.x,
+                y = this.y,
+                w1 = this.width * this.scale,
+                h1 = this.height * this.scale,
+                w2 = w1 * 0.5,
+                h2 = h1 * 0.5,
+                rotation = this.rotation,
+                a, b, c, d, e,
+                ax, ay,
+                bx,
+                cy,
+                sin, cos,
+
+                cos_ax,
+                cos_ay,
+                sin_ay,
+                sin_ax,
+                cos_bx,
+                cos_cy,
+                sin_bx,
+                sin_cy;
+
+            e = {
+                scale: this.scale,
+                rotation: this.rotation,
+                x: this.x,
+                y: this.y
+            };
+
+            if ( !!parent && this.scene !== parent ) {
+                // not scene
+                x = parent.x + x * parent.scale;
+                y = parent.y + y * parent.scale;
+
+                w1 = this.width * parent.scale;
+                h1 = this.height * parent.scale;
+
+                w2 = w1 * 0.5;
+                h2 = h1 * 0.5;
+
+                rotation = parent.rotation + this.rotation;
+
+                e.scale = parent.scale * this.scale;
+                e.rotation = rotation;
+            }
+
+            sin = _sin( rotation );
+            cos = _cos( rotation );
+
+            //  a    b
+            //  ------
+            //  |    |
+            //  |  e |
+            //  |    |
+            //  ------
+            //  d    c
+
+            ax = -w2;
+            ay = -h2;
+            bx = w2;
+            cy = h2;
+
+            cos_ax = cos * ax;
+            cos_ay = cos * ay;
+            sin_ay = sin * ay;
+            sin_ax = sin * ax;
+            cos_bx = cos * bx;
+            cos_cy = cos * cy;
+            sin_bx = sin * bx;
+            sin_cy = sin * cy;
+
+            a = { x: cos_ax - sin_ay + x, y: cos_ay + sin_ax + y };
+            b = { x: cos_bx - sin_ay + x, y: cos_ay + sin_bx + y };
+            c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
+            d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
+
+            e.x = ( a.x + c.x ) * 0.5;
+            e.y = ( a.y + c.y ) * 0.5;
+
+            return { a: a, b: b, c: c, d:d, e: e };
+        };
+
+        /**
+         * 角度を degree を元に radian 設定します
+         * @method rotate
+         * @param {number} degree 0 ~ 360
+         */
+        p.rotate = function ( degree ) {
+            this.rotation = Num.deg2rad( degree );
+        };
+
+        /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            return this._clone();
+        };
+
+        /**
+         * @method _clone
+         * @return {Object2D}
+         * @protected
+         */
+        p._clone = function () {
+            var clone = new Object2D();
+            clone.setPosition( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone.parent = parent && parent.clone();
+
+
+            return clone;
+        };
+
+        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
+        /**
+         * point が bounding box 内か外かを調べます
+         * @param {Vector2D} v 調べるpoint
+         * @return {boolean} true: inside, false: outside
+         */
+        p.inside = function ( v ) {
+
+            function area ( A, B, C ) {
+                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
+            }
+
+            var bounding = this.bounding();
+
+            if (
+                area( bounding.a, v ) > 0 ||
+                area( bounding.b, v ) > 0 ||
+                area( bounding.c, v ) > 0
+                ) {
+                // outside
+                return false;
+            }
+            // inside
+            return true;
+        };
+
+        /**
+         * @method add
+         * @param {*|Object2D} target
+         */
+        p.add = function ( target ) {
+
+            if ( target === this ) {
+
+                return;
+            }
+
+            if ( !!target.parent ) {
+
+                target.parent.remove( target );
+            }
+
+            target.parent = this;
+            this.children.push( target );
+
+            // find scene and target add to scene
+            var scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene.addChild( target );
+            }
+        };
+        /**
+         * @method remove
+         * @param {*|Object2D} target
+         */
+        p.remove = function ( target ) {
+            var index, scene;
+
+            index = this.children.indexOf( target );
+
+            if ( index === -1 ) {
+
+                return;
+            }
+
+            target.parent = null;
+            this.children.splice( index, 1 );
+
+            // remove from scene
+            scene = this.scene;
+
+            if ( !!scene ) {
+
+                scene.removeChild( target );
+            }
+        };
+
+        /**
+         * @method draw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.draw = function ( ctx ) {
+            this._draw( ctx );
+
+            var children = this.children,
+                child,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                child = children[ i ];
+
+                if ( child.visible && child.alpha() > 0 ) {
+                    // visible && alpha not 0
+                    children[ i ].draw( ctx );
+                }
+            }
+        };
+        /**
+         * @method _draw
+         * @param {CanvasRenderingContext2D} ctx
+         * @protected
+         */
+        p._draw = function ( ctx ) {
+
+        };
+
+        // children index change
+        p.swap = function ( o1, o2 ) {
+            var children = this.children,
+                index1 = children.indexOf( o1 ),
+                index2 = children.indexOf( o2 );
+
+            children[ index2 ] = o1;
+            children[ index1 ] = o2;
+        };
+
+        p.highest = function ( o ) {
+            var children = this.children,
+                index = children.indexOf( o );
+
+            children.splice( index, 1 );
+            children.push( o );
+        };
+
+        return Object2D;
+    }() );
+
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/05 - 14:03
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var document = window.document,
+
+        Sankaku = window.Sankaku,
+        Object2D = Sankaku.Object2D
+    ;
+
+    Sankaku.Scene = ( function (){
+        /**
+         * @class Scene
+         * @constructor
+         */
+        function Scene () {
+            Object2D.call( this );
+
+            this.scene = this;
+        }
+
+        Sankaku.extend( Object2D, Scene );
+
+        var p = Scene.prototype;
+
+        p.constructor = Sankaku.Scene;
+
+        /**
+         * @method addChild
+         * @param {*|Object2D} target
+         */
+        p.addChild = function ( target ) {
+            target.scene = this;
+        };
+        /**
+         * @method removeChild
+         * @param {*|Object2D} target
+         */
+        p.removeChild = function ( target ) {
+            target.scene = null;
+        };
+
+        return Scene;
+    }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
  * date 2014/06/25 - 12:19
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -2431,23 +2505,14 @@ Sankaku.version = "0.2.0";
             this._line = 1;
 
 //            /**
-//             * @property border
+//             * @property setBorder
 //             * @default { width: 0, setColor: "#000000" }
 //             * @type {{width: number, setColor: string}}
 //             */
-//            this.border = {
+//            this.setBorder = {
 //                width: 0,
 //                setColor: "#000000"
 //            };
-
-
-            /**
-             * @property _alpha
-             * @type {number}
-             * @default 1
-             * @protected
-             */
-            this._alpha = 1;
 
             this._rgb = {};
 
@@ -2460,7 +2525,7 @@ Sankaku.version = "0.2.0";
             this._color = color || "#000000";
             this.setColor( this._color );
 
-            this.border( this.setLine, this._color );
+            this.setBorder( this.setLine, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -2486,7 +2551,7 @@ Sankaku.version = "0.2.0";
 
         var p = Shape.prototype;
 
-        p.constructor = Shape;
+        p.constructor = Sankaku.Shape;
 
         /**
          * @method radius
@@ -2497,7 +2562,7 @@ Sankaku.version = "0.2.0";
                 a = bounding.a,
                 c = bounding.c;
 
-            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) );
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
         };
 
         /**
@@ -2525,12 +2590,12 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * @method border
+         * @method setBorder
          * @param {number} line
          * @param {string} color hex
          * @return {Shape}
          */
-        p.border = function ( line, color ) {
+        p.setBorder = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
             rgb.a = this._alpha;
 
@@ -2554,16 +2619,6 @@ Sankaku.version = "0.2.0";
             this._rgb.a = this._alpha;
 
             return this;
-        };
-
-        /**
-         * @method setAlpha
-         * @param {Number} n
-         * @return {Shape}
-         */
-        p.setAlpha = function ( n ) {
-            this._alpha = n;
-            return this.setColor( this._color );
         };
 
         /**
@@ -2699,7 +2754,9 @@ Sankaku.version = "0.2.0";
     ;
 
     Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2;
+        var PI2 = Math.PI * 2,
+            _sin = Math.sin,
+            _cos = Math.cos;
 
         /**
          * @class Circle
@@ -2721,13 +2778,13 @@ Sankaku.version = "0.2.0";
 
         var p = Circle.prototype;
 
-        p.constructor = Circle;
+        p.constructor = Sankaku.Circle;
 
         /**
          * @method getRadius
          * @return {number}
          */
-        p.getRadius = function () {
+        p.radius = function () {
             return this._radius;
         };
 
@@ -2758,9 +2815,24 @@ Sankaku.version = "0.2.0";
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
+            var bounding = this.bounding(),
+                e = bounding.e,
+                rotation = e.rotation,
+                radius = this._radius,
+
+                sin, cos,
+                x, y;
+
+//            sin = _sin( rotation );
+//            cos = _cos( rotation );
+//
+//            x = cos * ( e.x + this.x );
+//            y = cos * ( e.x + this.x );
+
             ctx.beginPath();
 
-            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
+//            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
+            ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
         };
@@ -2807,7 +2879,7 @@ Sankaku.version = "0.2.0";
 
         var p = Tripod.prototype;
 
-        p.constructor = Tripod;
+        p.constructor = Sankaku.Tripod;
 
         /**
          * @method clone
@@ -2828,8 +2900,6 @@ Sankaku.version = "0.2.0";
             };
 
             return clone;
-
-//            return Object.create( this );
         };
 
         /**
@@ -2847,7 +2917,8 @@ Sankaku.version = "0.2.0";
 
             // triangle
             ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+//            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+            ctx.lineTo( (b.x + c.x) * 0.5, ( b.y + c.y)  * 0.5 );
             ctx.lineTo( d.x, d.y );
             ctx.lineTo( a.x, a.y );
 
@@ -2904,7 +2975,15 @@ Sankaku.version = "0.2.0";
 
         var p = Star.prototype;
 
-        p.constructor = Star;
+        p.constructor = Sankaku.Star;
+
+        /**
+         * @method getRadius
+         * @return {number}
+         */
+        p.radius = function () {
+            return this._radius;
+        };
 
         /**
          * @method clone
@@ -2933,16 +3012,22 @@ Sankaku.version = "0.2.0";
          * @param {CanvasRenderingContext2D} ctx
          */
         p.paint = function ( ctx ) {
-            var points = this._points,
+            var bounding = this.bounding(),
+                e = bounding.e,
+                points = this._points,
                 limit = points * 2,
                 step = Num.ONE_EIGHTY / points,
                 ninety = Num.NINETY,
-                scale = this.scale,
+//                scale = this.scale,
+                scale = e.scale,
                 outer = this._radius * scale,
                 inner = this._inner * scale,
-                x = this.x,
-                y = this.y,
-                rotation = this.rotation,
+//                x = this.x,
+//                y = this.y,
+                x = e.x,
+                y = e.y,
+                rotation = e.rotation,
+//                rotation = e.rotation,
                 i, angle, r;
 
             ctx.beginPath();
@@ -3025,32 +3110,32 @@ Sankaku.version = "0.2.0";
             this._behavior = Vehicle.BOUNCE;
 
             /**
-             * padding left
+             * setPadding left
              * @property left
              * @type {number}
              */
             this.left = 0;
             /**
-             * padding top
+             * setPadding top
              * @property top
              * @type {number}
              */
             this.top = 0;
             /**
-             * padding right
+             * setPadding right
              * @property right
              * @type {number}
              */
             this.right = 0;
             /**
-             * padding bottom
+             * setPadding bottom
              * @property bottom
              * @type {number}
              */
             this.bottom = 0;
 
             // 描画形状
-            this.view( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
+            this.setView( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
         }
 
         Sankaku.extend( Object2D, Vehicle );
@@ -3070,39 +3155,43 @@ Sankaku.version = "0.2.0";
 
         var p = Vehicle.prototype;
 
-        p.constructor = Vehicle;
+        p.constructor = Sankaku.Vehicle;
 
         Sankaku.EventDispatcher.initialize( p );
 
-        p.view = function ( view ) {
+        /**
+         * @method setView
+         * @param {*|Object2D|Shape} view
+         */
+        p.setView = function ( view ) {
 
-            view.position( this._position );
+            view.setPosition( this._position );
 
-//            view.width = this.width;
-//            view.height = this.height;
-//            view.rotation = this.rotation;
-//            view.scale = this.scale;
-            // copy from view
+//            setView.width = this.width;
+//            setView.height = this.height;
+//            setView.rotation = this.rotation;
+//            setView.scale = this.scale;
+            // copy from setView
             this.width = view.width;
             this.height = view.height;
             this.rotation = view.rotation;
 
-            // copy to view
+            // copy to setView
             view.scale = this.scale;
 
-//            view._velocity = this._velocity;
-//            view._mass = this._mass;
-//            view._speed = this._speed;
-//            view._behavior = this._behavior;
+//            setView._velocity = this._velocity;
+//            setView._mass = this._mass;
+//            setView._speed = this._speed;
+//            setView._behavior = this._behavior;
 
             this._view = view;
         };
 
         /**
-         * @method getView
-         * @return {Shape}
+         * @method view
+         * @return {*|Object2D|Shape}
          */
-        p.getView = function () {
+        p.view = function () {
             return this._view;
         };
 
@@ -3115,7 +3204,7 @@ Sankaku.version = "0.2.0";
             var clone = new Vehicle( this._view.clone() );
 
             // object 2D
-            clone.position( this._position.clone() );
+            clone.setPosition( this._position.clone() );
             clone.width = this.width;
             clone.height = this.height;
             clone.rotation = this.rotation;
@@ -3130,13 +3219,13 @@ Sankaku.version = "0.2.0";
         };
 
         /**
-         * @method padding
+         * @method setPadding
          * @param {number} top
          * @param {number} [right]
          * @param {number} [bottom]
          * @param {number} [left]
          */
-        p.padding = function ( top, right, bottom, left ) {
+        p.setPadding = function ( top, right, bottom, left ) {
             right = right || top;
             bottom = bottom || top;
             left = left || top;
@@ -3149,59 +3238,59 @@ Sankaku.version = "0.2.0";
 
         /**
          * 質量を設定します
-         * @method mass
+         * @method setMass
          * @param {number} n
          */
-        p.mass = function ( n ) {
+        p.setMass = function ( n ) {
             this._mass = n;
         };
 
         /**
-         * @method getMass
+         * @method mass
          * @return {number}
          */
-        p.getMass = function () {
+        p.mass = function () {
             return this._mass;
         };
 
         /**
          * 最大スピードを設定します
-         * @method speed
+         * @method setSpeed
          * @param {number} n
          */
-        p.speed = function ( n ) {
+        p.setSpeed = function ( n ) {
             this._speed = n;
         };
 
         /**
-         * @method getSpeed
+         * @method speed
          * @return {number}
          */
-        p.getSpeed = function () {
+        p.speed = function () {
             return this._speed;
         };
 
         /**
-         * @method behavior
+         * @method setBehavior
          * @param {string} str
          */
-        p.behavior = function ( str ) {
+        p.setBehavior = function ( str ) {
             this._behavior = str;
         };
 
         /**
-         * @method getBehavior
+         * @method behavior
          * @return {string}
          */
-        p.getBehavior = function () {
+        p.behavior = function () {
             return this._behavior;
         };
 
         /**
-         * @method velocity
+         * @method setVelocity
          * @param {Vector2D} v
          */
-        p.velocity = function ( v ) {
+        p.setVelocity = function ( v ) {
             this._velocity = v;
         };
 
@@ -3209,7 +3298,7 @@ Sankaku.version = "0.2.0";
          * @method getVelocity
          * @return {Vector2D}
          */
-        p.getVelocity = function () {
+        p.velocity = function () {
             return this._velocity;
         };
 
@@ -3307,13 +3396,6 @@ Sankaku.version = "0.2.0";
                 this.dispatchEvent( { type: "wrap", currentTarget: this } );
             }
         };
-//
-//        /**
-//         * @method onWrap
-//         */
-//        p.onWrap  =function () {
-//
-//        };
 
         /**
          * @method bounce
@@ -3356,13 +3438,6 @@ Sankaku.version = "0.2.0";
                 this.dispatchEvent( { type: "bounce", currentTarget: this } );
             }
         };
-//
-//        /**
-//         * @method onBounce
-//         */
-//        p.onBounce = function () {
-//
-//        };
 
         return Vehicle;
     }() );
@@ -3399,7 +3474,7 @@ Sankaku.version = "0.2.0";
             Vehicle.call( this, viewModel );
 
             this._force = new Vector2D();
-            // max force
+            // setMax setForce
             this._force_max = 1.0;
             this._force_arrival = 100;
 
@@ -3414,7 +3489,7 @@ Sankaku.version = "0.2.0";
 
         var p = SteeredVehicle.prototype;
 
-        p.constructor = SteeredVehicle;
+        p.constructor = Sankaku.SteeredVehicle;
 
         /**
          * @method clone
@@ -3424,7 +3499,7 @@ Sankaku.version = "0.2.0";
 //            var clone = new SteeredVehicle( this._view );
 //
 //            // object 2D
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
 //            clone.rotation = this.rotation;
@@ -3451,102 +3526,102 @@ Sankaku.version = "0.2.0";
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method getMax
+         * @method max
          * @return {number} SteeredVehicle._force_max
          */
-        p.getMax = function () {
+        p.max = function () {
             return this._force_max;
         };
 
         /**
-         * @method max
+         * @method setMax
          * @param {number} n
          */
-        p.max = function ( n ) {
+        p.setMax = function ( n ) {
             this._force_max = n;
         };
 
         /**
-         * @method getArrival
+         * @method arrival
          * @return {number} SteeredVehicle._force_arrival
          */
-        p.getArrival = function () {
+        p.arrival = function () {
             return this._force_arrival;
         };
 
         /**
-         * @method arrival
+         * @method setArrival
          * @param {number} n
          */
-        p.arrival = function ( n ) {
+        p.setArrival = function ( n ) {
             this._force_arrival = n;
         };
 
         /**
-         * @method force
+         * @method setForce
          * @param {Vector2D} v
          */
-        p.force = function ( v ) {
+        p.setForce = function ( v ) {
             this._force = v;
         };
 
         /**
-         * @method getForce
+         * @method force
          * @return {Vector2D|SteeredVehicle._force}
          *
          */
-        p.getForce = function () {
+        p.force = function () {
             return this._force;
         };
 
         /**
-         * @method buffer
+         * @method setBuffer
          * @param {number} n
          */
-        p.buffer = function ( n ) {
+        p.setBuffer = function ( n ) {
             this._avoid_buffer = n;
         };
         /**
-         * @method getBuffer
+         * @method buffer
          * @return {number|*}
          */
-        p.getBuffer = function () {
+        p.buffer = function () {
             return this._avoid_buffer;
         };
 
         /**
-         * @method insight
+         * @method setInsight
          * @param {number} n
          */
-        p.insight = function ( n ) {
+        p.setInsight = function ( n ) {
             this._avoid_insight = n;
         };
         /**
-         * @method getInsight
+         * @method insight
          * @return {number|*}
          */
-        p.getInsight = function () {
+        p.insight = function () {
             return this._avoid_insight;
         };
 
         /**
-         * @method close
+         * @method setClose
          * @param {number} n
          */
-        p.close = function ( n ) {
+        p.setClose = function ( n ) {
             this._avoid_close = n;
         };
         /**
-         * @method getClose
+         * @method close
          * @return {number|*}
          */
-        p.getClose = function () {
+        p.close = function () {
             return this._avoid_close;
         };
 
@@ -3554,15 +3629,15 @@ Sankaku.version = "0.2.0";
          * @method avoidDistance
          * @param {number} n
          */
-        p.avoidDistance = function ( n ) {
+        p.setAvoidDistance = function ( n ) {
             this._avoid_distance = n;
         };
 
         /**
-         * @method getAvoidDistance
+         * @method avoidDistance
          * @return {number|*}
          */
-        p.getAvoidDistance = function () {
+        p.avoidDistance = function () {
             return this._avoid_distance;
         };
 
@@ -3636,8 +3711,8 @@ Sankaku.version = "0.2.0";
          * @param {Vehicle} target
          */
         p.pursue = function ( target ) {
-            var look = this._position.distance( target.getPosition() ),
-                clone = target.getPosition().clone();
+            var look = this._position.distance( target.position() ),
+                clone = target.position().clone();
 
             clone.add( target._velocity.multiplyNew( look ) );
 
@@ -3650,8 +3725,8 @@ Sankaku.version = "0.2.0";
          * @param {Vehicle} target
          */
         p.evade = function ( target ) {
-            var look = this._position.distance( target.getPosition() ) / this._speed,
-                clone = target.getPosition().clone();
+            var look = this._position.distance( target.position() ) / this._speed,
+                clone = target.position().clone();
 
             clone.sub( target._velocity.multiplyNew( look ) );
 
@@ -3679,7 +3754,7 @@ Sankaku.version = "0.2.0";
 
                 target = targets[ i ];
                 heading = this._velocity.clone().normalize();
-                difference = target.getPosition().subNew( this._position );
+                difference = target.position().subNew( this._position );
                 prod = difference.dot( heading );
 
                 if ( prod > 0 ) {
@@ -3693,13 +3768,13 @@ Sankaku.version = "0.2.0";
                     distance = projection.subNew( difference ).length();
 
                     if (
-                        distance < target.getRadius() + this._avoid_buffer &&
+                        distance < target.radius() + this._avoid_buffer &&
                         projection.length() < feeler.length()
                        ) {
 
                         force = heading.clone();
                         force.multiplyScalar( this._speed );
-                        force.setAngle( difference.sign( this._velocity ) * PI_05 );
+                        force.setAngle( force.angle() + difference.sign( this._velocity ) * PI_05 );
 
                         prf = projection.length() / feeler.length();
                         force.multiplyScalar( 1 - prf );
@@ -3746,18 +3821,18 @@ Sankaku.version = "0.2.0";
         function Wander ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
 
-            this._angle = 0;
-            this._distance = 10;
-            this._radius = 5;
-            this._range = 1;
-            this._range2 = this._range * 0.5;
+            this._wander_angle = 0;
+            this._wander_distance = 10;
+            this._wnder_radius = 5;
+            this._wander_range = 1;
+            this._wander_range2 = this._wander_range * 0.5;
         }
 
         Sankaku.extend( SteeredVehicle, Wander );
 
         var p = Wander.prototype;
 
-        p.constructor = Wander;
+        p.constructor = Sankaku.Wander;
 
         /**
          * @method clone
@@ -3767,7 +3842,7 @@ Sankaku.version = "0.2.0";
 //            var clone = new Wander();
 //
 //            // object 2D
-//            clone.position( this._position.clone() );
+//            clone.setPosition( this._position.clone() );
 //            clone.width = this.width;
 //            clone.height = this.height;
 //            clone.rotation = this.rotation;
@@ -3783,101 +3858,101 @@ Sankaku.version = "0.2.0";
 //            clone._force = this._force.clone();
 //            clone._force_max = this._force_max;
 //            clone._force_arrival = this._force_arrival;
-//            clone._avoid_distance = this._avoid_distance;
+//            clone._avoid_setWanderDistance = this._avoid_setWanderDistance;
 //            clone._avoid_buffer = this._avoid_buffer;
 //            clone._avoid_insight = this._avoid_insight;
 //            clone._avoid_close = this._avoid_close;
 //
 //            // wander
-//            clone._angle = this._angle;
-//            clone._distance = this._distance;
-//            clone._radius = this._radius;
-//            clone._range = this._range;
-//            clone._range2 = this._range2;
+//            clone._wander_angle = this._wander_angle;
+//            clone._wander_distance = this._wander_distance;
+//            clone._wnder_radius = this._wnder_radius;
+//            clone._wander_range = this._wander_range;
+//            clone._wander_range2 = this._wander_range2;
 //
 //            return clone;
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method angle
+         * @method setWanderAngle
          * @param {number} n
          */
-        p.angle = function ( n ) {
-            this._angle = n;
+        p.setWanderAngle = function ( n ) {
+            this._wander_angle = n;
         };
 
         /**
-         * @method getAngle
+         * @method wanderAngle
          * @return {number}
          */
-        p.getAngle = function () {
-            return this._angle;
+        p.wanderAngle = function () {
+            return this._wander_angle;
         };
 
         /**
-         * @method distance
+         * @method setWanderDistance
          * @param {number} n
          */
-        p.distance = function ( n ) {
-            this._distance = n;
+        p.setWanderDistance = function ( n ) {
+            this._wander_distance = n;
         };
 
         /**
-         * @method getDistance
+         * @method wanderDistance
          * @return {number}
          */
-        p.getDistance = function () {
-            return this._distance;
+        p.wanderDistance = function () {
+            return this._wander_distance;
         };
 
         /**
-         * @method radius
+         * @method setWanderRadius
          * @param {number} n
          */
-        p.radius = function ( n ) {
-            this._radius = n;
+        p.setWanderRadius = function ( n ) {
+            this._wnder_radius = n;
         };
 
         /**
-         * @method getRadius
+         * @method wanderRadius
          * @return {number}
          */
-        p.getRadius = function () {
-            return this._radius;
+        p.wanderRadius = function () {
+            return this._wnder_radius;
         };
 
         /**
-         * @method range
+         * @method setWanderRange
          * @param {number} n
          */
-        p.range = function ( n ) {
-            this._range = n;
-            this._range2 = n * 0.5;
+        p.setWanderRange = function ( n ) {
+            this._wander_range = n;
+            this._wander_range2 = n * 0.5;
         };
 
         /**
-         * @method getRange
+         * @method wanderRange
          * @return {number}
          */
-        p.getRange = function () {
-            return this._range;
+        p.wanderRange = function () {
+            return this._wander_range;
         };
 
         /**
          * @method wander
          */
         p.wander = function () {
-            var center = this._velocity.clone().normalize().multiplyScalar( this._distance ),
+            var center = this._velocity.clone().normalize().multiplyScalar( this._wander_distance ),
                 offset = new Vector2D();
 
-            offset.setLength( this._radius );
-            offset.setAngle( this._angle );
+            offset.setLength( this._wnder_radius );
+            offset.setAngle( this._wander_angle );
 
-            this._angle = _rand() * this._range - this._range2;
+            this._wander_angle += _rand() * this._wander_range - this._wander_range2;
 
             center.add( offset );
             this._force.add( center );
@@ -3926,7 +4001,7 @@ Sankaku.version = "0.2.0";
 
         var p = Flock.prototype;
 
-        p.constructor = Flock;
+        p.constructor = Sankaku.Flock;
 
         /**
          * @method clone
@@ -3968,38 +4043,38 @@ Sankaku.version = "0.2.0";
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method insight
+         * @method setInsight
          * @param {number} n
          */
-        p.insight = function ( n ) {
+        p.setInsight = function ( n ) {
             this._flock_insight = n;
         };
         /**
-         * @method getInsight
+         * @method insight
          * @return {number|*}
          */
-        p.getInsight = function () {
+        p.insight = function () {
             return this._flock_insight;
         };
 
         /**
-         * @method close
+         * @method setClose
          * @param {number} n
          */
-        p.close = function ( n ) {
+        p.setClose = function ( n ) {
             this._flock_close = n;
         };
         /**
-         * @method getClose
+         * @method close
          * @return {number|*}
          */
-        p.getClose = function () {
+        p.close = function () {
             return this._flock_close;
         };
 
@@ -4020,12 +4095,12 @@ Sankaku.version = "0.2.0";
 
                 if ( vehicle !== this && this.tooInsight( vehicle ) ) {
 
-                    average_velocity.add( vehicle.getVelocity() );
-                    average_position.add( vehicle.getPosition() );
+                    average_velocity.add( vehicle.velocity() );
+                    average_position.add( vehicle.position() );
 
                     if ( this.tooClose( vehicle ) ) {
 
-                        this.flee( vehicle.getPosition() );
+                        this.flee( vehicle.position() );
                     }
 
                     ++count;
@@ -4147,7 +4222,7 @@ Sankaku.version = "0.2.0";
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
@@ -4160,15 +4235,19 @@ Sankaku.version = "0.2.0";
         p.follow = function ( paths, loop ) {
             loop = !!loop;
 
-            var point = paths[ this._index ];
+            var point = paths[ this._index ],
+                last;
+
             if ( !point ) {
                 return;
             }
 
+            last = paths.length - 1;
+
             if ( this._position.distance( point ) < this._threshold ) {
                 // under _threshold
 
-                if ( this._index >= paths.length - 1 ) {
+                if ( this._index >= last ) {
                     // end
                     if ( loop ) {
                         // is loop
@@ -4180,7 +4259,7 @@ Sankaku.version = "0.2.0";
                 }
             }
 
-            if ( this._index > paths.length - 1 && !loop ) {
+            if ( this._index >= last && !loop ) {
 
                 this.arrive( point );
             } else {
@@ -4222,7 +4301,7 @@ Sankaku.version = "0.2.0";
 
         var p = Zanzo.prototype;
 
-        p.constructor = Zanzo;
+        p.constructor = Sankaku.Zanzo;
 
         /**
          * @method limit

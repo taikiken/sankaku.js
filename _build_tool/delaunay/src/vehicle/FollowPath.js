@@ -72,7 +72,7 @@
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
@@ -85,15 +85,19 @@
         p.follow = function ( paths, loop ) {
             loop = !!loop;
 
-            var point = paths[ this._index ];
+            var point = paths[ this._index ],
+                last;
+
             if ( !point ) {
                 return;
             }
 
+            last = paths.length - 1;
+
             if ( this._position.distance( point ) < this._threshold ) {
                 // under _threshold
 
-                if ( this._index >= paths.length - 1 ) {
+                if ( this._index >= last ) {
                     // end
                     if ( loop ) {
                         // is loop
@@ -105,7 +109,7 @@
                 }
             }
 
-            if ( this._index > paths.length - 1 && !loop ) {
+            if ( this._index >= last && !loop ) {
 
                 this.arrive( point );
             } else {

@@ -17,7 +17,7 @@
     Sankaku.List = ( function (){
         var _rand = Math.random,
             _floor = Math.floor,
-            _max = Math.max;
+            _max = Math.setMax;
 
         /**
          * Array ヘルパー
@@ -91,12 +91,12 @@
 
         /**
          * 配列内の最大数値を返します
-         * @method max
+         * @method setMax
          * @static
          * @param {Array} arr 検証対象の配列、内部は全部数値 [Number, [Number]]
          * @return {number} 配列内の最大数値を返します
          */
-        l.max = function ( arr ) {
+        l.setMax = function ( arr ) {
             return _max.apply( null, arr );
         };
 

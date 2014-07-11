@@ -90,14 +90,14 @@
         rect.w -= 10;
         rect.h -= 10;
 
-        seeker.seek( target.getPosition() );
+        seeker.seek( target.position() );
         seeker.update( rect.w, rect.h );
 
         pursuer.pursue( target );
         pursuer.update( rect.w, rect.h );
 
-        target.flee( seeker.getPosition() );
-//        target.seek( pursuer.getPosition() );
+        target.flee( seeker.position() );
+//        target.seek( pursuer.position() );
         target.update( rect.w, rect.h );
 
         ctx.strokeStyle = "#00ff00";
@@ -136,34 +136,34 @@
 
         seeker = new Sankaku.SteeredVehicle();
 
-        seeker.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        seeker.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
 //        seeker.setX( 400 );
-        seeker.behavior( behavior );
-        seeker.speed( speed * 0.98 );
+        seeker.setBehavior( behavior );
+        seeker.setSpeed( speed * 0.98 );
         seeker.left = 10;
         seeker.top = 10;
 
         pursuer = new Sankaku.SteeredVehicle();
 
-        pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        pursuer.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
 //        pursuer.setX( 400 );
 //        pursuer.setY( 400 );
-        pursuer.behavior( behavior );
-        pursuer.speed( speed * 0.94 );
+        pursuer.setBehavior( behavior );
+        pursuer.setSpeed( speed * 0.94 );
         pursuer.left = 10;
         pursuer.top = 10;
 
         target = new Sankaku.SteeredVehicle();
 
-        target.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-        target.behavior( behavior );
-        target.speed( speed * 1.05 );
+        target.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+        target.setBehavior( behavior );
+        target.setSpeed( speed * 1.05 );
         target.left = 10;
         target.top = 10;
 
-        var velocity = target.getVelocity();
+        var velocity = target.velocity();
         velocity.setLength( 15 );
-//        velocity.setAngle( Math.PI / 6 );
+//        setVelocity.setAngle( Math.PI / 6 );
 
         loop();
     }

@@ -52,9 +52,11 @@ body {
         ctx = canvas.getContext( "2d"),
 
         vehicle,
+        v2, v3,
 
         paths = [],
         flocks = [],
+        scene,
 
         ww, wh,
         prev_ww = -1,
@@ -83,30 +85,38 @@ body {
     }
 
     function draw ( rect ) {
-        vehicle.follow( paths, true );
+        vehicle.follow( paths, false );
         vehicle.update( rect.w, rect.h );
+
+        v2.follow( paths, false );
+        v2.update( rect.w, rect.h );
+
+        v3.follow( paths, false );
+        v3.update( rect.w, rect.h );
 
         var i, limit, flock;
 
-        for ( i = 0, limit = jams.length; i < limit; i++ ) {
-            var jam = jams[ i ];
-            jam.draw( ctx );
-        }
+//        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+//            var jam = jams[ i ];
+//            jam.draw( ctx );
+//        }
 
 //        ctx.strokeStyle = "#ff0000";
-        vehicle.draw( ctx );
+//        vehicle.draw( ctx );
 //        ctx.stroke();
 
-        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
-            flock = flocks[ i ];
+//        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
+//            flock = flocks[ i ];
+//
+//            flock.pursue( vehicle );
+//            flock.flock( flocks );
+//            flock.update( rect.w, rect.h );
+//
+////            flock.draw( ctx );
+////            ctx.fill();
+//        }
 
-            flock.pursue( vehicle );
-            flock.flock( flocks );
-            flock.update( rect.w, rect.h );
-
-            flock.draw( ctx );
-//            ctx.fill();
-        }
+        scene.draw( ctx );
     }
 
     function loop () {
@@ -133,48 +143,58 @@ body {
 
         for ( i = 0; i < limit; i++ ) {
             position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            circle = new Sankaku.Circle( position.x, position.y, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+            circle = new Sankaku.Circle( position.x, position.y, 8, Iro.int2hex( random( 0xffffff ) ) );
 
             jams.push( circle );
             paths.push( new Sankaku.Vector2D( position.x, position.y ) );
+
+            scene.add( circle );
         }
     }
 
     function init () {
+        scene = new Sankaku.Scene();
+
         hurdle();
 
         var rect = size(),
-            speed = 10,//7,
+            speed = 5,
             i, flock;
 
         vehicle = new Sankaku.FollowPath();
         vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
         vehicle.setBehavior( Sankaku.Vehicle.WRAP );
         vehicle.setPadding( -100 );
-        vehicle.setSpeed( speed );
-        vehicle.setMass( 0.5 );
+        vehicle.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+//        vehicle.setMass( 0.5 + Math.random() * 0.5 );
         vehicle.view().setColor( "#ff0000" );
-//        vehicle.setPadding( setPadding );
-//        vehicle.setAvoidDistance( 25 );
+//        vehicle.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
+        vehicle.setAvoidDistance( vehicle.speed() * vehicle.speed() );
 
-        for ( i = 0; i < 666; i++ ) {
 
-            flock = new Sankaku.Flock();
-            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.setSpeed( (speed * Math.random() + speed) * 0.5 );
-            flock.setMass( Math.random() * 0.5 + 1 );
-//            flock.setBehavior( Sankaku.Vehicle.WRAP );
-//            flock.width = 6;
-//            flock.height = 3;
-            flock.width *= 0.2;
-            flock.height *= 0.2;
-            flock.setPadding( -200 );
-            flock.setClose( 12 );
-            flock.view().setMode( Sankaku.Shape.FILL );
+        v2 = new Sankaku.FollowPath();
+        v2.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 + 30 ) );
+        v2.setBehavior( Sankaku.Vehicle.WRAP );
+        v2.setPadding( -100 );
+        v2.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+//        v2.setMass( 0.5 + Math.random() * 0.5 );
+        v2.view().setColor( "#00ff00" );
+//        v2.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
+        v2.setAvoidDistance( v2.speed() * v2.speed() );
 
-            flocks.push( flock );
-        }
+        v3 = new Sankaku.FollowPath();
+        v3.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 + 60 ) );
+        v3.setBehavior( Sankaku.Vehicle.WRAP );
+        v3.setPadding( -100 );
+        v3.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+//        v3.setMass( 0.5 + Math.random() * 0.5 );
+        v3.view().setColor( "#0000ff" );
+//        v3.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
+        v3.setAvoidDistance( v3.speed() * v3.speed() );
+
+        scene.add( vehicle );
+        scene.add( v2 );
+        scene.add( v3 );
 
         loop();
     }

@@ -62,7 +62,7 @@
             ctx.closePath();
         };
 
-        p.position = function () {
+        p.setPosition = function () {
             return { x: this.x, y: this.y };
         };
 
@@ -158,7 +158,7 @@
 
         for ( i = 0; i < count; i++ ) {
             circle = circles[ i ];
-            position = circle.position();
+            position = circle.setPosition();
 
             vertices[ i ] = {
                 x: position.x,

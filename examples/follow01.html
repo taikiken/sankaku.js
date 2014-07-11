@@ -264,16 +264,16 @@ ga('send', 'pageview');
         for ( i = 0; i < 4444; i++ ) {
 
             pursuer = new Sankaku.FollowPath();
-            pursuer.position( new Sankaku.Vector2D( 0, rect.h * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.setPosition( new Sankaku.Vector2D( 0, rect.h * Sankaku.Num.random( 100 ) * 0.01 ) );
             pursuer.width *= 0.4;
             pursuer.height *= 0.4;
             pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
-//            pursuer.mass( 0.8 + Math.random() * 0.5 );
+//            pursuer.setMass( 0.8 + Math.random() * 0.5 );
 
             r = Math.sqrt( Math.random() ) * speed;
             a = Math.random() * PI2;
             s = Math.abs( speed * 0.5 + Math.cos( a ) * r ) + 1;
-            pursuer.speed( s );
+            pursuer.setSpeed( s );
 
             pursuers.push( pursuer );
         }

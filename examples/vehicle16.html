@@ -88,15 +88,15 @@ body {
         vehicle.update( rect.w, rect.h );
 
 //        ctx.strokeStyle = "#ff0000";
-//        vehicle.draw( ctx );
+        vehicle.draw( ctx );
 //        ctx.stroke();
 
         var i, limit;
 
-//        for ( i = 0, limit = jams.length; i < limit; i++ ) {
-//            var jam = jams[ i ];
-//            jam.draw( ctx );
-//        }
+        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+            var jam = jams[ i ];
+            jam.draw( ctx );
+        }
 
         for ( i = 0, limit = pursuers.length; i < limit; i++ ) {
             var p = pursuers[ i ];
@@ -150,24 +150,29 @@ body {
             i, pursuer;
 
         vehicle = new Sankaku.FollowPath();
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.behavior( Sankaku.Vehicle.WRAP );
-        vehicle.speed( speed );
-        vehicle.mass( 0.1 );
-//        vehicle.padding( padding );
-//        vehicle.avoidDistance( 25 );
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5) );
+        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
+        vehicle.setSpeed( speed );
+//        vehicle.setMass( 0.1 );
+        vehicle.setMass( 0.5 );
+        vehicle.view().setColor( "#ffffff" );
+//        vehicle.setPadding( setPadding );
+//        vehicle.setAvoidDistance( 25 );
 
-        for ( i = 0; i < 888; i++ ) {
+        for ( i = 0; i < 3333; i++ ) {
 
             pursuer = new Sankaku.SteeredVehicle();
-            pursuer.position( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
-            pursuer.speed( speed * Sankaku.Num.random( 150, 300 ) * 0.01 );
+            pursuer.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.setSpeed( speed + speed * Sankaku.Num.random( 100, 150 ) * 0.01 );
             pursuer.width *= 0.3;
             pursuer.height *= 0.3;
-            pursuer.behavior( Sankaku.Vehicle.WRAP );
-            pursuer.padding( -100 );
+            pursuer.setBehavior( Sankaku.Vehicle.WRAP );
+            pursuer.setPadding( -100 );
+            pursuer.setMass( 0.1 + Math.random() );
+            pursuer.setArrival( 50 + 100 * Math.random() );
+
 //            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
-            pursuer.getView().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
+            pursuer.view().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
 
             pursuers.push( pursuer );
         }

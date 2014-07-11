@@ -25,7 +25,7 @@ body {
     min-height: 640px;
 }
 </style>
-<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+<script type="text/javascript" src="libs/sankaku.js"></script>
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
@@ -46,11 +46,14 @@ body {
         ctx = canvas.getContext( "2d"),
 
         vehicle,
+        scene,
 
         flocks = [],
         zanzo,
 
         square,
+        tripod,
+        star,
         rotation = 0,
         step = 3,
 
@@ -93,10 +96,20 @@ body {
         }
         var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
 
-        square.scale = sin;
+//        square.scale = sin;
         square.rotate( rotation );
 
-        square.draw( ctx );
+//        tripod.scale = sin;
+//        tripod.rotate( rotation );
+
+//        star.scale = sin;
+//        star.rotate( rotation );
+
+//        square.draw( ctx );
+
+//        var x = square.x;
+//        square.setX( x +5 );
+        scene.draw( ctx );
     }
 
     var clear = 0;
@@ -131,39 +144,29 @@ body {
     }
 
     function init () {
-////        hurdle();
-//
-//        var rect = size(),
-//            _other = Sagen.hasClass( element, "other" ),
-//            limit = _other ? 222 : 33,
-//            position,
-//            max_r = 6,
-//            setSpeed = 3,
-//            i, flock;
-//
-//        for ( i = 0; i < limit; i++ ) {
-////        for ( i = 0; i < 3; i++ ) {
-//
-//            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-//            flock = new Sankaku.Flock();
-////            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-//            flock.setPosition( new Sankaku.Vector2D( setPosition.x || rect.w * Math.random(), setPosition.y || rect.h * Math.random() ) );
-//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
-//            flock.setSpeed( (setSpeed + Math.random() * setSpeed) * 0.3 );
-//            flock.setMass( Math.random() * 0.5 + 1 );
-////            flock.setMass( Math.random() * 0.5 + 0.5 );
-////            flock.setBehavior( Sankaku.Vehicle.WRAP );
-//            flock.width = 2;
-//            flock.height = 1;
-//            flock.setClose( _other ? 32 : 12 );
-//            flock.setPadding( _other ? -160 : -10 );
-//            flock.scale = 1 + Math.random() * 3;
-//
-//            flocks.push( flock );
-//        }
         var rect = size();
 
-        square = new Sankaku.Shape( rect.w * 0.5, rect.h * 0.5, 100, 200, "#ff0000" );
+        scene = new Sankaku.Scene();
+
+        square = new Sankaku.Shape( rect.w * 0.25, rect.h * 0.25, 100, 200, "#ff0000" );
+
+        tripod = new Sankaku.Tripod( 0, 0, 100, 100, "#ffffff" );
+
+        star = new Sankaku.Star( 0, 0, 30, "#ffff00", null, 5 );
+        var star2 = new Sankaku.Star( 250, 250, 30, "#ffff00", null, 5 );
+        var circle = new Sankaku.Circle( 0, 0, 30, "#ff00ff" );
+        var circle2 = new Sankaku.Circle( 250, 250, 30, "#ff00cc" );
+
+        square.add( tripod );
+        square.add( star );
+        square.add( circle );
+
+        scene.add( square );
+        scene.add( circle2 );
+        scene.add( star2 );
+
+
+//        console.log( "tripod",  tripod.parent, tripod.parent instanceof Sankaku.Scene );
 
 //        zanzo.add( [square] );
 

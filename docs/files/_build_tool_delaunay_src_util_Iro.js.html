@@ -67,6 +67,8 @@
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
+                <li><a href="../classes/Scene.html">Scene</a></li>
+            
                 <li><a href="../classes/Shape.html">Shape</a></li>
             
                 <li><a href="../classes/Star.html">Star</a></li>
@@ -176,7 +178,7 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
+            var max = Math.setMax( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, l, d;
 
@@ -257,7 +259,7 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
+            var max = Math.setMax( r, g, b ),
                 min = Math.min( r, g, b ),
                 h, s, v = max,
                 d = max - min;

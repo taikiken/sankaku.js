@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=980">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
-<title>Canvas Note - 15 Follow | イナヅマTV</title>
+<title>Vehicle 12 Flock</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -33,11 +33,13 @@ body {
 }
 
 </style>
-<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
-
+<div id="debug">
+    <label for="debug_on">DEBUG ON<input type="checkbox" name="debug_on" id="debug_on" value="yes" /></label>
+</div>
 <script type="text/javascript">
 ( function ( window ){
     "use strict";
@@ -52,16 +54,25 @@ body {
         ctx = canvas.getContext( "2d"),
 
         vehicle,
+        pursuer2,
+        scene,
 
-        paths = [],
         flocks = [],
 
         ww, wh,
         prev_ww = -1,
         prev_wh = -1,
-        padding = 100,
+        padding = 120,
         jams = [],
         debug_mode = false;
+
+
+    // debug button
+    document.getElementById( "debug_on" ).addEventListener( "change", function () {
+
+        debug_mode = !debug_mode;
+    }, false );
+
 
     function size () {
         ww = document.body.clientWidth;
@@ -83,30 +94,44 @@ body {
     }
 
     function draw ( rect ) {
-        vehicle.follow( paths, true );
+        vehicle.wander();
+        vehicle.avoid( jams );
         vehicle.update( rect.w, rect.h );
+
+//        pursuer2.pursue( vehicle );
+//        pursuer2.update( rect.w, rect.h );
 
         var i, limit, flock;
 
-        for ( i = 0, limit = jams.length; i < limit; i++ ) {
-            var jam = jams[ i ];
-            jam.draw( ctx );
-        }
-
-//        ctx.strokeStyle = "#ff0000";
-        vehicle.draw( ctx );
-//        ctx.stroke();
+//        if ( debug_mode ) {
+//            for ( i = 0, limit = jams.length; i < limit; i++ ) {
+//                var jam = jams[ i ];
+//                jam.draw( ctx );
+//            }
+//
+//            ctx.strokeStyle = "#ff0000";
+//            vehicle.draw( ctx );
+//            ctx.stroke();
+//
+////            ctx.strokeStyle = "#ff00ff";
+////            pursuer2.draw( ctx );
+////            ctx.stroke();
+//        }
 
         for ( i = 0, limit = flocks.length; i < limit; i++ ) {
             flock = flocks[ i ];
 
-            flock.pursue( vehicle );
             flock.flock( flocks );
+            flock.pursue( vehicle );
             flock.update( rect.w, rect.h );
 
-            flock.draw( ctx );
+//            flock.pursue( pursuer2 );
+
+//            flock.draw( ctx );
 //            ctx.fill();
         }
+
+        scene.draw( ctx );
     }
 
     function loop () {
@@ -124,56 +149,62 @@ body {
             random = Sankaku.Num.random,
             Iro = Sankaku.Iro,
 
-            limit = 24,
-            i, circle,
-            position,
-            max_r;
+            i, circle;
 
-        max_r = Math.min( rect.w, rect.h ) * 0.5;
-
-        for ( i = 0; i < limit; i++ ) {
-            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            circle = new Sankaku.Circle( position.x, position.y, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+        for ( i = 0; i < 38; i++ ) {
+//            circle = new Sankaku.Circle( random( padding, rect.w - padding ), random( padding, rect.h - padding ), random( 10, 30 ), Iro.int2hex( random( 0xffffff ) ) );
+            circle = new Sankaku.Circle( random( padding, rect.w - padding ), random( padding, rect.h - padding ), 10, Iro.int2hex( random( 0xffffff ) ) );
 
             jams.push( circle );
-            paths.push( new Sankaku.Vector2D( position.x, position.y ) );
+            scene.add( circle );
         }
     }
 
     function init () {
+        scene = new Sankaku.Scene();
+
         hurdle();
 
         var rect = size(),
-            speed = 10,//7,
+            speed = 10,
             i, flock;
 
-        vehicle = new Sankaku.FollowPath();
+        vehicle = new Sankaku.Wander();
         vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
-        vehicle.setPadding( -100 );
         vehicle.setSpeed( speed );
-        vehicle.setMass( 0.5 );
-        vehicle.view().setColor( "#ff0000" );
-//        vehicle.setPadding( setPadding );
-//        vehicle.setAvoidDistance( 25 );
+//        vehicle.setMass( 0.01 );
+        vehicle.setMass( 0.25 );
+        vehicle.setPadding( 0 );
+        vehicle.setAvoidDistance( 30 );
+//        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
 
-        for ( i = 0; i < 666; i++ ) {
+//        pursuer2 = new Sankaku.SteeredVehicle();
+//        pursuer2.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+//        pursuer2.setSpeed( setSpeed * 4 );
+//        pursuer2.setBehavior( Sankaku.Vehicle.WRAP );
+
+        vehicle.view().setColor( "#ff0000" );
+        scene.add( vehicle );
+
+        for ( i = 0; i < 555; i++ ) {
 
             flock = new Sankaku.Flock();
             flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
             flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-            flock.setSpeed( (speed * Math.random() + speed) * 0.5 );
-            flock.setMass( Math.random() * 0.5 + 1 );
-//            flock.setBehavior( Sankaku.Vehicle.WRAP );
-//            flock.width = 6;
-//            flock.height = 3;
-            flock.width *= 0.2;
-            flock.height *= 0.2;
-            flock.setPadding( -200 );
-            flock.setClose( 12 );
+//            flock.setSpeed( speed * 1.5 );
+            flock.setSpeed( speed * 0.5 + speed * Math.random() );
+            flock.setMass( 2 );
+            flock.setBehavior( Sankaku.Vehicle.WRAP );
+            flock.width = 10;
+            flock.height = 5;
+            flock.setInsight( 400 );
+            flock.setClose( 15 );
             flock.view().setMode( Sankaku.Shape.FILL );
+            flock.view().setAlpha( 0.5 );
+            flock.setPadding( -padding + -padding * Math.random() );
 
             flocks.push( flock );
+            scene.add( flock );
         }
 
         loop();

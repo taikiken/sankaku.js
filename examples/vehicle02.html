@@ -118,13 +118,13 @@
         vehicle = new Sankaku.SteeredVehicle();
 //        vehicle.init();
 
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-//        var velocity = vehicle.getVelocity();
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+//        var setVelocity = vehicle.velocity();
 //
-//        console.log( "velocity ", velocity );
-//        velocity.setLength( 5 );
-//        velocity.setAngle( Math.PI / 6 );
-//        console.log( "velocity ", velocity );
+//        console.log( "setVelocity ", setVelocity );
+//        setVelocity.setLength( 5 );
+//        setVelocity.setAngle( Math.PI / 6 );
+//        console.log( "setVelocity ", setVelocity );
 
         window.addEventListener( "mousemove", onMouseMove, false );
 

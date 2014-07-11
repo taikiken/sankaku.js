@@ -120,8 +120,8 @@
     function init () {
         vehicle = new Sankaku.SteeredVehicle();
 
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.behavior( Sankaku.Vehicle.BOUNCE );
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.setBehavior( Sankaku.Vehicle.BOUNCE );
 
         window.addEventListener( "mousemove", onMouseMove, false );
 

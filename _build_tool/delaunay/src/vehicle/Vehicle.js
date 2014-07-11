@@ -61,32 +61,32 @@
             this._behavior = Vehicle.BOUNCE;
 
             /**
-             * padding left
+             * setPadding left
              * @property left
              * @type {number}
              */
             this.left = 0;
             /**
-             * padding top
+             * setPadding top
              * @property top
              * @type {number}
              */
             this.top = 0;
             /**
-             * padding right
+             * setPadding right
              * @property right
              * @type {number}
              */
             this.right = 0;
             /**
-             * padding bottom
+             * setPadding bottom
              * @property bottom
              * @type {number}
              */
             this.bottom = 0;
 
             // 描画形状
-            this.view( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
+            this.setView( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
         }
 
         Sankaku.extend( Object2D, Vehicle );
@@ -106,39 +106,43 @@
 
         var p = Vehicle.prototype;
 
-        p.constructor = Vehicle;
+        p.constructor = Sankaku.Vehicle;
 
         Sankaku.EventDispatcher.initialize( p );
 
-        p.view = function ( view ) {
+        /**
+         * @method setView
+         * @param {*|Object2D|Shape} view
+         */
+        p.setView = function ( view ) {
 
-            view.position( this._position );
+            view.setPosition( this._position );
 
-//            view.width = this.width;
-//            view.height = this.height;
-//            view.rotation = this.rotation;
-//            view.scale = this.scale;
-            // copy from view
+//            setView.width = this.width;
+//            setView.height = this.height;
+//            setView.rotation = this.rotation;
+//            setView.scale = this.scale;
+            // copy from setView
             this.width = view.width;
             this.height = view.height;
             this.rotation = view.rotation;
 
-            // copy to view
+            // copy to setView
             view.scale = this.scale;
 
-//            view._velocity = this._velocity;
-//            view._mass = this._mass;
-//            view._speed = this._speed;
-//            view._behavior = this._behavior;
+//            setView._velocity = this._velocity;
+//            setView._mass = this._mass;
+//            setView._speed = this._speed;
+//            setView._behavior = this._behavior;
 
             this._view = view;
         };
 
         /**
-         * @method getView
-         * @return {Shape}
+         * @method view
+         * @return {*|Object2D|Shape}
          */
-        p.getView = function () {
+        p.view = function () {
             return this._view;
         };
 
@@ -151,7 +155,7 @@
             var clone = new Vehicle( this._view.clone() );
 
             // object 2D
-            clone.position( this._position.clone() );
+            clone.setPosition( this._position.clone() );
             clone.width = this.width;
             clone.height = this.height;
             clone.rotation = this.rotation;
@@ -166,13 +170,13 @@
         };
 
         /**
-         * @method padding
+         * @method setPadding
          * @param {number} top
          * @param {number} [right]
          * @param {number} [bottom]
          * @param {number} [left]
          */
-        p.padding = function ( top, right, bottom, left ) {
+        p.setPadding = function ( top, right, bottom, left ) {
             right = right || top;
             bottom = bottom || top;
             left = left || top;
@@ -185,59 +189,59 @@
 
         /**
          * 質量を設定します
-         * @method mass
+         * @method setMass
          * @param {number} n
          */
-        p.mass = function ( n ) {
+        p.setMass = function ( n ) {
             this._mass = n;
         };
 
         /**
-         * @method getMass
+         * @method mass
          * @return {number}
          */
-        p.getMass = function () {
+        p.mass = function () {
             return this._mass;
         };
 
         /**
          * 最大スピードを設定します
-         * @method speed
+         * @method setSpeed
          * @param {number} n
          */
-        p.speed = function ( n ) {
+        p.setSpeed = function ( n ) {
             this._speed = n;
         };
 
         /**
-         * @method getSpeed
+         * @method speed
          * @return {number}
          */
-        p.getSpeed = function () {
+        p.speed = function () {
             return this._speed;
         };
 
         /**
-         * @method behavior
+         * @method setBehavior
          * @param {string} str
          */
-        p.behavior = function ( str ) {
+        p.setBehavior = function ( str ) {
             this._behavior = str;
         };
 
         /**
-         * @method getBehavior
+         * @method behavior
          * @return {string}
          */
-        p.getBehavior = function () {
+        p.behavior = function () {
             return this._behavior;
         };
 
         /**
-         * @method velocity
+         * @method setVelocity
          * @param {Vector2D} v
          */
-        p.velocity = function ( v ) {
+        p.setVelocity = function ( v ) {
             this._velocity = v;
         };
 
@@ -245,7 +249,7 @@
          * @method getVelocity
          * @return {Vector2D}
          */
-        p.getVelocity = function () {
+        p.velocity = function () {
             return this._velocity;
         };
 
@@ -343,13 +347,6 @@
                 this.dispatchEvent( { type: "wrap", currentTarget: this } );
             }
         };
-//
-//        /**
-//         * @method onWrap
-//         */
-//        p.onWrap  =function () {
-//
-//        };
 
         /**
          * @method bounce
@@ -392,13 +389,6 @@
                 this.dispatchEvent( { type: "bounce", currentTarget: this } );
             }
         };
-//
-//        /**
-//         * @method onBounce
-//         */
-//        p.onBounce = function () {
-//
-//        };
 
         return Vehicle;
     }() );

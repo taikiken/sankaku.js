@@ -104,8 +104,8 @@
         vehicle = new Sankaku.Vehicle();
 //        vehicle.init();
 
-        vehicle.position( new Sankaku.Vector2D( 100, 100 ) );
-        var velocity = vehicle.getVelocity();
+        vehicle.setPosition( new Sankaku.Vector2D( 100, 100 ) );
+        var velocity = vehicle.velocity();
 
         console.log( "velocity ", velocity );
         velocity.setLength( 5 );

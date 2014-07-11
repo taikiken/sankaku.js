@@ -136,26 +136,26 @@ body {
             i, flock;
 
         vehicle = new Sankaku.FollowPath( new Sankaku.Star( 0, 0, 30 ) );
-        vehicle.position( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.behavior( Sankaku.Vehicle.WRAP );
-//        vehicle.view( new Sankaku.Star( 0, 0, 30 ) );
-        vehicle.getView().setColor( "#ff0000" );
-//        vehicle.speed( speed );
-//        vehicle.mass( 0.00001 );
-//        vehicle.padding( padding );
-//        vehicle.avoidDistance( 25 );
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
+//        vehicle.setView( new Sankaku.Star( 0, 0, 30 ) );
+        vehicle.view().setColor( "#ff0000" );
+//        vehicle.setSpeed( setSpeed );
+//        vehicle.setMass( 0.00001 );
+//        vehicle.setPadding( setPadding );
+//        vehicle.setAvoidDistance( 25 );
 
 //        for ( i = 0; i < 666; i++ ) {
 //
 //            flock = new Sankaku.Flock();
-//            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-//            flock.velocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
-//            flock.speed( speed );
-//            flock.mass( 1.5 );
-//            flock.behavior( Sankaku.Vehicle.WRAP );
+//            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10, Sankaku.Num.random( 20 ) - 10 ) );
+//            flock.setSpeed( setSpeed );
+//            flock.setMass( 1.5 );
+//            flock.setBehavior( Sankaku.Vehicle.WRAP );
 //            flock.width = 6;
 //            flock.height = 3;
-//            flock.close( 12 );
+//            flock.setClose( 12 );
 //
 //
 //            flocks.push( flock );

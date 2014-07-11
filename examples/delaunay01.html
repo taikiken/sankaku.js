@@ -82,7 +82,7 @@ body {
             ctx.closePath();
         };
 
-        p.position = function () {
+        p.setPosition = function () {
             return { x: this.x, y: this.y };
         };
 
@@ -187,7 +187,7 @@ body {
             circle.update( rect );
             circle.draw();
 
-            position = circle.position();
+            position = circle.setPosition();
 
             vertices[ i ] = {
                 x: position.x,

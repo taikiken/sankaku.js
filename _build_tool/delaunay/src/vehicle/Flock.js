@@ -37,7 +37,7 @@
 
         var p = Flock.prototype;
 
-        p.constructor = Flock;
+        p.constructor = Sankaku.Flock;
 
         /**
          * @method clone
@@ -79,38 +79,38 @@
 //            return clone;
 
             var clone = Object.create( this );
-            clone.view( this._view.clone() );
+            clone.setView( this._view.clone() );
 
             return clone;
         };
 
         /**
-         * @method insight
+         * @method setInsight
          * @param {number} n
          */
-        p.insight = function ( n ) {
+        p.setInsight = function ( n ) {
             this._flock_insight = n;
         };
         /**
-         * @method getInsight
+         * @method insight
          * @return {number|*}
          */
-        p.getInsight = function () {
+        p.insight = function () {
             return this._flock_insight;
         };
 
         /**
-         * @method close
+         * @method setClose
          * @param {number} n
          */
-        p.close = function ( n ) {
+        p.setClose = function ( n ) {
             this._flock_close = n;
         };
         /**
-         * @method getClose
+         * @method close
          * @return {number|*}
          */
-        p.getClose = function () {
+        p.close = function () {
             return this._flock_close;
         };
 
@@ -131,12 +131,12 @@
 
                 if ( vehicle !== this && this.tooInsight( vehicle ) ) {
 
-                    average_velocity.add( vehicle.getVelocity() );
-                    average_position.add( vehicle.getPosition() );
+                    average_velocity.add( vehicle.velocity() );
+                    average_position.add( vehicle.position() );
 
                     if ( this.tooClose( vehicle ) ) {
 
-                        this.flee( vehicle.getPosition() );
+                        this.flee( vehicle.position() );
                     }
 
                     ++count;

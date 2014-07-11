@@ -78,7 +78,7 @@
 
             /**
              * @property scene
-             * @type {*}
+             * @type {*|Object2D}
              */
             this.scene = null;
             /**
@@ -91,30 +91,56 @@
              * @type {Array}
              */
             this.children = [];
+            /**
+             * @property visible
+             * @type {boolean}
+             */
+            this.visible = true;
+            /**
+             * @property _alpha
+             * @type {number}
+             * @default 1
+             * @protected
+             */
+            this._alpha = 1;
         }
 
         var p = Object2D.prototype;
 
-        p.constructor = Object2D;
+        p.constructor = Sankaku.Object2D;
 
         // mixin EventDispatcher
         Sankaku.EventDispatcher.initialize( p );
 
         /**
-         * @method position
+         * @method setAlpha
+         * @param {Number} n
+         * @return {Shape}
+         */
+        p.setAlpha = function ( n ) {
+            this._alpha = n;
+            return this.setColor( this._color );
+        };
+
+        p.alpha = function () {
+            return this._alpha;
+        };
+
+        /**
+         * @method setPosition
          * @param {Vector2D} v
          */
-        p.position = function ( v ) {
+        p.setPosition = function ( v ) {
             this._position = v;
             this.x = v.x;
             this.y = v.y;
         };
 
         /**
-         * @method getPosition
+         * @method position
          * @return {Vector2D}
          */
-        p.getPosition = function () {
+        p.position = function () {
             return this._position;
         };
 
@@ -141,14 +167,15 @@
          * @return {Object} {a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}
          */
         p.bounding = function () {
-            var x = this.x,
+            var parent = this.parent,
+                x = this.x,
                 y = this.y,
                 w1 = this.width * this.scale,
                 h1 = this.height * this.scale,
                 w2 = w1 * 0.5,
                 h2 = h1 * 0.5,
                 rotation = this.rotation,
-                a, b, c, d,
+                a, b, c, d, e,
                 ax, ay,
                 bx,
                 cy,
@@ -163,11 +190,37 @@
                 sin_bx,
                 sin_cy;
 
+            e = {
+                scale: this.scale,
+                rotation: this.rotation,
+                x: this.x,
+                y: this.y
+            };
+
+            if ( !!parent && this.scene !== parent ) {
+                // not scene
+                x = parent.x + x * parent.scale;
+                y = parent.y + y * parent.scale;
+
+                w1 = this.width * parent.scale;
+                h1 = this.height * parent.scale;
+
+                w2 = w1 * 0.5;
+                h2 = h1 * 0.5;
+
+                rotation = parent.rotation + this.rotation;
+
+                e.scale = parent.scale * this.scale;
+                e.rotation = rotation;
+            }
+
             sin = _sin( rotation );
             cos = _cos( rotation );
 
             //  a    b
             //  ------
+            //  |    |
+            //  |  e |
             //  |    |
             //  ------
             //  d    c
@@ -191,7 +244,10 @@
             c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
             d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
 
-            return { a: a, b: b, c: c, d:d };
+            e.x = ( a.x + c.x ) * 0.5;
+            e.y = ( a.y + c.y ) * 0.5;
+
+            return { a: a, b: b, c: c, d:d, e: e };
         };
 
         /**
@@ -218,7 +274,7 @@
          */
         p._clone = function () {
             var clone = new Object2D();
-            clone.position( this._position.clone() );
+            clone.setPosition( this._position.clone() );
             clone.width = this.width;
             clone.height = this.height;
             clone.rotation = this.rotation;
@@ -279,7 +335,7 @@
 
             if ( !!scene ) {
 
-                scene._addChild( target );
+                scene.addChild( target );
             }
         };
         /**
@@ -304,7 +360,7 @@
 
             if ( !!scene ) {
 
-                scene._removeChild( target );
+                scene.removeChild( target );
             }
         };
 
@@ -316,11 +372,17 @@
             this._draw( ctx );
 
             var children = this.children,
+                child,
                 i, limit;
 
             for ( i = 0, limit = children.length; i < limit; i++ ) {
 
-                children[ i ].draw( ctx );
+                child = children[ i ];
+
+                if ( child.visible && child.alpha() > 0 ) {
+                    // visible && alpha not 0
+                    children[ i ].draw( ctx );
+                }
             }
         };
         /**
