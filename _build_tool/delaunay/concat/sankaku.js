@@ -1991,8 +1991,8 @@ Sankaku.version = "0.2.3";
     "use strict";
     var Sankaku = window.Sankaku,
         Vector2D = Sankaku.Vector2D,
-        Num = Sankaku.Num
-        ;
+        Num = Sankaku.Num,
+        Iro = Sankaku.Iro;
 
     Sankaku.Object2D = ( function (){
         var _cos = Math.cos,
@@ -2088,9 +2088,51 @@ Sankaku.version = "0.2.3";
         Sankaku.EventDispatcher.initialize( p );
 
         /**
+         * @method clone
+         * @return {Object2D}
+         */
+        p.clone = function () {
+            return this._clone();
+        };
+
+        /**
+         * @method _clone
+         * @return {Object2D}
+         * @protected
+         */
+        p._clone = function () {
+            var clone = new Object2D();
+            clone.setPosition( this._position.clone() );
+            clone.width = this.width;
+            clone.height = this.height;
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone.parent = parent && parent.clone();
+
+            clone._alpha = this._alpha;
+            clone.setColor( this._color );
+
+            return clone;
+        };
+
+        /**
+         * @method setColor
+         * @param {String} hex
+         * @return {Object2D}
+         */
+        p.setColor = function ( hex ) {
+            this._color = hex;
+
+            this._rgb = Iro.hex2rgb( hex );
+            this._rgb.a = this._alpha;
+
+            return this;
+        };
+
+        /**
          * @method setAlpha
          * @param {Number} n
-         * @return {Shape}
+         * @return {Object2D}
          */
         p.setAlpha = function ( n ) {
             this._alpha = n;
@@ -2104,11 +2146,14 @@ Sankaku.version = "0.2.3";
         /**
          * @method setPosition
          * @param {Vector2D} v
+         * @return {Object2D}
          */
         p.setPosition = function ( v ) {
             this._position = v;
             this.x = v.x;
             this.y = v.y;
+
+            return this;
         };
 
         /**
@@ -2122,19 +2167,25 @@ Sankaku.version = "0.2.3";
         /**
          * @method setX
          * @param {number} x
+         * @return {Object2D}
          */
         p.setX = function ( x ) {
             this.x = x;
             this._position.x = x;
+
+            return this;
         };
 
         /**
          * @method setY
          * @param {number} y
+         * @return {Object2D}
          */
         p.setY = function ( y ) {
             this.y = y;
             this._position.y = y;
+
+            return this;
         };
 
         /**
@@ -2257,37 +2308,14 @@ Sankaku.version = "0.2.3";
 
         /**
          * 角度を degree を元に radian 設定します
-         * @method rotate
+         * @method setRotate
          * @param {number} degree 0 ~ 360
+         * @return {Object2D}
          */
-        p.rotate = function ( degree ) {
+        p.setRotate = function ( degree ) {
             this.rotation = Num.deg2rad( degree );
-        };
 
-        /**
-         * @method clone
-         * @return {Object2D}
-         */
-        p.clone = function () {
-            return this._clone();
-        };
-
-        /**
-         * @method _clone
-         * @return {Object2D}
-         * @protected
-         */
-        p._clone = function () {
-            var clone = new Object2D();
-            clone.setPosition( this._position.clone() );
-            clone.width = this.width;
-            clone.height = this.height;
-            clone.rotation = this.rotation;
-            clone.scale = this.scale;
-            clone.parent = parent && parent.clone();
-
-
-            return clone;
+            return this;
         };
 
         // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
@@ -2319,6 +2347,7 @@ Sankaku.version = "0.2.3";
         /**
          * @method add
          * @param {*|Object2D} target
+         * @return {Object2D}
          */
         p.add = function ( target ) {
 
@@ -2342,10 +2371,13 @@ Sankaku.version = "0.2.3";
 
                 scene.addChild( target );
             }
+
+            return this;
         };
         /**
          * @method remove
          * @param {*|Object2D} target
+         * @return {Object2D}
          */
         p.remove = function ( target ) {
             var index, scene;
@@ -2367,11 +2399,14 @@ Sankaku.version = "0.2.3";
 
                 scene.removeChild( target );
             }
+
+            return this;
         };
 
         /**
          * @method draw
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object2D}
          */
         p.draw = function ( ctx ) {
             this._draw( ctx );
@@ -2389,6 +2424,8 @@ Sankaku.version = "0.2.3";
                     children[ i ].draw( ctx );
                 }
             }
+
+            return this;
         };
         /**
          * @method _draw
@@ -2400,6 +2437,12 @@ Sankaku.version = "0.2.3";
         };
 
         // children index change
+        /**
+         * @method swap
+         * @param {Object2D} o1 置き換え先
+         * @param {Object2D} o2 対象ターゲット
+         * @return {Object2D}
+         */
         p.swap = function ( o1, o2 ) {
             var children = this.children,
                 index1 = children.indexOf( o1 ),
@@ -2407,14 +2450,23 @@ Sankaku.version = "0.2.3";
 
             children[ index2 ] = o1;
             children[ index1 ] = o2;
+
+            return this;
         };
 
+        /**
+         * @method highest
+         * @param {Object2D} o ターゲットオブジェクト
+         * @return {Object2D}
+         */
         p.highest = function ( o ) {
             var children = this.children,
                 index = children.indexOf( o );
 
             children.splice( index, 1 );
             children.push( o );
+
+            return this;
         };
 
         return Object2D;
@@ -2584,18 +2636,6 @@ Sankaku.version = "0.2.3";
         p.constructor = Sankaku.Shape;
 
         /**
-         * @method radius
-         * @return {number}
-         */
-        p.radius = function () {
-            var bounding = this.bounding(),
-                a = bounding.a,
-                c = bounding.c;
-
-            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
-        };
-
-        /**
          * @method clone
          * @return {Shape}
          */
@@ -2620,6 +2660,18 @@ Sankaku.version = "0.2.3";
         };
 
         /**
+         * @method radius
+         * @return {number}
+         */
+        p.radius = function () {
+            var bounding = this.bounding(),
+                a = bounding.a,
+                c = bounding.c;
+
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
+        };
+
+        /**
          * @method setBorder
          * @param {number} line
          * @param {string} color hex
@@ -2633,20 +2685,6 @@ Sankaku.version = "0.2.3";
                 setLine: line,
                 rgb: rgb
             };
-
-            return this;
-        };
-
-        /**
-         * @method setColor
-         * @param {String} hex
-         * @return {Shape}
-         */
-        p.setColor = function ( hex ) {
-            this._color = hex;
-
-            this._rgb = Iro.hex2rgb( hex );
-            this._rgb.a = this._alpha;
 
             return this;
         };

@@ -1013,103 +1013,6 @@
             "file": "_build_tool/delaunay/src/display/Object2D.js",
             "line": 115,
             "itemtype": "method",
-            "name": "setAlpha",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Shape"
-            },
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 129,
-            "itemtype": "method",
-            "name": "setPosition",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "",
-                    "type": "Vector2D"
-                }
-            ],
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 139,
-            "itemtype": "method",
-            "name": "position",
-            "return": {
-                "description": "",
-                "type": "Vector2D"
-            },
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 147,
-            "itemtype": "method",
-            "name": "setX",
-            "params": [
-                {
-                    "name": "x",
-                    "description": "",
-                    "type": "Number"
-                }
-            ],
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 156,
-            "itemtype": "method",
-            "name": "setY",
-            "params": [
-                {
-                    "name": "y",
-                    "description": "",
-                    "type": "Number"
-                }
-            ],
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 165,
-            "itemtype": "method",
-            "name": "bounding",
-            "return": {
-                "description": "{a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}",
-                "type": "Object"
-            },
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 283,
-            "description": "角度を degree を元に radian 設定します",
-            "itemtype": "method",
-            "name": "rotate",
-            "params": [
-                {
-                    "name": "degree",
-                    "description": "0 ~ 360",
-                    "type": "Number"
-                }
-            ],
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 292,
-            "itemtype": "method",
             "name": "clone",
             "return": {
                 "description": "",
@@ -1119,7 +1022,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 300,
+            "line": 123,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -1132,7 +1035,138 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 319,
+            "line": 143,
+            "itemtype": "method",
+            "name": "setColor",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 157,
+            "itemtype": "method",
+            "name": "setAlpha",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 171,
+            "itemtype": "method",
+            "name": "setPosition",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 184,
+            "itemtype": "method",
+            "name": "position",
+            "return": {
+                "description": "",
+                "type": "Vector2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 192,
+            "itemtype": "method",
+            "name": "setX",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 204,
+            "itemtype": "method",
+            "name": "setY",
+            "params": [
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 216,
+            "itemtype": "method",
+            "name": "bounding",
+            "return": {
+                "description": "{a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}",
+                "type": "Object"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 334,
+            "description": "角度を degree を元に radian 設定します",
+            "itemtype": "method",
+            "name": "setRotate",
+            "params": [
+                {
+                    "name": "degree",
+                    "description": "0 ~ 360",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 347,
             "description": "point が bounding box 内か外かを調べます",
             "params": [
                 {
@@ -1149,7 +1183,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 344,
+            "line": 372,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1159,11 +1193,15 @@
                     "type": "*|Object2D"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
             "class": "Object2D"
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 371,
+            "line": 402,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1173,11 +1211,15 @@
                     "type": "*|Object2D"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
             "class": "Object2D"
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 397,
+            "line": 431,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1187,11 +1229,15 @@
                     "type": "CanvasRenderingContext2D"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
             "class": "Object2D"
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 418,
+            "line": 455,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1203,6 +1249,47 @@
             ],
             "access": "protected",
             "tagname": "",
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 465,
+            "itemtype": "method",
+            "name": "swap",
+            "params": [
+                {
+                    "name": "o1",
+                    "description": "置き換え先",
+                    "type": "Object2D"
+                },
+                {
+                    "name": "o2",
+                    "description": "対象ターゲット",
+                    "type": "Object2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 482,
+            "itemtype": "method",
+            "name": "highest",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "ターゲットオブジェクト",
+                    "type": "Object2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
             "class": "Object2D"
         },
         {
@@ -1312,21 +1399,21 @@
             "file": "_build_tool/delaunay/src/display/Shape.js",
             "line": 108,
             "itemtype": "method",
-            "name": "radius",
+            "name": "clone",
             "return": {
                 "description": "",
-                "type": "Number"
+                "type": "Shape"
             },
             "class": "Shape"
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 120,
+            "line": 132,
             "itemtype": "method",
-            "name": "clone",
+            "name": "radius",
             "return": {
                 "description": "",
-                "type": "Shape"
+                "type": "Number"
             },
             "class": "Shape"
         },
@@ -1357,24 +1444,6 @@
             "file": "_build_tool/delaunay/src/display/Shape.js",
             "line": 162,
             "itemtype": "method",
-            "name": "setColor",
-            "params": [
-                {
-                    "name": "hex",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Shape"
-            },
-            "class": "Shape"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 176,
-            "itemtype": "method",
             "name": "setMode",
             "params": [
                 {
@@ -1391,7 +1460,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 185,
+            "line": 171,
             "itemtype": "method",
             "name": "mode",
             "return": {
@@ -1402,7 +1471,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 193,
+            "line": 179,
             "itemtype": "method",
             "name": "setLine",
             "params": [
@@ -1420,7 +1489,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 203,
+            "line": 189,
             "itemtype": "method",
             "name": "line",
             "return": {
@@ -1431,7 +1500,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 211,
+            "line": 197,
             "itemtype": "method",
             "name": "_draw",
             "access": "protected",
@@ -1447,7 +1516,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 234,
+            "line": 220,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -1466,7 +1535,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 247,
+            "line": 233,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -1490,7 +1559,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 262,
+            "line": 248,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -4360,7 +4429,7 @@
         },
         {
             "message": "Missing item type\npoint が bounding box 内か外かを調べます",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:319"
+            "line": " _build_tool/delaunay/src/display/Object2D.js:347"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 14:03\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

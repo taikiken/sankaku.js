@@ -240,18 +240,6 @@
         p.constructor = Sankaku.Shape;
 
         /**
-         * @method radius
-         * @return {number}
-         */
-        p.radius = function () {
-            var bounding = this.bounding(),
-                a = bounding.a,
-                c = bounding.c;
-
-            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
-        };
-
-        /**
          * @method clone
          * @return {Shape}
          */
@@ -276,6 +264,18 @@
         };
 
         /**
+         * @method radius
+         * @return {number}
+         */
+        p.radius = function () {
+            var bounding = this.bounding(),
+                a = bounding.a,
+                c = bounding.c;
+
+            return new Vector2D( a.x, a.y ).distance( new Vector2D( c.x, c.y ) ) * 0.5;
+        };
+
+        /**
          * @method setBorder
          * @param {number} line
          * @param {string} color hex
@@ -289,20 +289,6 @@
                 setLine: line,
                 rgb: rgb
             };
-
-            return this;
-        };
-
-        /**
-         * @method setColor
-         * @param {String} hex
-         * @return {Shape}
-         */
-        p.setColor = function ( hex ) {
-            this._color = hex;
-
-            this._rgb = Iro.hex2rgb( hex );
-            this._rgb.a = this._alpha;
 
             return this;
         };

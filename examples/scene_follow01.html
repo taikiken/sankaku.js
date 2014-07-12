@@ -158,39 +158,41 @@ body {
         hurdle();
 
         var rect = size(),
-            speed = 5,
+            speed = 3,
             i, flock;
 
         vehicle = new Sankaku.FollowPath();
         vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
-        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
+//        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
         vehicle.setPadding( -100 );
-        vehicle.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+        vehicle.setSpeed( Sankaku.Num.random( 80, 150 ) * 0.1 );
 //        vehicle.setMass( 0.5 + Math.random() * 0.5 );
         vehicle.view().setColor( "#ff0000" );
 //        vehicle.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
-        vehicle.setAvoidDistance( vehicle.speed() * vehicle.speed() );
+        vehicle.setAvoidDistance( vehicle.speed() * 3 );
+        vehicle.setMass( vehicle.speed() * 0.2 );
 
 
         v2 = new Sankaku.FollowPath();
         v2.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 + 30 ) );
-        v2.setBehavior( Sankaku.Vehicle.WRAP );
+//        v2.setBehavior( Sankaku.Vehicle.WRAP );
         v2.setPadding( -100 );
-        v2.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+        v2.setSpeed( Sankaku.Num.random( 80, 150 ) * 0.1 );
 //        v2.setMass( 0.5 + Math.random() * 0.5 );
         v2.view().setColor( "#00ff00" );
 //        v2.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
-        v2.setAvoidDistance( v2.speed() * v2.speed() );
+        v2.setAvoidDistance( v2.speed() * 3 );
+        v2.setMass( vehicle.speed() * 0.2 );
 
         v3 = new Sankaku.FollowPath();
         v3.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 + 60 ) );
-        v3.setBehavior( Sankaku.Vehicle.WRAP );
+//        v3.setBehavior( Sankaku.Vehicle.WRAP );
         v3.setPadding( -100 );
-        v3.setSpeed( Sankaku.Num.random( 100, 110 ) * 0.1 );
+        v3.setSpeed( Sankaku.Num.random( 80, 150 ) * 0.1 );
 //        v3.setMass( 0.5 + Math.random() * 0.5 );
         v3.view().setColor( "#0000ff" );
 //        v3.setAvoidDistance( Sankaku.Num.random( 10, 60 ) );
-        v3.setAvoidDistance( v3.speed() * v3.speed() );
+        v3.setMass( vehicle.speed() * 0.2 );
 
         scene.add( vehicle );
         scene.add( v2 );

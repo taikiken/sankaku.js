@@ -97,13 +97,13 @@ body {
         var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
 
 //        square.scale = sin;
-//        square.rotate( rotation );
+//        square.setRotate( rotation );
 
 //        tripod.scale = sin;
-//        tripod.rotate( rotation );
+//        tripod.setRotate( rotation );
 
 //        star.scale = sin;
-//        star.rotate( rotation );
+//        star.setRotate( rotation );
 
 //        square.draw( ctx );
 
@@ -149,7 +149,7 @@ body {
         scene = new Sankaku.Scene();
 
         square = new Sankaku.Shape( 200, 200, 100, 200, "#ff0000" );
-        square.rotate( 90 );
+        square.setRotate( 90 );
 
         tripod = new Sankaku.Tripod( 50, 100, 100, 100, "#ffffff" );
 

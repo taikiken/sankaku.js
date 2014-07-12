@@ -319,7 +319,7 @@ body {
             pursuer.height *= 0.4;
             pursuer.setBehavior( Sankaku.Vehicle.WRAP );
 //            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
-            pursuer.view().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) );
+            pursuer.view().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( Math.random() * 0xffffff ) ).setAlpha( 0.5 );
 
             pursuers.push( pursuer );
         }

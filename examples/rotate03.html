@@ -103,7 +103,7 @@ body {
         for ( i = 0, limit = squares.length; i < limit; i++ ) {
             square = squares[ i ];
             square.scale = sin;
-            square.rotate( rotation );
+            square.setRotate( rotation );
         }
 
         zanzo.add( squares );
@@ -172,7 +172,7 @@ body {
             for ( i = 0; i < sw; i++ ) {
 
                 square = new Sankaku.Shape( c + w * i, c + w * h, w, w, "#ffff00" );
-                square.rotate( rotation );
+                square.setRotate( rotation );
 
                 if ( he ) {
                     if ( i % 2 ) {
