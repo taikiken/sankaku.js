@@ -100,7 +100,7 @@
                 i, angle, r;
 
             ctx.beginPath();
-            console.log( 'STAR', rotation );
+
             for ( i = 0; i <= limit; ++i ) {
 
                 angle = i * step - ninety + rotation;

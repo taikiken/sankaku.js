@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>_build_tool/delaunay/src/display/Circle.js</title>
+    <title>_build_tool/delaunay/src/render/Inside.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -128,14 +128,14 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: _build_tool/delaunay/src/display/Circle.js</h1>
+                        <h1 class="file-heading">File: _build_tool/delaunay/src/render/Inside.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/06/25 - 16:22
+ * date 2014/07/13 - 17:32
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -147,101 +147,31 @@
 ( function ( window ){
     &quot;use strict&quot;;
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape
+        Scene = Sankaku.Scene
     ;
 
-    Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2,
-            _sin = Math.sin,
-            _cos = Math.cos,
-            _pow = Math.pow;
-
-        /**
-         * @class Circle
-         * @extends Shape
-         * @param {number} x
-         * @param {number} y
-         * @param {number=20} [radius]
-         * @param {string} [color] default #000000
-         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
-         * @constructor
-         */
-        function Circle ( x, y, radius, color, fill ) {
-            Shape.call( this, x, y, radius * 2, radius * 2, color, fill );
-
-            this._radius = radius || this.width;
+    Sankaku.Inside = ( function (){
+        // @class Inside
+        function Inside ( scene ) {
+            this._scene = scene;
+            this._contains = [];
         }
 
-        Sankaku.extend( Shape, Circle );
+        var p = Inside.prototype;
 
-        var p = Circle.prototype;
+        p.constructor = Sankaku.Inside;
 
-        p.constructor = Sankaku.Circle;
+        p.check = function ( v ) {
+            var contains = this._contains;
+            contains.length = 0;
 
-        /**
-         * @method getRadius
-         * @return {number}
-         */
-        p.radius = function () {
-            return this._radius;
+            contains = this._scene.inside( v, contains );
+
+//            console.log( &quot;contains&quot;, contains );
+            return contains.reverse();
         };
 
-        /**
-         * @method clone
-         * @return {Circle}
-         */
-        p.clone = function () {
-
-            var clone =  new Circle( this.x, this.y, this._radius, this._color, this._fill );
-
-            clone.rotation = this.rotation;
-            clone.scale = this.scale;
-            clone._alpha = this._alpha;
-            clone._rgb = Object.create( this._rgb );
-
-            clone._line = this._line;
-            clone._border = {
-                line: this._border.line,
-                rgb: this._border.rgb
-            };
-
-            return clone;
-        };
-
-        /**
-         * @method paint
-         * @param {CanvasRenderingContext2D} ctx
-         */
-        p.paint = function ( ctx ) {
-            var bounding = this.bounding(),
-                e = bounding.e;
-
-            ctx.beginPath();
-
-            ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
-
-            ctx.closePath();
-        };
-
-        /**
-         * @method _inside
-         * @param {Vector2D} v
-         * @param {Array} contains
-         * @return {Array}
-         * @protected
-         */
-        p._inside = function ( v, contains ) {
-            var r = this._radius;
-
-            if ( _pow( this.x - v.x, 2 ) + _pow( this.y - v.y, 2 ) &lt; r * r ) {
-                // inside
-                contains.push( this );
-            }
-
-            return contains;
-        };
-
-        return Circle;
+        return Inside;
     }() );
 }( window ) );
     </pre>

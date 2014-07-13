@@ -78,7 +78,7 @@
 
             /**
              * @property scene
-             * @type {*|Object2D}
+             * @type {*|null|Scene|Object2D}
              */
             this.scene = null;
             /**
@@ -135,6 +135,8 @@
             clone.parent = parent && parent.clone();
 
             clone._alpha = this._alpha;
+            clone.visible = this.visible;
+            clone.children = this.children.splice();
             clone.setColor( this._color );
 
             return clone;
@@ -239,7 +241,7 @@
                 bx,
                 cy,
                 sin, cos,
-                r,
+                xd, yd,
 
                 cos_ax,
                 cos_ay,
@@ -249,7 +251,7 @@
                 cos_cy,
                 sin_bx,
                 sin_cy,
-                parent_bounding;
+                my_bounding;
 
             e = {
                 scale: this.scale,
@@ -260,8 +262,10 @@
 
             if ( !!parent && this.scene !== parent ) {
                 // not scene
-                x = parent.x + x * parent.scale;
-                y = parent.y + y * parent.scale;
+//                x = parent.x + x * parent.scale;
+//                y = parent.y + y * parent.scale;
+                x = x * parent.scale;
+                y = y * parent.scale;
 
                 w1 = this.width * parent.scale;
                 h1 = this.height * parent.scale;
@@ -271,10 +275,12 @@
 
                 rotation = parent.rotation + this.rotation;
 
-//                r = new Vector2D( parent.x, parent.y ).distance( new Vector2D( x, y ) ) * 0.5;
-//                x = x + _cos( parent.rotation ) * r;
-//                y = y + _sin( parent.rotation ) * r;
-                console.log( "rotation ", parent.rotation ,this.rotation );
+                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
+                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+
+                x = xd;
+                y = yd;
+
                 e.scale = parent.scale * this.scale;
                 e.rotation = rotation;
             }
@@ -309,34 +315,13 @@
             c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
             d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
 
-            e.x = ( a.x + c.x ) * 0.5;
-            e.y = ( a.y + c.y ) * 0.5;
+            e.x = x;
+            e.y = y;
 
-            return { a: a, b: b, c: c, d:d, e: e };
+            my_bounding = { a: a, b: b, c: c, d:d, e: e };
+            this._bounding = my_bounding;
 
-//            if ( !!parent && this.scene !== parent ) {
-//                parent_bounding = parent.bounding();
-//                a.x += parent_bounding.a.x;
-//                a.y += parent_bounding.a.y;
-//
-//                b.x += parent_bounding.b.x;
-//                b.y += parent_bounding.b.y;
-//
-//                c.x += parent_bounding.c.x;
-//                c.y += parent_bounding.c.y;
-//
-//                d.x += parent_bounding.d.x;
-//                d.y += parent_bounding.d.y;
-//
-//            }
-//            return { a: a, b: b, c: c, d:d };
-        };
-
-        p.localBounding = function () {
-            var parent_bounding = this.parent.bounding(),
-
-                pa, pb, pc, pd;
-
+            return my_bounding;
         };
 
         /**
@@ -351,42 +336,16 @@
             return this;
         };
 
-        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
-        /**
-         * point が bounding box 内か外かを調べます
-         * @param {Vector2D} v 調べるpoint
-         * @return {boolean} true: inside, false: outside
-         */
-        p.inside = function ( v ) {
-
-            function area ( A, B, C ) {
-                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
-            }
-
-            var bounding = this.bounding();
-
-            if (
-                area( bounding.a, v ) > 0 ||
-                area( bounding.b, v ) > 0 ||
-                area( bounding.c, v ) > 0
-                ) {
-                // outside
-                return false;
-            }
-            // inside
-            return true;
-        };
-
         /**
          * @method add
-         * @param {*|Object2D} target
-         * @return {Object2D}
+         * @param {Object2D} target
+         * @return {*|Object2D}
          */
         p.add = function ( target ) {
 
             if ( target === this ) {
 
-                return;
+                return this;
             }
 
             if ( !!target.parent ) {
@@ -442,7 +401,11 @@
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
-            this._draw( ctx );
+
+            if ( this.visible && this._alpha > 0 ) {
+                // visible true && alpha not 0
+                this._draw( ctx );
+            }
 
             var children = this.children,
                 child,
@@ -452,10 +415,7 @@
 
                 child = children[ i ];
 
-                if ( child.visible && child.alpha() > 0 ) {
-                    // visible && alpha not 0
-                    children[ i ].draw( ctx );
-                }
+                children[ i ].draw( ctx );
             }
 
             return this;
@@ -467,6 +427,68 @@
          */
         p._draw = function ( ctx ) {
 
+        };
+
+        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
+        /**
+         * point が bounding box 内か外かを調べます
+         * @param {Vector2D} v 調べるpoint
+         * @param {Array} 結果を格納する
+         * @return {Array} inside の時は contains へthisを格納し返します
+         */
+        p.inside = function ( v, contains ) {
+            if ( this.visible ) {
+                // visible true && alpha not 0
+                contains = this._inside( v, contains );
+            }
+
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                contains = children[ i ].inside( v, contains );
+            }
+
+            return contains;
+        };
+
+        /**
+         * @method _area
+         * @param {Object|Vector2D} A
+         * @param {Object|Vector2D} B
+         * @param {Object|Vector2D} C
+         * @return {number}
+         * @protected
+         */
+        p._area = function ( A, B, C ) {
+            return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var bounding = this.bounding();
+
+            if (
+                    this._area( bounding.a, bounding.b, v ) > 0 ||
+                    this._area( bounding.b, bounding.c, v ) > 0 ||
+                    this._area( bounding.c, bounding.d, v ) > 0 ||
+                    this._area( bounding.d, bounding.a, v ) > 0
+                ) {
+                // outside
+                return contains;
+            } else {
+
+                contains.push( this );
+            }
+            // inside
+            return contains;
         };
 
         // children index change

@@ -19,7 +19,8 @@
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
             _sin = Math.sin,
-            _cos = Math.cos;
+            _cos = Math.cos,
+            _pow = Math.pow;
 
         /**
          * @class Circle
@@ -32,7 +33,7 @@
          * @constructor
          */
         function Circle ( x, y, radius, color, fill ) {
-            Shape.call( this, x, y, radius, radius, color, fill );
+            Shape.call( this, x, y, radius * 2, radius * 2, color, fill );
 
             this._radius = radius || this.width;
         }
@@ -79,25 +80,31 @@
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
-                e = bounding.e,
-                rotation = e.rotation,
-                radius = this._radius,
-
-                sin, cos,
-                x, y;
-
-//            sin = _sin( rotation );
-//            cos = _cos( rotation );
-//
-//            x = cos * ( e.x + this.x );
-//            y = cos * ( e.x + this.x );
+                e = bounding.e;
 
             ctx.beginPath();
 
-//            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
             ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var r = this._radius;
+
+            if ( _pow( this.x - v.x, 2 ) + _pow( this.y - v.y, 2 ) < r * r ) {
+                // inside
+                contains.push( this );
+            }
+
+            return contains;
         };
 
         return Circle;

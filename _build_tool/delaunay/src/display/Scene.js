@@ -12,11 +12,8 @@
  */
 ( function ( window ){
     "use strict";
-    var document = window.document,
-
-        Sankaku = window.Sankaku,
-        Object2D = Sankaku.Object2D
-    ;
+    var Sankaku = window.Sankaku,
+        Object2D = Sankaku.Object2D;
 
     Sankaku.Scene = ( function (){
         /**
@@ -37,7 +34,7 @@
 
         /**
          * @method addChild
-         * @param {*|Object2D} target
+         * @param {Object2D} target
          */
         p.addChild = function ( target ) {
             target.scene = this;
@@ -48,6 +45,25 @@
          */
         p.removeChild = function ( target ) {
             target.scene = null;
+        };
+
+        /**
+         * point が bounding box 内か外かを調べます
+         * <br>Sceneはinsideを調べません
+         * @param {Vector2D} v 調べるpoint
+         * @param {Array} 結果を格納する
+         * @return {Array} inside の時は contains へthisを格納し返します
+         */
+        p.inside = function ( v, contains ) {
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                contains = children[ i ].inside( v, contains );
+            }
+
+            return contains;
         };
 
         return Scene;

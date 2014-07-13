@@ -109,6 +109,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "_build_tool/delaunay/src/render/Inside.js": {
+            "name": "_build_tool/delaunay/src/render/Inside.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/render/Zanzo.js": {
             "name": "_build_tool/delaunay/src/render/Zanzo.js",
             "modules": {},
@@ -263,7 +270,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 24,
+            "line": 25,
             "extends": "Shape",
             "params": [
                 {
@@ -323,7 +330,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 22,
+            "line": 19,
             "is_constructor": 1
         },
         "Shape": {
@@ -860,7 +867,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 46,
+            "line": 47,
             "itemtype": "method",
             "name": "getRadius",
             "return": {
@@ -871,7 +878,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 54,
+            "line": 55,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -882,7 +889,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 76,
+            "line": 77,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -892,6 +899,31 @@
                     "type": "CanvasRenderingContext2D"
                 }
             ],
+            "class": "Circle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Circle.js",
+            "line": 92,
+            "itemtype": "method",
+            "name": "_inside",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "contains",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "access": "protected",
+            "tagname": "",
             "class": "Circle"
         },
         {
@@ -971,7 +1003,7 @@
             "line": 79,
             "itemtype": "property",
             "name": "scene",
-            "type": "{*|Object2D}",
+            "type": "{*|null|Scene|Object2D}",
             "class": "Object2D"
         },
         {
@@ -1035,7 +1067,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 143,
+            "line": 145,
             "itemtype": "method",
             "name": "setColor",
             "params": [
@@ -1053,13 +1085,24 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 157,
+            "line": 159,
+            "itemtype": "method",
+            "name": "rgba",
+            "return": {
+                "description": "",
+                "type": "Object|*|Object2D._rgb"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 167,
             "itemtype": "method",
             "name": "setAlpha",
             "params": [
                 {
                     "name": "n",
-                    "description": "",
+                    "description": "0 ~ 1",
                     "type": "Number"
                 }
             ],
@@ -1071,7 +1114,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 171,
+            "line": 181,
             "itemtype": "method",
             "name": "setPosition",
             "params": [
@@ -1089,7 +1132,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 184,
+            "line": 194,
             "itemtype": "method",
             "name": "position",
             "return": {
@@ -1100,7 +1143,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 192,
+            "line": 202,
             "itemtype": "method",
             "name": "setX",
             "params": [
@@ -1118,7 +1161,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 204,
+            "line": 214,
             "itemtype": "method",
             "name": "setY",
             "params": [
@@ -1136,7 +1179,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 216,
+            "line": 226,
             "itemtype": "method",
             "name": "bounding",
             "return": {
@@ -1147,7 +1190,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 334,
+            "line": 327,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "setRotate",
@@ -1166,42 +1209,25 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 347,
-            "description": "point が bounding box 内か外かを調べます",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "調べるpoint",
-                    "type": "Vector2D"
-                }
-            ],
-            "return": {
-                "description": "true: inside, false: outside",
-                "type": "Boolean"
-            },
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 372,
+            "line": 339,
             "itemtype": "method",
             "name": "add",
             "params": [
                 {
                     "name": "target",
                     "description": "",
-                    "type": "*|Object2D"
+                    "type": "Object2D"
                 }
             ],
             "return": {
                 "description": "",
-                "type": "Object2D"
+                "type": "*|Object2D"
             },
             "class": "Object2D"
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 402,
+            "line": 369,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1219,7 +1245,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 431,
+            "line": 398,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1237,7 +1263,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 455,
+            "line": 423,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1253,7 +1279,84 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 465,
+            "line": 433,
+            "description": "point が bounding box 内か外かを調べます",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "調べるpoint",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "結果を格納する",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "inside の時は contains へthisを格納し返します",
+                "type": "Array"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 456,
+            "itemtype": "method",
+            "name": "_area",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "",
+                    "type": "Object|Vector2D"
+                },
+                {
+                    "name": "B",
+                    "description": "",
+                    "type": "Object|Vector2D"
+                },
+                {
+                    "name": "C",
+                    "description": "",
+                    "type": "Object|Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "access": "protected",
+            "tagname": "",
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 468,
+            "itemtype": "method",
+            "name": "_inside",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "contains",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "access": "protected",
+            "tagname": "",
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 495,
             "itemtype": "method",
             "name": "swap",
             "params": [
@@ -1276,7 +1379,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 482,
+            "line": 512,
             "itemtype": "method",
             "name": "highest",
             "params": [
@@ -1300,9 +1403,23 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 38,
+            "line": 35,
             "itemtype": "method",
             "name": "addChild",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "",
+                    "type": "Object2D"
+                }
+            ],
+            "class": "Scene"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Scene.js",
+            "line": 42,
+            "itemtype": "method",
+            "name": "removeChild",
             "params": [
                 {
                     "name": "target",
@@ -1314,16 +1431,24 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 45,
-            "itemtype": "method",
-            "name": "removeChild",
+            "line": 50,
+            "description": "point が bounding box 内か外かを調べます\n<br>Sceneはinsideを調べません",
             "params": [
                 {
-                    "name": "target",
+                    "name": "v",
+                    "description": "調べるpoint",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "結果を格納する",
                     "description": "",
-                    "type": "*|Object2D"
+                    "type": "Array"
                 }
             ],
+            "return": {
+                "description": "inside の時は contains へthisを格納し返します",
+                "type": "Array"
+            },
             "class": "Scene"
         },
         {
@@ -1642,6 +1767,31 @@
                     "type": "CanvasRenderingContext2D"
                 }
             ],
+            "class": "Tripod"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Tripod.js",
+            "line": 86,
+            "itemtype": "method",
+            "name": "_inside",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                },
+                {
+                    "name": "contains",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "access": "protected",
+            "tagname": "",
             "class": "Tripod"
         },
         {
@@ -2930,6 +3080,12 @@
                 "type": "Number"
             },
             "class": "Vector2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/render/Inside.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/13 - 17:32\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Zanzo"
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
@@ -4429,11 +4585,15 @@
         },
         {
             "message": "Missing item type\npoint が bounding box 内か外かを調べます",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:347"
+            "line": " _build_tool/delaunay/src/display/Object2D.js:433"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/05 - 14:03\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/display/Scene.js:1"
+        },
+        {
+            "message": "Missing item type\npoint が bounding box 内か外かを調べます\n<br>Sceneはinsideを調べません",
+            "line": " _build_tool/delaunay/src/display/Scene.js:50"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/25 - 12:19\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -4466,6 +4626,10 @@
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 17:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/geom/Vector2D.js:1"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/13 - 17:32\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/render/Inside.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/03 - 11:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

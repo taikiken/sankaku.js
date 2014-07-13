@@ -45,10 +45,10 @@ body {
         canvas = document.getElementById( "canvas"),
         ctx = canvas.getContext( "2d"),
 
-        vehicle,
         scene,
+        inside,
 
-        flocks = [],
+        targets = [],
         zanzo,
 
         square,
@@ -64,9 +64,6 @@ body {
         jams = [],
         debug_mode = false;
 
-    // zanzo
-    zanzo = new Sankaku.Zanzo( 3 );
-//    zanzo = new Sankaku.Zanzo( 1 );
 
     function size () {
         ww = document.body.clientWidth;
@@ -87,32 +84,33 @@ body {
         return { w: canvas.width, h: canvas.height };
     }
 
-    function draw ( rect ) {
-        rotation += step;
-        if ( rotation >= 360 ) {
+    function onDown ( e ) {
+//        console.log( e.clientX, e.clientY );
+//        console.log( canvas.offsetLeft, canvas.offsetTop );
 
-            var sub = 360 - rotation;
-            rotation = sub;
+        var v = new Sankaku.Vector2D( e.clientX + canvas.offsetLeft, e.clientY + canvas.offsetTop ),
+            contains = inside.check( v );
+
+        if ( contains.length > 0 ) {
+            contains[ 0 ].setColor( "#ff0000" );
         }
-        var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
-
-        square.scale = sin;
-        square.setRotate( rotation );
-
-//        tripod.scale = sin;
-//        tripod.setRotate( rotation );
-
-//        star.scale = sin;
-//        star.setRotate( rotation );
-
-//        square.draw( ctx );
-
-//        var x = square.x;
-//        square.setX( x +5 );
-        scene.draw( ctx );
     }
 
-    var clear = 0;
+    function onUp () {
+        var children = scene.children,
+            i, limit;
+
+        for ( i = 0, limit = children.length; i < limit; i++ ) {
+            children[ i ].setColor( "#ffffff" );
+        }
+    }
+
+    canvas.addEventListener( "mousedown", onDown, false );
+    canvas.addEventListener( "mouseup", onUp, false );
+
+    function draw ( rect ) {
+        scene.draw( ctx );
+    }
 
     function loop () {
         requestAnimationFrame( loop );
@@ -148,35 +146,19 @@ body {
 
         scene = new Sankaku.Scene();
 
-        var c = new Sankaku.Circle( 200, 200, 100, "#ff0000" );
-        square = new Sankaku.Shape( 200, 200, 100, 200, "#ff0000" );
-        square.setRotate( 45 );
+        var c1 = new Sankaku.Circle( 200, 200, 50, "#ffffff" );
+        var c2 = new Sankaku.Circle( 400, 200, 50, "#ffffff" );
+        var c3 = new Sankaku.Circle( 600, 200, 50, "#ffffff" );
+        c1.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+        c2.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+        c3.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
 
-        tripod = new Sankaku.Tripod( 50, 100, 100, 100, "#ffffff" );
+        scene.add( c1 );
+        scene.add( c2 );
+        scene.add( c3 );
 
-        star = new Sankaku.Star( 50, 100, 30, "#ffff00", null, 5 );
-        var star2 = new Sankaku.Star( 250, 300, 30, "#ff0000", null, 5 );
-        var circle = new Sankaku.Circle( 50, 100, 30, "#ff00ff" );
-        circle.setAlpha( 0.25 ).setMode( Sankaku.Shape.FILL );
+        inside = new Sankaku.Inside( scene );
 
-        var circle2 = new Sankaku.Circle( 250, 300, 30, "#ff00cc" );
-//        circle2.setMode( Sankaku.Shape.FILL );
-
-        square.add( tripod );
-        square.add( star );
-        square.add( circle );
-
-        scene.add( c );
-        scene.add( square );
-        scene.add( circle2 );
-        scene.add( star2 );
-
-
-//        console.log( "tripod",  tripod.parent, tripod.parent instanceof Sankaku.Scene );
-
-//        zanzo.add( [square] );
-
-//        ctx.globalAlpha = 0.35;
         loop();
     }
 

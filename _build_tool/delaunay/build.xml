@@ -3,7 +3,7 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
-    <property name="version" value="0.2.3"/>
+    <property name="version" value="0.2.4"/>
 
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>
@@ -60,6 +60,7 @@
             <file name="vehicle/FollowPath.js"/>
 
             <file name="render/Zanzo.js"/>
+            <file name="render/Inside.js"/>
 
         </filelist>
 

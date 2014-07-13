@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - mouse interaction | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+</style>
+<script type="text/javascript" src="libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        scene,
+        inside,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        target,
+        offset;
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function onMove ( e ) {
+        var v;
+
+        if ( !!target ) {
+
+            v = new Sankaku.Vector2D( e.clientX + canvas.offsetLeft, e.clientY + canvas.offsetTop );
+            target.setX( v.x - offset.x );
+            target.setY( v.y - offset.y );
+        }
+    }
+
+    function onDown ( e ) {
+        var v = new Sankaku.Vector2D( e.clientX + canvas.offsetLeft, e.clientY + canvas.offsetTop ),
+            contains = inside.check( v );
+
+        if ( contains.length > 0 ) {
+
+            target = contains[ 0 ];
+            target.setColor( "#6cbad3" );
+
+            offset = {
+                x: v.x - target.x,
+                y: v.y - target.y
+            };
+
+            scene.highest( target );
+            canvas.addEventListener( "mousemove", onMove, false );
+            canvas.addEventListener( "mouseout", onUp, false );
+            document.body.style.cssText = "cursor: move";
+        }
+    }
+
+    function onUp () {
+        var children = scene.children,
+            i, limit;
+
+        for ( i = 0, limit = children.length; i < limit; i++ ) {
+            children[ i ].setColor( "#ffffff" );
+        }
+
+        canvas.removeEventListener( "mousemove", onDown );
+        canvas.removeEventListener( "mouseout", onUp );
+        target = null;
+        document.body.style.cssText = "cursor: auto";
+    }
+
+    canvas.addEventListener( "mousedown", onDown, false );
+    canvas.addEventListener( "mouseup", onUp, false );
+
+    function draw () {
+        scene.draw( ctx );
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw();
+    }
+
+    function init () {
+        var rect = size();
+
+        scene = new Sankaku.Scene();
+
+        var c1 = new Sankaku.Shape( rect.w * 0.5, 60, 60, 60, "#ffffff" );
+        var c2 = new Sankaku.Tripod( rect.w * 0.5, 160, 60, 60, "#ffffff" );
+        var c3 = new Sankaku.Circle( rect.w * 0.5, 260, 30, "#ffffff" );
+        c1.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL ).setRotate( 45 );
+        c2.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL ).setRotate( -90 );
+        c3.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+
+        scene.add( c1 );
+        scene.add( c2 );
+        scene.add( c3 );
+
+        inside = new Sankaku.Inside( scene );
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

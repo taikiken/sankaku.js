@@ -210,11 +210,42 @@
             // triangle
             ctx.moveTo( a.x, a.y );
 //            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
-            ctx.lineTo( (b.x + c.x) * 0.5, ( b.y + c.y)  * 0.5 );
+            ctx.lineTo( ( b.x + c.x ) * 0.5, ( b.y + c.y )  * 0.5 );
             ctx.lineTo( d.x, d.y );
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var bounding = this.bounding(),
+                b = bounding.b,
+                c = bounding.c,
+                p = {
+                    x: ( b.x + c.x ) * 0.5,
+                    y: ( b.y + c.y ) * 0.5
+                };
+
+            if (
+                this._area( bounding.a, p, v ) &gt; 0 ||
+                this._area( p, bounding.d, v ) &gt; 0 ||
+                this._area( bounding.d, bounding.a, v ) &gt; 0
+                ) {
+                // outside
+                return contains;
+            } else {
+
+                contains.push( this );
+            }
+            // inside
+            return contains;
         };
 
         return Tripod;

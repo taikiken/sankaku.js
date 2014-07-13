@@ -2053,7 +2053,7 @@ Sankaku.version = "0.2.3";
 
             /**
              * @property scene
-             * @type {*|Object2D}
+             * @type {*|null|Scene|Object2D}
              */
             this.scene = null;
             /**
@@ -2110,6 +2110,8 @@ Sankaku.version = "0.2.3";
             clone.parent = parent && parent.clone();
 
             clone._alpha = this._alpha;
+            clone.visible = this.visible;
+            clone.children = this.children.splice();
             clone.setColor( this._color );
 
             return clone;
@@ -2130,8 +2132,16 @@ Sankaku.version = "0.2.3";
         };
 
         /**
+         * @method rgba
+         * @return {Object|*|Object2D._rgb}
+         */
+        p.rgba = function () {
+            return this._rgb;
+        };
+
+        /**
          * @method setAlpha
-         * @param {Number} n
+         * @param {Number} n 0 ~ 1
          * @return {Object2D}
          */
         p.setAlpha = function ( n ) {
@@ -2206,7 +2216,7 @@ Sankaku.version = "0.2.3";
                 bx,
                 cy,
                 sin, cos,
-                r,
+                xd, yd,
 
                 cos_ax,
                 cos_ay,
@@ -2216,7 +2226,7 @@ Sankaku.version = "0.2.3";
                 cos_cy,
                 sin_bx,
                 sin_cy,
-                parent_bounding;
+                my_bounding;
 
             e = {
                 scale: this.scale,
@@ -2227,8 +2237,10 @@ Sankaku.version = "0.2.3";
 
             if ( !!parent && this.scene !== parent ) {
                 // not scene
-                x = parent.x + x * parent.scale;
-                y = parent.y + y * parent.scale;
+//                x = parent.x + x * parent.scale;
+//                y = parent.y + y * parent.scale;
+                x = x * parent.scale;
+                y = y * parent.scale;
 
                 w1 = this.width * parent.scale;
                 h1 = this.height * parent.scale;
@@ -2238,10 +2250,12 @@ Sankaku.version = "0.2.3";
 
                 rotation = parent.rotation + this.rotation;
 
-//                r = new Vector2D( parent.x, parent.y ).distance( new Vector2D( x, y ) ) * 0.5;
-//                x = x + _cos( parent.rotation ) * r;
-//                y = y + _sin( parent.rotation ) * r;
-                console.log( "rotation ", parent.rotation ,this.rotation );
+                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
+                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+
+                x = xd;
+                y = yd;
+
                 e.scale = parent.scale * this.scale;
                 e.rotation = rotation;
             }
@@ -2276,34 +2290,13 @@ Sankaku.version = "0.2.3";
             c = { x: cos_bx - sin_cy + x, y: cos_cy + sin_bx + y };
             d = { x: cos_ax - sin_cy + x, y: cos_cy + sin_ax + y };
 
-            e.x = ( a.x + c.x ) * 0.5;
-            e.y = ( a.y + c.y ) * 0.5;
+            e.x = x;
+            e.y = y;
 
-            return { a: a, b: b, c: c, d:d, e: e };
+            my_bounding = { a: a, b: b, c: c, d:d, e: e };
+            this._bounding = my_bounding;
 
-//            if ( !!parent && this.scene !== parent ) {
-//                parent_bounding = parent.bounding();
-//                a.x += parent_bounding.a.x;
-//                a.y += parent_bounding.a.y;
-//
-//                b.x += parent_bounding.b.x;
-//                b.y += parent_bounding.b.y;
-//
-//                c.x += parent_bounding.c.x;
-//                c.y += parent_bounding.c.y;
-//
-//                d.x += parent_bounding.d.x;
-//                d.y += parent_bounding.d.y;
-//
-//            }
-//            return { a: a, b: b, c: c, d:d };
-        };
-
-        p.localBounding = function () {
-            var parent_bounding = this.parent.bounding(),
-
-                pa, pb, pc, pd;
-
+            return my_bounding;
         };
 
         /**
@@ -2318,42 +2311,16 @@ Sankaku.version = "0.2.3";
             return this;
         };
 
-        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
-        /**
-         * point が bounding box 内か外かを調べます
-         * @param {Vector2D} v 調べるpoint
-         * @return {boolean} true: inside, false: outside
-         */
-        p.inside = function ( v ) {
-
-            function area ( A, B, C ) {
-                return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
-            }
-
-            var bounding = this.bounding();
-
-            if (
-                area( bounding.a, v ) > 0 ||
-                area( bounding.b, v ) > 0 ||
-                area( bounding.c, v ) > 0
-                ) {
-                // outside
-                return false;
-            }
-            // inside
-            return true;
-        };
-
         /**
          * @method add
-         * @param {*|Object2D} target
-         * @return {Object2D}
+         * @param {Object2D} target
+         * @return {*|Object2D}
          */
         p.add = function ( target ) {
 
             if ( target === this ) {
 
-                return;
+                return this;
             }
 
             if ( !!target.parent ) {
@@ -2386,7 +2353,7 @@ Sankaku.version = "0.2.3";
 
             if ( index === -1 ) {
 
-                return;
+                return this;
             }
 
             target.parent = null;
@@ -2409,7 +2376,11 @@ Sankaku.version = "0.2.3";
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
-            this._draw( ctx );
+
+            if ( this.visible && this._alpha > 0 ) {
+                // visible true && alpha not 0
+                this._draw( ctx );
+            }
 
             var children = this.children,
                 child,
@@ -2419,10 +2390,7 @@ Sankaku.version = "0.2.3";
 
                 child = children[ i ];
 
-                if ( child.visible && child.alpha() > 0 ) {
-                    // visible && alpha not 0
-                    children[ i ].draw( ctx );
-                }
+                children[ i ].draw( ctx );
             }
 
             return this;
@@ -2434,6 +2402,68 @@ Sankaku.version = "0.2.3";
          */
         p._draw = function ( ctx ) {
 
+        };
+
+        // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
+        /**
+         * point が bounding box 内か外かを調べます
+         * @param {Vector2D} v 調べるpoint
+         * @param {Array} 結果を格納する
+         * @return {Array} inside の時は contains へthisを格納し返します
+         */
+        p.inside = function ( v, contains ) {
+            if ( this.visible ) {
+                // visible true && alpha not 0
+                contains = this._inside( v, contains );
+            }
+
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                contains = children[ i ].inside( v, contains );
+            }
+
+            return contains;
+        };
+
+        /**
+         * @method _area
+         * @param {Object|Vector2D} A
+         * @param {Object|Vector2D} B
+         * @param {Object|Vector2D} C
+         * @return {number}
+         * @protected
+         */
+        p._area = function ( A, B, C ) {
+            return ( C.x * B.y - B.x * C.y ) - ( C.x * A.y - A.x * C.y ) + ( B.x * A.y - A.x * B.y );
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var bounding = this.bounding();
+
+            if (
+                    this._area( bounding.a, bounding.b, v ) > 0 ||
+                    this._area( bounding.b, bounding.c, v ) > 0 ||
+                    this._area( bounding.c, bounding.d, v ) > 0 ||
+                    this._area( bounding.d, bounding.a, v ) > 0
+                ) {
+                // outside
+                return contains;
+            } else {
+
+                contains.push( this );
+            }
+            // inside
+            return contains;
         };
 
         // children index change
@@ -2487,11 +2517,8 @@ Sankaku.version = "0.2.3";
  */
 ( function ( window ){
     "use strict";
-    var document = window.document,
-
-        Sankaku = window.Sankaku,
-        Object2D = Sankaku.Object2D
-    ;
+    var Sankaku = window.Sankaku,
+        Object2D = Sankaku.Object2D;
 
     Sankaku.Scene = ( function (){
         /**
@@ -2512,7 +2539,7 @@ Sankaku.version = "0.2.3";
 
         /**
          * @method addChild
-         * @param {*|Object2D} target
+         * @param {Object2D} target
          */
         p.addChild = function ( target ) {
             target.scene = this;
@@ -2523,6 +2550,25 @@ Sankaku.version = "0.2.3";
          */
         p.removeChild = function ( target ) {
             target.scene = null;
+        };
+
+        /**
+         * point が bounding box 内か外かを調べます
+         * <br>Sceneはinsideを調べません
+         * @param {Vector2D} v 調べるpoint
+         * @param {Array} 結果を格納する
+         * @return {Array} inside の時は contains へthisを格納し返します
+         */
+        p.inside = function ( v, contains ) {
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                contains = children[ i ].inside( v, contains );
+            }
+
+            return contains;
         };
 
         return Scene;
@@ -2824,7 +2870,8 @@ Sankaku.version = "0.2.3";
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
             _sin = Math.sin,
-            _cos = Math.cos;
+            _cos = Math.cos,
+            _pow = Math.pow;
 
         /**
          * @class Circle
@@ -2837,7 +2884,7 @@ Sankaku.version = "0.2.3";
          * @constructor
          */
         function Circle ( x, y, radius, color, fill ) {
-            Shape.call( this, x, y, radius, radius, color, fill );
+            Shape.call( this, x, y, radius * 2, radius * 2, color, fill );
 
             this._radius = radius || this.width;
         }
@@ -2884,25 +2931,31 @@ Sankaku.version = "0.2.3";
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
-                e = bounding.e,
-                rotation = e.rotation,
-                radius = this._radius,
-
-                sin, cos,
-                x, y;
-
-//            sin = _sin( rotation );
-//            cos = _cos( rotation );
-//
-//            x = cos * ( e.x + this.x );
-//            y = cos * ( e.x + this.x );
+                e = bounding.e;
 
             ctx.beginPath();
 
-//            ctx.arc( this.x, this.y, this._radius * this.scale, 0,  PI2, false);
             ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var r = this._radius;
+
+            if ( _pow( this.x - v.x, 2 ) + _pow( this.y - v.y, 2 ) < r * r ) {
+                // inside
+                contains.push( this );
+            }
+
+            return contains;
         };
 
         return Circle;
@@ -2986,11 +3039,42 @@ Sankaku.version = "0.2.3";
             // triangle
             ctx.moveTo( a.x, a.y );
 //            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
-            ctx.lineTo( (b.x + c.x) * 0.5, ( b.y + c.y)  * 0.5 );
+            ctx.lineTo( ( b.x + c.x ) * 0.5, ( b.y + c.y )  * 0.5 );
             ctx.lineTo( d.x, d.y );
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
+        };
+
+        /**
+         * @method _inside
+         * @param {Vector2D} v
+         * @param {Array} contains
+         * @return {Array}
+         * @protected
+         */
+        p._inside = function ( v, contains ) {
+            var bounding = this.bounding(),
+                b = bounding.b,
+                c = bounding.c,
+                p = {
+                    x: ( b.x + c.x ) * 0.5,
+                    y: ( b.y + c.y ) * 0.5
+                };
+
+            if (
+                this._area( bounding.a, p, v ) > 0 ||
+                this._area( p, bounding.d, v ) > 0 ||
+                this._area( bounding.d, bounding.a, v ) > 0
+                ) {
+                // outside
+                return contains;
+            } else {
+
+                contains.push( this );
+            }
+            // inside
+            return contains;
         };
 
         return Tripod;
@@ -3098,7 +3182,7 @@ Sankaku.version = "0.2.3";
                 i, angle, r;
 
             ctx.beginPath();
-            console.log( 'STAR', rotation );
+
             for ( i = 0; i <= limit; ++i ) {
 
                 angle = i * step - ninety + rotation;
@@ -4442,5 +4526,47 @@ Sankaku.version = "0.2.3";
         };
 
         return Zanzo;
+    }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/13 - 17:32
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Scene = Sankaku.Scene
+    ;
+
+    Sankaku.Inside = ( function (){
+        // @class Inside
+        function Inside ( scene ) {
+            this._scene = scene;
+            this._contains = [];
+        }
+
+        var p = Inside.prototype;
+
+        p.constructor = Sankaku.Inside;
+
+        p.check = function ( v ) {
+            var contains = this._contains;
+            contains.length = 0;
+
+            contains = this._scene.inside( v, contains );
+
+//            console.log( "contains", contains );
+            return contains.reverse();
+        };
+
+        return Inside;
     }() );
 }( window ) );

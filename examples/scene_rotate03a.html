@@ -96,7 +96,7 @@ body {
         }
         var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
 
-        square.scale = sin;
+//        square.scale = sin;
         square.setRotate( rotation );
 
 //        tripod.scale = sin;
@@ -149,14 +149,14 @@ body {
         scene = new Sankaku.Scene();
 
         var c = new Sankaku.Circle( 200, 200, 100, "#ff0000" );
-        square = new Sankaku.Shape( 200, 200, 100, 200, "#ff0000" );
+        square = new Sankaku.Shape( 200, 200, 200, 200, "#ff0000" );
         square.setRotate( 45 );
 
-        tripod = new Sankaku.Tripod( 50, 100, 100, 100, "#ffffff" );
+        tripod = new Sankaku.Tripod( 100, 100, 100, 100, "#ffffff" );
 
-        star = new Sankaku.Star( 50, 100, 30, "#ffff00", null, 5 );
+        star = new Sankaku.Star( 100, 100, 30, "#ffff00", null, 5 );
         var star2 = new Sankaku.Star( 250, 300, 30, "#ff0000", null, 5 );
-        var circle = new Sankaku.Circle( 50, 100, 30, "#ff00ff" );
+        var circle = new Sankaku.Circle( 100, 100, 30, "#ff00ff" );
         circle.setAlpha( 0.25 ).setMode( Sankaku.Shape.FILL );
 
         var circle2 = new Sankaku.Circle( 250, 300, 30, "#ff00cc" );
