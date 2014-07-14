@@ -63,6 +63,7 @@
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -81,6 +82,8 @@
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
+
+            return bounding;
         };
 
         /**

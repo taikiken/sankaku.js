@@ -166,6 +166,19 @@
             this._force.add( center );
         };
 
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.wander( this._paths, this._loop );
+            this.update( w, h );
+        };
+
         return Wander;
     }() );
 

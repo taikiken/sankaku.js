@@ -256,6 +256,7 @@
             e = {
                 scale: this.scale,
                 rotation: this.rotation,
+                alpha: this._alpha,
                 x: this.x,
                 y: this.y
             };
@@ -282,6 +283,7 @@
                 y = yd;
 
                 e.scale = parent.scale * this.scale;
+                e.alpha = parent.alpha() * this._alpha;
                 e.rotation = rotation;
             }
 
@@ -408,12 +410,9 @@
             }
 
             var children = this.children,
-                child,
                 i, limit;
 
             for ( i = 0, limit = children.length; i < limit; i++ ) {
-
-                child = children[ i ];
 
                 children[ i ].draw( ctx );
             }
@@ -522,6 +521,39 @@
             children.push( o );
 
             return this;
+        };
+
+        /**
+         * @method render
+         * @return {Object2D}
+         * @param {number} w canvas width
+         */
+        p.render = function ( w, h ) {
+            this.beginRender( w, h );
+
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                children[ i ].render( w, h );
+            }
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+        };
+
+        p.prepareRender = function () {
+
         };
 
         return Object2D;

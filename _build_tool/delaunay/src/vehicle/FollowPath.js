@@ -73,6 +73,9 @@
 
             var clone = Object.create( this );
             clone.setView( this._view.clone() );
+            clone.position( this._position.clone() );
+            clone._velocity = this._velocity.clone();
+            clone._force = this._force.clone();
 
             return clone;
         };
@@ -116,6 +119,41 @@
 
                 this.seek( point );
             }
+        };
+
+        /**
+         * @method setPath
+         * @param {Array} paths
+         * @return {FollowPath}
+         */
+        p.setPath = function ( paths ) {
+            this._paths = paths;
+
+            return this;
+        };
+
+        /**
+         * @method setLoop
+         * @param {Boolean} bool
+         * @return {FollowPath}
+         */
+        p.setLoop = function ( bool ) {
+            this._loop = bool;
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.follow( this._paths, this._loop );
+            this.update( w, h );
         };
 
         return FollowPath;

@@ -56,17 +56,16 @@
              */
             this._line = 1;
 
-//            /**
-//             * @property setBorder
-//             * @default { width: 0, setColor: "#000000" }
-//             * @type {{width: number, setColor: string}}
-//             */
-//            this.setBorder = {
-//                width: 0,
-//                setColor: "#000000"
-//            };
-
-            this._rgb = {};
+            /**
+             * @property _rgb
+             * @type {{r: number, g: number, b: number}}
+             * @protected
+             */
+            this._rgb = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
             /**
              * @property _color
@@ -200,21 +199,37 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p._draw = function ( ctx ) {
+            var bounding = this.paint( ctx ),
+                rgba = this._rgba( this._rgb, bounding.e.alpha ),
+                border_rgba;
+
             switch ( this._fill ) {
 
                 case Shape.STROKE:
-                    this.stroke( ctx, this._line, this._rgb );
+                    this.stroke( ctx, this._line, rgba );
                     break;
 
                 case Shape.FILL:
-                    this.fill( ctx, this._rgb );
+                    this.fill( ctx, rgba );
                     break;
 
                 case Shape.BOTH:
-                    this.stroke( ctx, this._border._line, this._border._rgb );
-                    this.fill( ctx, this._rgb );
+                    border_rgba = this._rgba( this._border._rgb, bounding.e.alpha );
+                    this.stroke( ctx, this._border._line, border_rgba );
+                    this.fill( ctx, rgba );
                     break;
             }
+        };
+
+        p._rgba = function ( rgb, alpha ) {
+            var _rgb = rgb;
+
+            return {
+                r: _rgb.r,
+                g: _rgb.g,
+                b: _rgb.b,
+                a: _rgb.a * alpha
+            };
         };
 
         /**
@@ -225,7 +240,7 @@
         p.fill = function ( ctx, color ) {
             ctx.fillStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
-            this.paint( ctx );
+//            this.paint( ctx );
 
             ctx.fill();
         };
@@ -240,7 +255,7 @@
             ctx.lineWidth = line;
             ctx.strokeStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
-            this.paint( ctx );
+//            this.paint( ctx );
 
             ctx.stroke();
         };
@@ -248,6 +263,7 @@
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -266,8 +282,9 @@
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
-        };
 
+            return bounding;
+        };
 
         return Shape;
     }() );

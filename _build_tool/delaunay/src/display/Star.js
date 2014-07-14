@@ -80,6 +80,7 @@
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -110,6 +111,8 @@
             }
 
             ctx.closePath();
+
+            return bounding;
         };
 
         return Star;

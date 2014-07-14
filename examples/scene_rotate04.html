@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=980">
-<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
-<title>Canvas Note - Star | イナヅマTV</title>
+<meta name="viewport" content="width=320, user-scalable=no, initial-scale=1">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - Rotate & addChild | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -24,9 +24,8 @@ body {
 .mobile.landscape body {
     min-height: 640px;
 }
-
 </style>
-<script type="text/javascript" src="../libs/sankaku.js"></script>
+<script type="text/javascript" src="libs/sankaku-0.2.5.min.js"></script>
 <script>
 //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 //    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,15 +54,10 @@ body {
         canvas = document.getElementById( "canvas"),
         ctx = canvas.getContext( "2d"),
 
-        flocks = [],
-        zanzo,
-
+        scene,
         ww, wh,
         prev_ww = -1,
         prev_wh = -1;
-
-    // zanzo
-    zanzo = new Sankaku.Zanzo( 12 );
 
     function size () {
         ww = document.body.clientWidth;
@@ -85,17 +79,9 @@ body {
     }
 
     function draw ( rect ) {
-        var i, limit, flock;
 
-        for ( i = 0, limit = flocks.length; i < limit; i++ ) {
-            flock = flocks[ i ];
-
-            flock.flock( flocks );
-            flock.update( rect.w, rect.h );
-        }
-
-        zanzo.add( flocks );
-        zanzo.draw( ctx );
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
     }
 
     function loop () {
@@ -109,29 +95,64 @@ body {
 
     function init () {
         var rect = size(),
-            _other = Sagen.hasClass( element, "other" ),
-            limit = _other ? 111 : 15,
-            position,
-            max_r = 60,
-            speed = 2.6,
-            i, flock;
+            rotation = 0,
+            step = 3,
+            scale;
 
-        for ( i = 0; i < limit; i++ ) {
+        scene = new Sankaku.Scene();
 
-            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-            flock = new Sankaku.Flock( new Sankaku.Star( 0, 0, 15 ) );
-            flock.setPosition( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
-            flock.setVelocity( new Sankaku.Vector2D( (Sankaku.Num.random( 1 ) ? 1 : -1 ), (Sankaku.Num.random( 1 ) ? 1 : -1 ) ) );
-            flock.setSpeed( Sankaku.Num.random( 10, speed * 10 ) * 0.1 );
-            flock.setMass( Math.random() * 0.5 + 0.75 );
+        var r1 = new Sankaku.Shape( rect.w * 0.5, rect.h * 0.5, 200, 200, "#ffffff" );
+        r1.prepareRender = function () {
+            rotation += step;
 
-            flock.setPadding( _other ? -160 : -10 );
-            flock.view().setColor( "#ffffff" ).setMode( Sankaku.Shape.STROKE ).setAlpha( 0.3 );
-            flock.setInsight( 120 );
-//            flock.setFlockClose( 80 );
+            if ( rotation >= 360 ) {
 
-            flocks.push( flock );
-        }
+                rotation = 360 - rotation;
+            }
+
+            scale = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
+
+            this.setRotate( rotation );
+            this.scale = scale;
+        };
+
+        var c1 = new Sankaku.Circle( rect.w * 0.5, rect.h * 0.5, 100, "#ff0000" );
+        c1.prepareRender = function () {
+
+            this.setRotate( rotation );
+            this.scale = scale;
+        };
+
+        var c2 = new Sankaku.Circle( 0, -88, 10, "#ffffff" );
+        c2.setMode( Sankaku.Shape.FILL );
+
+        var r2 = new Sankaku.Shape( 100, -100, 30, 60, "#ffffff" );
+
+        var t1 = new Sankaku.Tripod( -100, 100, 30, 30, "#ffffff" );
+
+        var s1 = new Sankaku.Star( 100, 100, 15, "#ffff00" );
+
+        var s2 = new Sankaku.Star( rect.w * 0.5, rect.h * 0.5, 100, "#ffff00" );
+        s2.prepareRender = function () {
+
+            this.setRotate( rotation );
+            this.scale = scale;
+        };
+
+        var c3 = new Sankaku.Circle( 70, -22, 10, "#7f9fc4" );
+        c3.setMode( Sankaku.Shape.FILL );
+
+        c1.add( c2 );
+
+        r1.add( r2 );
+        r1.add( t1 );
+        r1.add( s1 );
+
+        s2.add( c3 );
+
+        scene.add( r1 );
+        scene.add( c1 );
+        scene.add( s2 );
 
         loop();
     }

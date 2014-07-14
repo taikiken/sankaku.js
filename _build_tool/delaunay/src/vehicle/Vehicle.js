@@ -258,7 +258,10 @@
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
-            this._view.draw( ctx );
+
+            if ( this.visible && this._alpha > 0 ) {
+                this._view.draw( ctx );
+            }
         };
 
         /**
@@ -272,8 +275,8 @@
 
         /**
          * @method _update
-         * @param {number} w
-         * @param {number} h
+         * @param {number} w canvas width
+         * @param {number} h canvas height
          * @protected
          */
         p._update = function ( w, h ) {
@@ -388,6 +391,18 @@
                 // bounce event
                 this.dispatchEvent( { type: "bounce", currentTarget: this } );
             }
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.update( w, h );
         };
 
         return Vehicle;

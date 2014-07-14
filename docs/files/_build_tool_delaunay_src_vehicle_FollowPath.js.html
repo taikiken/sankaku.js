@@ -252,6 +252,31 @@
             }
         };
 
+        p.setPath = function ( paths ) {
+            this._paths = paths;
+
+            return this;
+        };
+
+        p.setLoop = function ( bool ) {
+            this._loop = bool;
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.follow( this._paths, this._loop );
+            this.update( w, h );
+        };
+
         return FollowPath;
     }() );
 

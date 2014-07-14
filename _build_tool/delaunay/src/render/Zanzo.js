@@ -93,11 +93,23 @@
                     object = one[ n ];
                     
                     object.draw( ctx );
-                    paint && paint.call( ctx );
+
+                    if ( !!paint ) {
+
+                        paint.call( ctx );
+                    }
                 }
             }
 
             ctx.restore();
+        };
+
+        /**
+         * @method length;
+         * @return {Number}
+         */
+        p.length = function () {
+            return this._objects.length;
         };
 
         return Zanzo;

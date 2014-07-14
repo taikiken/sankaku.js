@@ -77,6 +77,7 @@
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -87,6 +88,8 @@
             ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
+
+            return bounding;
         };
 
         /**

@@ -149,8 +149,8 @@ body {
             flock.setSpeed( speed * ( 10 - flock.scale ) * 0.1 );
 //            flock.setMass( Math.random() * 0.5 + 1 );
             flock.setMass( flock.scale * 0.5 );
-//            flock.setClose( _other ? 32 : 12 );
-            flock.setClose( _other ? 32 : 12 * flock.scale );
+//            flock.setFlockClose( _other ? 32 : 12 );
+            flock.setFlockClose( _other ? 32 : 12 * flock.scale );
             flock.setPadding( _other ? -160 : -10 );
             flock.view().setMode( Sankaku.Shape.FILL ).setColor( "#efefef" ).setAlpha( 0.5 );
 

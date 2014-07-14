@@ -163,8 +163,8 @@
             SteeredVehicle.call( this, viewModel );
 
             // for flock
-            this._flock_insight = 200;
-            this._flock_close = 60;
+            this._flock_flockInsight = 200;
+            this._flock_flockClose = 60;
         }
 
         Sankaku.extend( SteeredVehicle, Flock );
@@ -200,52 +200,61 @@
 //            clone._force_arrival = this._force_arrival;
 //            clone._avoid_distance = this._avoid_distance;
 //            clone._avoid_buffer = this._avoid_buffer;
-//            clone._avoid_insight = this._avoid_insight;
-//            clone._avoid_close = this._avoid_close;
+//            clone._avoid_flockInsight = this._avoid_flockInsight;
+//            clone._avoid_flockClose = this._avoid_flockClose;
 //
 //            // super method
 ////            var clone = SteeredVehicle.prototype.clone.call( this, this._view.clone() );
 //
             // for flock
-//            clone._flock_insight = this._flock_insight;
-//            clone._flock_close = this._flock_close;
+//            clone._flock_flockInsight = this._flock_flockInsight;
+//            clone._flock_flockClose = this._flock_flockClose;
 //
 //            return clone;
 
             var clone = Object.create( this );
             clone.setView( this._view.clone() );
+            clone.position( this._position.clone() );
+            clone._velocity = this._velocity.clone();
+            clone._force = this._force.clone();
 
             return clone;
         };
 
         /**
-         * @method setInsight
+         * @method setFlockInsight
          * @param {number} n
+         * @return {Flock}
          */
-        p.setInsight = function ( n ) {
-            this._flock_insight = n;
+        p.setFlockInsight = function ( n ) {
+            this._flock_flockInsight = n;
+
+            return this;
         };
         /**
-         * @method insight
+         * @method flockInsight
          * @return {number|*}
          */
-        p.insight = function () {
-            return this._flock_insight;
+        p.flockInsight = function () {
+            return this._flock_flockInsight;
         };
 
         /**
-         * @method setClose
+         * @method setFlockClose
          * @param {number} n
+         * @return {Flock}
          */
-        p.setClose = function ( n ) {
-            this._flock_close = n;
+        p.setFlockClose = function ( n ) {
+            this._flock_flockClose = n;
+
+            return this;
         };
         /**
-         * @method close
+         * @method flockClose
          * @return {number|*}
          */
-        p.close = function () {
-            return this._flock_close;
+        p.flockClose = function () {
+            return this._flock_flockClose;
         };
 
         /**
@@ -295,7 +304,7 @@
         p.tooInsight = function ( v ) {
             var heading, difference, prod;
 
-            if ( this._position.distance( v._position ) &gt; this._flock_insight ) {
+            if ( this._position.distance( v._position ) &gt; this._flock_flockInsight ) {
 
                 return false;
             }
@@ -312,7 +321,26 @@
          * @param {Vehicle} v
          */
         p.tooClose = function ( v ) {
-            return this._position.distance( v._position ) &lt; this._flock_close;
+            return this._position.distance( v._position ) &lt; this._flock_flockClose;
+        };
+
+        p.setFlocks = function ( flocks ) {
+            this._flocks = flocks;
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.flock( this._flocks );
+            this.update( w, h );
         };
 
         return Flock;

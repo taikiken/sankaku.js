@@ -2231,6 +2231,7 @@ Sankaku.version = "0.2.3";
             e = {
                 scale: this.scale,
                 rotation: this.rotation,
+                alpha: this._alpha,
                 x: this.x,
                 y: this.y
             };
@@ -2257,6 +2258,7 @@ Sankaku.version = "0.2.3";
                 y = yd;
 
                 e.scale = parent.scale * this.scale;
+                e.alpha = parent.alpha() * this._alpha;
                 e.rotation = rotation;
             }
 
@@ -2383,12 +2385,9 @@ Sankaku.version = "0.2.3";
             }
 
             var children = this.children,
-                child,
                 i, limit;
 
             for ( i = 0, limit = children.length; i < limit; i++ ) {
-
-                child = children[ i ];
 
                 children[ i ].draw( ctx );
             }
@@ -2497,6 +2496,39 @@ Sankaku.version = "0.2.3";
             children.push( o );
 
             return this;
+        };
+
+        /**
+         * @method render
+         * @return {Object2D}
+         * @param {number} w canvas width
+         */
+        p.render = function ( w, h ) {
+            this.beginRender( w, h );
+
+            var children = this.children,
+                i, limit;
+
+            for ( i = 0, limit = children.length; i < limit; i++ ) {
+
+                children[ i ].render( w, h );
+            }
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+        };
+
+        p.prepareRender = function () {
+
         };
 
         return Object2D;
@@ -2632,17 +2664,16 @@ Sankaku.version = "0.2.3";
              */
             this._line = 1;
 
-//            /**
-//             * @property setBorder
-//             * @default { width: 0, setColor: "#000000" }
-//             * @type {{width: number, setColor: string}}
-//             */
-//            this.setBorder = {
-//                width: 0,
-//                setColor: "#000000"
-//            };
-
-            this._rgb = {};
+            /**
+             * @property _rgb
+             * @type {{r: number, g: number, b: number}}
+             * @protected
+             */
+            this._rgb = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
             /**
              * @property _color
@@ -2776,21 +2807,37 @@ Sankaku.version = "0.2.3";
          * @param {CanvasRenderingContext2D} ctx
          */
         p._draw = function ( ctx ) {
+            var bounding = this.paint( ctx ),
+                rgba = this._rgba( this._rgb, bounding.e.alpha ),
+                border_rgba;
+
             switch ( this._fill ) {
 
                 case Shape.STROKE:
-                    this.stroke( ctx, this._line, this._rgb );
+                    this.stroke( ctx, this._line, rgba );
                     break;
 
                 case Shape.FILL:
-                    this.fill( ctx, this._rgb );
+                    this.fill( ctx, rgba );
                     break;
 
                 case Shape.BOTH:
-                    this.stroke( ctx, this._border._line, this._border._rgb );
-                    this.fill( ctx, this._rgb );
+                    border_rgba = this._rgba( this._border._rgb, bounding.e.alpha );
+                    this.stroke( ctx, this._border._line, border_rgba );
+                    this.fill( ctx, rgba );
                     break;
             }
+        };
+
+        p._rgba = function ( rgb, alpha ) {
+            var _rgb = rgb;
+
+            return {
+                r: _rgb.r,
+                g: _rgb.g,
+                b: _rgb.b,
+                a: _rgb.a * alpha
+            };
         };
 
         /**
@@ -2801,7 +2848,7 @@ Sankaku.version = "0.2.3";
         p.fill = function ( ctx, color ) {
             ctx.fillStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
-            this.paint( ctx );
+//            this.paint( ctx );
 
             ctx.fill();
         };
@@ -2816,7 +2863,7 @@ Sankaku.version = "0.2.3";
             ctx.lineWidth = line;
             ctx.strokeStyle = "rgba(" + color.r +","+color.g+","+color.b+","+color.a+")";
 
-            this.paint( ctx );
+//            this.paint( ctx );
 
             ctx.stroke();
         };
@@ -2824,6 +2871,7 @@ Sankaku.version = "0.2.3";
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -2842,8 +2890,9 @@ Sankaku.version = "0.2.3";
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
-        };
 
+            return bounding;
+        };
 
         return Shape;
     }() );
@@ -2928,6 +2977,7 @@ Sankaku.version = "0.2.3";
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -2938,6 +2988,8 @@ Sankaku.version = "0.2.3";
             ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
 
             ctx.closePath();
+
+            return bounding;
         };
 
         /**
@@ -3026,6 +3078,7 @@ Sankaku.version = "0.2.3";
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -3044,6 +3097,8 @@ Sankaku.version = "0.2.3";
             ctx.lineTo( a.x, a.y );
 
             ctx.closePath();
+
+            return bounding;
         };
 
         /**
@@ -3162,6 +3217,7 @@ Sankaku.version = "0.2.3";
         /**
          * @method paint
          * @param {CanvasRenderingContext2D} ctx
+         * @return {Object} bounding
          */
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
@@ -3192,6 +3248,8 @@ Sankaku.version = "0.2.3";
             }
 
             ctx.closePath();
+
+            return bounding;
         };
 
         return Star;
@@ -3458,7 +3516,10 @@ Sankaku.version = "0.2.3";
          * @param {CanvasRenderingContext2D} ctx
          */
         p.draw = function ( ctx ) {
-            this._view.draw( ctx );
+
+            if ( this.visible && this._alpha > 0 ) {
+                this._view.draw( ctx );
+            }
         };
 
         /**
@@ -3472,8 +3533,8 @@ Sankaku.version = "0.2.3";
 
         /**
          * @method _update
-         * @param {number} w
-         * @param {number} h
+         * @param {number} w canvas width
+         * @param {number} h canvas height
          * @protected
          */
         p._update = function ( w, h ) {
@@ -3590,6 +3651,18 @@ Sankaku.version = "0.2.3";
             }
         };
 
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.update( w, h );
+        };
+
         return Vehicle;
     }() );
 }( window ) );
@@ -3678,6 +3751,8 @@ Sankaku.version = "0.2.3";
 
             var clone = Object.create( this );
             clone.setView( this._view.clone() );
+            clone._force = this._force.clone();
+            clone.setPosition( this._position.clone() );
 
             return clone;
         };
@@ -4109,6 +4184,19 @@ Sankaku.version = "0.2.3";
             this._force.add( center );
         };
 
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.wander( this._paths, this._loop );
+            this.update( w, h );
+        };
+
         return Wander;
     }() );
 
@@ -4144,8 +4232,8 @@ Sankaku.version = "0.2.3";
             SteeredVehicle.call( this, viewModel );
 
             // for flock
-            this._flock_insight = 200;
-            this._flock_close = 60;
+            this._flock_flockInsight = 200;
+            this._flock_flockClose = 60;
         }
 
         Sankaku.extend( SteeredVehicle, Flock );
@@ -4181,52 +4269,61 @@ Sankaku.version = "0.2.3";
 //            clone._force_arrival = this._force_arrival;
 //            clone._avoid_distance = this._avoid_distance;
 //            clone._avoid_buffer = this._avoid_buffer;
-//            clone._avoid_insight = this._avoid_insight;
-//            clone._avoid_close = this._avoid_close;
+//            clone._avoid_flockInsight = this._avoid_flockInsight;
+//            clone._avoid_flockClose = this._avoid_flockClose;
 //
 //            // super method
 ////            var clone = SteeredVehicle.prototype.clone.call( this, this._view.clone() );
 //
             // for flock
-//            clone._flock_insight = this._flock_insight;
-//            clone._flock_close = this._flock_close;
+//            clone._flock_flockInsight = this._flock_flockInsight;
+//            clone._flock_flockClose = this._flock_flockClose;
 //
 //            return clone;
 
             var clone = Object.create( this );
             clone.setView( this._view.clone() );
+            clone.position( this._position.clone() );
+            clone._velocity = this._velocity.clone();
+            clone._force = this._force.clone();
 
             return clone;
         };
 
         /**
-         * @method setInsight
+         * @method setFlockInsight
          * @param {number} n
+         * @return {Flock}
          */
-        p.setInsight = function ( n ) {
-            this._flock_insight = n;
+        p.setFlockInsight = function ( n ) {
+            this._flock_flockInsight = n;
+
+            return this;
         };
         /**
-         * @method insight
+         * @method flockInsight
          * @return {number|*}
          */
-        p.insight = function () {
-            return this._flock_insight;
+        p.flockInsight = function () {
+            return this._flock_flockInsight;
         };
 
         /**
-         * @method setClose
+         * @method setFlockClose
          * @param {number} n
+         * @return {Flock}
          */
-        p.setClose = function ( n ) {
-            this._flock_close = n;
+        p.setFlockClose = function ( n ) {
+            this._flock_flockClose = n;
+
+            return this;
         };
         /**
-         * @method close
+         * @method flockClose
          * @return {number|*}
          */
-        p.close = function () {
-            return this._flock_close;
+        p.flockClose = function () {
+            return this._flock_flockClose;
         };
 
         /**
@@ -4276,7 +4373,7 @@ Sankaku.version = "0.2.3";
         p.tooInsight = function ( v ) {
             var heading, difference, prod;
 
-            if ( this._position.distance( v._position ) > this._flock_insight ) {
+            if ( this._position.distance( v._position ) > this._flock_flockInsight ) {
 
                 return false;
             }
@@ -4293,7 +4390,26 @@ Sankaku.version = "0.2.3";
          * @param {Vehicle} v
          */
         p.tooClose = function ( v ) {
-            return this._position.distance( v._position ) < this._flock_close;
+            return this._position.distance( v._position ) < this._flock_flockClose;
+        };
+
+        p.setFlocks = function ( flocks ) {
+            this._flocks = flocks;
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.flock( this._flocks );
+            this.update( w, h );
         };
 
         return Flock;
@@ -4419,6 +4535,31 @@ Sankaku.version = "0.2.3";
             }
         };
 
+        p.setPath = function ( paths ) {
+            this._paths = paths;
+
+            return this;
+        };
+
+        p.setLoop = function ( bool ) {
+            this._loop = bool;
+
+            return this;
+        };
+
+        /**
+         * prepare render
+         * @method beginRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.beginRender = function ( w, h ) {
+            this.prepareRender();
+
+            this.follow( this._paths, this._loop );
+            this.update( w, h );
+        };
+
         return FollowPath;
     }() );
 
@@ -4518,11 +4659,23 @@ Sankaku.version = "0.2.3";
                     object = one[ n ];
                     
                     object.draw( ctx );
-                    paint && paint.call( ctx );
+
+                    if ( !!paint ) {
+
+                        paint.call( ctx );
+                    }
                 }
             }
 
             ctx.restore();
+        };
+
+        /**
+         * @method length;
+         * @return {Number}
+         */
+        p.length = function () {
+            return this._objects.length;
         };
 
         return Zanzo;
