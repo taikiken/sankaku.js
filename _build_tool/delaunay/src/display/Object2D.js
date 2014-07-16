@@ -502,8 +502,10 @@
                 index1 = children.indexOf( o1 ),
                 index2 = children.indexOf( o2 );
 
-            children[ index2 ] = o1;
-            children[ index1 ] = o2;
+            if ( index1 !== -1 && index2 !== -1 ) {
+                children[ index2 ] = o1;
+                children[ index1 ] = o2;
+            }
 
             return this;
         };
@@ -517,8 +519,11 @@
             var children = this.children,
                 index = children.indexOf( o );
 
-            children.splice( index, 1 );
-            children.push( o );
+            if ( index !== -1 ) {
+
+                children.splice( index, 1 );
+                children.push( o );
+            }
 
             return this;
         };

@@ -67,14 +67,15 @@
                 b: 0
             };
 
+            color = color || "#000000";
             /**
              * @property _color
              * @type {String}
              * @default #000000
              * @protected
              */
-            this._color = color || "#000000";
-            this.setColor( this._color );
+            this._color = color;
+            this.setColor( color );
 
             this.setBorder( this.setLine, this._color );
         }
