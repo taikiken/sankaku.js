@@ -100,9 +100,11 @@
         /**
          * @method setMax
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setMax = function ( n ) {
             this._force_max = n;
+            return this;
         };
 
         /**
@@ -116,17 +118,21 @@
         /**
          * @method setArrival
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setArrival = function ( n ) {
             this._force_arrival = n;
+            return this;
         };
 
         /**
          * @method setForce
          * @param {Vector2D} v
+         * @return {SteeredVehicle}
          */
         p.setForce = function ( v ) {
             this._force = v;
+            return this;
         };
 
         /**
@@ -141,9 +147,11 @@
         /**
          * @method setBuffer
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setBuffer = function ( n ) {
             this._avoid_buffer = n;
+            return this;
         };
         /**
          * @method buffer
@@ -156,9 +164,11 @@
         /**
          * @method setInsight
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setInsight = function ( n ) {
             this._avoid_insight = n;
+            return this;
         };
         /**
          * @method insight
@@ -171,9 +181,11 @@
         /**
          * @method setClose
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setClose = function ( n ) {
             this._avoid_close = n;
+            return this;
         };
         /**
          * @method close
@@ -186,9 +198,11 @@
         /**
          * @method avoidDistance
          * @param {number} n
+         * @return {SteeredVehicle}
          */
         p.setAvoidDistance = function ( n ) {
             this._avoid_distance = n;
+            return this;
         };
 
         /**

@@ -55,15 +55,13 @@
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
-                <li><a href="../classes/List.html">List</a></li>
+                <li><a href="../classes/Line.html">Line</a></li>
             
-                <li><a href="../classes/Matrix2D.html">Matrix2D</a></li>
+                <li><a href="../classes/List.html">List</a></li>
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
                 <li><a href="../classes/Object2D.html">Object2D</a></li>
-            
-                <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
@@ -207,6 +205,9 @@
 
             var clone = Object.create( this );
             clone.setView( this._view.clone() );
+            clone.position( this._position.clone() );
+            clone._velocity = this._velocity.clone();
+            clone._force = this._force.clone();
 
             return clone;
         };
@@ -252,12 +253,22 @@
             }
         };
 
+        /**
+         * @method setPath
+         * @param {Array} paths
+         * @return {FollowPath}
+         */
         p.setPath = function ( paths ) {
             this._paths = paths;
 
             return this;
         };
 
+        /**
+         * @method setLoop
+         * @param {Boolean} bool
+         * @return {FollowPath}
+         */
         p.setLoop = function ( bool ) {
             this._loop = bool;
 

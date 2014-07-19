@@ -50,6 +50,7 @@
         /**
          * point が bounding box 内か外かを調べます
          * <br>Sceneはinsideを調べません
+         * @method inside
          * @param {Vector2D} v 調べるpoint
          * @param {Array} 結果を格納する
          * @return {Array} inside の時は contains へthisを格納し返します

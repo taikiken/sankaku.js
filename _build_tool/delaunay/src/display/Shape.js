@@ -222,17 +222,6 @@
             }
         };
 
-        p._rgba = function ( rgb, alpha ) {
-            var _rgb = rgb;
-
-            return {
-                r: _rgb.r,
-                g: _rgb.g,
-                b: _rgb.b,
-                a: _rgb.a * alpha
-            };
-        };
-
         /**
          * @method fill
          * @param {CanvasRenderingContext2D} ctx

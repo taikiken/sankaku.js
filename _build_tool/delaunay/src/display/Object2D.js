@@ -431,6 +431,7 @@
         // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
         /**
          * point が bounding box 内か外かを調べます
+         * @method inside
          * @param {Vector2D} v 調べるpoint
          * @param {Array} 結果を格納する
          * @return {Array} inside の時は contains へthisを格納し返します
@@ -554,11 +555,34 @@
          * @param {number} h canvas height
          */
         p.beginRender = function ( w, h ) {
-            this.prepareRender();
+            this.prepareRender( w, h );
         };
 
-        p.prepareRender = function () {
+        /**
+         * @method prepareRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.prepareRender = function ( w, h ) {
 
+        };
+
+        /**
+         * @method _rgba
+         * @param {Object} rgb { r: number, g: number, b: number}
+         * @param {Number} alpha
+         * @return {{r: *, g: *, b: *, a: number}}
+         * @protected
+         */
+        p._rgba = function ( rgb, alpha ) {
+            var _rgb = rgb;
+
+            return {
+                r: _rgb.r,
+                g: _rgb.g,
+                b: _rgb.b,
+                a: _rgb.a * alpha
+            };
         };
 
         return Object2D;

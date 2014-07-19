@@ -88,9 +88,11 @@
         /**
          * @method setWanderAngle
          * @param {number} n
+         * @return {Wander}
          */
         p.setWanderAngle = function ( n ) {
             this._wander_angle = n;
+            return this;
         };
 
         /**
@@ -104,9 +106,11 @@
         /**
          * @method setWanderDistance
          * @param {number} n
+         * @return {Wander}
          */
         p.setWanderDistance = function ( n ) {
             this._wander_distance = n;
+            return this;
         };
 
         /**
@@ -120,9 +124,11 @@
         /**
          * @method setWanderRadius
          * @param {number} n
+         * @return {Wander}
          */
         p.setWanderRadius = function ( n ) {
             this._wnder_radius = n;
+            return this;
         };
 
         /**
@@ -136,10 +142,12 @@
         /**
          * @method setWanderRange
          * @param {number} n
+         * @return {Wander}
          */
         p.setWanderRange = function ( n ) {
             this._wander_range = n;
             this._wander_range2 = n * 0.5;
+            return this;
         };
 
         /**

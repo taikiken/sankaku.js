@@ -175,6 +175,7 @@
          * @param {number} [right]
          * @param {number} [bottom]
          * @param {number} [left]
+         * @return {Vehicle}
          */
         p.setPadding = function ( top, right, bottom, left ) {
             right = right || top;
@@ -185,15 +186,19 @@
             this.right = right;
             this.bottom = bottom;
             this.left = left;
+
+            return this;
         };
 
         /**
          * 質量を設定します
          * @method setMass
          * @param {number} n
+         * @return {Vehicle}
          */
         p.setMass = function ( n ) {
             this._mass = n;
+            return this;
         };
 
         /**
@@ -208,9 +213,11 @@
          * 最大スピードを設定します
          * @method setSpeed
          * @param {number} n
+         * @return {Vehicle}
          */
         p.setSpeed = function ( n ) {
             this._speed = n;
+            return this;
         };
 
         /**
@@ -224,9 +231,11 @@
         /**
          * @method setBehavior
          * @param {string} str
+         * @return {Vehicle}
          */
         p.setBehavior = function ( str ) {
             this._behavior = str;
+            return this;
         };
 
         /**
@@ -240,9 +249,11 @@
         /**
          * @method setVelocity
          * @param {Vector2D} v
+         * @return {Vehicle}
          */
         p.setVelocity = function ( v ) {
             this._velocity = v;
+            return this;
         };
 
         /**

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - Line 6 intersects rect | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+        cancelAnimationFrame = self.cancelAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        scene,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        loop_id = 0;
+
+    var Particle = ( function (){
+        // @class Particle
+        function Particle ( x, y, r, color, lines ) {
+            Sankaku.Circle.call( this, x, y, r, color, Sankaku.Shape.FILL );
+
+            this._lines = lines;
+            this._my_color = color;
+        }
+
+        Sankaku.extend( Sankaku.Circle, Particle );
+
+        var p = Particle.prototype;
+
+        p.constructor = Particle;
+
+        p.contain = function ( v ) {
+            var results = [];
+
+            this._inside( v, results );
+
+            return results.length > 0;
+        };
+
+//        p.intersects = function ( a1, b1, a2, b2 ) {
+//            var b = a2.subNew( a1 ),
+//                d = b2.subNew( b1 ),
+//                dot = b.x * d.y - b.y * d.x,
+//                c, t, u;
+//
+//            if ( dot === 0 ) {
+//                return false;
+//            }
+//
+//            c = b1.subNew( a1 );
+//            t = ( c.x * d.y - c.y * d.x ) / dot;
+//            if ( t < 0 || t > 1 ) {
+//                return false;
+//            }
+//
+//            u = ( c.x * b.y - c.y * b.x ) / dot;
+//            if ( u < 0 || u > 1 ) {
+//                return false;
+//            }
+//            console.log( "b", b, a2, a1 );
+//            console.log( "d", d, b2, b1 );
+//            console.log( "dot", dot );
+//            console.log( "t", t );
+//            console.log( "u", u );
+//            return true;
+//        };
+//
+//        p.intersects = function ( a1, b1, bounding ) {
+//            var a = bounding.a,
+//                b = bounding.b,
+//                c = bounding.c,
+//                d = bounding.d;
+//
+//            if ( a1.x < a.x && b1.x < a.x ) {
+//                return false;
+//            }
+//            if ( a1.x < d.x && b1.x < d.x ) {
+//                return false;
+//            }
+//
+//            if ( a1.y < a.y && b1.y < a.y ) {
+//                return false;
+//            }
+//            if ( a1.y < b.y && b1.y < b.y ) {
+//                return false;
+//            }
+//
+//            if ( a1.x > b.x && b1.x > b.x ) {
+//                return false;
+//            }
+//            if ( a1.x > c.x && b1.x > c.x ) {
+//                return false;
+//            }
+//
+//            if ( a1.y > c.y && b1.y > c.y ) {
+//                return false;
+//            }
+//            if ( a1.y > d.y && b1.y > d.y ) {
+//                return false;
+//            }
+//
+//            console.log( a1, b1, a, b, c, d );
+//            return true;
+//        };
+//
+//        p.intersects = function ( a1, b1, bounding ) {
+//            var a = bounding.a,
+//                b = bounding.b,
+//                c = bounding.c,
+//                d = bounding.d;
+//
+//
+//            // top left
+//            if ( a.x < a1.x && a.x < b1.x ) {
+//                return false;
+//            }
+//            if ( a.y > a1.y && a.y > b1.x ) {
+//                return false;
+//            }
+//
+//            // bottom left
+//            if ( d.x > a1.x && d.x > b1.x ) {
+//                return false;
+//            }
+//            if ( d.y < a1.y && d.y < b1.x ) {
+//                return false;
+//            }
+//
+//            if ( ( d.y < a1.y || d.y < b1.y ) || ( b.y > a1.y || b.y > b1.y ) ) {
+//                return true;
+//            }
+//
+//            return false;
+//        };
+        // http://stackoverflow.com/questions/1073336/circle-line-collision-detection
+        // http://www.geisya.or.jp/~mwm48961/math3/pita_5.html
+        // http://www.highflyer2.com/math/triangle.html
+        p.intersects = function ( a1, b1, bounding ) {
+            var a = bounding.a,
+                b = bounding.b,
+                c = bounding.c,
+                d = bounding.d,
+                e = bounding.e,
+                center = new Sankaku.Vector2D( e.x, e.y ),
+                radius = this._radius,
+                vector_a = new Sankaku.Vector2D( a1.x, a1.y ),
+                vector_b = new Sankaku.Vector2D( b1.x, b1.y ),
+                hypotenuse_a,
+                hypotenuse_b,
+                base,
+                s,
+                space,
+                r;
+
+            hypotenuse_a = vector_a.distance( center );
+            hypotenuse_b = vector_b.distance( center );
+            base = vector_a.distance( vector_b );
+//            r = ( hypotenuse_a * hypotenuse_a - hypotenuse_b * hypotenuse_b + base * base ) / ( 2 * base );
+
+//            r = hypotenuse_a * hypotenuse_a - (  );
+
+            if ( b1.x < b.x ) {
+                return false;
+            }
+
+            s = ( hypotenuse_a + hypotenuse_b + base ) / 2;
+            space = Math.sqrt( s * ( s - hypotenuse_a ) * ( s - hypotenuse_b ) * ( s - base ) );
+            r = 2 * space / base;
+
+            if ( r > 0 && radius > r ) {
+
+                return true;
+            }
+
+            return false;
+        };
+
+        p.prepareRender = function () {
+            var Vector2D = Sankaku.Vector2D,
+                bounding = this.bounding(),
+                a = bounding.a,
+                b = bounding.b,
+                c = bounding.c,
+                d = bounding.d,
+
+                lines = this._lines,
+                line_bounding,
+                la,lb,
+                i, limit;
+
+            for ( i = 0, limit = lines.length; i < limit; i++ ) {
+
+                line_bounding = lines[ i ].bounding();
+                la = line_bounding.a;
+                lb = line_bounding.b;
+
+//                if ( this.intersects( new Vector2D( la.x, la.y ), new Vector2D( lb.x, lb.y ), new Vector2D( a.x, a.y ), new Vector2D( d.x, d.y ) ) ) {
+                if ( this.intersects( la, lb, bounding ) ) {
+                    this.setColor( "#f5ff55" );
+//                    stop();
+                } else {
+                    this.setColor( this._my_color );
+                }
+            }
+        };
+
+        return Particle;
+    }() );
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
+    }
+
+    function loop () {
+        loop_id = requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function stop () {
+        cancelAnimationFrame( loop_id );
+    }
+
+    function init () {
+        scene = new Sankaku.Scene();
+
+        var rect = size(),
+            center = {
+                x: rect.w * 0.5,
+                y: rect.h * 0.5
+            };
+        var step = Math.PI / 180 * 1;
+        var r = 14;
+
+        var c0 = new Sankaku.Circle( center.x, center.y, r, "#ffffff" );
+        c0.prepareRender = function () {
+            this.rotation += step;
+        };
+        c0.setMode( Sankaku.Shape.FILL );
+
+        var i0 = new Sankaku.Circle( 0, r, 3, "#ff0000" );
+        i0.visible = false;
+
+        var i1 = new Sankaku.Circle( 0, -r, 3, "#ff0000" );
+        i1.visible = false;
+
+        var o0 = new Sankaku.Circle( 0, r * 5, 3, "#00ffff" );
+        o0.visible = false;
+
+        var o1 = new Sankaku.Circle( 0, -r * 5, 3, "#00ffff" );
+        o1.visible = false;
+
+        var l0 = new Sankaku.Line( i0, o0, "#ffffff", 1 );
+        var l1 = new Sankaku.Line( i1, o1, "#ff00ff", 1 );
+
+//        var t = new Sankaku.Circle( 250, 210, 6, "#ff0000" );
+//        t.setMode( Sankaku.Shape.FILL );
+//        t.prepareRender = function () {
+//            var bounding = this.bounding(),
+//                a = bounding.a,
+//                b = bounding.b,
+//                c = bounding.c,
+//                d = bounding.d,
+//                e = bounding.e,
+//                line = l0,
+//                line_bounding = line.bounding(),
+//                la = line_bounding.a,
+//                lb = line_bounding.b;
+//        };
+
+        var t = new Particle( center.x + 50, center.y, 6, "#ff0000", [ l0, l1 ] );
+
+        c0.add( i0 );
+        c0.add( o0 );
+        c0.add( l0 );
+        c0.add( l0 );
+
+        c0.add( i1 );
+        c0.add( o1 );
+        c0.add( l1 );
+
+        scene.add( c0 );
+        scene.add( t );
+
+        loop();
+//        setTimeout( stop, 1000 * 8 );
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

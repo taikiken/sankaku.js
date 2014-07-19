@@ -55,15 +55,13 @@
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
-                <li><a href="../classes/List.html">List</a></li>
+                <li><a href="../classes/Line.html">Line</a></li>
             
-                <li><a href="../classes/Matrix2D.html">Matrix2D</a></li>
+                <li><a href="../classes/List.html">List</a></li>
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
                 <li><a href="../classes/Object2D.html">Object2D</a></li>
-            
-                <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
@@ -201,14 +199,15 @@
                 b: 0
             };
 
+            color = color || &quot;#000000&quot;;
             /**
              * @property _color
              * @type {String}
              * @default #000000
              * @protected
              */
-            this._color = color || &quot;#000000&quot;;
-            this.setColor( this._color );
+            this._color = color;
+            this.setColor( color );
 
             this.setBorder( this.setLine, this._color );
         }
@@ -353,17 +352,6 @@
                     this.fill( ctx, rgba );
                     break;
             }
-        };
-
-        p._rgba = function ( rgb, alpha ) {
-            var _rgb = rgb;
-
-            return {
-                r: _rgb.r,
-                g: _rgb.g,
-                b: _rgb.b,
-                a: _rgb.a * alpha
-            };
         };
 
         /**

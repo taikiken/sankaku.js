@@ -55,15 +55,13 @@
             
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
-                <li><a href="../classes/List.html">List</a></li>
+                <li><a href="../classes/Line.html">Line</a></li>
             
-                <li><a href="../classes/Matrix2D.html">Matrix2D</a></li>
+                <li><a href="../classes/List.html">List</a></li>
             
                 <li><a href="../classes/Num.html">Num</a></li>
             
                 <li><a href="../classes/Object2D.html">Object2D</a></li>
-            
-                <li><a href="../classes/Point.html">Point</a></li>
             
                 <li><a href="../classes/Sankaku.html">Sankaku</a></li>
             
@@ -565,6 +563,7 @@
         // http://www.emanueleferonato.com/2012/03/09/algorithm-to-determine-if-a-point-is-inside-a-square-with-mathematics-no-hit-test-involved/
         /**
          * point が bounding box 内か外かを調べます
+         * @method inside
          * @param {Vector2D} v 調べるpoint
          * @param {Array} 結果を格納する
          * @return {Array} inside の時は contains へthisを格納し返します
@@ -636,8 +635,10 @@
                 index1 = children.indexOf( o1 ),
                 index2 = children.indexOf( o2 );
 
-            children[ index2 ] = o1;
-            children[ index1 ] = o2;
+            if ( index1 !== -1 &amp;&amp; index2 !== -1 ) {
+                children[ index2 ] = o1;
+                children[ index1 ] = o2;
+            }
 
             return this;
         };
@@ -651,8 +652,11 @@
             var children = this.children,
                 index = children.indexOf( o );
 
-            children.splice( index, 1 );
-            children.push( o );
+            if ( index !== -1 ) {
+
+                children.splice( index, 1 );
+                children.push( o );
+            }
 
             return this;
         };
@@ -683,11 +687,34 @@
          * @param {number} h canvas height
          */
         p.beginRender = function ( w, h ) {
-            this.prepareRender();
+            this.prepareRender( w, h );
         };
 
-        p.prepareRender = function () {
+        /**
+         * @method prepareRender
+         * @param {number} w canvas width
+         * @param {number} h canvas height
+         */
+        p.prepareRender = function ( w, h ) {
 
+        };
+
+        /**
+         * @method _rgba
+         * @param {Object} rgb { r: number, g: number, b: number}
+         * @param {Number} alpha
+         * @return {{r: *, g: *, b: *, a: number}}
+         * @protected
+         */
+        p._rgba = function ( rgb, alpha ) {
+            var _rgb = rgb;
+
+            return {
+                r: _rgb.r,
+                g: _rgb.g,
+                b: _rgb.b,
+                a: _rgb.a * alpha
+            };
         };
 
         return Object2D;

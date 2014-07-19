@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - Line 1 | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        vehicle,
+        scene,
+
+        flocks = [],
+        zanzo,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 0,
+        jams = [],
+        debug_mode = false;
+
+    // zanzo
+    zanzo = new Sankaku.Zanzo( 10 );
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
+    }
+
+    var clear = 0;
+
+    function loop () {
+//        requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            limit = 45,
+            i, circle,
+            position,
+            max_r;
+
+        max_r = Math.min( rect.w, rect.h ) * 0.5;
+
+        for ( i = 0; i < limit; i++ ) {
+            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+            circle = new Sankaku.Circle( position.x, position.y, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+
+            jams.push( circle );
+        }
+    }
+
+    function init () {
+        scene = new Sankaku.Scene();
+
+//        var rect = size(),
+//            _other = Sagen.hasClass( element, "other" ),
+//            limit = _other ? 222 : 33,
+//            position,
+//            max_r = 1,
+//            speed = 3,
+//            i, flock;
+//
+//        for ( i = 0; i < limit; i++ ) {
+//
+//            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+//
+//            flock = new Sankaku.Flock();
+////            flock.setPosition( new Sankaku.Vector2D( position.x || rect.w * Math.random(), position.y || rect.h * Math.random() ) );
+//            flock.setPosition( new Sankaku.Vector2D( position.x, position.y ) );
+//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
+//            flock.width = 2;
+//            flock.height = 1;
+//            flock.scale = 1 + Math.random() * 3;
+//
+//            flock.setSpeed( speed * ( 10 - flock.scale ) * 0.1 );
+//            flock.setMass( flock.scale * 0.5 );
+////            flock.setFlockClose( _other ? 32 : 12 * flock.scale );
+//            flock.setFlockClose( _other ? 32 : 12 * ( 10 - flock.scale ) * 0.9 );
+//            flock.setPadding( _other ? -160 : -10 );
+//            flock.view().setMode( Sankaku.Shape.FILL ).setColor( "#efefef" ).setAlpha( 0.5 );
+//
+//            flock.setFlocks( flocks );
+//
+//            flocks.push( flock );
+//
+//            scene.add( flock );
+//        }
+
+        var c1, c2, l1;
+
+        c1 = new Sankaku.Circle( 100, 100, 10, "#ffffff" );
+        c2 = new Sankaku.Circle( 200, 200, 10, "#ff0000" );
+
+        l1 = new Sankaku.Line( c1, c2, "#ff00ff", 1 )
+
+        scene.add( c1 );
+        scene.add( c2 );
+        scene.add( l1 );
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

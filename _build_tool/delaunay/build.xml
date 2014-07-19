@@ -3,7 +3,7 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
-    <property name="version" value="0.2.5"/>
+    <property name="version" value="0.2.6"/>
 
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>
@@ -52,6 +52,8 @@
             <file name="display/Circle.js"/>
             <file name="display/Tripod.js"/>
             <file name="display/Star.js"/>
+
+            <file name="display/Line.js"/>
 
             <file name="vehicle/Vehicle.js"/>
             <file name="vehicle/SteeredVehicle.js"/>
