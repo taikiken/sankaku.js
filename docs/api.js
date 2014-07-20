@@ -5,6 +5,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Delaunay",
         "Distribute",
         "EventDispatcher",
+        "FileSave",
         "Flock",
         "FollowPath",
         "Iro",

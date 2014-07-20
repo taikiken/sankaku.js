@@ -125,6 +125,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "_build_tool/delaunay/src/util/FileSave.js": {
+            "name": "_build_tool/delaunay/src/util/FileSave.js",
+            "modules": {},
+            "classes": {
+                "FileSave": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/util/Iro.js": {
             "name": "_build_tool/delaunay/src/util/Iro.js",
             "modules": {},
@@ -227,6 +236,7 @@
                 "Vector2D": 1,
                 "Zanzo": 1,
                 "Distribute": 1,
+                "FileSave": 1,
                 "Iro": 1,
                 "List": 1,
                 "Num": 1,
@@ -246,7 +256,8 @@
             "line": 22,
             "license": "inazumatv.com",
             "author": "(at)taikiken / http://inazumatv.com",
-            "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay\n\nhosted on\nhttps://github.com/taikiken/sankaku.js"
+            "date": "2014/06/20 - 11:55\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.\n\ndelaunay\noriginal: https://github.com/ironwallaby/delaunay\n\ncanvas-toBlob.js\nA canvas.toBlob() implementation.\n2011-07-13\n\nBy Eli Grey, http://eligrey.com and Devin Samarin, https://github.com/eboyjr\nLicense: X11/MIT\n  See LICENSE.md",
+            "source": "http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js\n\nhosted on\nhttps://github.com/taikiken/sankaku.js"
         }
     },
     "classes": {
@@ -639,6 +650,19 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/util/Distribute.js",
             "line": 24,
+            "is_constructor": 1
+        },
+        "FileSave": {
+            "name": "FileSave",
+            "shortname": "FileSave",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Sankaku",
+            "file": "_build_tool/delaunay/src/util/FileSave.js",
+            "line": 282,
             "is_constructor": 1
         },
         "Iro": {
@@ -3252,6 +3276,23 @@
             "class": "Distribute"
         },
         {
+            "file": "_build_tool/delaunay/src/util/FileSave.js",
+            "line": 1,
+            "license": "inazumatv.com",
+            "author": "(at)taikiken / http://inazumatv.com",
+            "date": "2014/07/20 - 20:31\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "FileSave"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/FileSave.js",
+            "line": 290,
+            "itemtype": "method",
+            "name": "saveAs",
+            "static": 1,
+            "type": "{*|boolean}",
+            "class": "FileSave"
+        },
+        {
             "file": "_build_tool/delaunay/src/util/Iro.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -4785,7 +4826,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 21,
+            "line": 39,
             "itemtype": "property",
             "name": "version",
             "final": "",
@@ -4796,7 +4837,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/Sankaku.js",
-            "line": 201,
+            "line": 219,
             "description": "継承に使用します",
             "itemtype": "method",
             "name": "extend",
@@ -4819,6 +4860,14 @@
     ],
     "warnings": [
         {
+            "message": "unknown tag: license",
+            "line": " _build_tool/delaunay/src/util/FileSave.js:1"
+        },
+        {
+            "message": "unknown tag: date",
+            "line": " _build_tool/delaunay/src/util/FileSave.js:1"
+        },
+        {
             "message": "replacing incorrect tag: params with param",
             "line": " _build_tool/delaunay/src/vehicle/Flock.js:21"
         },
@@ -4836,6 +4885,14 @@
         },
         {
             "message": "unknown tag: date",
+            "line": " _build_tool/delaunay/src/Sankaku.js:1"
+        },
+        {
+            "message": "unknown tag: source",
+            "line": " _build_tool/delaunay/src/Sankaku.js:1"
+        },
+        {
+            "message": "unknown tag: source",
             "line": " _build_tool/delaunay/src/Sankaku.js:1"
         },
         {
@@ -4889,6 +4946,10 @@
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/26 - 11:40\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/util/Distribute.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " _build_tool/delaunay/src/util/FileSave.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/20 - 18:44\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
