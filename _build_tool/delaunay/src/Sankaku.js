@@ -24,7 +24,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.6";
+Sankaku.version = "0.2.7";
 
 // polyfill
 ( function ( self ){

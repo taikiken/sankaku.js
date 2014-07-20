@@ -49,7 +49,7 @@
          * @return {number}
          */
         p.radius = function () {
-            return this._radius;
+            return this._radius * this.scale;
         };
 
         /**
@@ -108,6 +108,14 @@
             }
 
             return contains;
+        };
+
+        p.contain = function ( v ) {
+            var results = [];
+
+            this._inside( v, results );
+
+            return results.length > 0;
         };
 
         return Circle;

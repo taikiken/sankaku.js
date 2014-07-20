@@ -24,7 +24,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.6";
+Sankaku.version = "0.2.7";
 
 // polyfill
 ( function ( self ){
@@ -2969,7 +2969,7 @@ Sankaku.version = "0.2.6";
          * @return {number}
          */
         p.radius = function () {
-            return this._radius;
+            return this._radius * this.scale;
         };
 
         /**
@@ -3028,6 +3028,14 @@ Sankaku.version = "0.2.6";
             }
 
             return contains;
+        };
+
+        p.contain = function ( v ) {
+            var results = [];
+
+            this._inside( v, results );
+
+            return results.length > 0;
         };
 
         return Circle;
