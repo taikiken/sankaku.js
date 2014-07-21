@@ -32,13 +32,12 @@
         (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob && navigator.msSaveOrOpenBlob.bind(navigator)) ||
         // Everyone else
         ( function ( view ) {
-//            "use strict";
             // IE <10 is explicitly unsupported
             if ( typeof navigator !== "undefined" && /MSIE [1-9]\./.test( navigator.userAgent ) ) {
                 return;
             }
 
-            var doc = view.document ,
+            var doc = view.document,
 
                 get_URL = function() {
                     // only get URL when necessary in case Blob.js hasn't overridden it yet

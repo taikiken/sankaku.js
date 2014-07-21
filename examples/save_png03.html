@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=320">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
-<title>Canvas Note - toBlob to PNG | イナヅマTV</title>
+<title>Canvas Note - toBlob and PNG down load | イナヅマTV</title>
 <link rel="author" href="https://plus.google.com/109284322876483643060/" />
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="stylesheet" href="css/reset.css"/>
@@ -16,7 +16,7 @@ html, body {
 body {
     min-width: 980px;
     min-height: 600px;
-    background-color: #28282f;
+    background-color: #17222f;
     overflow: hidden;
 }
 .mobile body {
@@ -32,9 +32,12 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform:translate( -50%, -50% );
-    -webkit-transform:translate( -50%, -50% );
-    /*background-color: #fff;*/
+
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 #control {
     position: absolute;
@@ -51,9 +54,24 @@ body {
     color: #daf2b4;
     font-size: 13px;
     text-decoration: none;
+    border: 1px solid #ccc;
+    -webkit-transition-property: background-color,color;
+    -moz-transition-property: background-color,color;
+    -ms-transition-property: background-color,color;
+    -o-transition-property: background-color,color;
+    transition-property: background-color,color;
+    -webkit-transition-duration: 0.32s;
+    -moz-transition-duration: 0.32s;
+    -ms-transition-duration: 0.32s;
+    -o-transition-duration: 0.32s;
+    transition-duration: 0.32s;
+}
+#save_png:hover {
+    background-color: #2f2f2f;
+    color: #ff430b;
 }
 </style>
-<script type="text/javascript" src="libs/sankaku.js"></script>
+<script type="text/javascript" src="libs/sankaku-0.2.8.min.js"></script>
 <script>
 //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 //    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -91,10 +109,7 @@ body {
 
         squares = [],
         rotation = 0,
-        step = 6;
-
-    // zanzo
-    zanzo = new Sankaku.Zanzo( 12 );
+        step = 3;
 
     function size () {
 
@@ -153,10 +168,14 @@ body {
             hex = "#000000",
             w = 100,
             c = w * 0.5,
+            z = 24,
             i, square, h,
             he,
 
             sw, sh;
+
+        // zanzo
+        zanzo = new Sankaku.Zanzo( z );
 
         if ( !_other ) {
 
@@ -166,6 +185,11 @@ body {
             w = 80;
             c = w * 0.5;
             rect = size();
+            zanzo.limit( 6 );
+            step = 9;
+        }
+
+        if ( Sagen.Browser.IE.is() ) {
             zanzo.limit( 6 );
             step = 9;
         }
@@ -183,13 +207,13 @@ body {
 
                 if ( he ) {
                     if ( i % 2 ) {
-                        square.setAlpha( 0.75 );
+                        square.setAlpha( 0.5 );
                         square.setColor( hex );
                     }
                 }
                 else {
                     if ( i % 2 === 0 ) {
-                        square.setAlpha( 0.75 );
+                        square.setAlpha( 0.5 );
                         square.setColor( hex );
                     }
                 }
