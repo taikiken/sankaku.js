@@ -107,7 +107,7 @@
 
         var p = Object2D.prototype;
 
-        p.constructor = Sankaku.Object2D;
+        p.constructor = Object2D;
 
         // mixin EventDispatcher
         Sankaku.EventDispatcher.initialize( p );

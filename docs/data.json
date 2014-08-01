@@ -1,6 +1,15 @@
 {
     "project": {},
     "files": {
+        "_build_tool/delaunay/src/display/Bitmap.js": {
+            "name": "_build_tool/delaunay/src/display/Bitmap.js",
+            "modules": {},
+            "classes": {
+                "Bitmap": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "_build_tool/delaunay/src/display/Circle.js": {
             "name": "_build_tool/delaunay/src/display/Circle.js",
             "modules": {},
@@ -98,6 +107,17 @@
                 "Vector2D": 1
             },
             "fors": {},
+            "namespaces": {}
+        },
+        "_build_tool/delaunay/src/net/LoadImage.js": {
+            "name": "_build_tool/delaunay/src/net/LoadImage.js",
+            "modules": {},
+            "classes": {
+                "LoadImage": 1
+            },
+            "fors": {
+                "LoadImage": 1
+            },
             "namespaces": {}
         },
         "_build_tool/delaunay/src/render/Inside.js": {
@@ -223,6 +243,7 @@
             "name": "Sankaku",
             "submodules": {},
             "classes": {
+                "Bitmap": 1,
                 "Circle": 1,
                 "Line": 1,
                 "Object2D": 1,
@@ -234,6 +255,7 @@
                 "Delaunay": 1,
                 "Triangle": 1,
                 "Vector2D": 1,
+                "LoadImage": 1,
                 "Zanzo": 1,
                 "Distribute": 1,
                 "FileSave": 1,
@@ -261,6 +283,47 @@
         }
     },
     "classes": {
+        "Bitmap": {
+            "name": "Bitmap",
+            "shortname": "Bitmap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Sankaku",
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 21,
+            "extends": "Shape",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "width",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "img",
+                    "description": "",
+                    "type": "LoadImage"
+                }
+            ],
+            "is_constructor": 1
+        },
         "Circle": {
             "name": "Circle",
             "shortname": "Circle",
@@ -271,7 +334,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 25,
+            "line": 24,
             "extends": "Shape",
             "params": [
                 {
@@ -539,6 +602,7 @@
             "plugin_for": [],
             "extension_for": [
                 "Object2D",
+                "LoadImage",
                 "Vehicle"
             ],
             "module": "Sankaku",
@@ -619,6 +683,29 @@
             ],
             "is_constructor": 1
         },
+        "LoadImage": {
+            "name": "LoadImage",
+            "shortname": "LoadImage",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Sankaku",
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 19,
+            "description": "画像を読み込みイベントを発火します",
+            "uses": [
+                "EventDispatcher"
+            ],
+            "params": [
+                {
+                    "name": "path",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1
+        },
         "Zanzo": {
             "name": "Zanzo",
             "shortname": "Zanzo",
@@ -662,7 +749,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/util/FileSave.js",
-            "line": 282,
+            "line": 281,
             "is_constructor": 1
         },
         "Iro": {
@@ -834,6 +921,12 @@
     },
     "classitems": [
         {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/31 - 19:09\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Bitmap"
+        },
+        {
             "file": "_build_tool/delaunay/src/display/Circle.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/25 - 16:22\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -841,7 +934,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 47,
+            "line": 46,
             "itemtype": "method",
             "name": "getRadius",
             "return": {
@@ -852,7 +945,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 55,
+            "line": 54,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -863,7 +956,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 77,
+            "line": 76,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -881,7 +974,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 95,
+            "line": 94,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -3170,6 +3263,42 @@
             "class": "Vector2D"
         },
         {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 1,
+            "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/31 - 19:12\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 30,
+            "description": "画像読み込み完了イベント",
+            "itemtype": "property",
+            "name": "COMPLETE",
+            "final": "",
+            "static": 1,
+            "type": "{string}",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 38,
+            "description": "画像読み込みエラーイベント",
+            "itemtype": "property",
+            "name": "ERROR",
+            "final": "",
+            "static": 1,
+            "type": "{string}",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 53,
+            "description": "画像読み込みを開始します",
+            "itemtype": "method",
+            "name": "load",
+            "class": "LoadImage"
+        },
+        {
             "file": "_build_tool/delaunay/src/render/Inside.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/13 - 17:32\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
@@ -3285,7 +3414,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/FileSave.js",
-            "line": 290,
+            "line": 289,
             "itemtype": "method",
             "name": "saveAs",
             "static": 1,
@@ -3464,7 +3593,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 226,
+            "line": 227,
             "itemtype": "method",
             "name": "int2hex",
             "static": 1,
@@ -4896,6 +5025,10 @@
             "line": " _build_tool/delaunay/src/Sankaku.js:1"
         },
         {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/31 - 19:09\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/display/Bitmap.js:1"
+        },
+        {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/25 - 16:22\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/display/Circle.js:1"
         },
@@ -4934,6 +5067,10 @@
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/06/22 - 17:33\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
             "line": " _build_tool/delaunay/src/geom/Vector2D.js:1"
+        },
+        {
+            "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/31 - 19:12\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "line": " _build_tool/delaunay/src/net/LoadImage.js:1"
         },
         {
             "message": "Missing item type\nlicense inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/13 - 17:32\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",

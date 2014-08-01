@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Vehicle</title>
+    <title>Bitmap</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -132,28 +132,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Vehicle Class</h1>
+                        <h1>Bitmap Class</h1>
 <div class="box meta">
-    
-        <div class="uses">
-            Uses
-            <ul class="inline commas">
-                
-                    <li><a href="EventDispatcher.html">EventDispatcher</a></li>
-                
-            </ul>
-        </div>
     
 
     
         <div class="extends">
-            Extends <a href="../classes/Object2D.html" class="crosslink">Object2D</a>
+            Extends <a href="../classes/Shape.html" class="crosslink">Shape</a>
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l23"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:23</code></a>
+            Defined in: <a href="../files/_build_tool_delaunay_src_display_Bitmap.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Bitmap.js:21</code></a>
         </div>
     
 
@@ -175,8 +166,8 @@
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Vehicle" class="method item">
-    <h3 class="name"><code>Vehicle</code></h3>
+        <div id="method_Bitmap" class="method item">
+    <h3 class="name"><code>Bitmap</code></h3>
 
     
         <div class="args">
@@ -184,7 +175,31 @@
             
                 <li class="arg">
                     
-                        <code class="optional">[viewModel]</code>
+                        <code>x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>img</code>
                     
                 </li>
             
@@ -217,7 +232,7 @@
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l23"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:23</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Bitmap.js.html#l21"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Bitmap.js:21</code></a>
         
         </p>
 
@@ -239,9 +254,68 @@
             
                 <li class="param">
                     
-                        <code class="param-name optional">[viewModel]</code>
-                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">width</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">img</code>
+                        <span class="type"><a href="../classes/LoadImage.html" class="crosslink">LoadImage</a></span>
                     
 
                     
@@ -303,7 +377,7 @@
                                 
                             </li>
                         
-                            <li class="index-item method protected inherited">
+                            <li class="index-item method protected inherited inherited">
                                 <a href="#method__draw">_draw</a>
 
                                 
@@ -324,13 +398,6 @@
                                 
                             </li>
                         
-                            <li class="index-item method protected">
-                                <a href="#method__update">_update</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method inherited">
                                 <a href="#method_add">add</a>
 
@@ -338,7 +405,7 @@
                                 
                             </li>
                         
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_addEventListener">addEventListener</a>
 
                                 
@@ -352,20 +419,6 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_behavior">behavior</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_bounce">bounce</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method inherited">
                                 <a href="#method_bounding">bounding</a>
 
@@ -373,14 +426,14 @@
                                 
                             </li>
                         
-                            <li class="index-item method inherited">
+                            <li class="index-item method inherited inherited">
                                 <a href="#method_clone">clone</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_dispatchEvent">dispatchEvent</a>
 
                                 
@@ -394,14 +447,14 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_getVelocity">getVelocity</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_fill">fill</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_hasEventListener">hasEventListener</a>
 
                                 
@@ -422,8 +475,22 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_mass">mass</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_line">line</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_mode">mode</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_paint">paint</a>
 
                                 
                                 
@@ -444,13 +511,20 @@
                             </li>
                         
                             <li class="index-item method inherited">
+                                <a href="#method_radius">radius</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
                                 <a href="#method_remove">remove</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited inherited">
+                            <li class="index-item method inherited">
                                 <a href="#method_removeEventListener">removeEventListener</a>
 
                                 
@@ -478,8 +552,8 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_setBehavior">setBehavior</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_setBorder">setBorder</a>
 
                                 
                                 
@@ -492,15 +566,15 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_setMass">setMass</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_setLine">setLine</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_setPadding">setPadding</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_setMode">setMode</a>
 
                                 
                                 
@@ -520,27 +594,6 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_setSpeed">setSpeed</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setVelocity">setVelocity</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setView">setView</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method inherited">
                                 <a href="#method_setX">setX</a>
 
@@ -555,8 +608,8 @@
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_speed">speed</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_stroke">stroke</a>
 
                                 
                                 
@@ -564,27 +617,6 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_swap">swap</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_update">update</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_view">view</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_wrap">wrap</a>
 
                                 
                                 
@@ -607,15 +639,22 @@
                                 
                             </li>
                         
-                            <li class="index-item property protected">
-                                <a href="#property__behavior">_behavior</a>
+                            <li class="index-item property protected inherited">
+                                <a href="#property__color">_color</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property protected">
-                                <a href="#property__mass">_mass</a>
+                            <li class="index-item property protected inherited">
+                                <a href="#property__fill">_fill</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property protected inherited">
+                                <a href="#property__line">_line</a>
 
                                 
                                 
@@ -628,32 +667,9 @@
                                 
                             </li>
                         
-                            <li class="index-item property protected">
-                                <a href="#property__speed">_speed</a>
+                            <li class="index-item property protected inherited">
+                                <a href="#property__rgb">_rgb</a>
 
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property protected">
-                                <a href="#property__velocity">_velocity</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bottom">bottom</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_BOUNCE">BOUNCE</a>
-
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -672,22 +688,8 @@
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_left">left</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item property inherited">
                                 <a href="#property_parent">parent</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_right">right</a>
 
                                 
                                 
@@ -714,13 +716,6 @@
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_top">top</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item property inherited">
                                 <a href="#property_visible">visible</a>
 
@@ -731,15 +726,6 @@
                             <li class="index-item property inherited">
                                 <a href="#property_width">width</a>
 
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_WRAP">WRAP</a>
-
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -1020,13 +1006,16 @@
 
     <div class="meta">
         
+            <p>Inherited from
+            <a href="../classes/Object2D.html#method__draw">
+                Object2D
+            </a>
             
-                <p>Inherited from
-                <a href="../classes/Object2D.html#method__draw">Object2D</a>:
+            but overwritten in
             
         
         
-        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l422"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:422</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l197"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:197</code></a>
         
         </p>
 
@@ -1320,118 +1309,6 @@
 </div>
 
                 
-                    <div id="method__update" class="method item protected">
-    <h3 class="name"><code>_update</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>w</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>h</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l287"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:287</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">w</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>canvas width</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">h</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>canvas height</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_add" class="method item inherited">
     <h3 class="name"><code>add</code></h3>
 
@@ -1571,12 +1448,9 @@
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/EventDispatcher.html#method_addEventListener">
-                EventDispatcher
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_addEventListener">EventDispatcher</a>:
             
         
         
@@ -1591,9 +1465,9 @@
     </div>
 
     <div class="description">
-        <p><p>イベントにハンドラを登録します<br>
+        <p>イベントにハンドラを登録します<br>
 ハンドラ内のthisはイベント発生元になるので注意が必要です<br>
-this参照を変えないために bind を使用する方法があります</p></p>
+this参照を変えないために bind を使用する方法があります</p>
 <pre class="code prettyprint"><code> function EventReceive () {
      var example = new ExampleClass();
 
@@ -1659,7 +1533,7 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_beginRender" class="method item">
+                    <div id="method_beginRender" class="method item inherited">
     <h3 class="name"><code>beginRender</code></h3>
 
     
@@ -1698,16 +1572,13 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/Object2D.html#method_beginRender">
-                Object2D
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_beginRender">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l407"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:407</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l551"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:551</code></a>
         
         </p>
 
@@ -1755,184 +1626,6 @@ this参照を変えないために bind を使用する方法があります</p>
                     <div class="param-description">
                         <p>canvas height</p>
 
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_behavior" class="method item">
-    <h3 class="name"><code>behavior</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l241"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:241</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">String</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_bounce" class="method item">
-    <h3 class="name"><code>bounce</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>w</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>h</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l365"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:365</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">w</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">h</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
                     </div>
 
                     
@@ -2017,7 +1710,7 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_clone" class="method item">
+                    <div id="method_clone" class="method item inherited">
     <h3 class="name"><code>clone</code></h3>
 
     
@@ -2026,7 +1719,7 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
+            <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>
         </span>
     
 
@@ -2053,7 +1746,7 @@ this参照を変えないために bind を使用する方法があります</p>
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l150"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:150</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l108"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:108</code></a>
         
         </p>
 
@@ -2076,7 +1769,7 @@ this参照を変えないために bind を使用する方法があります</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>:
+                        <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>:
                     
                 
             </div>
@@ -2120,12 +1813,9 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/EventDispatcher.html#method_dispatchEvent">
-                EventDispatcher
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_dispatchEvent">EventDispatcher</a>:
             
         
         
@@ -2176,7 +1866,7 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_draw" class="method item">
+                    <div id="method_draw" class="method item inherited">
     <h3 class="name"><code>draw</code></h3>
 
     
@@ -2194,6 +1884,10 @@ this参照を変えないために bind を使用する方法があります</p>
     
 
     
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>
+        </span>
+    
 
     
 
@@ -2209,16 +1903,13 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/Object2D.html#method_draw">
-                Object2D
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/Object2D.html#method_draw">Object2D</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l267"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:267</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Object2D.js.html#l400"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Object2D.js:400</code></a>
         
         </p>
 
@@ -2247,7 +1938,7 @@ this参照を変えないために bind を使用する方法があります</p>
                     
 
                     <div class="param-description">
-                        
+                         
                     </div>
 
                     
@@ -2258,22 +1949,46 @@ this参照を変えないために bind を使用する方法があります</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Object2D.html" class="crosslink">Object2D</a></span>:
+                    
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_getVelocity" class="method item">
-    <h3 class="name"><code>getVelocity</code></h3>
+                    <div id="method_fill" class="method item inherited">
+    <h3 class="name"><code>fill</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ctx</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
-        </span>
     
 
     
@@ -2291,15 +2006,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_fill">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l259"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:259</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l225"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:225</code></a>
         
         </p>
 
@@ -2314,19 +2026,45 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     
+        <div class="params">
+            <h4>Parameters:</h4>
 
-    
-        <div class="returns">
-            <h4>Returns:</h4>
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ctx</code>
+                        <span class="type">CanvasRenderingContext2D</span>
+                    
 
-            <div class="returns-description">
-                
                     
-                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>:
+
+                    <div class="param-description">
+                         
+                    </div>
+
                     
-                
-            </div>
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
         </div>
+    
+
     
 
     
@@ -2376,12 +2114,9 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/EventDispatcher.html#method_hasEventListener">
-                EventDispatcher
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_hasEventListener">EventDispatcher</a>:
             
         
         
@@ -2687,8 +2422,8 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_mass" class="method item">
-    <h3 class="name"><code>mass</code></h3>
+                    <div id="method_line" class="method item inherited">
+    <h3 class="name"><code>line</code></h3>
 
     
         <span class="paren">()</span>
@@ -2715,15 +2450,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_line">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l204"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:204</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l189"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:189</code></a>
         
         </p>
 
@@ -2748,6 +2480,175 @@ this参照を変えないために bind を使用する方法があります</p>
                     
                         <span class="type">Number</span>:
                     
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_mode" class="method item inherited">
+    <h3 class="name"><code>mode</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_mode">Shape</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l171"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:171</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_paint" class="method item inherited">
+    <h3 class="name"><code>paint</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ctx</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_paint">Shape</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l253"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:253</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ctx</code>
+                        <span class="type">CanvasRenderingContext2D</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    <p>bounding</p>
+
                 
             </div>
         </div>
@@ -2931,6 +2832,73 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
+                    <div id="method_radius" class="method item inherited">
+    <h3 class="name"><code>radius</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_radius">Shape</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l132"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:132</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_remove" class="method item inherited">
     <h3 class="name"><code>remove</code></h3>
 
@@ -3070,12 +3038,9 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="../classes/EventDispatcher.html#method_removeEventListener">
-                EventDispatcher
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_removeEventListener">EventDispatcher</a>:
             
         
         
@@ -3412,8 +3377,8 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_setBehavior" class="method item">
-    <h3 class="name"><code>setBehavior</code></h3>
+                    <div id="method_setBorder" class="method item inherited">
+    <h3 class="name"><code>setBorder</code></h3>
 
     
         <div class="args">
@@ -3421,7 +3386,13 @@ this参照を変えないために bind を使用する方法があります</p>
             
                 <li class="arg">
                     
-                        <code>str</code>
+                        <code>line</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color</code>
                     
                 </li>
             
@@ -3431,7 +3402,7 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
+            <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>
         </span>
     
 
@@ -3450,15 +3421,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_setBorder">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l231"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:231</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l144"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:144</code></a>
         
         </p>
 
@@ -3480,14 +3448,30 @@ this参照を変えないために bind を使用する方法があります</p>
             
                 <li class="param">
                     
-                        <code class="param-name">str</code>
+                        <code class="param-name">line</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        
+                        <p>hex</p>
+
                     </div>
 
                     
@@ -3504,7 +3488,7 @@ this参照を変えないために bind を使用する方法があります</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>:
+                        <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>:
                     
                 
             </div>
@@ -3615,8 +3599,8 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_setMass" class="method item">
-    <h3 class="name"><code>setMass</code></h3>
+                    <div id="method_setLine" class="method item inherited">
+    <h3 class="name"><code>setLine</code></h3>
 
     
         <div class="args">
@@ -3634,7 +3618,7 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
+            <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>
         </span>
     
 
@@ -3653,15 +3637,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_setLine">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l193"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:193</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l179"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:179</code></a>
         
         </p>
 
@@ -3672,8 +3653,7 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     <div class="description">
-        <p>質量を設定します</p>
-
+        
     </div>
 
     
@@ -3691,7 +3671,7 @@ this参照を変えないために bind を使用する方法があります</p>
                     
 
                     <div class="param-description">
-                        
+                         
                     </div>
 
                     
@@ -3708,7 +3688,7 @@ this参照を変えないために bind を使用する方法があります</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>:
+                        <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>:
                     
                 
             </div>
@@ -3719,8 +3699,8 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_setPadding" class="method item">
-    <h3 class="name"><code>setPadding</code></h3>
+                    <div id="method_setMode" class="method item inherited">
+    <h3 class="name"><code>setMode</code></h3>
 
     
         <div class="args">
@@ -3728,25 +3708,7 @@ this参照を変えないために bind を使用する方法があります</p>
             
                 <li class="arg">
                     
-                        <code>top</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[right]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[bottom]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[left]</code>
+                        <code>fill</code>
                     
                 </li>
             
@@ -3756,7 +3718,7 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
+            <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>
         </span>
     
 
@@ -3775,15 +3737,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_setMode">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l172"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:172</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l162"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:162</code></a>
         
         </p>
 
@@ -3805,62 +3764,14 @@ this参照を変えないために bind を使用する方法があります</p>
             
                 <li class="param">
                     
-                        <code class="param-name">top</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">fill</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[right]</code>
-                        <span class="type">Number</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[bottom]</code>
-                        <span class="type">Number</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[left]</code>
-                        <span class="type">Number</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
+                         
                     </div>
 
                     
@@ -3877,7 +3788,7 @@ this参照を変えないために bind を使用する方法があります</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>:
+                        <span class="type"><a href="../classes/Shape.html" class="crosslink">Shape</a></span>:
                     
                 
             </div>
@@ -4090,300 +4001,6 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_setSpeed" class="method item">
-    <h3 class="name"><code>setSpeed</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>n</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l212"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:212</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>最大スピードを設定します</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">n</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_setVelocity" class="method item">
-    <h3 class="name"><code>setVelocity</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>v</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l249"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:249</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">v</code>
-                        <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/Vehicle.html" class="crosslink">Vehicle</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_setView" class="method item">
-    <h3 class="name"><code>setView</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>view</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l113"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:113</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">view</code>
-                        <span class="type"> | <a href="../classes/Object2D.html" class="crosslink">Object2D</a> | <a href="../classes/Shape.html" class="crosslink">Shape</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_setX" class="method item inherited">
     <h3 class="name"><code>setX</code></h3>
 
@@ -4584,17 +4201,35 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_speed" class="method item">
-    <h3 class="name"><code>speed</code></h3>
+                    <div id="method_stroke" class="method item inherited">
+    <h3 class="name"><code>stroke</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ctx</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>line</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Number</span>
-        </span>
     
 
     
@@ -4612,15 +4247,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#method_stroke">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l223"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:223</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l238"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:238</code></a>
         
         </p>
 
@@ -4635,19 +4267,60 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     
+        <div class="params">
+            <h4>Parameters:</h4>
 
-    
-        <div class="returns">
-            <h4>Returns:</h4>
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ctx</code>
+                        <span class="type">CanvasRenderingContext2D</span>
+                    
 
-            <div class="returns-description">
-                
                     
-                        <span class="type">Number</span>:
+
+                    <div class="param-description">
+                         
+                    </div>
+
                     
-                
-            </div>
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">line</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
         </div>
+    
+
     
 
     
@@ -4777,292 +4450,6 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_update" class="method item">
-    <h3 class="name"><code>update</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>w</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>h</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l278"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:278</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">w</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">h</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_view" class="method item">
-    <h3 class="name"><code>view</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"> | <a href="../classes/Object2D.html" class="crosslink">Object2D</a> | <a href="../classes/Shape.html" class="crosslink">Shape</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l141"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:141</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"> | <a href="../classes/Object2D.html" class="crosslink">Object2D</a> | <a href="../classes/Shape.html" class="crosslink">Shape</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_wrap" class="method item">
-    <h3 class="name"><code>wrap</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>w</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>h</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l326"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:326</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">w</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">h</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
             </div>
         
 
@@ -5116,8 +4503,8 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="property__behavior" class="property item protected">
-    <h3 class="name"><code>_behavior</code></h3>
+                    <div id="property__color" class="property item protected inherited">
+    <h3 class="name"><code>_color</code></h3>
     <span class="type">String</span>
 
     
@@ -5133,15 +4520,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#property__color">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l55"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:55</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l71"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:71</code></a>
         
         </p>
 
@@ -5155,7 +4539,7 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     
-        <p><strong>Default:</strong> Vehicle.BOUNCE</p>
+        <p><strong>Default:</strong> #000000</p>
     
 
     
@@ -5164,8 +4548,53 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="property__mass" class="property item protected">
-    <h3 class="name"><code>_mass</code></h3>
+                    <div id="property__fill" class="property item protected inherited">
+    <h3 class="name"><code>_fill</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Shape.html#property__fill">Shape</a>:
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l43"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:43</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <p><strong>Default:</strong> Shape.STROKE</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property__line" class="property item protected inherited">
+    <h3 class="name"><code>_line</code></h3>
     <span class="type">Number</span>
 
     
@@ -5181,15 +4610,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#property__line">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l41"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:41</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l51"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:51</code></a>
         
         </p>
 
@@ -5203,7 +4629,7 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     
-        <p><strong>Default:</strong> 1.0</p>
+        <p><strong>Default:</strong> 1</p>
     
 
     
@@ -5257,9 +4683,9 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="property__speed" class="property item protected">
-    <h3 class="name"><code>_speed</code></h3>
-    <span class="type">Number</span>
+                    <div id="property__rgb" class="property item protected inherited">
+    <h3 class="name"><code>_rgb</code></h3>
+    <span class="type">R: number, g: number, b: number</span>
 
     
 
@@ -5274,158 +4700,12 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Shape.html#property__rgb">Shape</a>:
             
         
         
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l48"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:48</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <p><strong>Default:</strong> 10</p>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property__velocity" class="property item protected">
-    <h3 class="name"><code>_velocity</code></h3>
-    <span class="type"><a href="../classes/Vector2D.html" class="crosslink">Vector2D</a></span>
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l33"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:33</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <p><strong>Default:</strong> new Vector2D( 0, 0 )</p>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bottom" class="property item">
-    <h3 class="name"><code>bottom</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l81"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:81</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>setPadding bottom</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_BOUNCE" class="property item">
-    <h3 class="name"><code>BOUNCE</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l100"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:100</code></a>
+        <a href="../files/_build_tool_delaunay_src_display_Shape.js.html#l59"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;display&#x2F;Shape.js:59</code></a>
         
         </p>
 
@@ -5530,51 +4810,6 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="property_left" class="property item">
-    <h3 class="name"><code>left</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l63"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:63</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>setPadding left</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="property_parent" class="property item inherited">
     <h3 class="name"><code>parent</code></h3>
     <span class="type"></span>
@@ -5606,51 +4841,6 @@ this参照を変えないために bind を使用する方法があります</p>
 
     <div class="description">
         
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_right" class="property item">
-    <h3 class="name"><code>right</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l75"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:75</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>setPadding right</p>
-
     </div>
 
     
@@ -5789,51 +4979,6 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="property_top" class="property item">
-    <h3 class="name"><code>top</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l69"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:69</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>setPadding top</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="property_visible" class="property item inherited">
     <h3 class="name"><code>visible</code></h3>
     <span class="type">Boolean</span>
@@ -5910,54 +5055,6 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
         <p><strong>Default:</strong> 20</p>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_WRAP" class="property item">
-    <h3 class="name"><code>WRAP</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_build_tool_delaunay_src_vehicle_Vehicle.js.html#l94"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;vehicle&#x2F;Vehicle.js:94</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
     
 
     

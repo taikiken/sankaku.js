@@ -86,7 +86,7 @@
 
         var p = Line.prototype;
 
-        p.constructor = Sankaku.Line;
+        p.constructor = Line;
 
         /**
          * @method _clone

@@ -40,7 +40,7 @@
 
         var p = Wander.prototype;
 
-        p.constructor = Sankaku.Wander;
+        p.constructor = Wander;
 
         /**
          * @method clone

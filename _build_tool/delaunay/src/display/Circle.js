@@ -13,8 +13,7 @@
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape
-    ;
+        Shape = Sankaku.Shape;
 
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
@@ -42,7 +41,7 @@
 
         var p = Circle.prototype;
 
-        p.constructor = Sankaku.Circle;
+        p.constructor = Circle;
 
         /**
          * @method getRadius

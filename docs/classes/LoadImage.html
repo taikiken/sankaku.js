@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>EventDispatcher</title>
+    <title>LoadImage</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -132,15 +132,24 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>EventDispatcher Class</h1>
+                        <h1>LoadImage Class</h1>
 <div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="EventDispatcher.html">EventDispatcher</a></li>
+                
+            </ul>
+        </div>
     
 
     
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l5"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:5</code></a>
+            Defined in: <a href="../files/_build_tool_delaunay_src_net_LoadImage.js.html#l19"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;net&#x2F;LoadImage.js:19</code></a>
         </div>
     
 
@@ -156,27 +165,28 @@
 
 
 <div class="box intro">
-    <p>カスタム Event を管理します<br>
-必要なClassでmixinします<br>
-mixin 後下記の4関数が使用できるようになります<br>
-addEventListener<br>
-hasEventListener<br>
-removeEventListener<br>
-dispatchEvent<br></p>
-<pre class="code prettyprint"><code> function SomeClass () {}
- // mixin
- Sankaku.EventDispatcher.initialize( SomeClass.prototype );</code></pre>
+    <p>画像を読み込みイベントを発火します</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_EventDispatcher" class="method item">
-    <h3 class="name"><code>EventDispatcher</code></h3>
+        <div id="method_LoadImage" class="method item">
+    <h3 class="name"><code>LoadImage</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>path</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -204,7 +214,7 @@ dispatchEvent<br></p>
             
         
         
-        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l5"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:5</code></a>
+        <a href="../files/_build_tool_delaunay_src_net_LoadImage.js.html#l19"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;net&#x2F;LoadImage.js:19</code></a>
         
         </p>
 
@@ -218,6 +228,29 @@ dispatchEvent<br></p>
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">path</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -236,6 +269,8 @@ dispatchEvent<br></p>
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
         
         
     </ul>
@@ -250,21 +285,21 @@ dispatchEvent<br></p>
 
                     <ul class="index-list methods">
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_addEventListener">addEventListener</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_dispatchEvent">dispatchEvent</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_hasEventListener">hasEventListener</a>
 
                                 
@@ -272,15 +307,13 @@ dispatchEvent<br></p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_initialize">initialize</a>
+                                <a href="#method_load">load</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_removeEventListener">removeEventListener</a>
 
                                 
@@ -291,6 +324,32 @@ dispatchEvent<br></p>
                 </div>
             
 
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_COMPLETE">COMPLETE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_ERROR">ERROR</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -303,7 +362,7 @@ dispatchEvent<br></p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_addEventListener" class="method item">
+                    <div id="method_addEventListener" class="method item inherited">
     <h3 class="name"><code>addEventListener</code></h3>
 
     
@@ -343,11 +402,8 @@ dispatchEvent<br></p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_addEventListener">EventDispatcher</a>:
             
         
         
@@ -362,9 +418,9 @@ dispatchEvent<br></p>
     </div>
 
     <div class="description">
-        <p>イベントにハンドラを登録します<br>
+        <p><p>イベントにハンドラを登録します<br>
 ハンドラ内のthisはイベント発生元になるので注意が必要です<br>
-this参照を変えないために bind を使用する方法があります</p>
+this参照を変えないために bind を使用する方法があります</p></p>
 <pre class="code prettyprint"><code> function EventReceive () {
      var example = new ExampleClass();
 
@@ -430,7 +486,7 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_dispatchEvent" class="method item">
+                    <div id="method_dispatchEvent" class="method item inherited">
     <h3 class="name"><code>dispatchEvent</code></h3>
 
     
@@ -464,11 +520,8 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_dispatchEvent">EventDispatcher</a>:
             
         
         
@@ -519,7 +572,7 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_hasEventListener" class="method item">
+                    <div id="method_hasEventListener" class="method item inherited">
     <h3 class="name"><code>hasEventListener</code></h3>
 
     
@@ -563,11 +616,8 @@ this参照を変えないために bind を使用する方法があります</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_hasEventListener">EventDispatcher</a>:
             
         
         
@@ -647,21 +697,11 @@ this参照を変えないために bind を使用する方法があります</p>
 </div>
 
                 
-                    <div id="method_initialize" class="method item">
-    <h3 class="name"><code>initialize</code></h3>
+                    <div id="method_load" class="method item">
+    <h3 class="name"><code>load</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>object</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
     
@@ -672,8 +712,6 @@ this参照を変えないために bind を使用する方法があります</p>
 
     
 
-    
-        <span class="flag static">static</span>
     
 
     
@@ -691,7 +729,7 @@ this参照を変えないために bind を使用する方法があります</p>
             
         
         
-        <a href="../files/_build_tool_delaunay_src_events_EventDispatcher.js.html#l152"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;events&#x2F;EventDispatcher.js:152</code></a>
+        <a href="../files/_build_tool_delaunay_src_net_LoadImage.js.html#l53"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;net&#x2F;LoadImage.js:53</code></a>
         
         </p>
 
@@ -702,45 +740,10 @@ this参照を変えないために bind を使用する方法があります</p>
     </div>
 
     <div class="description">
-        <p>EventDispatcher mixin <br></p>
-<p>addEventListener<br>
-hasEventListener<br>
-removeEventListener<br>
-dispatchEvent<br>
-をobjectへ追加します</p>
-<pre class="code prettyprint"><code> function SomeClass () {}
- // mixin
- Sankaku.EventDispatcher.initialize( SomeClass.prototype );
-
- var someObject = {};
- // mixin
- Sankaku.EventDispatcher.initialize( someObject );</code></pre>
+        <p>画像読み込みを開始します</p>
 
     </div>
 
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">object</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
@@ -749,7 +752,7 @@ dispatchEvent<br>
 </div>
 
                 
-                    <div id="method_removeEventListener" class="method item">
+                    <div id="method_removeEventListener" class="method item inherited">
     <h3 class="name"><code>removeEventListener</code></h3>
 
     
@@ -789,11 +792,8 @@ dispatchEvent<br>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/EventDispatcher.html#method_removeEventListener">EventDispatcher</a>:
             
         
         
@@ -864,6 +864,110 @@ dispatchEvent<br>
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_COMPLETE" class="property item">
+    <h3 class="name"><code>COMPLETE</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_net_LoadImage.js.html#l30"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;net&#x2F;LoadImage.js:30</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>画像読み込み完了イベント</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_ERROR" class="property item">
+    <h3 class="name"><code>ERROR</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_build_tool_delaunay_src_net_LoadImage.js.html#l38"><code>_build_tool&#x2F;delaunay&#x2F;src&#x2F;net&#x2F;LoadImage.js:38</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>画像読み込みエラーイベント</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

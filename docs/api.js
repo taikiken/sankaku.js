@@ -1,6 +1,7 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "Bitmap",
         "Circle",
         "Delaunay",
         "Distribute",
@@ -11,6 +12,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Iro",
         "Line",
         "List",
+        "LoadImage",
         "Num",
         "Object2D",
         "Sankaku",

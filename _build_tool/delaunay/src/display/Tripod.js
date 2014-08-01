@@ -37,7 +37,7 @@
 
         var p = Tripod.prototype;
 
-        p.constructor = Sankaku.Tripod;
+        p.constructor = Tripod;
 
         /**
          * @method clone

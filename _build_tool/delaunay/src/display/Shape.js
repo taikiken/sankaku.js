@@ -103,7 +103,7 @@
 
         var p = Shape.prototype;
 
-        p.constructor = Sankaku.Shape;
+        p.constructor = Shape;
 
         /**
          * @method clone

@@ -45,7 +45,7 @@
 
         var p = SteeredVehicle.prototype;
 
-        p.constructor = Sankaku.SteeredVehicle;
+        p.constructor = SteeredVehicle;
 
         /**
          * @method clone

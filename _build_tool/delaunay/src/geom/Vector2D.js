@@ -38,7 +38,7 @@
 
         var p = Vector2D.prototype;
 
-        p.constructor = Sankaku.Vector2D;
+        p.constructor = Vector2D;
 
         /**
          * ベクトルを可視化するのに用います

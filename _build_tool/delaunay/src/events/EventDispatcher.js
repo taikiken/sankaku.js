@@ -24,7 +24,7 @@
 
         var p = EventDispatcher.prototype;
 
-        p.constructor = Sankaku.EventDispatcher;
+        p.constructor = EventDispatcher;
 
         /**
          * イベントにハンドラを登録します<br>

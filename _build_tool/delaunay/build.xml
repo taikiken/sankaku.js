@@ -3,7 +3,7 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
-    <property name="version" value="0.2.8"/>
+    <property name="version" value="0.2.9"/>
 
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>
@@ -31,6 +31,8 @@
 
             <file name="events/EventDispatcher.js"/>
 
+            <file name="net/LoadImage.js"/>
+
             <file name="util/FileSave.js"/>
 
             <file name="util/Iro.js"/>
@@ -56,6 +58,8 @@
             <file name="display/Star.js"/>
 
             <file name="display/Line.js"/>
+
+            <file name="display/Bitmap.js"/>
 
             <file name="vehicle/Vehicle.js"/>
             <file name="vehicle/SteeredVehicle.js"/>

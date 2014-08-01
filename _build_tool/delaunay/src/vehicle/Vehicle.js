@@ -106,7 +106,7 @@
 
         var p = Vehicle.prototype;
 
-        p.constructor = Sankaku.Vehicle;
+        p.constructor = Vehicle;
 
         Sankaku.EventDispatcher.initialize( p );
 

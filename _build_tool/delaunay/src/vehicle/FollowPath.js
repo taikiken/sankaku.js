@@ -34,7 +34,7 @@
 
         var p = FollowPath.prototype;
 
-        p.constructor = Sankaku.FollowPath;
+        p.constructor = FollowPath;
 
         /**
          * @method clone

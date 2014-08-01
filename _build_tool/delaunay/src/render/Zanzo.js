@@ -27,7 +27,7 @@
 
         var p = Zanzo.prototype;
 
-        p.constructor = Sankaku.Zanzo;
+        p.constructor = Zanzo;
 
         /**
          * @method limit

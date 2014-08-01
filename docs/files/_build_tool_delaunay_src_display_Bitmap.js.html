@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>_build_tool/delaunay/src/display/Star.js</title>
+    <title>_build_tool/delaunay/src/display/Bitmap.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -132,14 +132,14 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: _build_tool/delaunay/src/display/Star.js</h1>
+                        <h1 class="file-heading">File: _build_tool/delaunay/src/display/Bitmap.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
- * date 2014/07/05 - 17:00
+ * date 2014/07/31 - 19:09
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
  *
@@ -148,114 +148,130 @@
  *
  * This notice shall be included in all copies or substantial portions of the Software.
  */
+
 ( function ( window ){
     &quot;use strict&quot;;
     var Sankaku = window.Sankaku,
         Shape = Sankaku.Shape,
-        Num = Sankaku.Num;
+        LoadImage = Sankaku.LoadImage;
 
-    Sankaku.Star = ( function (){
-        var _sin = Math.sin,
-            _cos = Math.cos;
-
+    Sankaku.Bitmap = ( function (){
         /**
-         * @class Star
+         * @class Bitmap
          * @extends Shape
          * @param {number} x
          * @param {number} y
-         * @param {number=20} [radius]
-         * @param {string} [color] default #000000
-         * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
-         * @param {int=5} [points]
-         * @param {int} [inner]
-         * @default radius * 0.475
+         * @param {number} width
+         * @param {number} height
+         * @param {LoadImage} img
          * @constructor
          */
-        function Star ( x, y, radius, color, fill, points, inner ) {
-            Shape.call( this, x, y, radius, radius, color, fill );
+        function Bitmap ( x, y, width, height, img ) {
+            Shape.call( this, x, y, width, height );
 
-            this._radius = radius || this.width;
-            this._points = points || 5;
-            this._inner = inner || radius * 0.475;
+            var boundLoad = this.onLoad.bind( this ),
+                boundError = this.onError.bind( this );
+
+            this._boundLoad = boundLoad;
+            this._boundError = boundError;
+            this._fill = Shape.FILL;
+
+            this._img = img;
+            this._bitmap = null;
+
+            if ( img.constructor === Sankaku.LoadImage ) {
+
+                img.addEventListener( LoadImage.COMPLETE, boundLoad );
+                img.addEventListener( LoadImage.ERROR, boundError );
+                img.load();
+            }
         }
 
-        Sankaku.extend( Shape, Star );
+        Sankaku.extend( Shape, Bitmap );
 
-        var p = Star.prototype;
+        var p = Bitmap.prototype;
 
-        p.constructor = Star;
+        p.constructor = Bitmap;
 
-        /**
-         * @method getRadius
-         * @return {number}
-         */
-        p.radius = function () {
-            return this._radius;
+        p.dispose = function () {
+            var img = this._img;
+
+            img.removeEventListener( LoadImage.COMPLETE, this._boundLoad );
+            img.removeEventListener( LoadImage.ERROR, this._boundError );
         };
 
-        /**
-         * @method clone
-         * @return {Star}
-         */
+        p.onLoad = function ( event ) {
+            this.dispose();
+            this._bitmap = event.img;
+        };
+
+        p.onError = function () {
+            this.dispose();
+        };
+
         p.clone = function () {
-            var clone =  new Star( this.x, this.y, this._radius, this._color, this._fill, this._points );
-
-            clone.rotation = this.rotation;
-            clone.scale = this.scale;
-            clone._alpha = this._alpha;
-            clone._rgb = Object.create( this._rgb );
-
-            clone._line = this._line;
-            clone._border = {
-                line: this._border.line,
-                rgb: this._border.rgb
-            };
-
-            return clone;
         };
 
-        //http://www.fascinatedwithsoftware.com/blog/post/2012/11/03/How-to-Draw-a-Star-with-HTML5.aspx
-        /**
-         * @method paint
-         * @param {CanvasRenderingContext2D} ctx
-         * @return {Object} bounding
-         */
-        p.paint = function ( ctx ) {
-            var bounding = this.bounding(),
-                e = bounding.e,
-                points = this._points,
-                limit = points * 2,
-                step = Num.ONE_EIGHTY / points,
-                ninety = Num.NINETY,
-//                scale = this.scale,
-                scale = e.scale,
-                outer = this._radius * scale,
-                inner = this._inner * scale,
-//                x = this.x,
-//                y = this.y,
-                x = e.x,
-                y = e.y,
-                rotation = e.rotation,
-                i, angle, r;
+        p.setMode = function () {
+            // empty not change mode
+        };
 
-            ctx.beginPath();
-
-            for ( i = 0; i &lt;= limit; ++i ) {
-
-                angle = i * step - ninety + rotation;
-                r = i % 2 ? inner : outer;
-
-                ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+        p._draw = function ( ctx ) {
+            if ( !this._bitmap ) {
+                // cant drawing
+                return;
             }
 
-            ctx.closePath();
+            var bounding = this.bounding();
 
-            return bounding;
+            this.fill( ctx, bounding, this._bitmap );
         };
 
-        return Star;
-    }() );
+        p.fill = function ( ctx, bounding, bitmap ) {
+            var e = bounding.e,
+                a = bounding.a,
+                alpha = e.alpha,
+                rotation = e.rotation,
+                scale = e.scale,
+                w, h,
+                x, y;
 
+            w = this.width * scale;
+            h = this.height * scale;
+            x = e.x - w * 0.5;
+            y = e.y - h * 0.5;
+
+            if ( alpha &lt; 1 ||  rotation !== 0 ) {
+
+                ctx.save();
+
+
+                if ( alpha &lt; 1 ) {
+
+                    ctx.globalAlpha = alpha;
+                }
+
+                if ( rotation !== 0 ) {
+
+                    ctx.setTransform( 1, 0, 0, 1, 0, 0 );
+                    ctx.translate( e.x, e.y );
+                    ctx.rotate( rotation );
+
+                    x = - w * 0.5;
+                    y = - h * 0.5;
+                }
+
+            }
+
+            ctx.drawImage( bitmap, 0, 0, bitmap.width, bitmap.height, x, y, w, h );
+
+            if ( alpha &lt; 1 ||  rotation !== 0 ) {
+                ctx.restore();
+            }
+        };
+
+        return Bitmap;
+    }() );
 }( window ) );
     </pre>
 </div>

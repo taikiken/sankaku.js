@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=320">
 <script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
-<title>Canvas Note - boids Zanzo scale rotate | イナヅマTV</title>
+<title>Canvas Note - Bitmap | イナヅマTV</title>
 <link rel="stylesheet" href="css/reset.css"/>
 <style type="text/css">
 html, body {
@@ -25,7 +25,7 @@ body {
     min-height: 640px;
 }
 </style>
-<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+<script type="text/javascript" src="libs/sankaku.min.js"></script>
 </head>
 <body>
 <canvas id="canvas" width="640" height="480"></canvas>
@@ -45,10 +45,7 @@ body {
         canvas = document.getElementById( "canvas"),
         ctx = canvas.getContext( "2d"),
 
-        vehicle,
-
-        flocks = [],
-        zanzo,
+        scene,
 
         square,
         rotation = 0,
@@ -60,10 +57,6 @@ body {
         padding = 0,
         jams = [],
         debug_mode = false;
-
-    // zanzo
-    zanzo = new Sankaku.Zanzo( 3 );
-//    zanzo = new Sankaku.Zanzo( 1 );
 
     function size () {
         ww = document.body.clientWidth;
@@ -85,22 +78,25 @@ body {
     }
 
     function draw ( rect ) {
-        rotation += step;
-        if ( rotation >= 360 ) {
+//        rotation += step;
+//        if ( rotation >= 360 ) {
+//
+//            var sub = 360 - rotation;
+//            rotation = sub;
+//        }
+//        var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
+//
+//        square.scale = sin;
+//        square.setRotate( rotation );
+//
+//        square.draw( ctx );
 
-            var sub = 360 - rotation;
-            rotation = sub;
-        }
-        var sin = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
-
-        square.scale = sin;
-        square.setRotate( rotation );
-
-        square.draw( ctx );
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
     }
 
     function loop () {
-//        requestAnimationFrame( loop );
+        requestAnimationFrame( loop );
 
         var rect = size();
         ctx.clearRect( 0, 0, rect.w, rect.h );
@@ -129,43 +125,39 @@ body {
     }
 
     function init () {
-////        hurdle();
-//
-//        var rect = size(),
-//            _other = Sagen.hasClass( element, "other" ),
-//            limit = _other ? 222 : 33,
-//            position,
-//            max_r = 6,
-//            setSpeed = 3,
-//            i, flock;
-//
-//        for ( i = 0; i < limit; i++ ) {
-////        for ( i = 0; i < 3; i++ ) {
-//
-//            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
-//            flock = new Sankaku.Flock();
-////            flock.position( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
-//            flock.setPosition( new Sankaku.Vector2D( setPosition.x || rect.w * Math.random(), setPosition.y || rect.h * Math.random() ) );
-//            flock.setVelocity( new Sankaku.Vector2D( Sankaku.Num.random( 20 ) - 10 || 1, Sankaku.Num.random( 20 ) - 10 || 1 ) );
-//            flock.setSpeed( (setSpeed + Math.random() * setSpeed) * 0.3 );
-//            flock.setMass( Math.random() * 0.5 + 1 );
-////            flock.setMass( Math.random() * 0.5 + 0.5 );
-////            flock.setBehavior( Sankaku.Vehicle.WRAP );
-//            flock.width = 2;
-//            flock.height = 1;
-//            flock.setFlockClose( _other ? 32 : 12 );
-//            flock.setPadding( _other ? -160 : -10 );
-//            flock.scale = 1 + Math.random() * 3;
-//
-//            flocks.push( flock );
-//        }
-        var rect = size();
+        var rect = size(),
+            rotation = 0,
+            step = 3;
 
-        square = new Sankaku.Shape( rect.w * 0.5, rect.h * 0.5, 100, 200, "#ff0000" );
+        scene = new Sankaku.Scene();
 
-//        zanzo.add( [square] );
+        var img = new Sankaku.LoadImage( "img/276.png" );
+        square = new Sankaku.Bitmap( rect.w * 0.5, rect.h * 0.5, 300, 300, img );
 
-//        ctx.globalAlpha = 0.35;
+//        square.prepareRender = function () {
+//            rotation += step;
+//
+//            if ( rotation >= 360 ) {
+//
+//                rotation = 360 - rotation;
+//            }
+//
+////            scale = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) );
+//
+//            this.setRotate( rotation );
+////            this.scale = scale;
+//        };
+
+        square.setRotate( 270 );
+//        square.setAlpha( 0.5 );
+
+        var circle = new Sankaku.Circle( rect.w * 0.5, rect.h * 0.5, 6, "#ff0000", Sankaku.Shape.FILL );
+
+        scene.add( square );
+        scene.add( circle );
+
+        console.log( "square ", square, square.constructor === Sankaku.Bitmap );
+
         loop();
     }
 

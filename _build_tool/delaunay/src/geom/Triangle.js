@@ -71,7 +71,7 @@
 
         var p = Triangle.prototype;
 
-        p.constructor = Sankaku.Triangle;
+        p.constructor = Triangle;
 
         /**
          * @method draw

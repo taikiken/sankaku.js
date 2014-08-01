@@ -25,7 +25,7 @@
 
         var p = Inside.prototype;
 
-        p.constructor = Sankaku.Inside;
+        p.constructor = Inside;
 
         p.check = function ( v ) {
             var contains = this._contains;

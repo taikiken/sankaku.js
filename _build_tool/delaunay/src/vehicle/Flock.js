@@ -37,7 +37,7 @@
 
         var p = Flock.prototype;
 
-        p.constructor = Sankaku.Flock;
+        p.constructor = Flock;
 
         /**
          * @method clone

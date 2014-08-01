@@ -30,7 +30,7 @@
 
         var p = Scene.prototype;
 
-        p.constructor = Sankaku.Scene;
+        p.constructor = Scene;
 
         /**
          * @method addChild

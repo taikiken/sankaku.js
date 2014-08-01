@@ -42,7 +42,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.8";
+Sankaku.version = "0.2.9";
 
 // polyfill
 ( function ( self ){
@@ -387,7 +387,7 @@ Sankaku.version = "0.2.8";
 
         var p = EventDispatcher.prototype;
 
-        p.constructor = Sankaku.EventDispatcher;
+        p.constructor = EventDispatcher;
 
         /**
          * イベントにハンドラを登録します<br>
@@ -545,6 +545,97 @@ Sankaku.version = "0.2.8";
 
 }( window.Sankaku ) );
 /**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/31 - 19:12
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+( function ( window ){
+    "use strict";
+    var document = window.document,
+        Sankaku = window.Sankaku;
+
+    Sankaku.LoadImage = ( function (){
+        /**
+         * 画像を読み込みイベントを発火します
+         * @class LoadImage
+         * @uses EventDispatcher
+         * @param path
+         * @constructor
+         */
+        function LoadImage ( path ) {
+            this._path = path;
+        }
+
+        /**
+         * 画像読み込み完了イベント
+         * @for LoadImage
+         * @const COMPLETE
+         * @static
+         * @type {string}
+         */
+        LoadImage.COMPLETE = "load_image_complete";
+        /**
+         * 画像読み込みエラーイベント
+         * @for LoadImage
+         * @const ERROR
+         * @static
+         * @type {string}
+         */
+        LoadImage.ERROR = "load_image_error";
+
+        var p = LoadImage.prototype;
+
+        p.constructor = LoadImage;
+
+        Sankaku.EventDispatcher.initialize( p );
+
+        /**
+         * 画像読み込みを開始します
+         * @method load
+         */
+        p.load = function () {
+            var path = this._path,
+                img = new Image(),
+                _this = this;
+
+            function dispose () {
+
+                img.removeEventListener( "load", complete );
+                img.removeEventListener( "error", error );
+
+                return true;
+            }
+
+            function complete () {
+
+                dispose();
+                _this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: _this, path: path, img: img } );
+            }
+
+            function error () {
+
+                dispose();
+                _this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: _this, path: path } );
+
+            }
+
+            img.addEventListener( "load", complete, false );
+            img.addEventListener( "error", error, false );
+
+            img.src = path;
+        };
+
+        return LoadImage;
+    }() );
+}( window ) );
+/**
  * @license inazumatv.com
  * @author (at)taikiken / http://inazumatv.com
  * @date 2014/07/20 - 20:31
@@ -578,13 +669,12 @@ Sankaku.version = "0.2.8";
         (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob && navigator.msSaveOrOpenBlob.bind(navigator)) ||
         // Everyone else
         ( function ( view ) {
-//            "use strict";
             // IE <10 is explicitly unsupported
             if ( typeof navigator !== "undefined" && /MSIE [1-9]\./.test( navigator.userAgent ) ) {
                 return;
             }
 
-            var doc = view.document ,
+            var doc = view.document,
 
                 get_URL = function() {
                     // only get URL when necessary in case Blob.js hasn't overridden it yet
@@ -1057,11 +1147,11 @@ Sankaku.version = "0.2.8";
                 return r + r + g + g + b + b;
             });
 
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
             return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
+                r: parseInt( result[1], 16 ),
+                g: parseInt( result[2], 16 ),
+                b: parseInt( result[3], 16 )
             } : null;
         };
 
@@ -1074,8 +1164,9 @@ Sankaku.version = "0.2.8";
          * @return {string}
          */
         iro.rgb2hex = function ( r, g, b ) {
-            function componentToHex(c) {
-                var hex = c.toString(16);
+            function componentToHex( c ) {
+
+                var hex = c.toString( 16 );
                 return hex.length === 1 ? "0" + hex : hex;
             }
 
@@ -1421,7 +1512,7 @@ Sankaku.version = "0.2.8";
 
         var p = Vector2D.prototype;
 
-        p.constructor = Sankaku.Vector2D;
+        p.constructor = Vector2D;
 
         /**
          * ベクトルを可視化するのに用います
@@ -2134,7 +2225,7 @@ Sankaku.version = "0.2.8";
 
         var p = Triangle.prototype;
 
-        p.constructor = Sankaku.Triangle;
+        p.constructor = Triangle;
 
         /**
          * @method draw
@@ -2544,7 +2635,7 @@ Sankaku.version = "0.2.8";
 
         var p = Object2D.prototype;
 
-        p.constructor = Sankaku.Object2D;
+        p.constructor = Object2D;
 
         // mixin EventDispatcher
         Sankaku.EventDispatcher.initialize( p );
@@ -3058,7 +3149,7 @@ Sankaku.version = "0.2.8";
 
         var p = Scene.prototype;
 
-        p.constructor = Sankaku.Scene;
+        p.constructor = Scene;
 
         /**
          * @method addChild
@@ -3203,7 +3294,7 @@ Sankaku.version = "0.2.8";
 
         var p = Shape.prototype;
 
-        p.constructor = Sankaku.Shape;
+        p.constructor = Shape;
 
         /**
          * @method clone
@@ -3395,8 +3486,7 @@ Sankaku.version = "0.2.8";
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape
-    ;
+        Shape = Sankaku.Shape;
 
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
@@ -3424,7 +3514,7 @@ Sankaku.version = "0.2.8";
 
         var p = Circle.prototype;
 
-        p.constructor = Sankaku.Circle;
+        p.constructor = Circle;
 
         /**
          * @method getRadius
@@ -3542,7 +3632,7 @@ Sankaku.version = "0.2.8";
 
         var p = Tripod.prototype;
 
-        p.constructor = Sankaku.Tripod;
+        p.constructor = Tripod;
 
         /**
          * @method clone
@@ -3672,7 +3762,7 @@ Sankaku.version = "0.2.8";
 
         var p = Star.prototype;
 
-        p.constructor = Sankaku.Star;
+        p.constructor = Star;
 
         /**
          * @method getRadius
@@ -3834,7 +3924,7 @@ Sankaku.version = "0.2.8";
 
         var p = Line.prototype;
 
-        p.constructor = Sankaku.Line;
+        p.constructor = Line;
 
         /**
          * @method _clone
@@ -4028,6 +4118,143 @@ Sankaku.version = "0.2.8";
 /**
  * license inazumatv.com
  * author (at)taikiken / http://inazumatv.com
+ * date 2014/07/31 - 19:09
+ *
+ * Copyright (c) 2011-2014 inazumatv.com, inc.
+ *
+ * Distributed under the terms of the MIT license.
+ * http://www.opensource.org/licenses/mit-license.html
+ *
+ * This notice shall be included in all copies or substantial portions of the Software.
+ */
+
+( function ( window ){
+    "use strict";
+    var Sankaku = window.Sankaku,
+        Shape = Sankaku.Shape,
+        LoadImage = Sankaku.LoadImage;
+
+    Sankaku.Bitmap = ( function (){
+        /**
+         * @class Bitmap
+         * @extends Shape
+         * @param {number} x
+         * @param {number} y
+         * @param {number} width
+         * @param {number} height
+         * @param {LoadImage} img
+         * @constructor
+         */
+        function Bitmap ( x, y, width, height, img ) {
+            Shape.call( this, x, y, width, height );
+
+            var boundLoad = this.onLoad.bind( this ),
+                boundError = this.onError.bind( this );
+
+            this._boundLoad = boundLoad;
+            this._boundError = boundError;
+            this._fill = Shape.FILL;
+
+            this._img = img;
+            this._bitmap = null;
+
+            if ( img.constructor === Sankaku.LoadImage ) {
+
+                img.addEventListener( LoadImage.COMPLETE, boundLoad );
+                img.addEventListener( LoadImage.ERROR, boundError );
+                img.load();
+            }
+        }
+
+        Sankaku.extend( Shape, Bitmap );
+
+        var p = Bitmap.prototype;
+
+        p.constructor = Bitmap;
+
+        p.dispose = function () {
+            var img = this._img;
+
+            img.removeEventListener( LoadImage.COMPLETE, this._boundLoad );
+            img.removeEventListener( LoadImage.ERROR, this._boundError );
+        };
+
+        p.onLoad = function ( event ) {
+            this.dispose();
+            this._bitmap = event.img;
+        };
+
+        p.onError = function () {
+            this.dispose();
+        };
+
+        p.clone = function () {
+        };
+
+        p.setMode = function () {
+            // empty not change mode
+        };
+
+        p._draw = function ( ctx ) {
+            if ( !this._bitmap ) {
+                // cant drawing
+                return;
+            }
+
+            var bounding = this.bounding();
+
+            this.fill( ctx, bounding, this._bitmap );
+        };
+
+        p.fill = function ( ctx, bounding, bitmap ) {
+            var e = bounding.e,
+                a = bounding.a,
+                alpha = e.alpha,
+                rotation = e.rotation,
+                scale = e.scale,
+                w, h,
+                x, y;
+
+            w = this.width * scale;
+            h = this.height * scale;
+            x = e.x - w * 0.5;
+            y = e.y - h * 0.5;
+
+            if ( alpha < 1 ||  rotation !== 0 ) {
+
+                ctx.save();
+
+
+                if ( alpha < 1 ) {
+
+                    ctx.globalAlpha = alpha;
+                }
+
+                if ( rotation !== 0 ) {
+
+                    ctx.setTransform( 1, 0, 0, 1, 0, 0 );
+                    ctx.translate( e.x, e.y );
+                    ctx.rotate( rotation );
+
+                    x = - w * 0.5;
+                    y = - h * 0.5;
+                }
+
+            }
+
+            ctx.drawImage( bitmap, 0, 0, bitmap.width, bitmap.height, x, y, w, h );
+
+            if ( alpha < 1 ||  rotation !== 0 ) {
+                ctx.restore();
+            }
+        };
+
+        return Bitmap;
+    }() );
+}( window ) );
+/**
+ * license inazumatv.com
+ * author (at)taikiken / http://inazumatv.com
  * date 2014/06/22 - 21:01
  *
  * Copyright (c) 2011-2014 inazumatv.com, inc.
@@ -4133,7 +4360,7 @@ Sankaku.version = "0.2.8";
 
         var p = Vehicle.prototype;
 
-        p.constructor = Sankaku.Vehicle;
+        p.constructor = Vehicle;
 
         Sankaku.EventDispatcher.initialize( p );
 
@@ -4493,7 +4720,7 @@ Sankaku.version = "0.2.8";
 
         var p = SteeredVehicle.prototype;
 
-        p.constructor = Sankaku.SteeredVehicle;
+        p.constructor = SteeredVehicle;
 
         /**
          * @method clone
@@ -4852,7 +5079,7 @@ Sankaku.version = "0.2.8";
 
         var p = Wander.prototype;
 
-        p.constructor = Sankaku.Wander;
+        p.constructor = Wander;
 
         /**
          * @method clone
@@ -5042,7 +5269,7 @@ Sankaku.version = "0.2.8";
 
         var p = Flock.prototype;
 
-        p.constructor = Sankaku.Flock;
+        p.constructor = Flock;
 
         /**
          * @method clone
@@ -5253,7 +5480,7 @@ Sankaku.version = "0.2.8";
 
         var p = FollowPath.prototype;
 
-        p.constructor = Sankaku.FollowPath;
+        p.constructor = FollowPath;
 
         /**
          * @method clone
@@ -5408,7 +5635,7 @@ Sankaku.version = "0.2.8";
 
         var p = Zanzo.prototype;
 
-        p.constructor = Sankaku.Zanzo;
+        p.constructor = Zanzo;
 
         /**
          * @method limit
@@ -5523,7 +5750,7 @@ Sankaku.version = "0.2.8";
 
         var p = Inside.prototype;
 
-        p.constructor = Sankaku.Inside;
+        p.constructor = Inside;
 
         p.check = function ( v ) {
             var contains = this._contains;

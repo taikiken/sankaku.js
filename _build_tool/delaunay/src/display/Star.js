@@ -45,7 +45,7 @@
 
         var p = Star.prototype;
 
-        p.constructor = Sankaku.Star;
+        p.constructor = Star;
 
         /**
          * @method getRadius
