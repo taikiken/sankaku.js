@@ -52,7 +52,7 @@
          * <br>Sceneはinsideを調べません
          * @method inside
          * @param {Vector2D} v 調べるpoint
-         * @param {Array} 結果を格納する
+         * @param {Array} contains 結果を格納する配列
          * @return {Array} inside の時は contains へthisを格納し返します
          */
         p.inside = function ( v, contains ) {

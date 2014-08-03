@@ -1991,8 +1991,8 @@
                     "type": "Vector2D"
                 },
                 {
-                    "name": "結果を格納する",
-                    "description": "",
+                    "name": "contains",
+                    "description": "結果を格納する配列",
                     "type": "Array"
                 }
             ],
