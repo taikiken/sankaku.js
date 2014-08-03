@@ -9,6 +9,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "FileSave",
         "Flock",
         "FollowPath",
+        "Inside",
         "Iro",
         "Line",
         "List",

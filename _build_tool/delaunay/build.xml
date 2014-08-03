@@ -3,7 +3,7 @@
 
     <property name="compiler" value="../compiler.jar"/>
 
-    <property name="version" value="0.2.9"/>
+    <property name="version" value="0.2.10"/>
 
     <property name="dist" value="./dist"/>
     <property name="concat" value="./concat"/>

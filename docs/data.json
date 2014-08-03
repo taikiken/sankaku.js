@@ -123,7 +123,9 @@
         "_build_tool/delaunay/src/render/Inside.js": {
             "name": "_build_tool/delaunay/src/render/Inside.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "Inside": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -256,6 +258,7 @@
                 "Triangle": 1,
                 "Vector2D": 1,
                 "LoadImage": 1,
+                "Inside": 1,
                 "Zanzo": 1,
                 "Distribute": 1,
                 "FileSave": 1,
@@ -319,7 +322,7 @@
                 {
                     "name": "img",
                     "description": "",
-                    "type": "LoadImage"
+                    "type": "LoadImage|Image"
                 }
             ],
             "is_constructor": 1
@@ -706,6 +709,26 @@
             ],
             "is_constructor": 1
         },
+        "Inside": {
+            "name": "Inside",
+            "shortname": "Inside",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Sankaku",
+            "file": "_build_tool/delaunay/src/render/Inside.js",
+            "line": 20,
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "",
+                    "type": "Scene"
+                }
+            ],
+            "is_constructor": 1
+        },
         "Zanzo": {
             "name": "Zanzo",
             "shortname": "Zanzo",
@@ -924,6 +947,92 @@
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/31 - 19:09\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 61,
+            "itemtype": "method",
+            "name": "dispose",
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 71,
+            "itemtype": "method",
+            "name": "onLoad",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 80,
+            "itemtype": "method",
+            "name": "onError",
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 87,
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "Bitmap"
+            },
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 107,
+            "itemtype": "method",
+            "name": "setMode",
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 114,
+            "itemtype": "method",
+            "name": "if",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasRenderingContext2D"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "Bitmap"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Bitmap.js",
+            "line": 130,
+            "itemtype": "method",
+            "name": "fill",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "",
+                    "type": "CanvasRenderingContext2D"
+                },
+                {
+                    "name": "bounding",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "bitmap",
+                    "description": "",
+                    "type": "Image"
+                }
+            ],
             "class": "Bitmap"
         },
         {
@@ -1546,7 +1655,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 329,
+            "line": 344,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "setRotate",
@@ -1565,7 +1674,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 341,
+            "line": 356,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1583,7 +1692,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 371,
+            "line": 386,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1601,7 +1710,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 400,
+            "line": 415,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1619,7 +1728,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 422,
+            "line": 437,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1635,7 +1744,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 432,
+            "line": 447,
             "description": "point が bounding box 内か外かを調べます",
             "itemtype": "method",
             "name": "inside",
@@ -1659,7 +1768,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 456,
+            "line": 471,
             "itemtype": "method",
             "name": "_area",
             "params": [
@@ -1689,7 +1798,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 468,
+            "line": 483,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1714,7 +1823,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 495,
+            "line": 510,
             "itemtype": "method",
             "name": "swap",
             "params": [
@@ -1737,7 +1846,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 514,
+            "line": 529,
             "itemtype": "method",
             "name": "highest",
             "params": [
@@ -1755,7 +1864,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 532,
+            "line": 547,
             "itemtype": "method",
             "name": "render",
             "return": {
@@ -1773,7 +1882,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 551,
+            "line": 566,
             "description": "prepare render",
             "itemtype": "method",
             "name": "beginRender",
@@ -1793,7 +1902,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 561,
+            "line": 576,
             "itemtype": "method",
             "name": "prepareRender",
             "params": [
@@ -1812,7 +1921,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 570,
+            "line": 585,
             "itemtype": "method",
             "name": "_rgba",
             "params": [
@@ -3293,6 +3402,17 @@
         {
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
             "line": 53,
+            "itemtype": "method",
+            "name": "clone",
+            "return": {
+                "description": "",
+                "type": "LoadImage"
+            },
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 61,
             "description": "画像読み込みを開始します",
             "itemtype": "method",
             "name": "load",
@@ -3302,7 +3422,25 @@
             "file": "_build_tool/delaunay/src/render/Inside.js",
             "line": 1,
             "description": "license inazumatv.com\nauthor (at)taikiken / http://inazumatv.com\ndate 2014/07/13 - 17:32\n\nCopyright (c) 2011-2014 inazumatv.com, inc.\n\nDistributed under the terms of the MIT license.\nhttp://www.opensource.org/licenses/mit-license.html\n\nThis notice shall be included in all copies or substantial portions of the Software.",
-            "class": "Zanzo"
+            "class": "Inside"
+        },
+        {
+            "file": "_build_tool/delaunay/src/render/Inside.js",
+            "line": 34,
+            "itemtype": "method",
+            "name": "check",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Vector2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "Inside"
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",

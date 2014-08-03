@@ -51,6 +51,14 @@
         Sankaku.EventDispatcher.initialize( p );
 
         /**
+         * @method clone
+         * @return {LoadImage}
+         */
+        p.clone = function () {
+            return new LoadImage( this._path );
+        };
+
+        /**
          * 画像読み込みを開始します
          * @method load
          */

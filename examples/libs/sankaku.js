@@ -42,7 +42,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.9";
+Sankaku.version = "0.2.10";
 
 // polyfill
 ( function ( self ){
@@ -595,6 +595,14 @@ Sankaku.version = "0.2.9";
         p.constructor = LoadImage;
 
         Sankaku.EventDispatcher.initialize( p );
+
+        /**
+         * @method clone
+         * @return {LoadImage}
+         */
+        p.clone = function () {
+            return new LoadImage( this._path );
+        };
 
         /**
          * 画像読み込みを開始します
@@ -2779,7 +2787,8 @@ Sankaku.version = "0.2.9";
                 cos_cy,
                 sin_bx,
                 sin_cy,
-                my_bounding;
+                my_bounding,
+                p_bounding;
 
             e = {
                 scale: this.scale,
@@ -2791,27 +2800,41 @@ Sankaku.version = "0.2.9";
 
             if ( !!parent && this.scene !== parent ) {
                 // not scene
-//                x = parent.x + x * parent.scale;
-//                y = parent.y + y * parent.scale;
-                x = x * parent.scale;
-                y = y * parent.scale;
+                p_bounding = parent.bounding();
 
-                w1 = this.width * parent.scale;
-                h1 = this.height * parent.scale;
+//                x = x * parent.scale;
+//                y = y * parent.scale;
+
+                x = x * p_bounding.e.scale;
+                y = y * p_bounding.e.scale;
+
+//                w1 = this.width * parent.scale;
+//                h1 = this.height * parent.scale;
+
+                w1 = this.width * p_bounding.e.scale;
+                h1 = this.height * p_bounding.e.scale;
 
                 w2 = w1 * 0.5;
                 h2 = h1 * 0.5;
 
-                rotation = parent.rotation + this.rotation;
+//                rotation = parent.rotation + this.rotation;
 
-                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
-                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+                rotation = p_bounding.e.rotation + this.rotation;
+
+//                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
+//                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+
+                xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
+                yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
 
                 x = xd;
                 y = yd;
 
-                e.scale = parent.scale * this.scale;
-                e.alpha = parent.alpha() * this._alpha;
+//                e.scale = parent.scale * this.scale;
+//                e.alpha = parent.alpha() * this._alpha;
+                e.scale = p_bounding.e.scale * this.scale;
+                e.alpha = p_bounding.e.alpha * this._alpha;
+
                 e.rotation = rotation;
             }
 
@@ -2932,8 +2955,8 @@ Sankaku.version = "0.2.9";
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 ) {
-                // visible true && alpha not 0
+            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+                // visible true && alpha not 0 && scale not 0
                 this._draw( ctx );
             }
 
@@ -4142,7 +4165,7 @@ Sankaku.version = "0.2.9";
          * @param {number} y
          * @param {number} width
          * @param {number} height
-         * @param {LoadImage} img
+         * @param {LoadImage|Image} img
          * @constructor
          */
         function Bitmap ( x, y, width, height, img ) {
@@ -4163,6 +4186,9 @@ Sankaku.version = "0.2.9";
                 img.addEventListener( LoadImage.COMPLETE, boundLoad );
                 img.addEventListener( LoadImage.ERROR, boundError );
                 img.load();
+            } else if ( img.constructor === Image ) {
+
+                this._bitmap = img;
             }
         }
 
@@ -4172,6 +4198,9 @@ Sankaku.version = "0.2.9";
 
         p.constructor = Bitmap;
 
+        /**
+         * @method dispose
+         */
         p.dispose = function () {
             var img = this._img;
 
@@ -4179,22 +4208,54 @@ Sankaku.version = "0.2.9";
             img.removeEventListener( LoadImage.ERROR, this._boundError );
         };
 
+        /**
+         * @method onLoad
+         * @param {Object} event
+         */
         p.onLoad = function ( event ) {
             this.dispose();
             this._bitmap = event.img;
         };
 
+        /**
+         * @method onError
+         */
         p.onError = function () {
             this.dispose();
         };
 
+        /**
+         * @method clone
+         * @return {Bitmap}
+         */
         p.clone = function () {
+            var img = this._img,
+                clone_img;
+
+            if ( img.constructor === Sankaku.LoadImage ) {
+
+                clone_img = img.clone();
+            } else {
+
+                clone_img = new Image();
+                clone_img.src = img.src;
+            }
+
+            return new Bitmap( this.x, this.y, this.width, this.height, clone_img );
         };
 
+        /**
+         * @method setMode
+         */
         p.setMode = function () {
             // empty not change mode
         };
 
+        /**
+         * @method if
+         * @param {CanvasRenderingContext2D} ctx
+         * @protected
+         */
         p._draw = function ( ctx ) {
             if ( !this._bitmap ) {
                 // cant drawing
@@ -4206,12 +4267,19 @@ Sankaku.version = "0.2.9";
             this.fill( ctx, bounding, this._bitmap );
         };
 
+        /**
+         * @method fill
+         * @param {CanvasRenderingContext2D} ctx
+         * @param {Object} bounding
+         * @param {Image} bitmap
+         */
         p.fill = function ( ctx, bounding, bitmap ) {
             var e = bounding.e,
-                a = bounding.a,
+//                a = bounding.a,
                 alpha = e.alpha,
                 rotation = e.rotation,
                 scale = e.scale,
+                is_save = false,
                 w, h,
                 x, y;
 
@@ -4223,7 +4291,7 @@ Sankaku.version = "0.2.9";
             if ( alpha < 1 ||  rotation !== 0 ) {
 
                 ctx.save();
-
+                is_save = true;
 
                 if ( alpha < 1 ) {
 
@@ -4244,7 +4312,7 @@ Sankaku.version = "0.2.9";
 
             ctx.drawImage( bitmap, 0, 0, bitmap.width, bitmap.height, x, y, w, h );
 
-            if ( alpha < 1 ||  rotation !== 0 ) {
+            if ( is_save ) {
                 ctx.restore();
             }
         };
@@ -5742,7 +5810,11 @@ Sankaku.version = "0.2.9";
     ;
 
     Sankaku.Inside = ( function (){
-        // @class Inside
+        /**
+         * @class Inside
+         * @param {Scene} scene
+         * @constructor
+         */
         function Inside ( scene ) {
             this._scene = scene;
             this._contains = [];
@@ -5752,6 +5824,11 @@ Sankaku.version = "0.2.9";
 
         p.constructor = Inside;
 
+        /**
+         * @method check
+         * @param {Vector2D} v
+         * @return {Array}
+         */
         p.check = function ( v ) {
             var contains = this._contains;
             contains.length = 0;

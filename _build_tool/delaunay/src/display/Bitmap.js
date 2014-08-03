@@ -25,7 +25,7 @@
          * @param {number} y
          * @param {number} width
          * @param {number} height
-         * @param {LoadImage} img
+         * @param {LoadImage|Image} img
          * @constructor
          */
         function Bitmap ( x, y, width, height, img ) {
@@ -46,6 +46,9 @@
                 img.addEventListener( LoadImage.COMPLETE, boundLoad );
                 img.addEventListener( LoadImage.ERROR, boundError );
                 img.load();
+            } else if ( img.constructor === Image ) {
+
+                this._bitmap = img;
             }
         }
 
@@ -55,6 +58,9 @@
 
         p.constructor = Bitmap;
 
+        /**
+         * @method dispose
+         */
         p.dispose = function () {
             var img = this._img;
 
@@ -62,22 +68,54 @@
             img.removeEventListener( LoadImage.ERROR, this._boundError );
         };
 
+        /**
+         * @method onLoad
+         * @param {Object} event
+         */
         p.onLoad = function ( event ) {
             this.dispose();
             this._bitmap = event.img;
         };
 
+        /**
+         * @method onError
+         */
         p.onError = function () {
             this.dispose();
         };
 
+        /**
+         * @method clone
+         * @return {Bitmap}
+         */
         p.clone = function () {
+            var img = this._img,
+                clone_img;
+
+            if ( img.constructor === Sankaku.LoadImage ) {
+
+                clone_img = img.clone();
+            } else {
+
+                clone_img = new Image();
+                clone_img.src = img.src;
+            }
+
+            return new Bitmap( this.x, this.y, this.width, this.height, clone_img );
         };
 
+        /**
+         * @method setMode
+         */
         p.setMode = function () {
             // empty not change mode
         };
 
+        /**
+         * @method if
+         * @param {CanvasRenderingContext2D} ctx
+         * @protected
+         */
         p._draw = function ( ctx ) {
             if ( !this._bitmap ) {
                 // cant drawing
@@ -89,12 +127,19 @@
             this.fill( ctx, bounding, this._bitmap );
         };
 
+        /**
+         * @method fill
+         * @param {CanvasRenderingContext2D} ctx
+         * @param {Object} bounding
+         * @param {Image} bitmap
+         */
         p.fill = function ( ctx, bounding, bitmap ) {
             var e = bounding.e,
-                a = bounding.a,
+//                a = bounding.a,
                 alpha = e.alpha,
                 rotation = e.rotation,
                 scale = e.scale,
+                is_save = false,
                 w, h,
                 x, y;
 
@@ -106,7 +151,7 @@
             if ( alpha < 1 ||  rotation !== 0 ) {
 
                 ctx.save();
-
+                is_save = true;
 
                 if ( alpha < 1 ) {
 
@@ -127,7 +172,7 @@
 
             ctx.drawImage( bitmap, 0, 0, bitmap.width, bitmap.height, x, y, w, h );
 
-            if ( alpha < 1 ||  rotation !== 0 ) {
+            if ( is_save ) {
                 ctx.restore();
             }
         };

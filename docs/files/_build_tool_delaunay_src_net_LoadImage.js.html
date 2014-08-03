@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/FollowPath.html">FollowPath</a></li>
             
+                <li><a href="../classes/Inside.html">Inside</a></li>
+            
                 <li><a href="../classes/Iro.html">Iro</a></li>
             
                 <li><a href="../classes/Line.html">Line</a></li>
@@ -187,6 +189,14 @@
         p.constructor = LoadImage;
 
         Sankaku.EventDispatcher.initialize( p );
+
+        /**
+         * @method clone
+         * @return {LoadImage}
+         */
+        p.clone = function () {
+            return new LoadImage( this._path );
+        };
 
         /**
          * 画像読み込みを開始します

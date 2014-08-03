@@ -17,7 +17,11 @@
     ;
 
     Sankaku.Inside = ( function (){
-        // @class Inside
+        /**
+         * @class Inside
+         * @param {Scene} scene
+         * @constructor
+         */
         function Inside ( scene ) {
             this._scene = scene;
             this._contains = [];
@@ -27,6 +31,11 @@
 
         p.constructor = Inside;
 
+        /**
+         * @method check
+         * @param {Vector2D} v
+         * @return {Array}
+         */
         p.check = function ( v ) {
             var contains = this._contains;
             contains.length = 0;

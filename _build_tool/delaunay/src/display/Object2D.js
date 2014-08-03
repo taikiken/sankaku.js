@@ -251,7 +251,8 @@
                 cos_cy,
                 sin_bx,
                 sin_cy,
-                my_bounding;
+                my_bounding,
+                p_bounding;
 
             e = {
                 scale: this.scale,
@@ -263,27 +264,41 @@
 
             if ( !!parent && this.scene !== parent ) {
                 // not scene
-//                x = parent.x + x * parent.scale;
-//                y = parent.y + y * parent.scale;
-                x = x * parent.scale;
-                y = y * parent.scale;
+                p_bounding = parent.bounding();
 
-                w1 = this.width * parent.scale;
-                h1 = this.height * parent.scale;
+//                x = x * parent.scale;
+//                y = y * parent.scale;
+
+                x = x * p_bounding.e.scale;
+                y = y * p_bounding.e.scale;
+
+//                w1 = this.width * parent.scale;
+//                h1 = this.height * parent.scale;
+
+                w1 = this.width * p_bounding.e.scale;
+                h1 = this.height * p_bounding.e.scale;
 
                 w2 = w1 * 0.5;
                 h2 = h1 * 0.5;
 
-                rotation = parent.rotation + this.rotation;
+//                rotation = parent.rotation + this.rotation;
 
-                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
-                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+                rotation = p_bounding.e.rotation + this.rotation;
+
+//                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
+//                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
+
+                xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
+                yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
 
                 x = xd;
                 y = yd;
 
-                e.scale = parent.scale * this.scale;
-                e.alpha = parent.alpha() * this._alpha;
+//                e.scale = parent.scale * this.scale;
+//                e.alpha = parent.alpha() * this._alpha;
+                e.scale = p_bounding.e.scale * this.scale;
+                e.alpha = p_bounding.e.alpha * this._alpha;
+
                 e.rotation = rotation;
             }
 
@@ -404,8 +419,8 @@
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 ) {
-                // visible true && alpha not 0
+            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+                // visible true && alpha not 0 && scale not 0
                 this._draw( ctx );
             }
 

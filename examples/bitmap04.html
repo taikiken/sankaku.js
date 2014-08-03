@@ -161,8 +161,11 @@ body {
         s2.prepareRender = function () {
 
             this.setRotate( -rotation );
-//            this.scale = sin;
+            this.scale = Math.abs( Math.sin( Sankaku.Num.deg2rad( rotation ) ) ) * 2;
         };
+
+//        s2.scale = 2;
+//        s2.setRotate( 180 );
 
         scene.add( square );
         scene.add( circle );
