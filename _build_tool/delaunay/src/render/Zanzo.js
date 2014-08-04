@@ -30,18 +30,18 @@
         p.constructor = Zanzo;
 
         /**
-         * @method limit
+         * @method setLimit
          * @param {int} n
          */
-        p.limit = function ( n ) {
+        p.setLimit = function ( n ) {
             this._limit = n;
         };
 
         /**
          * @method add
-         * @param {Array} set [ Object2D, [] ]
+         * @param {Array} list [ Object2D, [] ]
          */
-        p.add = function ( set ) {
+        p.add = function ( list ) {
             var objects = this._objects,
                 clones = [],
                 object, i, limit;
@@ -51,9 +51,9 @@
                 objects.shift();
             }
 
-            for ( i = 0, limit = set.length; i < limit; i++ ) {
+            for ( i = 0, limit = list.length; i < limit; i++ ) {
 
-                object = set[ i ];
+                object = list[ i ];
                 clones.push( object.clone() );
             }
 
@@ -73,8 +73,7 @@
                 step,
                 opacity,
                 i, limit,
-                n, max,
-                _is;
+                n, max;
 
 
             limit = objects.length;
@@ -110,6 +109,16 @@
          */
         p.length = function () {
             return this._objects.length;
+        };
+
+        /**
+         * @method clear
+         * @return {Zanzo}
+         */
+        p.clear = function () {
+            this._objects = [];
+
+            return this;
         };
 
         return Zanzo;

@@ -14,7 +14,8 @@
     "use strict";
     var Sankaku = window.Sankaku,
         Object2D = Sankaku.Object2D,
-        Shape = Sankaku.Shape;
+        Shape = Sankaku.Shape,
+        Vector2D = Sankaku.Vector2D;
 
     Sankaku.Line = ( function (){
         /**
@@ -101,6 +102,17 @@
             clone.setColor( this._color );
 
             return clone;
+        };
+
+        /**
+         * @method segment
+         * @return {{start: *|Vector2D, end: |Vector2D}}
+         */
+        p.segment = function () {
+            return {
+                start: this._v1,
+                end: this._v2
+            };
         };
 
         /**

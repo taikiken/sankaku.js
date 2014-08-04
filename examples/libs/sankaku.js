@@ -1130,9 +1130,9 @@ Sankaku.version = "0.2.10";
             }
 
             return {
-                r: r * 255,
-                g: g * 255,
-                b: b * 255
+                r: parseInt( r * 255, 10),
+                g: parseInt( g * 255, 10),
+                b: parseInt( b * 255, 10)
             };
         };
 
@@ -2693,6 +2693,22 @@ Sankaku.version = "0.2.10";
         };
 
         /**
+         * @method setRGB
+         * @param {Object} rgb
+         * @return {Object2D}
+         */
+        p.setRGB = function ( rgb ) {
+            var _rgba = this._rgb;
+            _rgba.r= rgb.r;
+            _rgba.g= rgb.g;
+            _rgba.b= rgb.b;
+
+            this._color = Iro.rgb2hex( rgb.r, rgb.g, rgb.b );
+
+            return this;
+        };
+
+        /**
          * @method rgba
          * @return {Object|*|Object2D._rgb}
          */
@@ -2794,48 +2810,57 @@ Sankaku.version = "0.2.10";
                 scale: this.scale,
                 rotation: this.rotation,
                 alpha: this._alpha,
+                visible: this.visible,
                 x: this.x,
                 y: this.y
             };
 
             if ( !!parent && this.scene !== parent ) {
+
                 // not scene
                 p_bounding = parent.bounding();
+
+                e.visible = p_bounding.e.visible;
+
+                if ( e.visible ) {
+                    // parent is visible
 
 //                x = x * parent.scale;
 //                y = y * parent.scale;
 
-                x = x * p_bounding.e.scale;
-                y = y * p_bounding.e.scale;
+                    x = x * p_bounding.e.scale;
+                    y = y * p_bounding.e.scale;
 
 //                w1 = this.width * parent.scale;
 //                h1 = this.height * parent.scale;
 
-                w1 = this.width * p_bounding.e.scale;
-                h1 = this.height * p_bounding.e.scale;
+                    w1 = this.width * p_bounding.e.scale;
+                    h1 = this.height * p_bounding.e.scale;
 
-                w2 = w1 * 0.5;
-                h2 = h1 * 0.5;
+                    w2 = w1 * 0.5;
+                    h2 = h1 * 0.5;
 
 //                rotation = parent.rotation + this.rotation;
 
-                rotation = p_bounding.e.rotation + this.rotation;
+                    rotation = p_bounding.e.rotation + this.rotation;
 
 //                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
 //                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
 
-                xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
-                yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
+                    xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
+                    yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
 
-                x = xd;
-                y = yd;
+                    x = xd;
+                    y = yd;
 
 //                e.scale = parent.scale * this.scale;
 //                e.alpha = parent.alpha() * this._alpha;
-                e.scale = p_bounding.e.scale * this.scale;
-                e.alpha = p_bounding.e.alpha * this._alpha;
+                    e.scale = p_bounding.e.scale * this.scale;
+                    e.alpha = p_bounding.e.alpha * this._alpha;
 
-                e.rotation = rotation;
+                    e.rotation = rotation;
+                }
+
             }
 
             sin = _sin( rotation );
@@ -2957,7 +2982,9 @@ Sankaku.version = "0.2.10";
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
+                this.beginDraw( ctx );
                 this._draw( ctx );
+                this.exitDraw( ctx );
             }
 
             var children = this.children,
@@ -2976,6 +3003,22 @@ Sankaku.version = "0.2.10";
          * @protected
          */
         p._draw = function ( ctx ) {
+
+        };
+
+        /**
+         * @method beginDraw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.beginDraw = function ( ctx ) {
+
+        };
+
+        /**
+         * @method exitDraw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.exitDraw = function ( ctx ) {
 
         };
 
@@ -3415,8 +3458,15 @@ Sankaku.version = "0.2.10";
          */
         p._draw = function ( ctx ) {
             var bounding = this.paint( ctx ),
-                rgba = this._rgba( this._rgb, bounding.e.alpha ),
+                rgba,
                 border_rgba;
+
+            if ( !bounding.e.visible ) {
+                // parent is invisible
+                return;
+            }
+
+            rgba = this._rgba( this._rgb, bounding.e.alpha );
 
             switch ( this._fill ) {
 
@@ -3475,17 +3525,20 @@ Sankaku.version = "0.2.10";
                 b = bounding.b,
                 c = bounding.c,
                 d = bounding.d;
+//            console.log( "paint ", bounding.e.visible, this.parent );
+            if ( bounding.e.visible ) {
+                // parent is visible
+                ctx.beginPath();
 
-            ctx.beginPath();
+                // rect
+                ctx.moveTo( a.x, a.y );
+                ctx.lineTo( b.x, b.y );
+                ctx.lineTo( c.x, c.y );
+                ctx.lineTo( d.x, d.y );
+                ctx.lineTo( a.x, a.y );
 
-            // rect
-            ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y );
-            ctx.lineTo( c.x, c.y );
-            ctx.lineTo( d.x, d.y );
-            ctx.lineTo( a.x, a.y );
-
-            ctx.closePath();
+                ctx.closePath();
+            }
 
             return bounding;
         };
@@ -3509,7 +3562,8 @@ Sankaku.version = "0.2.10";
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape;
+        Shape = Sankaku.Shape,
+        Vector2D = Sankaku.Vector2D;
 
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
@@ -3578,11 +3632,14 @@ Sankaku.version = "0.2.10";
             var bounding = this.bounding(),
                 e = bounding.e;
 
-            ctx.beginPath();
+            if ( e.visible ) {
 
-            ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
+                ctx.beginPath();
 
-            ctx.closePath();
+                ctx.arc( e.x, e.y, this._radius * e.scale, 0, PI2, false );
+
+                ctx.closePath();
+            }
 
             return bounding;
         };
@@ -3605,12 +3662,90 @@ Sankaku.version = "0.2.10";
             return contains;
         };
 
+        /**
+         * @method contain
+         * @param {Vector2D} v
+         * @return {boolean}
+         */
         p.contain = function ( v ) {
             var results = [];
 
             this._inside( v, results );
 
             return results.length > 0;
+        };
+
+        /**
+         * @method intersect
+         * @param {Line} o
+         * @return {boolean}
+         */
+        p.intersect = function ( o ) {
+            var segment = o.segment(),
+                v1 = segment.start,
+                v2 = segment.end,
+                v1_e, v2_e,
+                v1_v, v2_v,
+                radius,
+                bounding,
+                e,
+                AB, BC, AC, BD,
+                x_min, x_max, y_min, y_max,
+                center;
+
+            v1_e = v1.bounding().e;
+            v2_e = v2.bounding().e;
+            v1_v = new Vector2D( v1_e.x, v1_e.y );
+            v2_v = new Vector2D( v2_e.x, v2_e.y );
+
+            // check point inside
+            if ( this.contain( v1_v ) ) {
+
+                return true;
+            }
+            // check point inside
+            if ( this.contain( v2_v ) ) {
+
+                return true;
+            }
+
+            radius = this.radius();
+            bounding = this.bounding();
+            e = bounding.e;
+
+            x_min = e.x - radius;
+            x_max = e.x + radius;
+            y_min = e.y - radius;
+            y_max = e.y + radius;
+
+            // x check
+            if ( ( v1_e.x < x_min  && v2_e.x < x_min ) || ( v1_e.x > x_max && v2_e.x > x_max ) ) {
+                // outside x
+                return false;
+            }
+
+            // y check
+            if ( ( v1_e.y < y_min && v2_e.y < y_min ) || ( v1_e.y > y_max && v2_e.y > y_max ) ) {
+                // outside y
+                return false;
+            }
+
+            // contain check
+            center = new Vector2D( e.x, e.y );
+
+            AB = v1_v.distance( center );
+            BC = v2_v.distance( center );
+            AC = v1_v.distance( v2_v );
+            BD = Math.sqrt( ( ( AC+BC+AB )*( AC-BC+AB )*( -AC+BC+AB )*( AC+BC-AB ) ) / ( 4*AC*AC ) );
+
+//            if ( BD <= radius ) {
+//                // contain
+//                return true;
+//            }
+//
+//            return false;
+
+            return BD <= radius;
         };
 
         return Circle;
@@ -3690,16 +3825,18 @@ Sankaku.version = "0.2.10";
                 c = bounding.c,
                 d = bounding.d;
 
-            ctx.beginPath();
+            if ( bounding.e.visible ) {
+                ctx.beginPath();
 
-            // triangle
-            ctx.moveTo( a.x, a.y );
+                // triangle
+                ctx.moveTo( a.x, a.y );
 //            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
-            ctx.lineTo( ( b.x + c.x ) * 0.5, ( b.y + c.y )  * 0.5 );
-            ctx.lineTo( d.x, d.y );
-            ctx.lineTo( a.x, a.y );
+                ctx.lineTo( ( b.x + c.x ) * 0.5, ( b.y + c.y ) * 0.5 );
+                ctx.lineTo( d.x, d.y );
+                ctx.lineTo( a.x, a.y );
 
-            ctx.closePath();
+                ctx.closePath();
+            }
 
             return bounding;
         };
@@ -3825,32 +3962,43 @@ Sankaku.version = "0.2.10";
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
                 e = bounding.e,
-                points = this._points,
-                limit = points * 2,
-                step = Num.ONE_EIGHTY / points,
-                ninety = Num.NINETY,
-//                scale = this.scale,
-                scale = e.scale,
-                outer = this._radius * scale,
-                inner = this._inner * scale,
-//                x = this.x,
-//                y = this.y,
-                x = e.x,
-                y = e.y,
-                rotation = e.rotation,
+                points,
+                limit,
+                step,
+                ninety,
+                scale,
+                outer,
+                inner,
+                x,
+                y,
+                rotation,
                 i, angle, r;
 
-            ctx.beginPath();
+            if ( e.visible ) {
 
-            for ( i = 0; i <= limit; ++i ) {
+                points = this._points;
+                limit = points * 2;
+                step = Num.ONE_EIGHTY / points;
+                ninety = Num.NINETY;
+                scale = e.scale;
+                outer = this._radius * scale;
+                inner = this._inner * scale;
+                x = e.x;
+                y = e.y;
+                rotation = e.rotation;
 
-                angle = i * step - ninety + rotation;
-                r = i % 2 ? inner : outer;
+                ctx.beginPath();
 
-                ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+                for ( i = 0; i <= limit; ++ i ) {
+
+                    angle = i * step - ninety + rotation;
+                    r = i % 2 ? inner : outer;
+
+                    ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+                }
+
+                ctx.closePath();
             }
-
-            ctx.closePath();
 
             return bounding;
         };
@@ -3875,7 +4023,8 @@ Sankaku.version = "0.2.10";
     "use strict";
     var Sankaku = window.Sankaku,
         Object2D = Sankaku.Object2D,
-        Shape = Sankaku.Shape;
+        Shape = Sankaku.Shape,
+        Vector2D = Sankaku.Vector2D;
 
     Sankaku.Line = ( function (){
         /**
@@ -3962,6 +4111,17 @@ Sankaku.version = "0.2.10";
             clone.setColor( this._color );
 
             return clone;
+        };
+
+        /**
+         * @method segment
+         * @return {{start: *|Vector2D, end: |Vector2D}}
+         */
+        p.segment = function () {
+            return {
+                start: this._v1,
+                end: this._v2
+            };
         };
 
         /**
@@ -4264,7 +4424,10 @@ Sankaku.version = "0.2.10";
 
             var bounding = this.bounding();
 
-            this.fill( ctx, bounding, this._bitmap );
+            if ( bounding.e.visible ) {
+                // parent visible is true
+                this.fill( ctx, bounding, this._bitmap );
+            }
         };
 
         /**
@@ -4275,7 +4438,6 @@ Sankaku.version = "0.2.10";
          */
         p.fill = function ( ctx, bounding, bitmap ) {
             var e = bounding.e,
-//                a = bounding.a,
                 alpha = e.alpha,
                 rotation = e.rotation,
                 scale = e.scale,
@@ -5706,18 +5868,18 @@ Sankaku.version = "0.2.10";
         p.constructor = Zanzo;
 
         /**
-         * @method limit
+         * @method setLimit
          * @param {int} n
          */
-        p.limit = function ( n ) {
+        p.setLimit = function ( n ) {
             this._limit = n;
         };
 
         /**
          * @method add
-         * @param {Array} set [ Object2D, [] ]
+         * @param {Array} list [ Object2D, [] ]
          */
-        p.add = function ( set ) {
+        p.add = function ( list ) {
             var objects = this._objects,
                 clones = [],
                 object, i, limit;
@@ -5727,9 +5889,9 @@ Sankaku.version = "0.2.10";
                 objects.shift();
             }
 
-            for ( i = 0, limit = set.length; i < limit; i++ ) {
+            for ( i = 0, limit = list.length; i < limit; i++ ) {
 
-                object = set[ i ];
+                object = list[ i ];
                 clones.push( object.clone() );
             }
 
@@ -5749,8 +5911,7 @@ Sankaku.version = "0.2.10";
                 step,
                 opacity,
                 i, limit,
-                n, max,
-                _is;
+                n, max;
 
 
             limit = objects.length;
@@ -5786,6 +5947,16 @@ Sankaku.version = "0.2.10";
          */
         p.length = function () {
             return this._objects.length;
+        };
+
+        /**
+         * @method clear
+         * @return {Zanzo}
+         */
+        p.clear = function () {
+            this._objects = [];
+
+            return this;
         };
 
         return Zanzo;

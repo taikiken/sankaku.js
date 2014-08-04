@@ -157,6 +157,22 @@
         };
 
         /**
+         * @method setRGB
+         * @param {Object} rgb
+         * @return {Object2D}
+         */
+        p.setRGB = function ( rgb ) {
+            var _rgba = this._rgb;
+            _rgba.r= rgb.r;
+            _rgba.g= rgb.g;
+            _rgba.b= rgb.b;
+
+            this._color = Iro.rgb2hex( rgb.r, rgb.g, rgb.b );
+
+            return this;
+        };
+
+        /**
          * @method rgba
          * @return {Object|*|Object2D._rgb}
          */
@@ -258,48 +274,57 @@
                 scale: this.scale,
                 rotation: this.rotation,
                 alpha: this._alpha,
+                visible: this.visible,
                 x: this.x,
                 y: this.y
             };
 
             if ( !!parent && this.scene !== parent ) {
+
                 // not scene
                 p_bounding = parent.bounding();
+
+                e.visible = p_bounding.e.visible;
+
+                if ( e.visible ) {
+                    // parent is visible
 
 //                x = x * parent.scale;
 //                y = y * parent.scale;
 
-                x = x * p_bounding.e.scale;
-                y = y * p_bounding.e.scale;
+                    x = x * p_bounding.e.scale;
+                    y = y * p_bounding.e.scale;
 
 //                w1 = this.width * parent.scale;
 //                h1 = this.height * parent.scale;
 
-                w1 = this.width * p_bounding.e.scale;
-                h1 = this.height * p_bounding.e.scale;
+                    w1 = this.width * p_bounding.e.scale;
+                    h1 = this.height * p_bounding.e.scale;
 
-                w2 = w1 * 0.5;
-                h2 = h1 * 0.5;
+                    w2 = w1 * 0.5;
+                    h2 = h1 * 0.5;
 
 //                rotation = parent.rotation + this.rotation;
 
-                rotation = p_bounding.e.rotation + this.rotation;
+                    rotation = p_bounding.e.rotation + this.rotation;
 
 //                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
 //                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
 
-                xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
-                yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
+                    xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
+                    yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
 
-                x = xd;
-                y = yd;
+                    x = xd;
+                    y = yd;
 
 //                e.scale = parent.scale * this.scale;
 //                e.alpha = parent.alpha() * this._alpha;
-                e.scale = p_bounding.e.scale * this.scale;
-                e.alpha = p_bounding.e.alpha * this._alpha;
+                    e.scale = p_bounding.e.scale * this.scale;
+                    e.alpha = p_bounding.e.alpha * this._alpha;
 
-                e.rotation = rotation;
+                    e.rotation = rotation;
+                }
+
             }
 
             sin = _sin( rotation );
@@ -421,7 +446,9 @@
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
+                this.beginDraw( ctx );
                 this._draw( ctx );
+                this.exitDraw( ctx );
             }
 
             var children = this.children,
@@ -440,6 +467,22 @@
          * @protected
          */
         p._draw = function ( ctx ) {
+
+        };
+
+        /**
+         * @method beginDraw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.beginDraw = function ( ctx ) {
+
+        };
+
+        /**
+         * @method exitDraw
+         * @param {CanvasRenderingContext2D} ctx
+         */
+        p.exitDraw = function ( ctx ) {
 
         };
 

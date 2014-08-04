@@ -13,7 +13,8 @@
 ( function ( window ){
     "use strict";
     var Sankaku = window.Sankaku,
-        Shape = Sankaku.Shape;
+        Shape = Sankaku.Shape,
+        Vector2D = Sankaku.Vector2D;
 
     Sankaku.Circle = ( function (){
         var PI2 = Math.PI * 2,
@@ -82,11 +83,14 @@
             var bounding = this.bounding(),
                 e = bounding.e;
 
-            ctx.beginPath();
+            if ( e.visible ) {
 
-            ctx.arc( e.x, e.y, this._radius * e.scale, 0,  PI2, false);
+                ctx.beginPath();
 
-            ctx.closePath();
+                ctx.arc( e.x, e.y, this._radius * e.scale, 0, PI2, false );
+
+                ctx.closePath();
+            }
 
             return bounding;
         };
@@ -109,12 +113,90 @@
             return contains;
         };
 
+        /**
+         * @method contain
+         * @param {Vector2D} v
+         * @return {boolean}
+         */
         p.contain = function ( v ) {
             var results = [];
 
             this._inside( v, results );
 
             return results.length > 0;
+        };
+
+        /**
+         * @method intersect
+         * @param {Line} o
+         * @return {boolean}
+         */
+        p.intersect = function ( o ) {
+            var segment = o.segment(),
+                v1 = segment.start,
+                v2 = segment.end,
+                v1_e, v2_e,
+                v1_v, v2_v,
+                radius,
+                bounding,
+                e,
+                AB, BC, AC, BD,
+                x_min, x_max, y_min, y_max,
+                center;
+
+            v1_e = v1.bounding().e;
+            v2_e = v2.bounding().e;
+            v1_v = new Vector2D( v1_e.x, v1_e.y );
+            v2_v = new Vector2D( v2_e.x, v2_e.y );
+
+            // check point inside
+            if ( this.contain( v1_v ) ) {
+
+                return true;
+            }
+            // check point inside
+            if ( this.contain( v2_v ) ) {
+
+                return true;
+            }
+
+            radius = this.radius();
+            bounding = this.bounding();
+            e = bounding.e;
+
+            x_min = e.x - radius;
+            x_max = e.x + radius;
+            y_min = e.y - radius;
+            y_max = e.y + radius;
+
+            // x check
+            if ( ( v1_e.x < x_min  && v2_e.x < x_min ) || ( v1_e.x > x_max && v2_e.x > x_max ) ) {
+                // outside x
+                return false;
+            }
+
+            // y check
+            if ( ( v1_e.y < y_min && v2_e.y < y_min ) || ( v1_e.y > y_max && v2_e.y > y_max ) ) {
+                // outside y
+                return false;
+            }
+
+            // contain check
+            center = new Vector2D( e.x, e.y );
+
+            AB = v1_v.distance( center );
+            BC = v2_v.distance( center );
+            AC = v1_v.distance( v2_v );
+            BD = Math.sqrt( ( ( AC+BC+AB )*( AC-BC+AB )*( -AC+BC+AB )*( AC+BC-AB ) ) / ( 4*AC*AC ) );
+
+//            if ( BD <= radius ) {
+//                // contain
+//                return true;
+//            }
+//
+//            return false;
+
+            return BD <= radius;
         };
 
         return Circle;

@@ -85,32 +85,43 @@
         p.paint = function ( ctx ) {
             var bounding = this.bounding(),
                 e = bounding.e,
-                points = this._points,
-                limit = points * 2,
-                step = Num.ONE_EIGHTY / points,
-                ninety = Num.NINETY,
-//                scale = this.scale,
-                scale = e.scale,
-                outer = this._radius * scale,
-                inner = this._inner * scale,
-//                x = this.x,
-//                y = this.y,
-                x = e.x,
-                y = e.y,
-                rotation = e.rotation,
+                points,
+                limit,
+                step,
+                ninety,
+                scale,
+                outer,
+                inner,
+                x,
+                y,
+                rotation,
                 i, angle, r;
 
-            ctx.beginPath();
+            if ( e.visible ) {
 
-            for ( i = 0; i <= limit; ++i ) {
+                points = this._points;
+                limit = points * 2;
+                step = Num.ONE_EIGHTY / points;
+                ninety = Num.NINETY;
+                scale = e.scale;
+                outer = this._radius * scale;
+                inner = this._inner * scale;
+                x = e.x;
+                y = e.y;
+                rotation = e.rotation;
 
-                angle = i * step - ninety + rotation;
-                r = i % 2 ? inner : outer;
+                ctx.beginPath();
 
-                ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+                for ( i = 0; i <= limit; ++ i ) {
+
+                    angle = i * step - ninety + rotation;
+                    r = i % 2 ? inner : outer;
+
+                    ctx.lineTo( x + r * _cos( angle ), y + r * _sin( angle ) );
+                }
+
+                ctx.closePath();
             }
-
-            ctx.closePath();
 
             return bounding;
         };

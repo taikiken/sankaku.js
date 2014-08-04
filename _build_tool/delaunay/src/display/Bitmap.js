@@ -124,7 +124,10 @@
 
             var bounding = this.bounding();
 
-            this.fill( ctx, bounding, this._bitmap );
+            if ( bounding.e.visible ) {
+                // parent visible is true
+                this.fill( ctx, bounding, this._bitmap );
+            }
         };
 
         /**
@@ -135,7 +138,6 @@
          */
         p.fill = function ( ctx, bounding, bitmap ) {
             var e = bounding.e,
-//                a = bounding.a,
                 alpha = e.alpha,
                 rotation = e.rotation,
                 scale = e.scale,

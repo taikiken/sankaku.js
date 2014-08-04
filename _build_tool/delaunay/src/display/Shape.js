@@ -201,8 +201,15 @@
          */
         p._draw = function ( ctx ) {
             var bounding = this.paint( ctx ),
-                rgba = this._rgba( this._rgb, bounding.e.alpha ),
+                rgba,
                 border_rgba;
+
+            if ( !bounding.e.visible ) {
+                // parent is invisible
+                return;
+            }
+
+            rgba = this._rgba( this._rgb, bounding.e.alpha );
 
             switch ( this._fill ) {
 
@@ -261,17 +268,20 @@
                 b = bounding.b,
                 c = bounding.c,
                 d = bounding.d;
+//            console.log( "paint ", bounding.e.visible, this.parent );
+            if ( bounding.e.visible ) {
+                // parent is visible
+                ctx.beginPath();
 
-            ctx.beginPath();
+                // rect
+                ctx.moveTo( a.x, a.y );
+                ctx.lineTo( b.x, b.y );
+                ctx.lineTo( c.x, c.y );
+                ctx.lineTo( d.x, d.y );
+                ctx.lineTo( a.x, a.y );
 
-            // rect
-            ctx.moveTo( a.x, a.y );
-            ctx.lineTo( b.x, b.y );
-            ctx.lineTo( c.x, c.y );
-            ctx.lineTo( d.x, d.y );
-            ctx.lineTo( a.x, a.y );
-
-            ctx.closePath();
+                ctx.closePath();
+            }
 
             return bounding;
         };
