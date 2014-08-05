@@ -103,6 +103,13 @@
              * @protected
              */
             this._alpha = 1;
+
+            /**
+             * @property _mask
+             * @type {*|null}
+             * @protected
+             */
+            this._mask = null;
         }
 
         var p = Object2D.prototype;
@@ -138,6 +145,8 @@
             clone.visible = this.visible;
             clone.children = this.children.splice();
             clone.setColor( this._color );
+
+            clone.setMask( this.mask().clone() );
 
             return clone;
         };
@@ -237,6 +246,53 @@
             this._position.y = y;
 
             return this;
+        };
+
+        /**
+         * 角度を degree を元に radian 設定します
+         * @method setRotate
+         * @param {number} degree 0 ~ 360
+         * @return {Object2D}
+         */
+        p.setRotate = function ( degree ) {
+            this.rotation = Num.deg2rad( degree );
+
+            return this;
+        };
+
+        /**
+         * @method rotate
+         * @return {number} 回転角度(degree)を返します
+         */
+        p.rotate = function () {
+            return Num.rad2deg( this.rotation );
+        };
+
+        /**
+         * @method radian
+         * @return {*|number|Object2D.rotation}
+         */
+        p.radian = function () {
+            return this.rotation;
+        };
+
+        p.setMask = function ( mask ) {
+            mask.parent = this;
+            this._mask = mask;
+
+            return this;
+        };
+
+        p.removeMask = function () {
+            var mask = this._mask;
+            mask.parent = null;
+            this._mask = null;
+
+            return this;
+        };
+
+        p.mask = function () {
+            return this._mask;
         };
 
         /**
@@ -367,18 +423,6 @@
         };
 
         /**
-         * 角度を degree を元に radian 設定します
-         * @method setRotate
-         * @param {number} degree 0 ~ 360
-         * @return {Object2D}
-         */
-        p.setRotate = function ( degree ) {
-            this.rotation = Num.deg2rad( degree );
-
-            return this;
-        };
-
-        /**
          * @method add
          * @param {Object2D} target
          * @return {*|Object2D}
@@ -443,11 +487,33 @@
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
+            var is_save = false;
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
                 this.beginDraw( ctx );
+
+//                console.log( "mask ", !!this._mask, this._mask, this.constructor );
+//                ctx.globalCompositeOperation = "source-over";
+
+                if ( !!this._mask ) {
+
+                    ctx.save();
+
+                    this._drawMask( ctx );
+
+                    ctx.globalCompositeOperation = 'source-in';
+                    is_save = true;
+                }
+
                 this._draw( ctx );
+
+                if ( is_save ) {
+
+                    ctx.restore();
+                    ctx.globalCompositeOperation = 'source-over';
+
+                }
                 this.exitDraw( ctx );
             }
 
@@ -461,6 +527,12 @@
 
             return this;
         };
+
+        p._drawMask = function ( ctx ) {
+
+            this._mask.draw( ctx );
+        };
+
         /**
          * @method _draw
          * @param {CanvasRenderingContext2D} ctx

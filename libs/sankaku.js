@@ -1351,30 +1351,42 @@ Sankaku.version = "0.2.10";
 
         /**
          * @const ONE_DEG
+         * @static
          * @type {number}
          * @default Math.PI / 180
          */
         n.ONE_DEG = _PI / 180;
         /**
+         * @const ONE_RAD
+         * @static
+         * @type {number}
+         * @default 180 / Math.PI
+         */
+        n.ONE_RAD = 180 / _PI;
+        /**
          * @const FORTY_FIVE
+         * @static
          * @type {number}
          * @default Math.PI / 4
          */
         n.FORTY_FIVE = _PI / 4;
         /**
          * @const NINETY
+         * @static
          * @type {number}
          * @default Math.PI / 2
          */
         n.NINETY = _PI / 2;
         /**
          * @const ONE_EIGHTY
+         * @static
          * @type {number}
          * @default Math.PI
          */
         n.ONE_EIGHTY = _PI;
         /**
          * @const THREE_SIXTY
+         * @static
          * @type {number}
          * @default Math.PI * 2
          */
@@ -1413,11 +1425,23 @@ Sankaku.version = "0.2.10";
         /**
          * degree を radian へ変換します
          * @method deg2rad
+         * @static
          * @param {number} degree degree 0 ~ 360
          * @return {number} radian 0 ~ 2 * PI
          */
         n.deg2rad = function ( degree ) {
             return degree * n.ONE_DEG;
+        };
+
+        /**
+         * radian を degree へ変換します
+         * @method rad2deg
+         * @static
+         * @param {number} radian
+         * @return {number} degree 0 ~ 360
+         */
+        n.rad2deg = function ( radian ) {
+            return radian * n.ONE_RAD;
         };
 
         return Num;
@@ -2639,6 +2663,13 @@ Sankaku.version = "0.2.10";
              * @protected
              */
             this._alpha = 1;
+
+            /**
+             * @property _mask
+             * @type {*|null}
+             * @protected
+             */
+            this._mask = null;
         }
 
         var p = Object2D.prototype;
@@ -2674,6 +2705,8 @@ Sankaku.version = "0.2.10";
             clone.visible = this.visible;
             clone.children = this.children.splice();
             clone.setColor( this._color );
+
+            clone.setMask( this.mask().clone() );
 
             return clone;
         };
@@ -2773,6 +2806,53 @@ Sankaku.version = "0.2.10";
             this._position.y = y;
 
             return this;
+        };
+
+        /**
+         * 角度を degree を元に radian 設定します
+         * @method setRotate
+         * @param {number} degree 0 ~ 360
+         * @return {Object2D}
+         */
+        p.setRotate = function ( degree ) {
+            this.rotation = Num.deg2rad( degree );
+
+            return this;
+        };
+
+        /**
+         * @method rotate
+         * @return {number} 回転角度(degree)を返します
+         */
+        p.rotate = function () {
+            return Num.rad2deg( this.rotation );
+        };
+
+        /**
+         * @method radian
+         * @return {*|number|Object2D.rotation}
+         */
+        p.radian = function () {
+            return this.rotation;
+        };
+
+        p.setMask = function ( mask ) {
+            mask.parent = this;
+            this._mask = mask;
+
+            return this;
+        };
+
+        p.removeMask = function () {
+            var mask = this._mask;
+            mask.parent = null;
+            this._mask = null;
+
+            return this;
+        };
+
+        p.mask = function () {
+            return this._mask;
         };
 
         /**
@@ -2903,18 +2983,6 @@ Sankaku.version = "0.2.10";
         };
 
         /**
-         * 角度を degree を元に radian 設定します
-         * @method setRotate
-         * @param {number} degree 0 ~ 360
-         * @return {Object2D}
-         */
-        p.setRotate = function ( degree ) {
-            this.rotation = Num.deg2rad( degree );
-
-            return this;
-        };
-
-        /**
          * @method add
          * @param {Object2D} target
          * @return {*|Object2D}
@@ -2979,11 +3047,33 @@ Sankaku.version = "0.2.10";
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
+            var is_save = false;
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
                 this.beginDraw( ctx );
+
+//                console.log( "mask ", !!this._mask, this._mask, this.constructor );
+//                ctx.globalCompositeOperation = "source-over";
+
+                if ( !!this._mask ) {
+
+                    ctx.save();
+
+                    this._drawMask( ctx );
+
+                    ctx.globalCompositeOperation = 'source-in';
+                    is_save = true;
+                }
+
                 this._draw( ctx );
+
+                if ( is_save ) {
+
+                    ctx.restore();
+                    ctx.globalCompositeOperation = 'source-over';
+
+                }
                 this.exitDraw( ctx );
             }
 
@@ -2997,6 +3087,12 @@ Sankaku.version = "0.2.10";
 
             return this;
         };
+
+        p._drawMask = function ( ctx ) {
+
+            this._mask.draw( ctx );
+        };
+
         /**
          * @method _draw
          * @param {CanvasRenderingContext2D} ctx
@@ -3383,6 +3479,8 @@ Sankaku.version = "0.2.10";
                 rgb: this._border.rgb
             };
 
+            clone.setMask( this.mask().clone() );
+
             return clone;
         };
 
@@ -3458,10 +3556,11 @@ Sankaku.version = "0.2.10";
          */
         p._draw = function ( ctx ) {
             var bounding = this.paint( ctx ),
+                e = bounding.e,
                 rgba,
                 border_rgba;
 
-            if ( !bounding.e.visible ) {
+            if ( !e.visible || e.alpha === 0 || e.scale === 0 ) {
                 // parent is invisible
                 return;
             }

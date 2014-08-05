@@ -173,30 +173,42 @@
 
         /**
          * @const ONE_DEG
+         * @static
          * @type {number}
          * @default Math.PI / 180
          */
         n.ONE_DEG = _PI / 180;
         /**
+         * @const ONE_RAD
+         * @static
+         * @type {number}
+         * @default 180 / Math.PI
+         */
+        n.ONE_RAD = 180 / _PI;
+        /**
          * @const FORTY_FIVE
+         * @static
          * @type {number}
          * @default Math.PI / 4
          */
         n.FORTY_FIVE = _PI / 4;
         /**
          * @const NINETY
+         * @static
          * @type {number}
          * @default Math.PI / 2
          */
         n.NINETY = _PI / 2;
         /**
          * @const ONE_EIGHTY
+         * @static
          * @type {number}
          * @default Math.PI
          */
         n.ONE_EIGHTY = _PI;
         /**
          * @const THREE_SIXTY
+         * @static
          * @type {number}
          * @default Math.PI * 2
          */
@@ -235,11 +247,23 @@
         /**
          * degree を radian へ変換します
          * @method deg2rad
+         * @static
          * @param {number} degree degree 0 ~ 360
          * @return {number} radian 0 ~ 2 * PI
          */
         n.deg2rad = function ( degree ) {
             return degree * n.ONE_DEG;
+        };
+
+        /**
+         * radian を degree へ変換します
+         * @method rad2deg
+         * @static
+         * @param {number} radian
+         * @return {number} degree 0 ~ 360
+         */
+        n.rad2deg = function ( radian ) {
+            return radian * n.ONE_RAD;
         };
 
         return Num;

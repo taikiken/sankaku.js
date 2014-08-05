@@ -126,6 +126,8 @@
                 rgb: this._border.rgb
             };
 
+            clone.setMask( this.mask().clone() );
+
             return clone;
         };
 
@@ -201,10 +203,11 @@
          */
         p._draw = function ( ctx ) {
             var bounding = this.paint( ctx ),
+                e = bounding.e,
                 rgba,
                 border_rgba;
 
-            if ( !bounding.e.visible ) {
+            if ( !e.visible || e.alpha === 0 || e.scale === 0 ) {
                 // parent is invisible
                 return;
             }

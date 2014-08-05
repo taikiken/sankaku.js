@@ -84,9 +84,7 @@ body {
             Sankaku.Circle.call( this, x, y, r, color, Sankaku.Shape.FILL );
 
             this._my_color = color;
-//            this._id = 0;
             this._hits = [];
-            this._zanzo = new Sankaku.Zanzo( 12 );
         }
 
         Sankaku.extend( Sankaku.Circle, Particle );
@@ -115,39 +113,9 @@ body {
                     scale: 1,
                     v: hsv.v
                 },
-                zanzo = this._zanzo,
                 tween;
 
             this.kill();
-
-//            zanzo.clear();
-
-//            tween = new TweenMax(
-//                dummy,
-//                0.22,
-//                {
-//                    scale: 2,
-//                    v: 1,
-//                    ease: Power3.easeOut,
-//                    onUpdate: function () {
-//                        var rgb = Sankaku.Iro.hsv2rgb( 0, 0, dummy.v );
-//
-//                        _this.setRGB( rgb );
-//                        _this.scale = dummy.scale;
-//
-////                        zanzo.add( [ _this ] );
-//                    },
-//                    onComplete: function () {
-//
-//                        _this.setColor( _this._my_color );
-//                        _this.scale = 1;
-//
-////                        zanzo.clear();
-//                    },
-//                    repeat: 1,
-//                    yoyo: true
-//                }
-//            );
 
             tween = new TimelineMax(
                 {
@@ -210,10 +178,6 @@ body {
 
             hits.splice( index, 1 );
         };
-
-//        p.exitDraw = function ( ctx ) {
-//            this._zanzo.draw( ctx );
-//        };
 
         return Particle;
     }() );

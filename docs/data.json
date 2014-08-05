@@ -1555,7 +1555,17 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 115,
+            "line": 107,
+            "itemtype": "property",
+            "name": "_mask",
+            "type": "{*|null}",
+            "access": "protected",
+            "tagname": "",
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 122,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -1566,7 +1576,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 123,
+            "line": 130,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -1579,7 +1589,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 145,
+            "line": 154,
             "itemtype": "method",
             "name": "setColor",
             "params": [
@@ -1597,7 +1607,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 159,
+            "line": 168,
             "itemtype": "method",
             "name": "setRGB",
             "params": [
@@ -1615,7 +1625,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 175,
+            "line": 184,
             "itemtype": "method",
             "name": "rgba",
             "return": {
@@ -1626,7 +1636,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 183,
+            "line": 192,
             "itemtype": "method",
             "name": "setAlpha",
             "params": [
@@ -1644,7 +1654,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 197,
+            "line": 206,
             "itemtype": "method",
             "name": "setPosition",
             "params": [
@@ -1662,7 +1672,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 210,
+            "line": 219,
             "itemtype": "method",
             "name": "position",
             "return": {
@@ -1673,7 +1683,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 218,
+            "line": 227,
             "itemtype": "method",
             "name": "setX",
             "params": [
@@ -1691,7 +1701,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 230,
+            "line": 239,
             "itemtype": "method",
             "name": "setY",
             "params": [
@@ -1709,18 +1719,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 242,
-            "itemtype": "method",
-            "name": "bounding",
-            "return": {
-                "description": "{a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}",
-                "type": "Object"
-            },
-            "class": "Object2D"
-        },
-        {
-            "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 369,
+            "line": 251,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "setRotate",
@@ -1739,7 +1738,40 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 381,
+            "line": 263,
+            "itemtype": "method",
+            "name": "rotate",
+            "return": {
+                "description": "回転角度(degree)を返します",
+                "type": "Number"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 271,
+            "itemtype": "method",
+            "name": "radian",
+            "return": {
+                "description": "",
+                "type": "*|number|Object2D.rotation"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 298,
+            "itemtype": "method",
+            "name": "bounding",
+            "return": {
+                "description": "{a: {x: number, y: number}, b: {x: number, y: number}, c: {x: number, y: number}, d: {x: number, y: number}}",
+                "type": "Object"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 425,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1757,7 +1789,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 411,
+            "line": 455,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1775,7 +1807,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 440,
+            "line": 484,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1793,7 +1825,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 464,
+            "line": 536,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1809,7 +1841,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 473,
+            "line": 545,
             "itemtype": "method",
             "name": "beginDraw",
             "params": [
@@ -1823,7 +1855,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 481,
+            "line": 553,
             "itemtype": "method",
             "name": "exitDraw",
             "params": [
@@ -1837,7 +1869,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 490,
+            "line": 562,
             "description": "point が bounding box 内か外かを調べます",
             "itemtype": "method",
             "name": "inside",
@@ -1861,7 +1893,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 514,
+            "line": 586,
             "itemtype": "method",
             "name": "_area",
             "params": [
@@ -1891,7 +1923,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 526,
+            "line": 598,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1916,7 +1948,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 553,
+            "line": 625,
             "itemtype": "method",
             "name": "swap",
             "params": [
@@ -1939,7 +1971,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 572,
+            "line": 644,
             "itemtype": "method",
             "name": "highest",
             "params": [
@@ -1957,7 +1989,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 590,
+            "line": 662,
             "itemtype": "method",
             "name": "render",
             "return": {
@@ -1975,7 +2007,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 609,
+            "line": 681,
             "description": "prepare render",
             "itemtype": "method",
             "name": "beginRender",
@@ -1995,7 +2027,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 619,
+            "line": 691,
             "itemtype": "method",
             "name": "prepareRender",
             "params": [
@@ -2014,7 +2046,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 628,
+            "line": 700,
             "itemtype": "method",
             "name": "_rgba",
             "params": [
@@ -2187,7 +2219,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 132,
+            "line": 134,
             "itemtype": "method",
             "name": "radius",
             "return": {
@@ -2198,7 +2230,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 144,
+            "line": 146,
             "itemtype": "method",
             "name": "setBorder",
             "params": [
@@ -2221,7 +2253,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 162,
+            "line": 164,
             "itemtype": "method",
             "name": "setMode",
             "params": [
@@ -2239,7 +2271,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 171,
+            "line": 173,
             "itemtype": "method",
             "name": "mode",
             "return": {
@@ -2250,7 +2282,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 179,
+            "line": 181,
             "itemtype": "method",
             "name": "setLine",
             "params": [
@@ -2268,7 +2300,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 189,
+            "line": 191,
             "itemtype": "method",
             "name": "line",
             "return": {
@@ -2279,7 +2311,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 197,
+            "line": 199,
             "itemtype": "method",
             "name": "_draw",
             "access": "protected",
@@ -2295,7 +2327,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 232,
+            "line": 235,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -2314,7 +2346,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 245,
+            "line": 248,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -2338,7 +2370,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 260,
+            "line": 263,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -3955,53 +3987,69 @@
             "itemtype": "property",
             "name": "ONE_DEG",
             "final": "",
+            "static": 1,
             "type": "{number}",
             "default": "Math.PI / 180",
             "class": "Num"
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 40,
+            "line": 41,
+            "itemtype": "property",
+            "name": "ONE_RAD",
+            "final": "",
+            "static": 1,
+            "type": "{number}",
+            "default": "180 / Math.PI",
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 48,
             "itemtype": "property",
             "name": "FORTY_FIVE",
             "final": "",
+            "static": 1,
             "type": "{number}",
             "default": "Math.PI / 4",
             "class": "Num"
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 46,
+            "line": 55,
             "itemtype": "property",
             "name": "NINETY",
             "final": "",
+            "static": 1,
             "type": "{number}",
             "default": "Math.PI / 2",
             "class": "Num"
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 52,
+            "line": 62,
             "itemtype": "property",
             "name": "ONE_EIGHTY",
             "final": "",
+            "static": 1,
             "type": "{number}",
             "default": "Math.PI",
             "class": "Num"
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 58,
+            "line": 69,
             "itemtype": "property",
             "name": "THREE_SIXTY",
             "final": "",
+            "static": 1,
             "type": "{number}",
             "default": "Math.PI * 2",
             "class": "Num"
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 65,
+            "line": 77,
             "description": "数値か否かをチェックします",
             "itemtype": "method",
             "name": "is",
@@ -4021,7 +4069,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 76,
+            "line": 88,
             "description": "範囲指定し乱数を生成します\n<br>結果は int になります\n<br>max 省略時は 0 ~ min 間の乱数を発生させます",
             "itemtype": "method",
             "name": "random",
@@ -4047,10 +4095,11 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Num.js",
-            "line": 95,
+            "line": 107,
             "description": "degree を radian へ変換します",
             "itemtype": "method",
             "name": "deg2rad",
+            "static": 1,
             "params": [
                 {
                     "name": "degree",
@@ -4060,6 +4109,26 @@
             ],
             "return": {
                 "description": "radian 0 ~ 2 * PI",
+                "type": "Number"
+            },
+            "class": "Num"
+        },
+        {
+            "file": "_build_tool/delaunay/src/util/Num.js",
+            "line": 118,
+            "description": "radian を degree へ変換します",
+            "itemtype": "method",
+            "name": "rad2deg",
+            "static": 1,
+            "params": [
+                {
+                    "name": "radian",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "degree 0 ~ 360",
                 "type": "Number"
             },
             "class": "Num"
