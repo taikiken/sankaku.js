@@ -418,7 +418,11 @@
 
         p.setMask = function ( mask ) {
             mask.parent = this;
+            mask.maskMode = true;
+
             this._mask = mask;
+
+            this.add( mask );
 
             return this;
         };
@@ -426,6 +430,7 @@
         p.removeMask = function () {
             var mask = this._mask;
             mask.parent = null;
+            mask.maskMode = false;
             this._mask = null;
 
             return this;
@@ -627,34 +632,18 @@
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
-            var is_save = false;
 
             if ( this.visible &amp;&amp; this._alpha &gt; 0 &amp;&amp; this.scale &gt; 0 ) {
                 // visible true &amp;&amp; alpha not 0 &amp;&amp; scale not 0
-                this.beginDraw( ctx );
 
-//                console.log( &quot;mask &quot;, !!this._mask, this._mask, this.constructor );
-//                ctx.globalCompositeOperation = &quot;source-over&quot;;
+                if ( !this._mask || !!this._mask &amp;&amp; this._mask.ready ) {
 
-                if ( !!this._mask ) {
+                    this.beginDraw( ctx );
 
-                    ctx.save();
+                    this._draw( ctx );
 
-                    this._drawMask( ctx );
-
-                    ctx.globalCompositeOperation = &#x27;source-in&#x27;;
-                    is_save = true;
+                    this.exitDraw( ctx );
                 }
-
-                this._draw( ctx );
-
-                if ( is_save ) {
-
-                    ctx.restore();
-                    ctx.globalCompositeOperation = &#x27;source-over&#x27;;
-
-                }
-                this.exitDraw( ctx );
             }
 
             var children = this.children,

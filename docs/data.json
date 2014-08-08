@@ -951,14 +951,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 61,
+            "line": 62,
             "itemtype": "method",
             "name": "dispose",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 71,
+            "line": 72,
             "itemtype": "method",
             "name": "onLoad",
             "params": [
@@ -972,14 +972,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 80,
+            "line": 81,
             "itemtype": "method",
             "name": "onError",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 87,
+            "line": 88,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -990,14 +990,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 107,
+            "line": 108,
             "itemtype": "method",
             "name": "setMode",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 114,
+            "line": 115,
             "itemtype": "method",
             "name": "if",
             "params": [
@@ -1013,7 +1013,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 133,
+            "line": 137,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -1760,7 +1760,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 298,
+            "line": 303,
             "itemtype": "method",
             "name": "bounding",
             "return": {
@@ -1771,7 +1771,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 425,
+            "line": 430,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1789,7 +1789,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 455,
+            "line": 460,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1807,7 +1807,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 484,
+            "line": 489,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1825,7 +1825,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 536,
+            "line": 525,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1841,7 +1841,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 545,
+            "line": 534,
             "itemtype": "method",
             "name": "beginDraw",
             "params": [
@@ -1855,7 +1855,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 553,
+            "line": 542,
             "itemtype": "method",
             "name": "exitDraw",
             "params": [
@@ -1869,7 +1869,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 562,
+            "line": 551,
             "description": "point が bounding box 内か外かを調べます",
             "itemtype": "method",
             "name": "inside",
@@ -1893,7 +1893,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 586,
+            "line": 575,
             "itemtype": "method",
             "name": "_area",
             "params": [
@@ -1923,7 +1923,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 598,
+            "line": 587,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1948,7 +1948,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 625,
+            "line": 614,
             "itemtype": "method",
             "name": "swap",
             "params": [
@@ -1971,7 +1971,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 644,
+            "line": 633,
             "itemtype": "method",
             "name": "highest",
             "params": [
@@ -1989,7 +1989,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 662,
+            "line": 651,
             "itemtype": "method",
             "name": "render",
             "return": {
@@ -2007,7 +2007,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 681,
+            "line": 670,
             "description": "prepare render",
             "itemtype": "method",
             "name": "beginRender",
@@ -2027,7 +2027,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 691,
+            "line": 680,
             "itemtype": "method",
             "name": "prepareRender",
             "params": [
@@ -2046,7 +2046,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 700,
+            "line": 689,
             "itemtype": "method",
             "name": "_rgba",
             "params": [
@@ -4784,7 +4784,15 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 94,
+            "line": 88,
+            "itemtype": "property",
+            "name": "maskMode",
+            "type": "{boolean}",
+            "class": "Vehicle"
+        },
+        {
+            "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
+            "line": 100,
             "itemtype": "property",
             "name": "WRAP",
             "final": "",
@@ -4794,7 +4802,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 100,
+            "line": 106,
             "itemtype": "property",
             "name": "BOUNCE",
             "final": "",
@@ -4804,7 +4812,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 113,
+            "line": 119,
             "itemtype": "method",
             "name": "setView",
             "params": [
@@ -5008,7 +5016,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 278,
+            "line": 279,
             "itemtype": "method",
             "name": "update",
             "params": [
@@ -5027,7 +5035,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 287,
+            "line": 288,
             "itemtype": "method",
             "name": "_update",
             "params": [
@@ -5048,7 +5056,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 326,
+            "line": 327,
             "itemtype": "method",
             "name": "wrap",
             "params": [
@@ -5067,7 +5075,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 365,
+            "line": 366,
             "itemtype": "method",
             "name": "bounce",
             "params": [
@@ -5086,7 +5094,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/vehicle/Vehicle.js",
-            "line": 407,
+            "line": 408,
             "description": "prepare render",
             "itemtype": "method",
             "name": "beginRender",

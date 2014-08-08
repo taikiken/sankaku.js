@@ -2838,7 +2838,11 @@ Sankaku.version = "0.2.10";
 
         p.setMask = function ( mask ) {
             mask.parent = this;
+            mask.maskMode = true;
+
             this._mask = mask;
+
+            this.add( mask );
 
             return this;
         };
@@ -2846,6 +2850,7 @@ Sankaku.version = "0.2.10";
         p.removeMask = function () {
             var mask = this._mask;
             mask.parent = null;
+            mask.maskMode = false;
             this._mask = null;
 
             return this;
@@ -3047,34 +3052,18 @@ Sankaku.version = "0.2.10";
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
-            var is_save = false;
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
-                this.beginDraw( ctx );
 
-//                console.log( "mask ", !!this._mask, this._mask, this.constructor );
-//                ctx.globalCompositeOperation = "source-over";
+                if ( !this._mask || !!this._mask && this._mask.ready ) {
 
-                if ( !!this._mask ) {
+                    this.beginDraw( ctx );
 
-                    ctx.save();
+                    this._draw( ctx );
 
-                    this._drawMask( ctx );
-
-                    ctx.globalCompositeOperation = 'source-in';
-                    is_save = true;
+                    this.exitDraw( ctx );
                 }
-
-                this._draw( ctx );
-
-                if ( is_save ) {
-
-                    ctx.restore();
-                    ctx.globalCompositeOperation = 'source-over';
-
-                }
-                this.exitDraw( ctx );
             }
 
             var children = this.children,
@@ -4439,6 +4428,7 @@ Sankaku.version = "0.2.10";
 
             this._img = img;
             this._bitmap = null;
+            this.ready = false;
 
             if ( img.constructor === Sankaku.LoadImage ) {
 
@@ -4521,9 +4511,12 @@ Sankaku.version = "0.2.10";
                 return;
             }
 
-            var bounding = this.bounding();
+            var bounding = this.bounding(),
+                e = bounding.e;
 
-            if ( bounding.e.visible ) {
+            this.ready = true;
+
+            if ( e.visible && e.alpha > 0 && e.scale > 0 ) {
                 // parent visible is true
                 this.fill( ctx, bounding, this._bitmap );
             }
@@ -4549,7 +4542,7 @@ Sankaku.version = "0.2.10";
             x = e.x - w * 0.5;
             y = e.y - h * 0.5;
 
-            if ( alpha < 1 ||  rotation !== 0 ) {
+            if ( this.maskMode || alpha < 1 || rotation !== 0 ) {
 
                 ctx.save();
                 is_save = true;
@@ -4567,6 +4560,11 @@ Sankaku.version = "0.2.10";
 
                     x = - w * 0.5;
                     y = - h * 0.5;
+                }
+
+                if ( this.maskMode ) {
+
+                    ctx.globalCompositeOperation = 'destination-in';
                 }
 
             }
@@ -4668,6 +4666,12 @@ Sankaku.version = "0.2.10";
              */
             this.bottom = 0;
 
+            /**
+             * @property maskMode
+             * @type {boolean}
+             */
+            this.maskMode = false;
+
             // 描画形状
             this.setView( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
         }
@@ -4699,24 +4703,18 @@ Sankaku.version = "0.2.10";
          */
         p.setView = function ( view ) {
 
+            // copy to view
             view.setPosition( this._position );
 
-//            setView.width = this.width;
-//            setView.height = this.height;
-//            setView.rotation = this.rotation;
-//            setView.scale = this.scale;
-            // copy from setView
+            // copy properties from view
             this.width = view.width;
             this.height = view.height;
             this.rotation = view.rotation;
+            this.alpha = view.alpha;
+            this.scale = view.scale;
 
-            // copy to setView
-            view.scale = this.scale;
-
-//            setView._velocity = this._velocity;
-//            setView._mass = this._mass;
-//            setView._speed = this._speed;
-//            setView._behavior = this._behavior;
+            // copy to view
+//            view.scale = this.scale;
 
             this._view = view;
         };
@@ -4853,7 +4851,8 @@ Sankaku.version = "0.2.10";
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 ) {
+            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+                // can draw
                 this._view.draw( ctx );
             }
         };

@@ -85,6 +85,12 @@
              */
             this.bottom = 0;
 
+            /**
+             * @property maskMode
+             * @type {boolean}
+             */
+            this.maskMode = false;
+
             // 描画形状
             this.setView( viewModel || new Tripod( this.x, this.y, this.width, this.height ) );
         }
@@ -116,24 +122,18 @@
          */
         p.setView = function ( view ) {
 
+            // copy to view
             view.setPosition( this._position );
 
-//            setView.width = this.width;
-//            setView.height = this.height;
-//            setView.rotation = this.rotation;
-//            setView.scale = this.scale;
-            // copy from setView
+            // copy properties from view
             this.width = view.width;
             this.height = view.height;
             this.rotation = view.rotation;
+            this.alpha = view.alpha;
+            this.scale = view.scale;
 
-            // copy to setView
-            view.scale = this.scale;
-
-//            setView._velocity = this._velocity;
-//            setView._mass = this._mass;
-//            setView._speed = this._speed;
-//            setView._behavior = this._behavior;
+            // copy to view
+//            view.scale = this.scale;
 
             this._view = view;
         };
@@ -270,7 +270,8 @@
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 ) {
+            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+                // can draw
                 this._view.draw( ctx );
             }
         };

@@ -278,7 +278,11 @@
 
         p.setMask = function ( mask ) {
             mask.parent = this;
+            mask.maskMode = true;
+
             this._mask = mask;
+
+            this.add( mask );
 
             return this;
         };
@@ -286,6 +290,7 @@
         p.removeMask = function () {
             var mask = this._mask;
             mask.parent = null;
+            mask.maskMode = false;
             this._mask = null;
 
             return this;
@@ -487,34 +492,18 @@
          * @return {Object2D}
          */
         p.draw = function ( ctx ) {
-            var is_save = false;
 
             if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
                 // visible true && alpha not 0 && scale not 0
-                this.beginDraw( ctx );
 
-//                console.log( "mask ", !!this._mask, this._mask, this.constructor );
-//                ctx.globalCompositeOperation = "source-over";
+                if ( !this._mask || !!this._mask && this._mask.ready ) {
 
-                if ( !!this._mask ) {
+                    this.beginDraw( ctx );
 
-                    ctx.save();
+                    this._draw( ctx );
 
-                    this._drawMask( ctx );
-
-                    ctx.globalCompositeOperation = 'source-in';
-                    is_save = true;
+                    this.exitDraw( ctx );
                 }
-
-                this._draw( ctx );
-
-                if ( is_save ) {
-
-                    ctx.restore();
-                    ctx.globalCompositeOperation = 'source-over';
-
-                }
-                this.exitDraw( ctx );
             }
 
             var children = this.children,
@@ -528,10 +517,10 @@
             return this;
         };
 
-        p._drawMask = function ( ctx ) {
-
-            this._mask.draw( ctx );
-        };
+//        p._drawMask = function ( ctx ) {
+//
+//            this._mask.draw( ctx );
+//        };
 
         /**
          * @method _draw

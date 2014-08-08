@@ -40,6 +40,7 @@
 
             this._img = img;
             this._bitmap = null;
+            this.ready = false;
 
             if ( img.constructor === Sankaku.LoadImage ) {
 
@@ -122,9 +123,12 @@
                 return;
             }
 
-            var bounding = this.bounding();
+            var bounding = this.bounding(),
+                e = bounding.e;
 
-            if ( bounding.e.visible ) {
+            this.ready = true;
+
+            if ( e.visible && e.alpha > 0 && e.scale > 0 ) {
                 // parent visible is true
                 this.fill( ctx, bounding, this._bitmap );
             }
@@ -150,7 +154,7 @@
             x = e.x - w * 0.5;
             y = e.y - h * 0.5;
 
-            if ( alpha < 1 ||  rotation !== 0 ) {
+            if ( this.maskMode || alpha < 1 || rotation !== 0 ) {
 
                 ctx.save();
                 is_save = true;
@@ -168,6 +172,11 @@
 
                     x = - w * 0.5;
                     y = - h * 0.5;
+                }
+
+                if ( this.maskMode ) {
+
+                    ctx.globalCompositeOperation = 'destination-in';
                 }
 
             }
