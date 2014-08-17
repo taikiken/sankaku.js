@@ -90,17 +90,22 @@ body {
         p.constructor = Ripple;
 
         p.start = function ( x, y, radius, callback ) {
-            var _this = this;
+            var _this = this,
+                target = {
+                    scale: 1,
+                    alpha: 0.75
+                };
 
-            this.setX( x ).setY( y ).setAlpha( 1 );
+            this.setX( x ).setY( y ).setAlpha( 0.75 );
             this.radius = radius * 1.3;
             this.scale = 1;
+            this.visible = false;
 
             TweenLite.to(
-                _this,
-                1,
+                target,
+                0.8,
                 {
-                    _alpha: 0,
+                    alpha: 0,
                     scale: 5,
                     ease: Linear.easeNone,
                     onStart: function () {
@@ -109,7 +114,8 @@ body {
                     },
                     onUpdate: function () {
 
-                        _this.setAlpha( _this._alpha );
+                        _this.scale = target.scale;
+                        _this.setAlpha( target.alpha );
                     },
                     onComplete: function () {
 
