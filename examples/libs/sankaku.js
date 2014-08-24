@@ -42,7 +42,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.10";
+Sankaku.version = "0.2.11";
 
 // polyfill
 ( function ( self ){
@@ -3077,10 +3077,10 @@ Sankaku.version = "0.2.10";
             return this;
         };
 
-        p._drawMask = function ( ctx ) {
-
-            this._mask.draw( ctx );
-        };
+//        p._drawMask = function ( ctx ) {
+//
+//            this._mask.draw( ctx );
+//        };
 
         /**
          * @method _draw
@@ -3468,7 +3468,10 @@ Sankaku.version = "0.2.10";
                 rgb: this._border.rgb
             };
 
-            clone.setMask( this.mask().clone() );
+            if ( !!this._mask ) {
+                // mask があるなら
+                clone.setMask( this.mask().clone() );
+            }
 
             return clone;
         };

@@ -126,7 +126,10 @@
                 rgb: this._border.rgb
             };
 
-            clone.setMask( this.mask().clone() );
+            if ( !!this._mask ) {
+                // mask があるなら
+                clone.setMask( this.mask().clone() );
+            }
 
             return clone;
         };

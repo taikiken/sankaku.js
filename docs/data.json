@@ -2219,7 +2219,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 134,
+            "line": 137,
             "itemtype": "method",
             "name": "radius",
             "return": {
@@ -2230,7 +2230,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 146,
+            "line": 149,
             "itemtype": "method",
             "name": "setBorder",
             "params": [
@@ -2253,7 +2253,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 164,
+            "line": 167,
             "itemtype": "method",
             "name": "setMode",
             "params": [
@@ -2271,7 +2271,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 173,
+            "line": 176,
             "itemtype": "method",
             "name": "mode",
             "return": {
@@ -2282,7 +2282,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 181,
+            "line": 184,
             "itemtype": "method",
             "name": "setLine",
             "params": [
@@ -2300,7 +2300,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 191,
+            "line": 194,
             "itemtype": "method",
             "name": "line",
             "return": {
@@ -2311,7 +2311,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 199,
+            "line": 202,
             "itemtype": "method",
             "name": "_draw",
             "access": "protected",
@@ -2327,7 +2327,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 235,
+            "line": 238,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -2346,7 +2346,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 248,
+            "line": 251,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -2370,7 +2370,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 263,
+            "line": 266,
             "itemtype": "method",
             "name": "paint",
             "params": [
