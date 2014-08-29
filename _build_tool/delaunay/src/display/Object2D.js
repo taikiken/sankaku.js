@@ -493,7 +493,7 @@
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+            if ( this.visible && this._alpha !== 0 && this.scale !== 0 ) {
                 // visible true && alpha not 0 && scale not 0
 
                 if ( !this._mask || !!this._mask && this._mask.ready ) {

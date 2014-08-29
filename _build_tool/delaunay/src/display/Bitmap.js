@@ -91,7 +91,7 @@
          */
         p.clone = function () {
             var img = this._img,
-                clone_img;
+                clone_img, clone;
 
             if ( img.constructor === Sankaku.LoadImage ) {
 
@@ -102,7 +102,13 @@
                 clone_img.src = img.src;
             }
 
-            return new Bitmap( this.x, this.y, this.width, this.height, clone_img );
+            clone = new Bitmap( this.x, this.y, this.width, this.height, clone_img );
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone.visible = this.visible;
+            clone._alpha = this._alpha;
+
+            return clone;
         };
 
         /**

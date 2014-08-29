@@ -42,7 +42,7 @@ var Sankaku = {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.2.11";
+Sankaku.version = "0.2.12";
 
 // polyfill
 ( function ( self ){
@@ -3053,7 +3053,7 @@ Sankaku.version = "0.2.11";
          */
         p.draw = function ( ctx ) {
 
-            if ( this.visible && this._alpha > 0 && this.scale > 0 ) {
+            if ( this.visible && this._alpha !== 0 && this.scale !== 0 ) {
                 // visible true && alpha not 0 && scale not 0
 
                 if ( !this._mask || !!this._mask && this._mask.ready ) {
@@ -3459,6 +3459,7 @@ Sankaku.version = "0.2.11";
 //            clone.height = this.height;
             clone.rotation = this.rotation;
             clone.scale = this.scale;
+            clone.visible = this.visible;
             clone._alpha = this._alpha;
             clone._rgb = Object.create( this._rgb );
 
@@ -3702,6 +3703,7 @@ Sankaku.version = "0.2.11";
 
             clone.rotation = this.rotation;
             clone.scale = this.scale;
+            clone.visible = this.visible;
             clone._alpha = this._alpha;
             clone._rgb = Object.create( this._rgb );
 
@@ -3892,6 +3894,7 @@ Sankaku.version = "0.2.11";
 
             clone.rotation = this.rotation;
             clone.scale = this.scale;
+            clone.visible = this.visible;
             clone._alpha = this._alpha;
             clone._rgb = Object.create( this._rgb );
 
@@ -4032,6 +4035,7 @@ Sankaku.version = "0.2.11";
 
             clone.rotation = this.rotation;
             clone.scale = this.scale;
+            clone.visible = this.visible;
             clone._alpha = this._alpha;
             clone._rgb = Object.create( this._rgb );
 
@@ -4482,7 +4486,7 @@ Sankaku.version = "0.2.11";
          */
         p.clone = function () {
             var img = this._img,
-                clone_img;
+                clone_img, clone;
 
             if ( img.constructor === Sankaku.LoadImage ) {
 
@@ -4493,7 +4497,13 @@ Sankaku.version = "0.2.11";
                 clone_img.src = img.src;
             }
 
-            return new Bitmap( this.x, this.y, this.width, this.height, clone_img );
+            clone = new Bitmap( this.x, this.y, this.width, this.height, clone_img );
+            clone.rotation = this.rotation;
+            clone.scale = this.scale;
+            clone.visible = this.visible;
+            clone._alpha = this._alpha;
+
+            return clone;
         };
 
         /**

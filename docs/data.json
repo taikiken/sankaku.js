@@ -990,14 +990,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 108,
+            "line": 114,
             "itemtype": "method",
             "name": "setMode",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 115,
+            "line": 121,
             "itemtype": "method",
             "name": "if",
             "params": [
@@ -1013,7 +1013,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 137,
+            "line": 143,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -1065,7 +1065,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 77,
+            "line": 78,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -1083,7 +1083,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 98,
+            "line": 99,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1108,7 +1108,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 116,
+            "line": 117,
             "itemtype": "method",
             "name": "contain",
             "params": [
@@ -1126,7 +1126,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Circle.js",
-            "line": 129,
+            "line": 130,
             "itemtype": "method",
             "name": "intersect",
             "params": [
@@ -2219,7 +2219,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 137,
+            "line": 138,
             "itemtype": "method",
             "name": "radius",
             "return": {
@@ -2230,7 +2230,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 149,
+            "line": 150,
             "itemtype": "method",
             "name": "setBorder",
             "params": [
@@ -2253,7 +2253,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 167,
+            "line": 168,
             "itemtype": "method",
             "name": "setMode",
             "params": [
@@ -2271,7 +2271,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 176,
+            "line": 177,
             "itemtype": "method",
             "name": "mode",
             "return": {
@@ -2282,7 +2282,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 184,
+            "line": 185,
             "itemtype": "method",
             "name": "setLine",
             "params": [
@@ -2300,7 +2300,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 194,
+            "line": 195,
             "itemtype": "method",
             "name": "line",
             "return": {
@@ -2311,7 +2311,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 202,
+            "line": 203,
             "itemtype": "method",
             "name": "_draw",
             "access": "protected",
@@ -2327,7 +2327,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 238,
+            "line": 239,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -2346,7 +2346,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 251,
+            "line": 252,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -2370,7 +2370,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Shape.js",
-            "line": 266,
+            "line": 267,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2416,7 +2416,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Star.js",
-            "line": 80,
+            "line": 81,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2451,7 +2451,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2469,7 +2469,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
-            "line": 91,
+            "line": 92,
             "itemtype": "method",
             "name": "_inside",
             "params": [
