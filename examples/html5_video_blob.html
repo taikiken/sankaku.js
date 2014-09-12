@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>HTML5 VIDEO with Blob | イナヅマTV</title>
+<link rel="author" href="https://plus.google.com/109284322876483643060/" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" href="css/reset.css"/>
+<link rel="stylesheet" href="css/html5_video_blob.css"/>
+</head>
+<body>
+<div class="page">
+
+<aside class="sequence_nav step_1">
+	<ul>
+		<li id="step_1" class="current"><span>1. UPLOAD VIDEO FILE</span></li>
+		<li id="step_2"><span>2. PLAY VIDEO</span></li>
+	</ul>
+	<div id="step_mark"></div>
+</aside>
+
+<section class="step_container step_container_1">
+	<h1 class="step__title">1. UPLOAD VIDEO FILE</h1>
+
+	<div id="drop_zone">
+		<input type="file" accept="video/*" name="drop_zone__video" id="drop_zone__video"/>
+		<span class="drop_zone__message">drag and drop video</span>
+	</div>
+</section>
+
+<section class="step_container step_container_2">
+	<h1 class="step__title">2. PLAY VIDEO</h1>
+
+	<div class="video_container">
+		<video src="" id="video_player"></video>
+		<footer class="video_control">
+			<span class="button" id="play_pause">PLAY</span>
+			<span class="button" id="reverse">REVERSE</span>
+		</footer>
+	</div>
+</section>
+
+</div>
+</body>
+</html>

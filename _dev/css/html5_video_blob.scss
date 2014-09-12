@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+@import "compass";
+
+body {
+	font-size: 13px;
+	@include min-width( 980px );
+}
+
+.page {
+	padding: 8px 16px;
+}
+
+.sequence_nav {
+	position: relative;
+	$height: 32px;
+
+	height: $height + 8px;
+	margin-bottom: 16px;
+	@include pie-clearfix;
+
+	ul {
+		float: left;
+		height: $height;
+
+		li {
+			float: left;
+			height: $height;
+			width: 190px;
+			background: #efefef;
+
+			@include box-shadow();
+			@include skewX( 25deg );
+
+			span {
+				display: block;
+				padding: 0 16px;
+				height: $height;
+				line-height: $height;
+				@include skewX( -25deg );
+			}
+
+		}
+	}// ul
+
+	#step_mark {
+		position: absolute;
+		bottom: 0;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 8px 16px 8px;
+		border-color: transparent transparent #2e2e2e transparent;
+
+		@include transition-duration( 0.32s );
+		@include transition-property( left );
+	}
+
+	&.step_1 {
+		ul li#step_1 {
+			background: #ff430b;
+		}
+
+		#step_mark {
+			left: 8px;
+		}
+	}
+	&.step_2 {
+		ul li#step_2 {
+			background: #ff430b;
+		}
+
+		#step_mark {
+			left: 190px + 8px;
+		}
+	}
+}
+
+// ===============================================================
+// step
+.step_container {
+	@include pie-clearfix;
+
+	.step__title {
+		margin-bottom: 20px;
+		padding: 0 0 0 8px;
+		line-height: 16px;
+		font-weight: bold;
+		border-bottom: 3px solid #333;
+		border-left: 16px solid #333;
+	}
+}
+
+// ===============================================================
+// step 1
+//.step_container_1 {
+//	@include pie-clearfix;
+//}
+
+#drop_zone {
+	display: table-cell;
+//	width: 100%;
+	vertical-align: middle;
+	@include box-sizing( border-box );
+	@include min-width( 980px );
+	height: 60px;
+	padding: 12px;
+	text-align: center;
+	border: 1px solid #bbbbbb;
+	background: #EFEFEF;
+}
+
+// ===============================================================
+// step 2
+.step_container_2 {
+
+	.video_control {
+
+		.button {
+			@include inline-block;
+			@include box-sizing( border-box );
+			width: 200px;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+
+			border: 1px solid #ccc;
+			background: #ffffff;
+
+			@include transition-duration( 0.32s );
+			@include transition-property( background );
+
+			&:hover {
+				cursor: pointer;
+				background: #ede9e8;
+			}
+		}
+	}
+}
