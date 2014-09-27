@@ -1880,8 +1880,8 @@
                     "type": "Vector2D"
                 },
                 {
-                    "name": "結果を格納する",
-                    "description": "",
+                    "name": "contains",
+                    "description": "結果を格納する",
                     "type": "Array"
                 }
             ],
@@ -5314,18 +5314,6 @@
         {
             "message": "unknown tag: date",
             "line": " _build_tool/delaunay/src/util/FileSave.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: params with param",
-            "line": " _build_tool/delaunay/src/vehicle/Flock.js:21"
-        },
-        {
-            "message": "replacing incorrect tag: params with param",
-            "line": " _build_tool/delaunay/src/vehicle/FollowPath.js:19"
-        },
-        {
-            "message": "replacing incorrect tag: params with param",
-            "line": " _build_tool/delaunay/src/vehicle/Wander.js:22"
         },
         {
             "message": "unknown tag: license",

@@ -3112,7 +3112,7 @@ Sankaku.version = "0.2.12";
          * point が bounding box 内か外かを調べます
          * @method inside
          * @param {Vector2D} v 調べるpoint
-         * @param {Array} 結果を格納する
+         * @param {Array} contains 結果を格納する
          * @return {Array} inside の時は contains へthisを格納し返します
          */
         p.inside = function ( v, contains ) {
@@ -5403,7 +5403,7 @@ Sankaku.version = "0.2.12";
          * 徘徊
          * @class Wander
          * @extends SteeredVehicle
-         * @params {Object2D} viewModel
+         * @param {Object2D} viewModel
          * @constructor
          */
         function Wander ( viewModel ) {
@@ -5595,7 +5595,7 @@ Sankaku.version = "0.2.12";
          * 群行動
          * @class Flock
          * @extends SteeredVehicle
-         * @params {Object2D} viewModel
+         * @param {Object2D} viewModel
          * @constructor
          */
         function Flock ( viewModel ) {
@@ -5807,7 +5807,7 @@ Sankaku.version = "0.2.12";
          * 経路追従
          * @class FollowPath
          * @extends SteeredVehicle
-         * @params {Object2D} viewModel
+         * @param {Object2D} viewModel
          * @constructor
          */
         function FollowPath ( viewModel ) {

@@ -23,7 +23,7 @@
          * 徘徊
          * @class Wander
          * @extends SteeredVehicle
-         * @params {Object2D} viewModel
+         * @param {Object2D} viewModel
          * @constructor
          */
         function Wander ( viewModel ) {

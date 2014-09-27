@@ -22,7 +22,7 @@
          * 群行動
          * @class Flock
          * @extends SteeredVehicle
-         * @params {Object2D} viewModel
+         * @param {Object2D} viewModel
          * @constructor
          */
         function Flock ( viewModel ) {

@@ -329,7 +329,7 @@
                 sin_bx,
                 sin_cy,
                 my_bounding,
-                p_bounding;
+                parent_bounding;
 
             e = {
                 scale: this.scale,
@@ -343,9 +343,9 @@
             if ( !!parent && this.scene !== parent ) {
 
                 // not scene
-                p_bounding = parent.bounding();
+                parent_bounding = parent.bounding();
 
-                e.visible = p_bounding.e.visible;
+                e.visible = parent_bounding.e.visible;
 
                 if ( e.visible ) {
                     // parent is visible
@@ -353,35 +353,35 @@
 //                x = x * parent.scale;
 //                y = y * parent.scale;
 
-                    x = x * p_bounding.e.scale;
-                    y = y * p_bounding.e.scale;
+                    x = x * parent_bounding.e.scale;
+                    y = y * parent_bounding.e.scale;
 
 //                w1 = this.width * parent.scale;
 //                h1 = this.height * parent.scale;
 
-                    w1 = this.width * p_bounding.e.scale;
-                    h1 = this.height * p_bounding.e.scale;
+                    w1 = this.width * parent_bounding.e.scale;
+                    h1 = this.height * parent_bounding.e.scale;
 
                     w2 = w1 * 0.5;
                     h2 = h1 * 0.5;
 
 //                rotation = parent.rotation + this.rotation;
 
-                    rotation = p_bounding.e.rotation + this.rotation;
+                    rotation = parent_bounding.e.rotation + this.rotation;
 
 //                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
 //                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
 
-                    xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
-                    yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
+                    xd = parent.x + x * _cos( parent_bounding.e.rotation ) - y * _sin( parent_bounding.e.rotation );
+                    yd = parent.y + x * _sin( parent_bounding.e.rotation ) + y * _cos( parent_bounding.e.rotation );
 
                     x = xd;
                     y = yd;
 
 //                e.scale = parent.scale * this.scale;
 //                e.alpha = parent.alpha() * this._alpha;
-                    e.scale = p_bounding.e.scale * this.scale;
-                    e.alpha = p_bounding.e.alpha * this._alpha;
+                    e.scale = parent_bounding.e.scale * this.scale;
+                    e.alpha = parent_bounding.e.alpha * this._alpha;
 
                     e.rotation = rotation;
                 }
@@ -398,6 +398,8 @@
             //  |    |
             //  ------
             //  d    c
+            //
+            //  e: center
 
             ax = -w2;
             ay = -h2;
@@ -552,7 +554,7 @@
          * point が bounding box 内か外かを調べます
          * @method inside
          * @param {Vector2D} v 調べるpoint
-         * @param {Array} 結果を格納する
+         * @param {Array} contains 結果を格納する
          * @return {Array} inside の時は contains へthisを格納し返します
          */
         p.inside = function ( v, contains ) {
@@ -688,9 +690,9 @@
 
         /**
          * @method _rgba
-         * @param {Object} rgb { r: number, g: number, b: number}
+         * @param {Object} rgb {{ r: Number, g: Number, b: Number}}
          * @param {Number} alpha
-         * @return {{r: *, g: *, b: *, a: number}}
+         * @return {{r: Number, g: Number, b: Number, a: Number}}
          * @protected
          */
         p._rgba = function ( rgb, alpha ) {
