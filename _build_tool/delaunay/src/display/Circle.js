@@ -28,7 +28,7 @@
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
-         * @param {string} [color] default #000000
+         * @param {string=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */

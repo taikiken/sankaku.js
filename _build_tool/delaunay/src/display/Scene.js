@@ -18,6 +18,7 @@
     Sankaku.Scene = ( function (){
         /**
          * @class Scene
+         * @extend Object2D
          * @constructor
          */
         function Scene () {

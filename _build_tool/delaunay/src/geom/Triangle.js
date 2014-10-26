@@ -22,7 +22,7 @@
 
     Sankaku.Triangle = ( function (){
         /**
-         *
+         * ポリゴン（三角形）分割
          * @class Triangle
          * @param {Object} a
          * @param {Object} b

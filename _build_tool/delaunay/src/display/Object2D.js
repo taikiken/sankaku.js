@@ -24,6 +24,9 @@
             _sin = Math.sin;
 
         /**
+         * 表示Class
+         * <br>すべての表示Classの親になります
+         *
          * @class Object2D
          * @uses EventDispatcher
          * @constructor
@@ -276,6 +279,11 @@
             return this.rotation;
         };
 
+        /**
+         * @method setMask
+         * @param {Object2D} mask
+         * @returns {Object2D}
+         */
         p.setMask = function ( mask ) {
             mask.parent = this;
             mask.maskMode = true;
@@ -287,6 +295,10 @@
             return this;
         };
 
+        /**
+         * @method removeMask
+         * @returns {Object2D}
+         */
         p.removeMask = function () {
             var mask = this._mask;
             mask.parent = null;
@@ -295,7 +307,10 @@
 
             return this;
         };
-
+        /**
+         * @method mask
+         * @returns {Object2D|*|Object2D._mask}
+         */
         p.mask = function () {
             return this._mask;
         };

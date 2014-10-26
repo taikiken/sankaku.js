@@ -19,6 +19,7 @@
 
     Sankaku.Bitmap = ( function (){
         /**
+         * 画像を表示します
          * @class Bitmap
          * @extends Shape
          * @param {number} x

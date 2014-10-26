@@ -16,6 +16,7 @@
 
     Sankaku.Zanzo = ( function (){
         /**
+         * 残像感を出すためObject2Dを複数回drawします
          * @class Zanzo
          * @param {int} limit
          * @constructor

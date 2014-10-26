@@ -297,6 +297,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
             "line": 21,
+            "description": "画像を表示します",
             "extends": "Shape",
             "params": [
                 {
@@ -359,7 +360,7 @@
                 {
                     "name": "color",
                     "description": "default #000000",
-                    "type": "String",
+                    "type": "String=0",
                     "optional": true
                 },
                 {
@@ -397,7 +398,7 @@
                 {
                     "name": "color",
                     "description": "hex, default #000000",
-                    "type": "String",
+                    "type": "String=0",
                     "optional": true
                 },
                 {
@@ -407,7 +408,6 @@
                     "optional": true
                 }
             ],
-            "default": "#000000",
             "is_constructor": 1
         },
         "Object2D": {
@@ -421,6 +421,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Object2D.js",
             "line": 26,
+            "description": "表示Class\n<br>すべての表示Classの親になります",
             "uses": [
                 "EventDispatcher"
             ],
@@ -437,6 +438,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Scene.js",
             "line": 19,
+            "extends": "Object2D",
             "is_constructor": 1
         },
         "Shape": {
@@ -477,7 +479,7 @@
                 {
                     "name": "color",
                     "description": "default #000000",
-                    "type": "String",
+                    "type": "String=0",
                     "optional": true
                 },
                 {
@@ -521,7 +523,7 @@
                 {
                     "name": "color",
                     "description": "default #000000",
-                    "type": "String",
+                    "type": "String=0",
                     "optional": true
                 },
                 {
@@ -538,12 +540,11 @@
                 },
                 {
                     "name": "inner",
-                    "description": "",
+                    "description": "default radius * 0.475",
                     "type": "Int",
                     "optional": true
                 }
             ],
-            "default": "radius * 0.475",
             "is_constructor": 1
         },
         "Tripod": {
@@ -557,6 +558,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/display/Tripod.js",
             "line": 21,
+            "description": "三角形描画",
             "extends": "Object2D",
             "params": [
                 {
@@ -584,7 +586,7 @@
                 {
                     "name": "color",
                     "description": "default #000000",
-                    "type": "String",
+                    "type": "String=0",
                     "optional": true
                 },
                 {
@@ -639,6 +641,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/geom/Triangle.js",
             "line": 24,
+            "description": "ポリゴン（三角形）分割",
             "params": [
                 {
                     "name": "a",
@@ -704,7 +707,8 @@
             "params": [
                 {
                     "name": "path",
-                    "description": ""
+                    "description": "画像パス",
+                    "type": "String"
                 }
             ],
             "is_constructor": 1
@@ -719,7 +723,8 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/render/Inside.js",
-            "line": 20,
+            "line": 18,
+            "description": "当たり判定を行います",
             "params": [
                 {
                     "name": "scene",
@@ -740,6 +745,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
             "line": 18,
+            "description": "残像感を出すためObject2Dを複数回drawします",
             "params": [
                 {
                     "name": "limit",
@@ -760,6 +766,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/util/Distribute.js",
             "line": 24,
+            "description": "平均化した円形分布を行います",
             "is_constructor": 1
         },
         "FileSave": {
@@ -786,7 +793,7 @@
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/util/Iro.js",
             "line": 18,
-            "description": "https://github.com/less/less.js/blob/master/lib/less/functions.js\n<br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion",
+            "description": "色設定 utility\nhttps://github.com/less/less.js/blob/master/lib/less/functions.js\n<br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion",
             "is_constructor": 1
         },
         "List": {
@@ -951,14 +958,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 62,
+            "line": 63,
             "itemtype": "method",
             "name": "dispose",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 72,
+            "line": 73,
             "itemtype": "method",
             "name": "onLoad",
             "params": [
@@ -972,14 +979,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 81,
+            "line": 82,
             "itemtype": "method",
             "name": "onError",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 88,
+            "line": 89,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -990,14 +997,14 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 114,
+            "line": 115,
             "itemtype": "method",
             "name": "setMode",
             "class": "Bitmap"
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 121,
+            "line": 122,
             "itemtype": "method",
             "name": "if",
             "params": [
@@ -1013,7 +1020,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Bitmap.js",
-            "line": 143,
+            "line": 144,
             "itemtype": "method",
             "name": "fill",
             "params": [
@@ -1150,7 +1157,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 34,
+            "line": 33,
             "itemtype": "property",
             "name": "_v1",
             "type": "{Object2D}",
@@ -1160,7 +1167,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 40,
+            "line": 39,
             "itemtype": "property",
             "name": "_v2",
             "type": "{Object2D}",
@@ -1170,7 +1177,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 47,
+            "line": 46,
             "itemtype": "property",
             "name": "_fill",
             "type": "{string}",
@@ -1181,7 +1188,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 56,
+            "line": 55,
             "itemtype": "property",
             "name": "_line",
             "type": "{number}",
@@ -1192,7 +1199,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 64,
+            "line": 63,
             "itemtype": "property",
             "name": "_rgb",
             "type": "{{r: number, g: number, b: number}}",
@@ -1202,7 +1209,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 76,
+            "line": 75,
             "itemtype": "property",
             "name": "_color",
             "type": "{String}",
@@ -1213,7 +1220,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 92,
+            "line": 91,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -1226,7 +1233,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 107,
+            "line": 106,
             "itemtype": "method",
             "name": "segment",
             "return": {
@@ -1237,7 +1244,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 118,
+            "line": 117,
             "description": "not use",
             "itemtype": "method",
             "name": "setPosition",
@@ -1256,7 +1263,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 129,
+            "line": 128,
+            "description": "not use",
             "itemtype": "method",
             "name": "setX",
             "params": [
@@ -1358,6 +1366,7 @@
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
             "line": 212,
+            "description": "not use",
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1382,7 +1391,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 239,
+            "line": 240,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1398,7 +1407,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 251,
+            "line": 252,
             "itemtype": "method",
             "name": "stroke",
             "params": [
@@ -1422,7 +1431,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Line.js",
-            "line": 264,
+            "line": 265,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -1446,7 +1455,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 32,
+            "line": 35,
             "itemtype": "property",
             "name": "_position",
             "type": "{Vector2D}",
@@ -1457,7 +1466,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 40,
+            "line": 43,
             "itemtype": "property",
             "name": "x",
             "type": "{number}",
@@ -1466,7 +1475,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 46,
+            "line": 49,
             "itemtype": "property",
             "name": "y",
             "type": "{number}",
@@ -1475,7 +1484,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 52,
+            "line": 55,
             "description": "radian",
             "itemtype": "property",
             "name": "rotation",
@@ -1485,7 +1494,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 59,
+            "line": 62,
             "itemtype": "property",
             "name": "width",
             "type": "{number}",
@@ -1494,7 +1503,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 65,
+            "line": 68,
             "itemtype": "property",
             "name": "height",
             "type": "{number}",
@@ -1503,7 +1512,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 72,
+            "line": 75,
             "itemtype": "property",
             "name": "scale",
             "type": "{number}",
@@ -1512,7 +1521,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 79,
+            "line": 82,
             "itemtype": "property",
             "name": "scene",
             "type": "{*|null|Scene|Object2D}",
@@ -1520,7 +1529,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 84,
+            "line": 87,
             "itemtype": "property",
             "name": "parent",
             "type": "{*}",
@@ -1528,7 +1537,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 89,
+            "line": 92,
             "itemtype": "property",
             "name": "children",
             "type": "{Array}",
@@ -1536,7 +1545,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 94,
+            "line": 97,
             "itemtype": "property",
             "name": "visible",
             "type": "{boolean}",
@@ -1544,7 +1553,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 99,
+            "line": 102,
             "itemtype": "property",
             "name": "_alpha",
             "type": "{number}",
@@ -1555,7 +1564,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 107,
+            "line": 110,
             "itemtype": "property",
             "name": "_mask",
             "type": "{*|null}",
@@ -1565,7 +1574,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 122,
+            "line": 125,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -1576,7 +1585,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 130,
+            "line": 133,
             "itemtype": "method",
             "name": "_clone",
             "return": {
@@ -1589,7 +1598,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 154,
+            "line": 157,
             "itemtype": "method",
             "name": "setColor",
             "params": [
@@ -1607,7 +1616,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 168,
+            "line": 171,
             "itemtype": "method",
             "name": "setRGB",
             "params": [
@@ -1625,7 +1634,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 184,
+            "line": 187,
             "itemtype": "method",
             "name": "rgba",
             "return": {
@@ -1636,7 +1645,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 192,
+            "line": 195,
             "itemtype": "method",
             "name": "setAlpha",
             "params": [
@@ -1654,7 +1663,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 206,
+            "line": 209,
             "itemtype": "method",
             "name": "setPosition",
             "params": [
@@ -1672,7 +1681,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 219,
+            "line": 222,
             "itemtype": "method",
             "name": "position",
             "return": {
@@ -1683,7 +1692,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 227,
+            "line": 230,
             "itemtype": "method",
             "name": "setX",
             "params": [
@@ -1701,7 +1710,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 239,
+            "line": 242,
             "itemtype": "method",
             "name": "setY",
             "params": [
@@ -1719,7 +1728,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 251,
+            "line": 254,
             "description": "角度を degree を元に radian 設定します",
             "itemtype": "method",
             "name": "setRotate",
@@ -1738,7 +1747,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 263,
+            "line": 266,
             "itemtype": "method",
             "name": "rotate",
             "return": {
@@ -1749,7 +1758,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 271,
+            "line": 274,
             "itemtype": "method",
             "name": "radian",
             "return": {
@@ -1760,7 +1769,47 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 303,
+            "line": 282,
+            "itemtype": "method",
+            "name": "setMask",
+            "params": [
+                {
+                    "name": "mask",
+                    "description": "",
+                    "type": "Object2D"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 298,
+            "itemtype": "method",
+            "name": "removeMask",
+            "return": {
+                "description": "",
+                "type": "Object2D"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 310,
+            "itemtype": "method",
+            "name": "mask",
+            "return": {
+                "description": "",
+                "type": "Object2D|*|Object2D._mask"
+            },
+            "class": "Object2D"
+        },
+        {
+            "file": "_build_tool/delaunay/src/display/Object2D.js",
+            "line": 318,
             "itemtype": "method",
             "name": "bounding",
             "return": {
@@ -1771,7 +1820,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 430,
+            "line": 447,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -1789,7 +1838,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 460,
+            "line": 477,
             "itemtype": "method",
             "name": "remove",
             "params": [
@@ -1807,7 +1856,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 489,
+            "line": 506,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -1825,7 +1874,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 525,
+            "line": 542,
             "itemtype": "method",
             "name": "_draw",
             "params": [
@@ -1841,7 +1890,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 534,
+            "line": 551,
             "itemtype": "method",
             "name": "beginDraw",
             "params": [
@@ -1855,7 +1904,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 542,
+            "line": 559,
             "itemtype": "method",
             "name": "exitDraw",
             "params": [
@@ -1869,7 +1918,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 551,
+            "line": 568,
             "description": "point が bounding box 内か外かを調べます",
             "itemtype": "method",
             "name": "inside",
@@ -1893,7 +1942,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 575,
+            "line": 592,
             "itemtype": "method",
             "name": "_area",
             "params": [
@@ -1923,7 +1972,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 587,
+            "line": 604,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -1948,7 +1997,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 614,
+            "line": 631,
             "itemtype": "method",
             "name": "swap",
             "params": [
@@ -1971,7 +2020,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 633,
+            "line": 650,
             "itemtype": "method",
             "name": "highest",
             "params": [
@@ -1989,7 +2038,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 651,
+            "line": 668,
             "itemtype": "method",
             "name": "render",
             "return": {
@@ -2007,7 +2056,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 670,
+            "line": 687,
             "description": "prepare render",
             "itemtype": "method",
             "name": "beginRender",
@@ -2027,7 +2076,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 680,
+            "line": 697,
             "itemtype": "method",
             "name": "prepareRender",
             "params": [
@@ -2046,13 +2095,13 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Object2D.js",
-            "line": 689,
+            "line": 706,
             "itemtype": "method",
             "name": "_rgba",
             "params": [
                 {
                     "name": "rgb",
-                    "description": "{ r: number, g: number, b: number}",
+                    "description": "{{ r: Number, g: Number, b: Number}}",
                     "type": "Object"
                 },
                 {
@@ -2063,7 +2112,7 @@
             ],
             "return": {
                 "description": "}",
-                "type": "R: *, g: *, b: *, a: number"
+                "type": "R: Number, g: Number, b: Number, a: Number"
             },
             "access": "protected",
             "tagname": "",
@@ -2077,7 +2126,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 35,
+            "line": 36,
             "itemtype": "method",
             "name": "addChild",
             "params": [
@@ -2091,7 +2140,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 42,
+            "line": 43,
             "itemtype": "method",
             "name": "removeChild",
             "params": [
@@ -2105,7 +2154,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Scene.js",
-            "line": 50,
+            "line": 51,
             "description": "point が bounding box 内か外かを調べます\n<br>Sceneはinsideを調べません",
             "itemtype": "method",
             "name": "inside",
@@ -2394,7 +2443,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Star.js",
-            "line": 50,
+            "line": 49,
             "itemtype": "method",
             "name": "getRadius",
             "return": {
@@ -2405,7 +2454,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Star.js",
-            "line": 58,
+            "line": 57,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -2416,7 +2465,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Star.js",
-            "line": 81,
+            "line": 80,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2440,7 +2489,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
-            "line": 42,
+            "line": 43,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -2451,7 +2500,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
-            "line": 64,
+            "line": 65,
             "itemtype": "method",
             "name": "paint",
             "params": [
@@ -2469,7 +2518,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/display/Tripod.js",
-            "line": 92,
+            "line": 93,
             "itemtype": "method",
             "name": "_inside",
             "params": [
@@ -3551,7 +3600,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Inside.js",
-            "line": 34,
+            "line": 33,
+            "description": "座標と当たるオブジェクトを配列で返します",
             "itemtype": "method",
             "name": "check",
             "params": [
@@ -3575,7 +3625,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 32,
+            "line": 33,
             "itemtype": "method",
             "name": "setLimit",
             "params": [
@@ -3589,7 +3639,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 40,
+            "line": 41,
             "itemtype": "method",
             "name": "add",
             "params": [
@@ -3603,7 +3653,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "method",
             "name": "draw",
             "params": [
@@ -3623,7 +3673,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 106,
+            "line": 107,
             "itemtype": "method",
             "name": "length;",
             "return": {
@@ -3634,7 +3684,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/render/Zanzo.js",
-            "line": 114,
+            "line": 115,
             "itemtype": "method",
             "name": "clear",
             "return": {
@@ -3651,7 +3701,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Distribute.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "method",
             "name": "circle",
             "static": 1,
@@ -3703,7 +3753,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "method",
             "name": "rgb2hsl",
             "static": 1,
@@ -3732,7 +3782,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 73,
+            "line": 74,
             "itemtype": "method",
             "name": "hsl2rgb",
             "static": 1,
@@ -3761,7 +3811,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 115,
+            "line": 116,
             "itemtype": "method",
             "name": "rgb2hsv",
             "static": 1,
@@ -3790,7 +3840,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 150,
+            "line": 151,
             "itemtype": "method",
             "name": "hsv2rgb",
             "static": 1,
@@ -3819,7 +3869,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 183,
+            "line": 184,
             "itemtype": "method",
             "name": "hex2rgb",
             "static": 1,
@@ -3838,7 +3888,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 209,
+            "line": 210,
             "itemtype": "method",
             "name": "rgb2hex",
             "static": 1,
@@ -3867,7 +3917,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/util/Iro.js",
-            "line": 227,
+            "line": 228,
             "itemtype": "method",
             "name": "int2hex",
             "static": 1,
@@ -5307,6 +5357,22 @@
         }
     ],
     "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/display/Object2D.js:282"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/display/Object2D.js:298"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " _build_tool/delaunay/src/display/Object2D.js:310"
+        },
+        {
+            "message": "replacing incorrect tag: extend with extends",
+            "line": " _build_tool/delaunay/src/display/Scene.js:19"
+        },
         {
             "message": "unknown tag: license",
             "line": " _build_tool/delaunay/src/util/FileSave.js:1"

@@ -12,12 +12,11 @@
  */
 ( function ( window ){
     "use strict";
-    var Sankaku = window.Sankaku,
-        Scene = Sankaku.Scene
-    ;
+    var Sankaku = window.Sankaku;
 
     Sankaku.Inside = ( function (){
         /**
+         * 当たり判定を行います
          * @class Inside
          * @param {Scene} scene
          * @constructor
@@ -32,6 +31,7 @@
         p.constructor = Inside;
 
         /**
+         * 座標と当たるオブジェクトを配列で返します
          * @method check
          * @param {Vector2D} v
          * @return {Array}

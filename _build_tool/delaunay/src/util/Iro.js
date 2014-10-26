@@ -16,6 +16,7 @@
 
     Sankaku.Iro = ( function (){
         /**
+         * 色設定 utility
          * https://github.com/less/less.js/blob/master/lib/less/functions.js
          * <br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
          *

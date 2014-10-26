@@ -566,7 +566,7 @@ Sankaku.version = "0.2.12";
          * 画像を読み込みイベントを発火します
          * @class LoadImage
          * @uses EventDispatcher
-         * @param path
+         * @param {string} path 画像パス
          * @constructor
          */
         function LoadImage ( path ) {
@@ -973,6 +973,7 @@ Sankaku.version = "0.2.12";
 
     Sankaku.Iro = ( function (){
         /**
+         * 色設定 utility
          * https://github.com/less/less.js/blob/master/lib/less/functions.js
          * <br>http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
          *
@@ -1471,6 +1472,7 @@ Sankaku.version = "0.2.12";
             PI2 = Math.PI * 2;
 
         /**
+         * 平均化した円形分布を行います
          * @class Distribute
          * @constructor
          */
@@ -2208,7 +2210,7 @@ Sankaku.version = "0.2.12";
 
     Sankaku.Triangle = ( function (){
         /**
-         *
+         * ポリゴン（三角形）分割
          * @class Triangle
          * @param {Object} a
          * @param {Object} b
@@ -2584,6 +2586,9 @@ Sankaku.version = "0.2.12";
             _sin = Math.sin;
 
         /**
+         * 表示Class
+         * <br>すべての表示Classの親になります
+         *
          * @class Object2D
          * @uses EventDispatcher
          * @constructor
@@ -2836,6 +2841,11 @@ Sankaku.version = "0.2.12";
             return this.rotation;
         };
 
+        /**
+         * @method setMask
+         * @param {Object2D} mask
+         * @returns {Object2D}
+         */
         p.setMask = function ( mask ) {
             mask.parent = this;
             mask.maskMode = true;
@@ -2847,6 +2857,10 @@ Sankaku.version = "0.2.12";
             return this;
         };
 
+        /**
+         * @method removeMask
+         * @returns {Object2D}
+         */
         p.removeMask = function () {
             var mask = this._mask;
             mask.parent = null;
@@ -2855,7 +2869,10 @@ Sankaku.version = "0.2.12";
 
             return this;
         };
-
+        /**
+         * @method mask
+         * @returns {Object2D|*|Object2D._mask}
+         */
         p.mask = function () {
             return this._mask;
         };
@@ -2889,7 +2906,7 @@ Sankaku.version = "0.2.12";
                 sin_bx,
                 sin_cy,
                 my_bounding,
-                p_bounding;
+                parent_bounding;
 
             e = {
                 scale: this.scale,
@@ -2903,9 +2920,9 @@ Sankaku.version = "0.2.12";
             if ( !!parent && this.scene !== parent ) {
 
                 // not scene
-                p_bounding = parent.bounding();
+                parent_bounding = parent.bounding();
 
-                e.visible = p_bounding.e.visible;
+                e.visible = parent_bounding.e.visible;
 
                 if ( e.visible ) {
                     // parent is visible
@@ -2913,35 +2930,35 @@ Sankaku.version = "0.2.12";
 //                x = x * parent.scale;
 //                y = y * parent.scale;
 
-                    x = x * p_bounding.e.scale;
-                    y = y * p_bounding.e.scale;
+                    x = x * parent_bounding.e.scale;
+                    y = y * parent_bounding.e.scale;
 
 //                w1 = this.width * parent.scale;
 //                h1 = this.height * parent.scale;
 
-                    w1 = this.width * p_bounding.e.scale;
-                    h1 = this.height * p_bounding.e.scale;
+                    w1 = this.width * parent_bounding.e.scale;
+                    h1 = this.height * parent_bounding.e.scale;
 
                     w2 = w1 * 0.5;
                     h2 = h1 * 0.5;
 
 //                rotation = parent.rotation + this.rotation;
 
-                    rotation = p_bounding.e.rotation + this.rotation;
+                    rotation = parent_bounding.e.rotation + this.rotation;
 
 //                xd = parent.x + x * _cos( parent.rotation ) - y * _sin( parent.rotation );
 //                yd = parent.y + x * _sin( parent.rotation ) + y * _cos( parent.rotation );
 
-                    xd = parent.x + x * _cos( p_bounding.e.rotation ) - y * _sin( p_bounding.e.rotation );
-                    yd = parent.y + x * _sin( p_bounding.e.rotation ) + y * _cos( p_bounding.e.rotation );
+                    xd = parent.x + x * _cos( parent_bounding.e.rotation ) - y * _sin( parent_bounding.e.rotation );
+                    yd = parent.y + x * _sin( parent_bounding.e.rotation ) + y * _cos( parent_bounding.e.rotation );
 
                     x = xd;
                     y = yd;
 
 //                e.scale = parent.scale * this.scale;
 //                e.alpha = parent.alpha() * this._alpha;
-                    e.scale = p_bounding.e.scale * this.scale;
-                    e.alpha = p_bounding.e.alpha * this._alpha;
+                    e.scale = parent_bounding.e.scale * this.scale;
+                    e.alpha = parent_bounding.e.alpha * this._alpha;
 
                     e.rotation = rotation;
                 }
@@ -2958,6 +2975,8 @@ Sankaku.version = "0.2.12";
             //  |    |
             //  ------
             //  d    c
+            //
+            //  e: center
 
             ax = -w2;
             ay = -h2;
@@ -3248,9 +3267,9 @@ Sankaku.version = "0.2.12";
 
         /**
          * @method _rgba
-         * @param {Object} rgb { r: number, g: number, b: number}
+         * @param {Object} rgb {{ r: Number, g: Number, b: Number}}
          * @param {Number} alpha
-         * @return {{r: *, g: *, b: *, a: number}}
+         * @return {{r: Number, g: Number, b: Number, a: Number}}
          * @protected
          */
         p._rgba = function ( rgb, alpha ) {
@@ -3288,6 +3307,7 @@ Sankaku.version = "0.2.12";
     Sankaku.Scene = ( function (){
         /**
          * @class Scene
+         * @extend Object2D
          * @constructor
          */
         function Scene () {
@@ -3369,7 +3389,7 @@ Sankaku.version = "0.2.12";
          * @param {number} y
          * @param {number=20} [width]
          * @param {number=10} [height]
-         * @param {String} [color] default #000000
+         * @param {String=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
@@ -3669,7 +3689,7 @@ Sankaku.version = "0.2.12";
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
-         * @param {string} [color] default #000000
+         * @param {string=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
@@ -3865,13 +3885,14 @@ Sankaku.version = "0.2.12";
     Sankaku.Tripod = ( function (){
 
         /**
+         * 三角形描画
          * @class Tripod
          * @extends Object2D
          * @param {number} x
          * @param {number} y
          * @param {number=20} [width]
          * @param {number=10} [height]
-         * @param {String} [color] default #000000
+         * @param {String=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @constructor
          */
@@ -3997,11 +4018,10 @@ Sankaku.version = "0.2.12";
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
-         * @param {string} [color] default #000000
+         * @param {string=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @param {int=5} [points]
-         * @param {int} [inner]
-         * @default radius * 0.475
+         * @param {int} [inner] default radius * 0.475
          * @constructor
          */
         function Star ( x, y, radius, color, fill, points, inner ) {
@@ -4127,8 +4147,7 @@ Sankaku.version = "0.2.12";
          * @extends Object2D
          * @param {Object2D} v1
          * @param {Object2D} v2
-         * @param {string} [color] hex, default #000000
-         * @default #000000
+         * @param {string=0} [color] hex, default #000000
          * @param {Number=1} [line] line width
          * @constructor
          */
@@ -4231,6 +4250,7 @@ Sankaku.version = "0.2.12";
             return this;
         };
         /**
+         * not use
          * @method setX
          * @param {number} x
          * @return {Object2D}
@@ -4278,7 +4298,7 @@ Sankaku.version = "0.2.12";
          * @param {*|Object2D} target
          * @return {Object2D}
          */
-        p.remove = function () {
+        p.remove = function ( target ) {
             // empty
             return this;
         };
@@ -4314,6 +4334,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
+         * not use
          * @method _inside
          * @param {Vector2D} v
          * @param {Array} contains
@@ -4414,6 +4435,7 @@ Sankaku.version = "0.2.12";
 
     Sankaku.Bitmap = ( function (){
         /**
+         * 画像を表示します
          * @class Bitmap
          * @extends Shape
          * @param {number} x
@@ -5965,6 +5987,7 @@ Sankaku.version = "0.2.12";
 
     Sankaku.Zanzo = ( function (){
         /**
+         * 残像感を出すためObject2Dを複数回drawします
          * @class Zanzo
          * @param {int} limit
          * @constructor
@@ -6087,12 +6110,11 @@ Sankaku.version = "0.2.12";
  */
 ( function ( window ){
     "use strict";
-    var Sankaku = window.Sankaku,
-        Scene = Sankaku.Scene
-    ;
+    var Sankaku = window.Sankaku;
 
     Sankaku.Inside = ( function (){
         /**
+         * 当たり判定を行います
          * @class Inside
          * @param {Scene} scene
          * @constructor
@@ -6107,6 +6129,7 @@ Sankaku.version = "0.2.12";
         p.constructor = Inside;
 
         /**
+         * 座標と当たるオブジェクトを配列で返します
          * @method check
          * @param {Vector2D} v
          * @return {Array}

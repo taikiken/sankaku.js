@@ -20,7 +20,7 @@
          * 画像を読み込みイベントを発火します
          * @class LoadImage
          * @uses EventDispatcher
-         * @param path
+         * @param {string} path 画像パス
          * @constructor
          */
         function LoadImage ( path ) {

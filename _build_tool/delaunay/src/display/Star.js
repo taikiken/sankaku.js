@@ -26,11 +26,10 @@
          * @param {number} x
          * @param {number} y
          * @param {number=20} [radius]
-         * @param {string} [color] default #000000
+         * @param {string=0} [color] default #000000
          * @param {string=stroke} [fill] fill or stroke or both, Shape.FILL, Shape.STROKE, Shape.BOTH
          * @param {int=5} [points]
-         * @param {int} [inner]
-         * @default radius * 0.475
+         * @param {int} [inner] default radius * 0.475
          * @constructor
          */
         function Star ( x, y, radius, color, fill, points, inner ) {

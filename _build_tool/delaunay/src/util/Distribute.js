@@ -22,6 +22,7 @@
             PI2 = Math.PI * 2;
 
         /**
+         * 平均化した円形分布を行います
          * @class Distribute
          * @constructor
          */

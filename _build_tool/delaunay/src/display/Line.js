@@ -23,8 +23,7 @@
          * @extends Object2D
          * @param {Object2D} v1
          * @param {Object2D} v2
-         * @param {string} [color] hex, default #000000
-         * @default #000000
+         * @param {string=0} [color] hex, default #000000
          * @param {Number=1} [line] line width
          * @constructor
          */
@@ -127,6 +126,7 @@
             return this;
         };
         /**
+         * not use
          * @method setX
          * @param {number} x
          * @return {Object2D}
@@ -174,7 +174,7 @@
          * @param {*|Object2D} target
          * @return {Object2D}
          */
-        p.remove = function () {
+        p.remove = function ( target ) {
             // empty
             return this;
         };
@@ -210,6 +210,7 @@
         };
 
         /**
+         * not use
          * @method _inside
          * @param {Vector2D} v
          * @param {Array} contains
