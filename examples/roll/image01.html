@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Image</title>
+    <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+<h3>Image</h3>
+<input type="file" accept="image/*" capture="camera" id="image">
+
+<p><button id="access">access</button></p>
+<img src="" alt="" id="img1"/>
+<img src="" alt="" id="img2"/>
+<img src="" alt="" id="img3"/>
+<script type="text/javascript">
+    (function ( window ){
+        "use strict";
+
+        var document = window.document,
+            $ = window.jQuery,
+            image, img1, img2, img3, $access
+        ;
+
+        image = document.getElementById( "image" );
+        img1 = document.getElementById( "img1" );
+        img2 = document.getElementById( "img2" );
+        img3 = document.getElementById( "img3" );
+        $access = $( "#access" );
+
+        var reader = new FileReader();
+
+        console.log( "readAsDataURL", reader.readAsDataURL );
+
+
+        $access.on( "click", function ( e ){
+            e.preventDefault();
+            e.stopPropagation;
+
+            var file = image.files[0];
+
+//            img1.src = file.name;
+
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    // Render thumbnail.
+                    img1.src = e.target.result;
+                };
+            })(file);
+
+            reader.readAsDataURL( file );
+            console.log( "files", image.files[0] );
+        } )
+    }( window ));
+
+</script>
+</body>
+</html>

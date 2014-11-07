@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>iOS</title>
+</head>
+<body>
+<h3>Image</h3>
+<input type="file" accept="image/*" capture="camera" id="image">
+<h3>Video</h3>
+<input type="file" accept="video/*" capture="camera" id="video">
+
+<p><button id="access">get</button></p>
+<video src="" type="video/mp4" id="videoTag" preload="none" controls="controls" autoplay="autoplay">
+<script type="text/javascript">
+    var _video = document.getElementById("video" ),
+        _access = document.getElementById("access" ),
+        _videoTag = document.getElementById("videoTag")
+    ;
+
+    _videoTag.type = "video/mp4";
+    _videoTag.autoplay = "autoplay";
+
+    var reader = new FileReader();
+
+    _access.addEventListener("click", function (){
+        console.log( "files",  _videoTag.files[0]);
+
+        reader.readAsDataURL(_videoTag.files[0]);
+        reader.onloadend = function ( e ){
+            _videoTag.src = e.target.result;
+        };
+    }, false);
+
+</script>
+</body>
+</html>
