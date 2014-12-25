@@ -13,14 +13,14 @@
 ( function ( window ){
     "use strict";
 
-    var _abs = Math.abs,
-        _min = Math.min,
-        _max = Math.max,
-        _round = Math.round,
-
+    var Math = window.Math,
         Sankaku = window.Sankaku;
 
     Sankaku.Triangle = ( function (){
+        var _abs = Math.abs,
+            _min = Math.min,
+            _max = Math.max,
+            _round = Math.round;
         /**
          * ポリゴン（三角形）分割
          * @class Triangle
@@ -95,12 +95,10 @@
          */
         p.centroid = function() {
 
-            return (
-            {
+            return {
                 x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
                 y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
-            }
-                );
+            };
         };
 
         return Triangle;

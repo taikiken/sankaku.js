@@ -671,7 +671,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 27,
+            "line": 28,
             "description": "二次元ベクトルクラス",
             "params": [
                 {
@@ -699,7 +699,7 @@
             "extension_for": [],
             "module": "Sankaku",
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
-            "line": 19,
+            "line": 18,
             "description": "画像を読み込みイベントを発火します",
             "uses": [
                 "EventDispatcher"
@@ -2698,7 +2698,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 43,
+            "line": 44,
             "description": "ベクトルを可視化するのに用います\n<br>デバッグなどで使用します。",
             "itemtype": "method",
             "name": "draw",
@@ -2717,7 +2717,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 61,
+            "line": 62,
             "description": "ベクトルのコピーを作成します",
             "itemtype": "method",
             "name": "clone",
@@ -2729,7 +2729,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 70,
+            "line": 71,
             "description": "ベクトルのx, yの値を 0 にします",
             "itemtype": "method",
             "name": "zero",
@@ -2741,7 +2741,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 82,
+            "line": 83,
             "description": "ベクトルの値が x, y 共 0 かどうかを判定します",
             "itemtype": "method",
             "name": "isZero",
@@ -2753,7 +2753,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 91,
+            "line": 92,
             "description": "ベクトルへ値を設定します",
             "itemtype": "method",
             "name": "set",
@@ -2777,7 +2777,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 105,
+            "line": 106,
             "description": "ベクトルの x へ値を設定します",
             "itemtype": "method",
             "name": "setX",
@@ -2796,7 +2796,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 117,
+            "line": 118,
             "description": "ベクトルの y へ値を設定します",
             "itemtype": "method",
             "name": "setY",
@@ -2815,7 +2815,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 129,
+            "line": 130,
             "description": "ベクトルへ引数ベクトルの値を複写します",
             "itemtype": "method",
             "name": "copy",
@@ -2834,7 +2834,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 142,
+            "line": 143,
             "description": "ベクトルへ引数ベクトルの値を加算します",
             "itemtype": "method",
             "name": "add",
@@ -2853,7 +2853,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 155,
+            "line": 156,
             "description": "ベクトルへ値を加算します",
             "itemtype": "method",
             "name": "add",
@@ -2872,7 +2872,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 168,
+            "line": 169,
             "description": "ベクトルへ引数ベクトルの値を加算し新しいVector2Dを作成します",
             "itemtype": "method",
             "name": "addNew",
@@ -2891,7 +2891,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 178,
+            "line": 179,
             "description": "二つのベクトルの値を加算します",
             "itemtype": "method",
             "name": "addVector",
@@ -2915,7 +2915,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 192,
+            "line": 193,
             "description": "ベクトルへ引数ベクトルの値を減算します",
             "itemtype": "method",
             "name": "sub",
@@ -2934,7 +2934,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 205,
+            "line": 206,
             "description": "ベクトルへ引数ベクトルの値を減算し新しいVector2Dを作成します",
             "itemtype": "method",
             "name": "subNew",
@@ -2953,7 +2953,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 215,
+            "line": 216,
             "description": "二つのベクトルの値を減算します",
             "itemtype": "method",
             "name": "subVector",
@@ -2977,7 +2977,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 230,
+            "line": 231,
             "description": "ベクトルへ引数ベクトルの値を乗算します",
             "itemtype": "method",
             "name": "multiply",
@@ -2996,7 +2996,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 243,
+            "line": 244,
             "description": "ベクトルの値を乗算します",
             "itemtype": "method",
             "name": "multiplyScalar",
@@ -3015,7 +3015,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 257,
+            "line": 258,
             "description": "ベクトルへ引数ベクトルの値を乗算し新しいVector2Dを作成します",
             "itemtype": "method",
             "name": "multiplyNew",
@@ -3034,7 +3034,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 267,
+            "line": 268,
             "description": "ベクトルへ引数ベクトルの値を除算します",
             "itemtype": "method",
             "name": "divide",
@@ -3053,7 +3053,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 280,
+            "line": 281,
             "description": "ベクトルの値を除算します",
             "itemtype": "method",
             "name": "divideScalar",
@@ -3072,7 +3072,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 304,
+            "line": 305,
             "description": "ベクトルへ引数ベクトルの値を除算し新しいVector2Dを作成します",
             "itemtype": "method",
             "name": "divideNew",
@@ -3091,7 +3091,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 314,
+            "line": 315,
             "description": "ベクトルへ引数ベクトルの値と比較し小さな方の値を設定します",
             "itemtype": "method",
             "name": "min",
@@ -3110,7 +3110,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 334,
+            "line": 335,
             "description": "ベクトルへ引数ベクトルの値と比較し大きな方の値を設定します",
             "itemtype": "method",
             "name": "max",
@@ -3129,7 +3129,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 354,
+            "line": 355,
             "description": "this.min( min_v ), this.max( max_v ) を実行します",
             "itemtype": "method",
             "name": "clamp",
@@ -3153,7 +3153,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 383,
+            "line": 370,
             "description": "スカラ値を使用しclampします",
             "itemtype": "method",
             "name": "clampScalar",
@@ -3177,7 +3177,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 402,
+            "line": 389,
+            "description": "ベクトル値、小数点を切り捨てます",
             "itemtype": "method",
             "name": "floor",
             "return": {
@@ -3188,7 +3189,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 413,
+            "line": 401,
+            "description": "ベクトル値、小数点を切り上げます",
             "itemtype": "method",
             "name": "ceil",
             "return": {
@@ -3199,7 +3201,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 424,
+            "line": 413,
+            "description": "ベクトル値、小数点を四捨五入します",
             "itemtype": "method",
             "name": "round",
             "return": {
@@ -3210,7 +3213,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 435,
+            "line": 425,
             "itemtype": "method",
             "name": "roundToZero",
             "return": {
@@ -3221,7 +3224,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 446,
+            "line": 436,
+            "description": "ベクトルの値を反転します\n<br><code>this.multiplyScalar( -1 )</code> を実行します",
             "itemtype": "method",
             "name": "negate",
             "return": {
@@ -3232,7 +3236,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 454,
+            "line": 446,
             "description": "ベクトルと引数ベクトルの内積を計算します",
             "itemtype": "method",
             "name": "dot",
@@ -3251,8 +3255,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 464,
-            "description": "ベクトルの大きさの２条を計算します",
+            "line": 456,
+            "description": "ベクトルの大きさの２乗を計算します",
             "itemtype": "method",
             "name": "lengthSq",
             "return": {
@@ -3263,8 +3267,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 473,
-            "description": "ベクトルの大きさの２条の平方根を計算します",
+            "line": 465,
+            "description": "ベクトルの大きさの２乗の平方根を計算します",
             "itemtype": "method",
             "name": "length",
             "return": {
@@ -3275,7 +3279,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 482,
+            "line": 474,
             "description": "ベクトルの大きさを設定します",
             "itemtype": "method",
             "name": "setLength",
@@ -3294,8 +3298,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 499,
-            "description": "ベクトルの角度を設定します",
+            "line": 491,
+            "description": "ベクトルの角度を設定します\n<br>角度の設定により x, y は変わるが大きさは維持されます",
             "itemtype": "method",
             "name": "setAngle",
             "params": [
@@ -3313,7 +3317,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 516,
+            "line": 509,
             "description": "ベクトルの角度を計算します",
             "itemtype": "method",
             "name": "angle",
@@ -3325,7 +3329,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 525,
+            "line": 518,
             "description": "ベクトルの大きさを正規化（大きさを1）にします",
             "itemtype": "method",
             "name": "normalize",
@@ -3337,8 +3341,8 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 535,
-            "description": "ベクトルと引数ベクトル間の距離の２条を計算します",
+            "line": 528,
+            "description": "ベクトルと引数ベクトル間の距離の２乗を計算します",
             "itemtype": "method",
             "name": "distanceSq",
             "params": [
@@ -3356,7 +3360,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 548,
+            "line": 541,
             "description": "ベクトルと引数ベクトル間の距離を計算します",
             "itemtype": "method",
             "name": "distance",
@@ -3375,7 +3379,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 558,
+            "line": 551,
             "itemtype": "method",
             "name": "lerp",
             "params": [
@@ -3398,7 +3402,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 571,
+            "line": 564,
             "description": "ベクトルと引数ベクトルの値が等しいかを判定します",
             "itemtype": "method",
             "name": "equals",
@@ -3417,7 +3421,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 581,
+            "line": 574,
             "description": "配列を使いベクトルを設定します",
             "itemtype": "method",
             "name": "fromArray",
@@ -3436,7 +3440,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 594,
+            "line": 587,
             "description": "ベクトルの値を配列として返します",
             "itemtype": "method",
             "name": "toArray",
@@ -3448,7 +3452,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 603,
+            "line": 596,
             "description": "ベクトルの値を設定した値以下にします",
             "itemtype": "method",
             "name": "truncate",
@@ -3467,7 +3471,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 614,
+            "line": 607,
             "description": "ベクトルの値を反転します",
             "itemtype": "method",
             "name": "reverse",
@@ -3479,7 +3483,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 627,
+            "line": 619,
             "description": "ベクトルが正規化されているかを判定します",
             "itemtype": "method",
             "name": "isNormalize",
@@ -3491,7 +3495,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 636,
+            "line": 628,
             "description": "このベクトルに垂直なベクトルを生成し返します",
             "itemtype": "method",
             "name": "perpendicular",
@@ -3503,7 +3507,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 645,
+            "line": 637,
             "description": "引数ベクトルが、このベクトルの左側にあるか右側かを判定します",
             "itemtype": "method",
             "name": "sign",
@@ -3522,7 +3526,7 @@
         },
         {
             "file": "_build_tool/delaunay/src/geom/Vector2D.js",
-            "line": 656,
+            "line": 648,
             "description": "２つのベクトル間の角度を計算します",
             "itemtype": "method",
             "name": "angleBetween",
@@ -3553,29 +3557,69 @@
         },
         {
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
-            "line": 30,
+            "line": 26,
+            "description": "path 画像パス",
+            "itemtype": "property",
+            "name": "_path",
+            "type": "{string}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 33,
+            "description": "load する Image instance",
+            "itemtype": "property",
+            "name": "_img",
+            "type": "{null|Image}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 40,
+            "itemtype": "property",
+            "name": "_boundComplete",
+            "type": "{function(this:LoadImage)|*}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 46,
+            "itemtype": "property",
+            "name": "_boundError",
+            "type": "{function(this:LoadImage)|*}",
+            "access": "private",
+            "tagname": "",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 54,
             "description": "画像読み込み完了イベント",
-            "itemtype": "property",
+            "itemtype": "event",
             "name": "COMPLETE",
-            "final": "",
             "static": 1,
             "type": "{string}",
             "class": "LoadImage"
         },
         {
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
-            "line": 38,
+            "line": 62,
             "description": "画像読み込みエラーイベント",
-            "itemtype": "property",
+            "itemtype": "event",
             "name": "ERROR",
-            "final": "",
             "static": 1,
             "type": "{string}",
             "class": "LoadImage"
         },
         {
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
-            "line": 53,
+            "line": 77,
             "itemtype": "method",
             "name": "clone",
             "return": {
@@ -3586,10 +3630,31 @@
         },
         {
             "file": "_build_tool/delaunay/src/net/LoadImage.js",
-            "line": 61,
+            "line": 85,
             "description": "画像読み込みを開始します",
             "itemtype": "method",
             "name": "load",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 123,
+            "itemtype": "method",
+            "name": "dispose",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 132,
+            "itemtype": "method",
+            "name": "onComplete",
+            "class": "LoadImage"
+        },
+        {
+            "file": "_build_tool/delaunay/src/net/LoadImage.js",
+            "line": 139,
+            "itemtype": "method",
+            "name": "onError",
             "class": "LoadImage"
         },
         {
@@ -5357,22 +5422,6 @@
         }
     ],
     "warnings": [
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:282"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:298"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " _build_tool/delaunay/src/display/Object2D.js:310"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " _build_tool/delaunay/src/display/Scene.js:19"
-        },
         {
             "message": "unknown tag: license",
             "line": " _build_tool/delaunay/src/util/FileSave.js:1"

@@ -558,8 +558,7 @@ Sankaku.version = "0.2.12";
  */
 ( function ( window ){
     "use strict";
-    var document = window.document,
-        Sankaku = window.Sankaku;
+    var Sankaku = window.Sankaku;
 
     Sankaku.LoadImage = ( function (){
         /**
@@ -570,13 +569,38 @@ Sankaku.version = "0.2.12";
          * @constructor
          */
         function LoadImage ( path ) {
+            /**
+             * path 画像パス
+             * @property _path
+             * @type {string}
+             * @private
+             */
             this._path = path;
+            /**
+             * load する Image instance
+             * @property _img
+             * @type {null|Image}
+             * @private
+             */
+            this._img = null;
+            /**
+             * @property _boundComplete
+             * @type {function(this:LoadImage)|*}
+             * @private
+             */
+            this._boundComplete = this.onComplete.bind( this );
+            /**
+             * @property _boundError
+             * @type {function(this:LoadImage)|*}
+             * @private
+             */
+            this._boundError = this.onError.bind( this );
         }
 
         /**
          * 画像読み込み完了イベント
          * @for LoadImage
-         * @const COMPLETE
+         * @event COMPLETE
          * @static
          * @type {string}
          */
@@ -584,7 +608,7 @@ Sankaku.version = "0.2.12";
         /**
          * 画像読み込みエラーイベント
          * @for LoadImage
-         * @const ERROR
+         * @event ERROR
          * @static
          * @type {string}
          */
@@ -609,35 +633,61 @@ Sankaku.version = "0.2.12";
          * @method load
          */
         p.load = function () {
-            var path = this._path,
-                img = new Image(),
-                _this = this;
+            var img = new Image();
 
-            function dispose () {
+            this._img = img;
 
-                img.removeEventListener( "load", complete );
-                img.removeEventListener( "error", error );
+            //function dispose () {
+            //
+            //    img.removeEventListener( "load", complete );
+            //    img.removeEventListener( "error", error );
+            //
+            //    return true;
+            //}
+            //
+            //function complete () {
+            //
+            //    dispose();
+            //    _this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: _this, path: path, img: img } );
+            //}
+            //
+            //function error () {
+            //
+            //    dispose();
+            //    _this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: _this, path: path } );
+            //
+            //}
+            //
+            //img.addEventListener( "load", complete, false );
+            //img.addEventListener( "error", error, false );
 
-                return true;
-            }
+            img.addEventListener( "load", this._boundComplete, false );
+            img.addEventListener( "error", this._boundError, false );
 
-            function complete () {
+            img.src = this._path;
+        };
+        /**
+         * @method dispose
+         */
+        p.dispose = function () {
+            var img = this._img;
 
-                dispose();
-                _this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: _this, path: path, img: img } );
-            }
-
-            function error () {
-
-                dispose();
-                _this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: _this, path: path } );
-
-            }
-
-            img.addEventListener( "load", complete, false );
-            img.addEventListener( "error", error, false );
-
-            img.src = path;
+            img.removeEventListener( "load", this._boundComplete );
+            img.removeEventListener( "error", this._boundError );
+        };
+        /**
+         * @method onComplete
+         */
+        p.onComplete = function () {
+            this.dispose();
+            this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: this, path: this._path, img: this._img } );
+        };
+        /**
+         * @method onError
+         */
+        p.onError = function () {
+            this.dispose();
+            this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: this, path: this._path } );
         };
 
         return LoadImage;
@@ -1520,7 +1570,8 @@ Sankaku.version = "0.2.12";
  */
 ( function ( window ){
     "use strict";
-    var Sankaku = window.Sankaku;
+    var Sankaku = window.Sankaku,
+        Math = window.Math;
 
     Sankaku.Vector2D = ( function (){
         var _floor = Math.floor,
@@ -1867,21 +1918,7 @@ Sankaku.version = "0.2.12";
          * @return {Vector2D}
          */
         p.clamp = function ( min_v, max_v ) {
-//            if ( this.x < min.x ) {
-//
-//                this.x = min.x;
-//            } else if ( this.x > max.x ) {
-//
-//                this.x = max.x;
-//            }
-//
-//            if ( this.y < min.y ) {
-//
-//                this.y = min.y;
-//            } else if ( this.y > max.y ) {
-//
-//                this.y = max.y;
-//            }
+
             this.min( min_v );
             this.max( max_v );
 
@@ -1908,6 +1945,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
+         * ベクトル値、小数点を切り捨てます
          * @method floor
          * @return {Vector2D}
          */
@@ -1919,6 +1957,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
+         * ベクトル値、小数点を切り上げます
          * @method ceil
          * @return {Vector2D}
          */
@@ -1930,6 +1969,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
+         * ベクトル値、小数点を四捨五入します
          * @method round
          * @return {Vector2D}
          */
@@ -1952,11 +1992,13 @@ Sankaku.version = "0.2.12";
         };
 
         /**
+         * ベクトルの値を反転します
+         * <br><code>this.multiplyScalar( -1 )</code> を実行します
          * @method negate
          * @return {Vector2D}
          */
         p.negate = function () {
-            return this.multiplyScalar( - 1 );
+            return this.multiplyScalar( -1 );
         };
 
         /**
@@ -1970,7 +2012,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
-         * ベクトルの大きさの２条を計算します
+         * ベクトルの大きさの２乗を計算します
          * @method lengthSq
          * @return {number}
          */
@@ -1979,7 +2021,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
-         * ベクトルの大きさの２条の平方根を計算します
+         * ベクトルの大きさの２乗の平方根を計算します
          * @method length
          * @return {number}
          */
@@ -2006,6 +2048,7 @@ Sankaku.version = "0.2.12";
 
         /**
          * ベクトルの角度を設定します
+         * <br>角度の設定により x, y は変わるが大きさは維持されます
          * @method setAngle
          * @param {number} value radian
          * @return {Vector2D}
@@ -2041,7 +2084,7 @@ Sankaku.version = "0.2.12";
         };
 
         /**
-         * ベクトルと引数ベクトル間の距離の２条を計算します
+         * ベクトルと引数ベクトル間の距離の２乗を計算します
          * @method distanceSq
          * @param {Vector2D} v
          * @return {number}
@@ -2125,8 +2168,7 @@ Sankaku.version = "0.2.12";
          * @return {Vector2D}
          */
         p.reverse = function () {
-//            this.x *= -1;
-//            this.y *= -1;
+
             this.negate();
 
             return this;
@@ -2201,14 +2243,14 @@ Sankaku.version = "0.2.12";
 ( function ( window ){
     "use strict";
 
-    var _abs = Math.abs,
-        _min = Math.min,
-        _max = Math.max,
-        _round = Math.round,
-
+    var Math = window.Math,
         Sankaku = window.Sankaku;
 
     Sankaku.Triangle = ( function (){
+        var _abs = Math.abs,
+            _min = Math.min,
+            _max = Math.max,
+            _round = Math.round;
         /**
          * ポリゴン（三角形）分割
          * @class Triangle
@@ -2283,12 +2325,10 @@ Sankaku.version = "0.2.12";
          */
         p.centroid = function() {
 
-            return (
-            {
+            return {
                 x: _round( ( this.a.x + this.b.x + this.c.x ) / 3 ),
                 y: _round( ( this.a.y + this.b.y + this.c.y ) / 3 )
-            }
-                );
+            };
         };
 
         return Triangle;
@@ -2844,7 +2884,7 @@ Sankaku.version = "0.2.12";
         /**
          * @method setMask
          * @param {Object2D} mask
-         * @returns {Object2D}
+         * @return {Object2D}
          */
         p.setMask = function ( mask ) {
             mask.parent = this;
@@ -2859,7 +2899,7 @@ Sankaku.version = "0.2.12";
 
         /**
          * @method removeMask
-         * @returns {Object2D}
+         * @return {Object2D}
          */
         p.removeMask = function () {
             var mask = this._mask;
@@ -2871,7 +2911,7 @@ Sankaku.version = "0.2.12";
         };
         /**
          * @method mask
-         * @returns {Object2D|*|Object2D._mask}
+         * @return {Object2D|*|Object2D._mask}
          */
         p.mask = function () {
             return this._mask;
@@ -3307,7 +3347,7 @@ Sankaku.version = "0.2.12";
     Sankaku.Scene = ( function (){
         /**
          * @class Scene
-         * @extend Object2D
+         * @extends Object2D
          * @constructor
          */
         function Scene () {

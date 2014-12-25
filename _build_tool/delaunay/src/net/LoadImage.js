@@ -12,8 +12,7 @@
  */
 ( function ( window ){
     "use strict";
-    var document = window.document,
-        Sankaku = window.Sankaku;
+    var Sankaku = window.Sankaku;
 
     Sankaku.LoadImage = ( function (){
         /**
@@ -24,13 +23,38 @@
          * @constructor
          */
         function LoadImage ( path ) {
+            /**
+             * path 画像パス
+             * @property _path
+             * @type {string}
+             * @private
+             */
             this._path = path;
+            /**
+             * load する Image instance
+             * @property _img
+             * @type {null|Image}
+             * @private
+             */
+            this._img = null;
+            /**
+             * @property _boundComplete
+             * @type {function(this:LoadImage)|*}
+             * @private
+             */
+            this._boundComplete = this.onComplete.bind( this );
+            /**
+             * @property _boundError
+             * @type {function(this:LoadImage)|*}
+             * @private
+             */
+            this._boundError = this.onError.bind( this );
         }
 
         /**
          * 画像読み込み完了イベント
          * @for LoadImage
-         * @const COMPLETE
+         * @event COMPLETE
          * @static
          * @type {string}
          */
@@ -38,7 +62,7 @@
         /**
          * 画像読み込みエラーイベント
          * @for LoadImage
-         * @const ERROR
+         * @event ERROR
          * @static
          * @type {string}
          */
@@ -63,35 +87,61 @@
          * @method load
          */
         p.load = function () {
-            var path = this._path,
-                img = new Image(),
-                _this = this;
+            var img = new Image();
 
-            function dispose () {
+            this._img = img;
 
-                img.removeEventListener( "load", complete );
-                img.removeEventListener( "error", error );
+            //function dispose () {
+            //
+            //    img.removeEventListener( "load", complete );
+            //    img.removeEventListener( "error", error );
+            //
+            //    return true;
+            //}
+            //
+            //function complete () {
+            //
+            //    dispose();
+            //    _this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: _this, path: path, img: img } );
+            //}
+            //
+            //function error () {
+            //
+            //    dispose();
+            //    _this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: _this, path: path } );
+            //
+            //}
+            //
+            //img.addEventListener( "load", complete, false );
+            //img.addEventListener( "error", error, false );
 
-                return true;
-            }
+            img.addEventListener( "load", this._boundComplete, false );
+            img.addEventListener( "error", this._boundError, false );
 
-            function complete () {
+            img.src = this._path;
+        };
+        /**
+         * @method dispose
+         */
+        p.dispose = function () {
+            var img = this._img;
 
-                dispose();
-                _this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: _this, path: path, img: img } );
-            }
-
-            function error () {
-
-                dispose();
-                _this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: _this, path: path } );
-
-            }
-
-            img.addEventListener( "load", complete, false );
-            img.addEventListener( "error", error, false );
-
-            img.src = path;
+            img.removeEventListener( "load", this._boundComplete );
+            img.removeEventListener( "error", this._boundError );
+        };
+        /**
+         * @method onComplete
+         */
+        p.onComplete = function () {
+            this.dispose();
+            this.dispatchEvent( { type: LoadImage.COMPLETE, currentTarget: this, path: this._path, img: this._img } );
+        };
+        /**
+         * @method onError
+         */
+        p.onError = function () {
+            this.dispose();
+            this.dispatchEvent( { type: LoadImage.ERROR, currentTarget: this, path: this._path } );
         };
 
         return LoadImage;

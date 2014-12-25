@@ -282,7 +282,7 @@
         /**
          * @method setMask
          * @param {Object2D} mask
-         * @returns {Object2D}
+         * @return {Object2D}
          */
         p.setMask = function ( mask ) {
             mask.parent = this;
@@ -297,7 +297,7 @@
 
         /**
          * @method removeMask
-         * @returns {Object2D}
+         * @return {Object2D}
          */
         p.removeMask = function () {
             var mask = this._mask;
@@ -309,7 +309,7 @@
         };
         /**
          * @method mask
-         * @returns {Object2D|*|Object2D._mask}
+         * @return {Object2D|*|Object2D._mask}
          */
         p.mask = function () {
             return this._mask;

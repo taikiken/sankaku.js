@@ -12,7 +12,8 @@
  */
 ( function ( window ){
     "use strict";
-    var Sankaku = window.Sankaku;
+    var Sankaku = window.Sankaku,
+        Math = window.Math;
 
     Sankaku.Vector2D = ( function (){
         var _floor = Math.floor,
@@ -359,21 +360,7 @@
          * @return {Vector2D}
          */
         p.clamp = function ( min_v, max_v ) {
-//            if ( this.x < min.x ) {
-//
-//                this.x = min.x;
-//            } else if ( this.x > max.x ) {
-//
-//                this.x = max.x;
-//            }
-//
-//            if ( this.y < min.y ) {
-//
-//                this.y = min.y;
-//            } else if ( this.y > max.y ) {
-//
-//                this.y = max.y;
-//            }
+
             this.min( min_v );
             this.max( max_v );
 
@@ -400,6 +387,7 @@
         };
 
         /**
+         * ベクトル値、小数点を切り捨てます
          * @method floor
          * @return {Vector2D}
          */
@@ -411,6 +399,7 @@
         };
 
         /**
+         * ベクトル値、小数点を切り上げます
          * @method ceil
          * @return {Vector2D}
          */
@@ -422,6 +411,7 @@
         };
 
         /**
+         * ベクトル値、小数点を四捨五入します
          * @method round
          * @return {Vector2D}
          */
@@ -444,11 +434,13 @@
         };
 
         /**
+         * ベクトルの値を反転します
+         * <br><code>this.multiplyScalar( -1 )</code> を実行します
          * @method negate
          * @return {Vector2D}
          */
         p.negate = function () {
-            return this.multiplyScalar( - 1 );
+            return this.multiplyScalar( -1 );
         };
 
         /**
@@ -462,7 +454,7 @@
         };
 
         /**
-         * ベクトルの大きさの２条を計算します
+         * ベクトルの大きさの２乗を計算します
          * @method lengthSq
          * @return {number}
          */
@@ -471,7 +463,7 @@
         };
 
         /**
-         * ベクトルの大きさの２条の平方根を計算します
+         * ベクトルの大きさの２乗の平方根を計算します
          * @method length
          * @return {number}
          */
@@ -498,6 +490,7 @@
 
         /**
          * ベクトルの角度を設定します
+         * <br>角度の設定により x, y は変わるが大きさは維持されます
          * @method setAngle
          * @param {number} value radian
          * @return {Vector2D}
@@ -533,7 +526,7 @@
         };
 
         /**
-         * ベクトルと引数ベクトル間の距離の２条を計算します
+         * ベクトルと引数ベクトル間の距離の２乗を計算します
          * @method distanceSq
          * @param {Vector2D} v
          * @return {number}
@@ -617,8 +610,7 @@
          * @return {Vector2D}
          */
         p.reverse = function () {
-//            this.x *= -1;
-//            this.y *= -1;
+
             this.negate();
 
             return this;
