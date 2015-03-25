@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - boids Zanzo scale rotate | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        scene,
+        inside,
+
+        targets = [],
+        zanzo,
+
+        square,
+        tripod,
+        star,
+        rotation = 0,
+        step = 3,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 0,
+        jams = [],
+        debug_mode = false;
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function onDown ( e ) {
+//        console.log( e.clientX, e.clientY );
+//        console.log( canvas.offsetLeft, canvas.offsetTop );
+
+        var v = new Sankaku.Vector2D( e.clientX + canvas.offsetLeft, e.clientY + canvas.offsetTop ),
+            contains = inside.check( v );
+
+        if ( contains.length > 0 ) {
+            contains[ 0 ].setColor( "#ff0000" );
+        }
+    }
+
+    function onUp () {
+        var children = scene.children,
+            i, limit;
+
+        for ( i = 0, limit = children.length; i < limit; i++ ) {
+            children[ i ].setColor( "#ffffff" );
+        }
+    }
+
+    canvas.addEventListener( "mousedown", onDown, false );
+    canvas.addEventListener( "mouseup", onUp, false );
+
+    function draw ( rect ) {
+        scene.draw( ctx );
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            limit = 45,
+            i, circle,
+            position,
+            max_r;
+
+        max_r = Math.min( rect.w, rect.h ) * 0.5;
+
+        for ( i = 0; i < limit; i++ ) {
+            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+            circle = new Sankaku.Circle( position.x, position.y, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+
+            jams.push( circle );
+        }
+    }
+
+    function init () {
+        var rect = size();
+
+        scene = new Sankaku.Scene();
+
+        var c1 = new Sankaku.Circle( 200, 200, 50, "#ffffff" );
+        var c2 = new Sankaku.Circle( 400, 200, 50, "#ffffff" );
+        var c3 = new Sankaku.Circle( 600, 200, 50, "#ffffff" );
+        c1.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+        c2.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+        c3.setAlpha( 0.5 ).setMode( Sankaku.Shape.FILL );
+
+        scene.add( c1 );
+        scene.add( c2 );
+        scene.add( c3 );
+
+        inside = new Sankaku.Inside( scene );
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

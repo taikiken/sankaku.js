@@ -41,7 +41,7 @@ var Gasane=Gasane||{};!function(t){"use strict";var n=t.self;Date.now||(Date.now
  * @author (at)taikiken / http://inazumatv.com
  * @date 2014/06/20 - 11:55
  *
- * Copyright (c) 2011-2015 inazumatv.com, inc.
+ * Copyright (c) 2011-@@year inazumatv.com, inc.
  *
  * Distributed under the terms of the MIT license.
  * http://www.opensource.org/licenses/mit-license.html
@@ -69,9 +69,9 @@ var Gasane=Gasane||{};!function(t){"use strict";var n=t.self;Date.now||(Date.now
  *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
  * @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js
  *
- * @build 2015-03-25 13:24:08
- * @version 0.3.0
- * @host https://github.com/taikiken/sankaku.js
+ * @build @@buildTime
+ * @version @@version
+ * @host @@repository
  * @requires kaketsugi.js, gasane.js
  *
  *
@@ -84,14 +84,14 @@ var Sankaku = {} || {};
  * @static
  * @type {string}
  */
-Sankaku.version = "0.3.0";
+Sankaku.version = "@@version";
 /**
  * @for Sankaku
  * @property build
  * @static
  * @type {string}
  */
-Sankaku.build = "2015-03-25 13:24:08";
+Sankaku.build = "@@buildTime";
 
 ( function ( window ){
   "use strict";

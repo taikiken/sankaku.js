@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true" data-orientation="true"></script>
+<title>Canvas Note - Line 8 intersects Circle | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #28282f;
+}
+.mobile body {
+    max-width: 640px;
+    min-width: 100%;
+    min-height: 100%;
+}
+.mobile.landscape body {
+    min-height: 640px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+        cancelAnimationFrame = self.cancelAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        Sagen = window.Sagen,
+        element = Sagen.Device.getElement(),
+        _touch = Sagen.hasClass( element, "touch" ),
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        scene,
+        inside,
+
+        target,
+        offset,
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        loop_id = 0;
+
+    // particle
+    var Particle = ( function (){
+        // @class Particle
+        function Particle ( x, y, r, color ) {
+            Sankaku.Circle.call( this, x, y, r, color, Sankaku.Shape.FILL );
+
+            this._my_color = color;
+//            this._hit_color = "#f5ff55";
+            this._hit_color = "#ffffff";
+            this._id = 0;
+        }
+
+        Sankaku.extend( Sankaku.Circle, Particle );
+
+        var p = Particle.prototype;
+
+        p.constructor = Particle;
+
+        p.hit = function () {
+            clearTimeout( this._id );
+
+            this.setColor( this._hit_color );
+
+            var _this = this;
+
+            this._id = setTimeout( function () {
+                _this.normal();
+            }, 180 );
+        };
+
+        p.normal = function () {
+            this.setColor( this._my_color );
+        };
+
+        return Particle;
+    }() );
+
+    // Arm
+    var Arm = ( function (){
+        var Vector2D = Sankaku.Vector2D;
+
+        // @class Arm
+        function Arm ( v1, v2, color, particles ) {
+            Sankaku.Line.call( this, v1, v2, color, 1 );
+
+            this._particles = particles;
+        }
+
+        Sankaku.extend( Sankaku.Line, Arm );
+        
+        var p = Arm.prototype;
+        
+        p.constructor = Arm;
+
+        p._intersect = function ( particle ) {
+            var v1 = this._v1,
+                v2 = this._v2,
+                v1_e, v2_e,
+                v1_v, v2_v,
+                radius,
+                bounding,
+                e,
+                AB, BC, AC, BD,
+                x_min, x_max, y_min, y_max,
+                center;
+
+            function hit () {
+                particle.hit();
+            }
+
+            v1_e = v1.bounding().e;
+            v2_e = v2.bounding().e;
+            v1_v = new Vector2D( v1_e.x, v1_e.y );
+            v2_v = new Vector2D( v2_e.x, v2_e.y );
+
+            // check point inside
+            if ( particle.contain( v1_v ) ) {
+
+                return hit();
+            }
+            // check point inside
+            if ( particle.contain( v2_v ) ) {
+
+                return hit();
+            }
+
+            radius = particle.radius();
+            bounding = particle.bounding();
+            e = bounding.e;
+
+            x_min = e.x - radius;
+            x_max = e.x + radius;
+            y_min = e.y - radius;
+            y_max = e.y + radius;
+
+            // x check
+            if ( ( v1_e.x < x_min  && v2_e.x < x_min ) || ( v1_e.x > x_max && v2_e.x > x_max ) ) {
+                // outside x
+                return;
+            }
+
+            // y check
+            if ( ( v1_e.y < y_min && v2_e.y < y_min ) || ( v1_e.y > y_max && v2_e.y > y_max ) ) {
+                // outside y
+                return;
+            }
+
+            // contain check
+            center = new Vector2D( e.x, e.y );
+
+            AB = v1_v.distance( center );
+            BC = v2_v.distance( center );
+            AC = v1_v.distance( v2_v );
+            BD = Math.sqrt( ( ( AC+BC+AB )*( AC-BC+AB )*( -AC+BC+AB )*( AC+BC-AB ) ) / ( 4*AC*AC ) );
+
+            if ( BD <= radius ) {
+                // contain
+                return hit();
+            }
+        };
+        
+        p.prepareRender = function () {
+            var particles = this._particles,
+                i, limit;
+
+            for ( i = 0, limit = particles.length; i < limit; i++ ) {
+
+                this._intersect( particles[ i ] )
+            }
+        };
+        
+        return Arm;
+    }() );
+
+    // Wheel
+    var Wheel = ( function (){
+        var _cos = Math.cos,
+            _sin = Math.sin;
+
+        /**
+         * @class Wheel
+         * @extends Circle
+         * @param {number} x
+         * @param {number} y
+         * @param {int} n
+         * @param {Array} particles
+         * @constructor
+         */
+        function Wheel ( x, y, n, particles ) {
+            Sankaku.Circle.call( this, x, y, 14, "#c3c3c3" );
+
+            this._n = n;
+            this._particles = particles;
+            this._speed = Sankaku.Num.ONE_DEG;
+            this.setMode( Sankaku.Shape.FILL );
+        }
+
+        Sankaku.extend( Sankaku.Circle, Wheel );
+
+        var p = Wheel.prototype;
+
+        p.constructor = Wheel;
+
+        p.init = function () {
+            var n = this._n,
+                particles = this._particles,
+                r = this.radius(),
+                circumscription = r * 5,
+                ct, st,
+                theta,
+                ix, iy,
+                ox, oy,
+                ic, oc,
+                arm,
+                i,
+                angle;
+
+            angle = Sankaku.Num.THREE_SIXTY / n;
+
+            for ( i = 0; i < n; i++ ) {
+
+                theta = i * angle;
+                // inner
+                ct = _cos( theta );
+                st = _sin( theta );
+                ix = r * ct;
+                iy = r * st;
+                ic = new Sankaku.Circle( ix, iy, 4, "#ff0000" );
+                ic.visible = false;
+
+                ox = circumscription * ct;
+                oy = circumscription * st;
+                oc = new Sankaku.Circle( ox, oy, 4, "#ffff00" );
+                oc.visible = false;
+
+                this.add( ic );
+                this.add( oc );
+
+                arm = new Arm( ic, oc, this._color, particles );
+                this.add( arm );
+            }
+        };
+
+        p.prepareRender = function () {
+            this.rotation += this._speed;
+        };
+
+        return Wheel;
+    }() );
+
+    // --------------------------------------------------------------------------------------
+    // interaction
+    function onMove ( e ) {
+        var v;
+
+        if ( !!target ) {
+
+            v = new Sankaku.Vector2D( e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop );
+
+            target.setX( v.x - offset.x );
+            target.setY( v.y - offset.y );
+        }
+    }
+
+    function onDown ( e ) {
+        var v, contains;
+
+        v = new Sankaku.Vector2D( e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop );
+
+        contains = inside.check( v );
+
+        if ( contains.length > 0 ) {
+
+            target = contains[ 0 ];
+
+            offset = {
+                x: v.x - target.x,
+                y: v.y - target.y
+            };
+
+            if ( !_touch ) {
+                canvas.addEventListener( "mousemove", onMove, false );
+                canvas.addEventListener( "mouseout", onUp, false );
+                document.body.style.cssText = "cursor: move";
+            }  else {
+                e.preventDefault();
+                canvas.addEventListener( "touchmove", onMove, false );
+            }
+        }
+    }
+
+    function onUp () {
+        if ( !_touch ) {
+            // touch
+            canvas.removeEventListener( "mousemove", onDown );
+            canvas.removeEventListener( "mouseout", onUp );
+            document.body.style.cssText = "cursor: auto";
+        } else {
+            // no touch
+            canvas.removeEventListener( "touchmove", onMove );
+        }
+
+        target = null;
+    }
+
+    if ( !_touch ) {
+        // may be PC
+        canvas.addEventListener( "mousedown", onDown, false );
+        canvas.addEventListener( "mouseup", onUp, false );
+    } else {
+        // touch
+        canvas.addEventListener( "touchstart", onDown, false );
+        canvas.addEventListener( "touchend", onUp, false );
+    }
+
+    // --------------------------------------------------------------------------------------
+    // application main
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
+    }
+
+    function loop () {
+        loop_id = requestAnimationFrame( loop );
+
+        var rect = size();
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function stop () {
+        cancelAnimationFrame( loop_id );
+    }
+
+    function init () {
+        scene = new Sankaku.Scene();
+        inside = new Sankaku.Inside( scene );
+
+        var particles = [],
+            rect = size(),
+            limit = 8,
+            i,
+            position,
+            max_r;
+
+        max_r = Math.min( rect.w, rect.h ) * 0.2;
+
+        for ( i = 0; i < limit; i++ ) {
+
+            position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+            var particle = new Particle( position.x, position.y, 6, "#9a9a9a" );
+            particles.push( particle );
+            scene.add( particle );
+        }
+
+        position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+        var wh1 = new Wheel( position.x, position.y, 3, particles );
+
+        position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+        var wh2 = new Wheel( position.x, position.y, 4, particles );
+
+        position = Sankaku.Distribute.circle( max_r, rect.w, rect.h );
+        var wh3 = new Wheel( position.x, position.y, 5, particles );
+
+        scene.add( wh1 );
+        scene.add( wh2 );
+        scene.add( wh3 );
+
+        wh1.init();
+        wh2.init();
+        wh3.init();
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>
