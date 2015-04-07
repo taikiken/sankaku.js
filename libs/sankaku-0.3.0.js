@@ -2473,10 +2473,19 @@ Sankaku.build = "@@buildTime";
          * @return {Object2D}
          */
         p.setColor = function ( hex ) {
+            var rgb;
+
             this._color = hex;
 
-            this._rgb = Iro.hex2rgb( hex );
-            this._rgb.a = this._alpha;
+            rgb = Iro.hex2rgb( hex );
+
+            if ( !!rgb ) {
+
+                rgb.a = this._alpha;
+                this._rgb = rgb;
+
+            }
+
 
             return this;
         };
@@ -3270,12 +3279,16 @@ Sankaku.build = "@@buildTime";
          */
         p.setBorder = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
-            rgb.a = this._alpha;
 
-            this._border = {
-                setLine: line,
-                rgb: rgb
-            };
+            if ( !!rgb ) {
+
+                rgb.a = this._alpha;
+                this._border = {
+                    setLine: line,
+                    rgb: rgb
+                };
+
+            }
 
             return this;
         };

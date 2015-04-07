@@ -69,7 +69,7 @@ var Gasane=Gasane||{};!function(t){"use strict";var n=t.self;Date.now||(Date.now
  *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
  * @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js
  *
- * @build 4/7/2015, 4:51:07 PM
+ * @build 4/7/2015, 6:16:41 PM
  * @version 0.3.0
  * @host https://github.com/taikiken/sankaku.js
  *
@@ -92,7 +92,7 @@ Sankaku.version = "0.3.0";
  * @static
  * @type {string}
  */
-Sankaku.build = "4/7/2015, 4:51:07 PM";
+Sankaku.build = "4/7/2015, 6:16:41 PM";
 
 ( function ( window ){
   "use strict";
@@ -2473,10 +2473,19 @@ Sankaku.build = "4/7/2015, 4:51:07 PM";
          * @return {Object2D}
          */
         p.setColor = function ( hex ) {
+            var rgb;
+
             this._color = hex;
 
-            this._rgb = Iro.hex2rgb( hex );
-            this._rgb.a = this._alpha;
+            rgb = Iro.hex2rgb( hex );
+
+            if ( !!rgb ) {
+
+                rgb.a = this._alpha;
+                this._rgb = rgb;
+
+            }
+
 
             return this;
         };
@@ -3270,12 +3279,16 @@ Sankaku.build = "4/7/2015, 4:51:07 PM";
          */
         p.setBorder = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
-            rgb.a = this._alpha;
 
-            this._border = {
-                setLine: line,
-                rgb: rgb
-            };
+            if ( !!rgb ) {
+
+                rgb.a = this._alpha;
+                this._border = {
+                    setLine: line,
+                    rgb: rgb
+                };
+
+            }
 
             return this;
         };

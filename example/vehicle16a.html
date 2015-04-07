@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Canvas Note - 16 Follow | イナヅマTV</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+    background-color: #282b33;
+}
+.mobile body {
+    min-height: 1280px;
+}
+#debug {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
+    overflow: hidden;
+}
+
+</style>
+<script type="text/javascript" src="../libs/sankaku.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        vehicle,
+
+        paths = [],
+        pursuers = [],
+
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 100,
+        jams = [],
+        debug_mode = false;
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+        vehicle.follow( paths, true );
+        vehicle.update( rect.w, rect.h );
+
+//        ctx.strokeStyle = "#ff0000";
+//        vehicle.draw( ctx );
+//        ctx.stroke();
+
+        var i, limit;
+
+//        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+//            var jam = jams[ i ];
+//            jam.draw( ctx );
+//        }
+
+        for ( i = 0, limit = pursuers.length; i < limit; i++ ) {
+            var p = pursuers[ i ];
+
+            p.pursue( vehicle );
+            p.update( rect.w, rect.h );
+
+//            ctx.fillStyle = p.color;
+            p.draw( ctx );
+//            ctx.fill();
+        }
+
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            limit = 30,
+            i, circle,
+            position,
+            max_r;
+
+        max_r = Math.min( rect.w, rect.h ) * 0.5;
+
+        for ( i = 0; i < limit; i++ ) {
+            position = Sankaku.Distribute.circle( max_r, rect.w - padding * 2, rect.h - padding * 2 );
+            circle = new Sankaku.Circle( position.x + padding, position.y + padding, random( 4, 8 ), Iro.int2hex( random( 0xffffff ) ) );
+
+            jams.push( circle );
+            paths.push( new Sankaku.Vector2D( position.x + padding, position.y + padding ) );
+        }
+    }
+
+    function init () {
+        hurdle();
+
+        var rect = size(),
+            speed = 10, //7,
+            i, pursuer;
+
+        vehicle = new Sankaku.FollowPath();
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5) );
+        vehicle.setBehavior( Sankaku.Vehicle.WRAP );
+//        vehicle.setSpeed( speed );
+//        vehicle.setMass( 0.1 );
+//        vehicle.setMass( 0.5 );
+        vehicle.view().setColor( "#ffffff" );
+//        vehicle.setPadding( setPadding );
+//        vehicle.setAvoidDistance( 25 );
+
+        for ( i = 0; i < 3333; i++ ) {
+
+            pursuer = new Sankaku.SteeredVehicle();
+            pursuer.setPosition( new Sankaku.Vector2D( window.innerWidth * Sankaku.Num.random( 100 ) * 0.01, window.innerHeight * Sankaku.Num.random( 100 ) * 0.01 ) );
+            pursuer.setSpeed( speed + speed * Sankaku.Num.random( 100, 150 ) * 0.01 );
+            pursuer.width *= 0.3;
+            pursuer.height *= 0.3;
+            pursuer.setBehavior( Sankaku.Vehicle.WRAP );
+            pursuer.setPadding( -100 );
+//            pursuer.setMass( 0.1 + Math.random() );
+            pursuer.setArrival( 50 + 100 * Math.random() );
+
+//            pursuer.color = Sankaku.Iro.int2hex( Math.random() * 0xffffff );
+            pursuer.view().setMode( Sankaku.Shape.FILL ).setColor( Sankaku.Iro.int2hex( /*Math.random() * */0xffffff ) ).setAlpha( 0.5 );
+
+            pursuers.push( pursuer );
+        }
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>

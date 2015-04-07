@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Vehicle 13 Flock</title>
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+body {
+    min-width: 980px;
+    min-height: 600px;
+}
+.mobile body {
+    min-height: 1280px;
+}
+#debug {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
+    overflow: hidden;
+}
+
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<div id="debug">
+    <label for="debug_on">DEBUG ON<input type="checkbox" name="debug_on" id="debug_on" value="yes" /></label>
+</div>
+<script type="text/javascript">
+( function ( window ){
+    "use strict";
+
+    var document = window.document,
+
+        requestAnimationFrame = self.requestAnimationFrame,
+
+        Sankaku = window.Sankaku,
+
+        canvas = document.getElementById( "canvas"),
+        ctx = canvas.getContext( "2d"),
+
+        scene,
+        vehicle,
+
+        flocks = [],
+        ww, wh,
+        prev_ww = -1,
+        prev_wh = -1,
+        padding = 120,
+        jams = [],
+        debug_mode = false;
+
+
+    // debug button
+    document.getElementById( "debug_on" ).addEventListener( "change", function () {
+
+        debug_mode = !debug_mode;
+
+        var i, limit, flock;
+
+        for ( i = 0, limit = jams.length; i < limit; i++ ) {
+
+            jams[ i ].visible = debug_mode;
+        }
+
+        vehicle.visible = debug_mode;
+
+    }, false );
+
+
+    function size () {
+        ww = document.body.clientWidth;
+        wh = document.body.clientHeight;
+
+        if ( prev_ww !== ww ) {
+
+            canvas.width = ww;
+            prev_ww = ww;
+        }
+
+        if ( prev_wh !== wh ) {
+
+            canvas.height = wh;
+            prev_wh = wh;
+        }
+
+        return { w: canvas.width, h: canvas.height };
+    }
+
+    function draw ( rect ) {
+
+        scene.render( rect.w, rect.h );
+        scene.draw( ctx );
+    }
+
+    function loop () {
+        requestAnimationFrame( loop );
+
+        var rect = size();
+
+        ctx.clearRect( 0, 0, rect.w, rect.h );
+
+        draw( rect );
+    }
+
+    function hurdle () {
+        var rect = size(),
+            random = Sankaku.Num.random,
+            Iro = Sankaku.Iro,
+
+            i, circle;
+
+        for ( i = 0; i < 38; i++ ) {
+            circle = new Sankaku.Circle( random( padding, rect.w - padding ), random( padding, rect.h - padding ), random( 10, 30 ), Iro.int2hex( random( 0xffffff ) ) );
+            circle.visible = false;
+
+            scene.add( circle );
+            jams.push( circle );
+        }
+    }
+
+    function init () {
+        scene = new Sankaku.Scene();
+
+        hurdle();
+
+        var rect = size(),
+            speed = 10,
+            i, flock,
+          Iro = Sankaku.Iro,
+          Num = Sankaku.Num;
+
+        vehicle = new Sankaku.Wander();
+        vehicle.setPosition( new Sankaku.Vector2D( window.innerWidth * 0.5, window.innerHeight * 0.5 ) );
+        vehicle.setSpeed( 3 );
+//        vehicle.setMass( 0.25 );
+//        vehicle.setPadding( 20 );
+//        vehicle.setAvoidDistance( 10 );
+        vehicle.view().setMode( Sankaku.Shape.FILL ).setColor( Iro.int2hex( 0xffffff ) );
+        vehicle.prepareRender = function () {
+            this.avoid( jams );
+        };
+        vehicle.visible = false;
+
+        scene.add( vehicle );
+
+        function notZero () {
+            var
+              n = Num.random( 20 ) - 10;
+
+            return n || 1;
+
+        }
+
+        for ( i = 0; i < 555; i++ ) {
+//        for ( i = 0; i < 1111; i++ ) {
+
+            flock = new Sankaku.Flock( new Sankaku.Circle( 0, 0, Num.random( 1, 4 ), Iro.int2hex( 0xffffff ) ) );
+//            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
+            flock.setPosition( new Sankaku.Vector2D( rect.w / 2, rect.h / 2 ) );
+            flock.setVelocity( new Sankaku.Vector2D( notZero(), notZero() ) );
+//            flock.setSpeed( speed * 0.5 + speed * Math.random() );
+            flock.setSpeed( Num.random( speed * 0.75, speed * 1.5 ) * 0.25 );
+            flock.setMass( Num.random( 10, 20 ) / 10 );
+            flock.setBehavior( Sankaku.Vehicle.WRAP );
+//            flock.width = 1;
+//            flock.height = 1;
+//            flock.setInsight( Num.random( 50, 100 ) );
+//            flock.setFlockClose( Num.random( 100, 300 ) );
+            flock.view().setMode( Sankaku.Shape.FILL );
+//            flock.view().setAlpha( 0.5 );
+            flock.view().setAlpha( Num.random( 30, 60 ) / 100 );
+            flock.setPadding( -padding + -padding * Math.random() );
+
+            flock.setFlocks( flocks );
+            flock.prepareRender = function () {
+
+//                this.pursue( vehicle );
+            };
+
+            scene.add( flock );
+
+            flocks.push( flock );
+        }
+
+        loop();
+    }
+
+    init();
+}( window ) );
+</script>
+</body>
+</html>
