@@ -72,6 +72,7 @@ var Gasane=Gasane||{};!function(t){"use strict";var n=t.self;Date.now||(Date.now
  * @build @@buildTime
  * @version @@version
  * @host @@repository
+ *
  * @requires kaketsugi.js, gasane.js
  *
  *

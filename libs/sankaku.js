@@ -69,9 +69,10 @@ var Gasane=Gasane||{};!function(t){"use strict";var n=t.self;Date.now||(Date.now
  *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
  * @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js
  *
- * @build 2015-03-25 13:24:08
+ * @build 4/7/2015, 4:51:07 PM
  * @version 0.3.0
  * @host https://github.com/taikiken/sankaku.js
+ *
  * @requires kaketsugi.js, gasane.js
  *
  *
@@ -91,7 +92,7 @@ Sankaku.version = "0.3.0";
  * @static
  * @type {string}
  */
-Sankaku.build = "2015-03-25 13:24:08";
+Sankaku.build = "4/7/2015, 4:51:07 PM";
 
 ( function ( window ){
   "use strict";

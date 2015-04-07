@@ -35,6 +35,7 @@
  * @build @@buildTime
  * @version @@version
  * @host @@repository
+ *
  * @requires kaketsugi.js, gasane.js
  *
  *

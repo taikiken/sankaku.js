@@ -178,9 +178,10 @@ gulp.task( 'script-version', function () {
 // YUIDocs
 gulp.task( 'script-docs', function () {
 
-  return gulp.src( dir.src )
-    .pipe( yuidoc.parser() )
-    .pipe( yuidoc.generator() )
+  return gulp.src( dir.src + '/**/*.js' )
+    .pipe( yuidoc() )
+    //.pipe( yuidoc.parser() )
+    //.pipe( yuidoc.generator() )
     .pipe( gulp.dest( dir.docs ) );
 } );
 
