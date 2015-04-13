@@ -35,7 +35,17 @@
          * @constructor
          */
         function Vector2D ( x, y ) {
+            /**
+             * @property x
+             * @type {number}
+             * @default 0
+             */
             this.x = x || 0;
+            /**
+             * @property y
+             * @type {number}
+             * @default 0
+             */
             this.y = y || 0;
         }
 

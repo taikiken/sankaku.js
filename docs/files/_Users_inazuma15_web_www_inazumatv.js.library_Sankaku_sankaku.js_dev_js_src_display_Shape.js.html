@@ -174,8 +174,15 @@
 
             this.setX( x );
             this.setY( y );
-
+            /**
+             * @property width
+             * @type {number}
+             */
             this.width = width || 20;
+            /**
+             * @property height
+             * @type {number}
+             */
             this.height = height || 10;
 
             /**
@@ -215,7 +222,7 @@
             this._color = color;
             this.setColor( color );
 
-            this.setBorder( this.setLine, this._color );
+            this.setBorder( this._line, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -293,12 +300,16 @@
          */
         p.setBorder = function ( line, color ) {
             var rgb = Iro.hex2rgb( color );
-            rgb.a = this._alpha;
 
-            this._border = {
-                setLine: line,
-                rgb: rgb
-            };
+            if ( !!rgb ) {
+
+                rgb.a = this._alpha;
+                this._border = {
+                    setLine: line,
+                    rgb: rgb
+                };
+
+            }
 
             return this;
         };

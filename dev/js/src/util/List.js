@@ -15,7 +15,8 @@
     var Sankaku = window.Sankaku;
 
     Sankaku.List = ( function (){
-        var _rand = Math.random,
+        var
+          _rand = Math.random,
           _floor = Math.floor,
           _max = Math.max;
 
@@ -28,8 +29,6 @@
             throw new Error( "List can't create instance" );
         }
 
-        var l = List;
-
         // http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
         // http://jsperf.com/zerofill-2d-array
         /**
@@ -40,7 +39,7 @@
          * @param {int|string} word
          * @return {Array}
          */
-        l.word = function ( length, word ) {
+        List.word = function ( length, word ) {
             var arr = [], i;
 
             for ( i = 0; i < length; i++ ) {
@@ -57,10 +56,11 @@
          * @param {int} length
          * @return {Array}
          */
-        l.zero = function ( length ) {
+        List.zero = function ( length ) {
             return this.word( length, 0 );
         };
 
+        // http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         /**
          * 配列をシャッフルします
          * @method shuffle
@@ -68,22 +68,24 @@
          * @param {Array} array
          * @return {Array} シャッフル後の配列を返します
          */
-        l.shuffle = function ( array ) {
-            var copy = [], n = array.length, i;
+        List.shuffle = function ( array ) {
+            var
+              copy = array.slice( 0 ),
+              currentIndex = copy.length,
+              temporaryValue,
+              randomIndex ;
 
-            // While there remain elements to shuffle…
-            while ( n ) {
+            // While there remain elements to shuffle...
+            while ( 0 !== currentIndex ) {
 
-                // Pick a remaining element…
-                i = _floor( _rand() * array.length );
+                // Pick a remaining element...
+                randomIndex = _floor( _rand() * currentIndex );
+                currentIndex -= 1;
 
-                // If not already shuffled, move it to the new array.
-                if ( i in array ) {
-
-                    copy.push( array[ i ] );
-                    delete array[ i ];
-                    --n;
-                }
+                // And swap it with the current element.
+                temporaryValue = copy[ currentIndex ];
+                copy[ currentIndex ] = copy[ randomIndex ];
+                copy[ randomIndex ] = temporaryValue;
             }
 
             return copy;
@@ -96,7 +98,7 @@
          * @param {Array} arr 検証対象の配列、内部は全部数値 [Number, [Number]]
          * @return {number} 配列内の最大数値を返します
          */
-        l.max = function ( arr ) {
+        List.max = function ( arr ) {
             return _max.apply( null, arr );
         };
 

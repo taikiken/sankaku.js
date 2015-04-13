@@ -29,10 +29,35 @@
         function Wander ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
 
+            /**
+             * @property _wander_angle
+             * @type {number}
+             * @protected
+             */
             this._wander_angle = 0;
+            /**
+             * @property _wander_distance
+             * @type {number}
+             * @protected
+             */
             this._wander_distance = 10;
+            /**
+             * @property _wnder_radius
+             * @type {number}
+             * @protected
+             */
             this._wnder_radius = 5;
+            /**
+             * @property _wander_range
+             * @type {number}
+             * @protected
+             */
             this._wander_range = 1;
+            /**
+             * @property _wander_range2
+             * @type {number}
+             * @protected
+             */
             this._wander_range2 = this._wander_range * 0.5;
         }
 

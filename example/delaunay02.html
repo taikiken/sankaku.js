@@ -171,8 +171,8 @@
                 };
 
                 this._degree = 0;
-                this._ax = random( 1, 19 ) * 0.1;//0.05;
-                this._ay = random( 1, 13 ) * 0.1;//0.05;
+                this._ax = random( 1, 19 ) * 0.075;//0.05;
+                this._ay = random( 1, 13 ) *  0.075;//0.05;
                 this._speed = random( 30, 100 ) * 0.01 * ( random( 1 ) ? 1 : -1 );
 
                 a = Math.min( size.w, size.h );
@@ -224,17 +224,17 @@
 //                this._ay = random( 1, 13 ) * 0.05;
 //            };
 
-            p.prepare = function ( rect ) {
+            p.prepare = function ( w, h ) {
                 var
                   radian = ONE_DEGREE * this._degree,
                   center = this._center,
                   radius = this._r,
                   speed = this._speed,
-                  w, h,
+//                  w, h,
                   x, y;
 
-                w = rect.w;
-                h = rect.h;
+//                w = rect.w;
+//                h = rect.h;
 
                 x = center.x + radius * _cos( radian ) * this._ax;
                 y = center.y + radius * _sin( radian ) * this._ay;
@@ -362,8 +362,8 @@
               w = window.innerWidth,
               h = window.innerHeight,
               rect = size(),
-              sw = w * 0.8,
-              sh = h * 0.8,
+              sw = w * 0.25,
+              sh = h * 0.25,
               limit = Sagen.hasClass( element, "other" ) ? 1111 : 222;
 
 //            limit = 600;
@@ -374,8 +374,8 @@
                 y = random( sh, h - sh );
 
                 circle = new CircleEx( x, y, rect );
-                circle.prepareRender = function () {
-                    this.prepare( size() );
+                circle.prepareRender = function ( w, h ) {
+                    this.prepare( w, h );
                 };
                 circles.push( circle );
 

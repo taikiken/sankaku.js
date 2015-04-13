@@ -173,13 +173,19 @@
 
             }
 
-
             return this;
+        };
+        /**
+         * @method color
+         * @return {String|*}
+         */
+        p.color = function () {
+            return this._color;
         };
 
         /**
          * @method setRGB
-         * @param {Object} rgb
+         * @param {{r: number, g: number, b: number}} rgb
          * @return {Object2D}
          */
         p.setRGB = function ( rgb ) {
@@ -192,13 +198,20 @@
 
             return this;
         };
-
         /**
          * @method rgba
-         * @return {Object|*|Object2D._rgb}
+         * @return {{r: number, g: number, b: number, a: number}}
          */
         p.rgba = function () {
             return this._rgb;
+        };
+        /**
+         * alias rgba()
+         * @method rgb
+         * @return {{r: number, g: number, b: number, a: number}|Object|*|Object2D._rgb}
+         */
+        p.rgb = function () {
+          return this.rgba();
         };
 
         /**
@@ -510,6 +523,12 @@
             }
 
             return this;
+        };
+
+        p.removeChildren = function () {
+
+            this.children = [];
+
         };
 
         /**

@@ -29,15 +29,50 @@
         function SteeredVehicle ( viewModel ) {
             Vehicle.call( this, viewModel );
 
+            /**
+             * @property _force
+             * @protected
+             * @type {Vector2D}
+             */
             this._force = new Vector2D();
             // setMax setForce
+            /**
+             * @property _force_max
+             * @type {number}
+             * @protected
+             */
             this._force_max = 1.0;
+            /**
+             * @property _force_arrival
+             * @type {number}
+             * @protected
+             */
             this._force_arrival = 100;
 
             // for avoid
+            /**
+             * @property _avoid_distance
+             * @type {number}
+             * @protected
+             */
             this._avoid_distance = 300;
+            /**
+             * @property _avoid_buffer
+             * @type {number}
+             * @protected
+             */
             this._avoid_buffer = 20;
+            /**
+             * @property _avoid_insight
+             * @type {number}
+             * @protected
+             */
             this._avoid_insight = 200;
+            /**
+             * @property _avoid_close
+             * @type {number}
+             * @protected
+             */
             this._avoid_close = 60;
         }
 

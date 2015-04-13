@@ -27,8 +27,17 @@
          */
         function FollowPath ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
-
+            /**
+             * @property _index
+             * @type {number}
+             * @protected
+             */
             this._index = 0;
+            /**
+             * @property _threshold
+             * @type {number}
+             * @protected
+             */
             this._threshold = 20;
         }
 

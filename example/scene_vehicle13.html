@@ -142,6 +142,8 @@ body {
         var rect = size(),
             speed = 10,
             i, flock,
+            fView,
+            r,
           Iro = Sankaku.Iro,
           Num = Sankaku.Num;
 
@@ -168,23 +170,29 @@ body {
         }
 
         for ( i = 0; i < 555; i++ ) {
-//        for ( i = 0; i < 1111; i++ ) {
+//        for ( i = 0; i < 777; i++ ) {
 
-            flock = new Sankaku.Flock( new Sankaku.Circle( 0, 0, Num.random( 1, 4 ), Iro.int2hex( 0xffffff ) ) );
+            flock = new Sankaku.Flock( new Sankaku.Circle( 0, 0, Num.random( 10, 40 ) / 10, Iro.int2hex( 0xffffff ) ) );
 //            flock.setPosition( new Sankaku.Vector2D( Sankaku.Num.random( rect.w ) - rect.w, Sankaku.Num.random( rect.h ) - rect.h ) );
             flock.setPosition( new Sankaku.Vector2D( rect.w / 2, rect.h / 2 ) );
             flock.setVelocity( new Sankaku.Vector2D( notZero(), notZero() ) );
 //            flock.setSpeed( speed * 0.5 + speed * Math.random() );
-            flock.setSpeed( Num.random( speed * 0.75, speed * 1.5 ) * 0.25 );
-            flock.setMass( Num.random( 10, 20 ) / 10 );
-            flock.setBehavior( Sankaku.Vehicle.WRAP );
+//            flock.setBehavior( Sankaku.Vehicle.WRAP );
 //            flock.width = 1;
 //            flock.height = 1;
 //            flock.setInsight( Num.random( 50, 100 ) );
 //            flock.setFlockClose( Num.random( 100, 300 ) );
-            flock.view().setMode( Sankaku.Shape.FILL );
+            fView = flock.view();
+            r = fView.radius() / 5;
+//            flock.setSpeed( (1 - r) * 5 );
+            flock.setSpeed( (1-r) * 3 );
+            fView.setMode( Sankaku.Shape.FILL );
+//            flock.setMass( 10 * (1-r) );
+//            flock.setInsight( 300 * (1-r) );
+            flock.setFlockClose( 60 * (1-r) );
+
 //            flock.view().setAlpha( 0.5 );
-            flock.view().setAlpha( Num.random( 30, 60 ) / 100 );
+            fView.setAlpha( 1-r );
             flock.setPadding( -padding + -padding * Math.random() );
 
             flock.setFlocks( flocks );

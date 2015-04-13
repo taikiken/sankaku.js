@@ -32,43 +32,70 @@
          * @constructor
          */
         function Triangle ( a, b, c ) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
+          /**
+           * @property a
+           * @type {Object}
+           */
+          this.a = a;
+          /**
+           * @property b
+           * @type {Object}
+           */
+          this.b = b;
+          /**
+           * @property c
+           * @type {Object}
+           */
+          this.c = c;
+          /**
+           * @property x
+           * @type {number}
+           */
+          this.x = 0;
+          /**
+           * @property y
+           * @type {number}
+           */
+          this.y = 0;
+          /**
+           * @property r
+           * @type {number}
+           */
+          this.r = 0;
 
-            var A = b.x - a.x,
-              B = b.y - a.y,
-              C = c.x - a.x,
-              D = c.y - a.y,
-              E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
-              F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
-              G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
-              minx, miny, dx, dy,
-              x, y;
+          var A = b.x - a.x,
+            B = b.y - a.y,
+            C = c.x - a.x,
+            D = c.y - a.y,
+            E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
+            F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
+            G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
+            minx, miny, dx, dy,
+            x, y;
 
-            // If the points of the triangle are collinear, then just find the
-            // extremes and use the midpoint as the center of the circumcircle.
-            if( _abs( G ) < 0.000001 ) {
-                // under
-                minx = _min( a.x, b.x, c.x );
-                miny = _min( a.y, b.y, c.y );
-                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
-                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
+          // If the points of the triangle are collinear, then just find the
+          // extremes and use the midpoint as the center of the circumcircle.
+          if( _abs( G ) < 0.000001 ) {
+            // under
+            minx = _min( a.x, b.x, c.x );
+            miny = _min( a.y, b.y, c.y );
+            dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
+            dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
 
-                this.x = minx + dx;
-                this.y = miny + dy;
-                this.r = dx * dx + dy * dy;
-            } else {
-                // over
-                x = ( D*E - B*F ) / G;
-                y = ( A*F - C*E ) / G;
-                dx = x - a.x;
-                dy = y - a.y;
+            this.x = minx + dx;
+            this.y = miny + dy;
+            this.r = dx * dx + dy * dy;
+          } else {
+            // over
+            x = ( D*E - B*F ) / G;
+            y = ( A*F - C*E ) / G;
+            dx = x - a.x;
+            dy = y - a.y;
 
-                this.x = x;
-                this.y = y;
-                this.r = dx * dx + dy * dy;
-            }
+            this.x = x;
+            this.y = y;
+            this.r = dx * dx + dy * dy;
+          }
         }
 
         var p = Triangle.prototype;

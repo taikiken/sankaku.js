@@ -15,7 +15,8 @@
     var Sankaku = window.Sankaku;
 
     Sankaku.Num = ( function (){
-        var parseFloat = window.parseFloat,
+        var
+          _float = window.parseFloat,
           _rand = Math.random,
           _floor = Math.floor,
           _PI = Math.PI;
@@ -29,50 +30,48 @@
             throw new Error( "Num can't create instance" );
         }
 
-        var n = Num;
-
         /**
          * @const ONE_DEG
          * @static
          * @type {number}
          * @default Math.PI / 180
          */
-        n.ONE_DEG = _PI / 180;
+        Num.ONE_DEG = _PI / 180;
         /**
          * @const ONE_RAD
          * @static
          * @type {number}
          * @default 180 / Math.PI
          */
-        n.ONE_RAD = 180 / _PI;
+        Num.ONE_RAD = 180 / _PI;
         /**
          * @const FORTY_FIVE
          * @static
          * @type {number}
          * @default Math.PI / 4
          */
-        n.FORTY_FIVE = _PI / 4;
+        Num.FORTY_FIVE = _PI / 4;
         /**
          * @const NINETY
          * @static
          * @type {number}
          * @default Math.PI / 2
          */
-        n.NINETY = _PI / 2;
+        Num.NINETY = _PI / 2;
         /**
          * @const ONE_EIGHTY
          * @static
          * @type {number}
          * @default Math.PI
          */
-        n.ONE_EIGHTY = _PI;
+        Num.ONE_EIGHTY = _PI;
         /**
          * @const THREE_SIXTY
          * @static
          * @type {number}
          * @default Math.PI * 2
          */
-        n.THREE_SIXTY = _PI * 2;
+        Num.THREE_SIXTY = _PI * 2;
 
         /**
          * 数値か否かをチェックします
@@ -81,8 +80,8 @@
          * @param {Object} obj
          * @return {boolean} true: 数値
          */
-        n.is = function ( obj ) {
-            return !isNaN( parseFloat( obj ) ) && isFinite( obj );
+        Num.is = function ( obj ) {
+            return !isNaN( _float( obj ) ) && isFinite( obj );
         };
 
         /**
@@ -95,13 +94,16 @@
          * @param {number} [max]
          * @return {int} 乱数を返します
          */
-        n.random = function ( min, max ) {
-            if ( !n.is( max ) ) {
+        Num.random = function ( min, max ) {
+            if ( !Num.is( max ) ) {
 
                 max = min;
                 min = 0;
+
             }
+
             return min + _floor( _rand() * ( max - min + 1 ) );
+
         };
 
         /**
@@ -111,8 +113,10 @@
          * @param {number} degree degree 0 ~ 360
          * @return {number} radian 0 ~ 2 * PI
          */
-        n.deg2rad = function ( degree ) {
-            return degree * n.ONE_DEG;
+        Num.deg2rad = function ( degree ) {
+
+            return degree * Num.ONE_DEG;
+
         };
 
         /**
@@ -122,8 +126,8 @@
          * @param {number} radian
          * @return {number} degree 0 ~ 360
          */
-        n.rad2deg = function ( radian ) {
-            return radian * n.ONE_RAD;
+        Num.rad2deg = function ( radian ) {
+            return radian * Num.ONE_RAD;
         };
 
         return Num;

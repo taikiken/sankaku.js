@@ -30,8 +30,24 @@
             SteeredVehicle.call( this, viewModel );
 
             // for flock
+            /**
+             * @property _flock_flockInsight
+             * @type {number}
+             * @protected
+             */
             this._flock_flockInsight = 200;
+            /**
+             * @property _flock_flockClose
+             * @type {number}
+             * @protected
+             */
             this._flock_flockClose = 60;
+            /**
+             * @property _flocks
+             * @type {Array}
+             * @protected
+             */
+            this._flocks = [];
         }
 
         Sankaku.extend( SteeredVehicle, Flock );
@@ -191,6 +207,11 @@
             return this._position.distance( v._position ) < this._flock_flockClose;
         };
 
+        /**
+         * @method setFlocks
+         * @param {Array} flocks
+         * @return {Flock}
+         */
         p.setFlocks = function ( flocks ) {
             this._flocks = flocks;
 

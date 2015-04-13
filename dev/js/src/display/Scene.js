@@ -25,7 +25,10 @@
          */
         function Scene () {
             Object2D.call( this );
-
+            /**
+             * @property scene
+             * @type {Scene}
+             */
             this.scene = this;
         }
 
@@ -48,6 +51,13 @@
          */
         p.removeChild = function ( target ) {
             target.scene = null;
+        };
+        /**
+         * draw object を全て削除します
+         * @method removeAll
+         */
+        p.removeAll = function () {
+          this.children = [];
         };
 
         /**

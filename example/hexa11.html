@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980">
+<script type="text/javascript" src="libs/sagen.min.js" id="sagen" data-ios="true"></script>
+<title>Hexagon | イナヅマTV</title>
+<link rel="author" href="https://plus.google.com/109284322876483643060/" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" href="css/reset.css"/>
+<style type="text/css">
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+body {
+  min-width: 980px;
+  min-height: 600px;
+}
+.mobile body {
+  min-height: 1280px;
+}
+</style>
+<script type="text/javascript" src="../libs/sankaku.js"></script>
+<script type="text/javascript" src="libs/TweenMax.min.js"></script>
+<script>
+    //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    //(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    //m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    //})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    //
+    //ga('create', 'UA-5431264-1', 'inazumatv.com');
+    //ga('send', 'pageview');
+</script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="640"></canvas>
+<script type="text/javascript">
+( function ( window ){
+
+  "use strict";
+  var
+    document = window.document,
+
+    TweenMax = window.TweenMax,
+    Linear = window.Linear,
+
+    requestAnimationFrame = self.requestAnimationFrame,
+
+    Sankaku = window.Sankaku,
+//    Sagen = window.Sagen,
+//    element = Sagen.Device.getElement(),
+//    random = Sankaku.Num.random,
+
+    canvas = document.getElementById( "canvas"),
+    ctx = canvas.getContext( "2d"),
+
+    PI = Math.PI,
+    R360 = PI / 180 * 360,
+    ONE_DEGREE = PI / 180,
+    _cos = Math.cos,
+    _sin = Math.sin,
+    ww, wh,
+    prev_ww = -1,
+    prev_wh = -1,
+    prev = {
+      w: prev_ww,
+      h: prev_wh
+    },
+    prevDivide = 0,
+    circles = [],
+    pattern = [
+      [
+        "#26313a",
+        "#253039",
+        "#232f37",
+//        "#ff0000",
+        "#28333c",
+        "#27333b"
+      ],
+      [
+        "#232e37",
+        "#28333c",
+        "#232e37",
+        "#253039",
+        "#253139"
+      ],
+      [
+        "#242f38",
+        "#26323a",
+        "#253039",
+        "#222d36",
+        "#28333c"
+      ],
+      [
+        "#222d36",
+        "#28333c",
+        "#242f38",
+        "#26313a",
+        "#202c34"
+      ]
+    ],
+    scene,
+    container,
+    layer1,
+    layer2;
+
+  scene = new Sankaku.Scene();
+  container = new Sankaku.Object2D();
+  layer1 = new Sankaku.Object2D();
+  layer2 = new Sankaku.Object2D();
+
+  container.add( layer1 );
+  container.add( layer2 );
+
+  scene.add( container );
+
+  var Actor = ( function (){
+    var Iro = Sankaku.Iro;
+
+    function Actor ( display, index, wait, duration ) {
+      this._display = display;
+      this._index = index;
+      this._wait = wait;
+      this._duration = duration;
+
+      var rgb = display.rgb() || { r: 0, g: 0, b: 0},
+
+        hsl = Iro.rgb2hsl( rgb.r, rgb.g, rgb.b );
+
+//      // hue getter / setter
+//      var hue;
+//
+//      hue = hsl.h;
+//
+//      Object.defineProperty( this, "hue", {
+//        get: function () {
+//          return hue;
+//        },
+//        set: function ( val ) {
+//          hue = val;
+//          console.log( "set hue", hue );
+//        },
+//        enumerable: true,
+//        configurable: true
+//      } );
+
+      this._hsl = hsl;
+
+      this.alpha = 1;
+    }
+
+    var p = Actor.prototype;
+
+    p.constructor = Actor;
+
+    p.start = function () {
+      var
+        display = this._display,
+        index = this._index,
+        hsl = this._hsl,
+        time = 0.77,
+        wait = this._wait,
+        duration = this._duration,
+        _this = this;
+
+//      console.log( "hue default ", this._index, this.hue );
+
+      TweenMax.to(
+        hsl,
+//        this,
+//        2.67,
+        time * duration,
+        {
+          h: "+=0.06",
+          l: "-=0.06",
+//          alpha: 0.7,
+          delay: time * index + time + wait,
+          ease: Linear.easeNone,
+          onUpdate: function () {
+            var rgb = Iro.hsl2rgb( hsl.h, hsl.s, hsl.l );
+//            console.log( "hsl", hsl, rgb );
+            display.setRGB( rgb );
+//            display.setAlpha( _this.alpha );
+          },
+          repeat: -1,
+          yoyo: true,
+          repeatDelay: time * 2
+        }
+      );
+    };
+
+    return Actor;
+  }() );
+
+  var Tripod2 = ( function (){
+
+    function Tripod2 ( x, y, width, height, color, fill ) {
+      Sankaku.Tripod.call( this, x, y, width, height, color, fill );
+    }
+
+    Sankaku.extend( Sankaku.Tripod, Tripod2 );
+
+    var p = Tripod2.prototype;
+
+    p.constructor = Tripod2;
+
+    p.paint = function () {
+      var
+        bounding = this.bounding(),
+        a = bounding.a,
+        b = bounding.b,
+        c = bounding.c,
+        d = bounding.d;
+
+      if ( bounding.e.visible ) {
+        ctx.beginPath();
+
+        // triangle
+        ctx.moveTo( ( a.x + b.x ) * 0.5, a.y );
+//            ctx.lineTo( b.x, b.y + ( (c.y - b.y) * 0.5 ) );
+        ctx.lineTo( c.x, c.y );
+        ctx.lineTo( d.x, d.y );
+        ctx.lineTo( ( a.x + b.x ) * 0.5, a.y );
+
+        ctx.closePath();
+      }
+
+      return bounding;
+    };
+
+    return Tripod2;
+  }() );
+
+  function size () {
+      ww = document.body.clientWidth;
+      wh = document.body.clientHeight;
+
+      if ( prev_ww !== ww ) {
+
+        if ( ww < 980 ) {
+
+          ww = 980;
+
+        }
+          canvas.width = ww;
+          prev_ww = ww;
+      }
+
+      if ( prev_wh !== wh ) {
+
+          canvas.height = wh;
+          prev_wh = wh;
+      }
+
+      return { w: canvas.width, h: canvas.height };
+  }
+
+  function draw ( rect ) {
+
+    if ( rect.w !== prev.w ) {
+
+      paint();
+      prev.w = rect.w;
+
+    }
+
+    scene.render( rect.w, rect.h );
+    scene.draw( ctx );
+  }
+
+  function loop () {
+      requestAnimationFrame( loop );
+
+      var rect = size();
+
+      ctx.clearRect( 0, 0, rect.w, rect.h );
+
+      draw( rect );
+  }
+
+  function paint () {
+    var
+      w = window.innerWidth,
+      h = window.innerHeight,
+      minW = 980,
+      fixW = Math.max( w, minW ),
+      width = 376,
+      height = 320,
+      divide = Math.ceil( fixW / (width*6) ),
+      widthHalf = width * 0.5,
+      fillMode = Sankaku.Shape.FILL,
+      remainder,
+
+      add,
+      altW,
+      subtract,
+      subHalf,
+      n, limit, end,
+      i, x, y,
+      colors,
+      rect,
+      tripod,
+      actor;
+
+    divide = divide * 6;
+
+//    if ( divide < 6 ) {
+//
+//      divide = 6;
+//
+//    }
+//
+//    remainder = divide % 2;
+//
+//    if ( remainder > 0 ) {
+//
+//      divide = divide + 1;
+//
+//    }
+
+    add = divide - prevDivide;
+
+    if ( add === 0 ) {
+
+      return;
+
+    }
+
+    altW = divide * width;
+    subtract = fixW - altW;
+    subHalf = subtract * 0.5;
+
+//    console.log( "subHalf ", subHalf );
+    layer1.setX( subHalf );
+    layer2.setX( subHalf );
+//
+//    if ( divide === prevDivivde ) {
+//
+//      return;
+//
+//    }
+
+    if ( add < 0 ) {
+
+      return;
+
+    }
+
+    console.log( "paint add ", add );
+
+//    container.removeChildren();
+
+    // rect 1
+    y = height*0.5;
+    colors = pattern[ 0 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i;// + subHalf;
+      rect = new Sankaku.Shape( x, y, width, height, colors[ n ], fillMode );
+      layer1.add( rect );
+
+      actor = new Actor( rect, i, 0.15, 4.1 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    // triangle
+    colors = pattern[ 1 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i + widthHalf;// + subHalf;
+      tripod = new Tripod2( x, y, width, height, colors[ n ], fillMode );
+      layer2.add( tripod );
+
+      actor = new Actor( tripod, i, 0.0, 4.1 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    // rect 2
+    y = height+height*0.5;
+    colors = pattern[ 2 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i + widthHalf;// + subHalf;
+      rect = new Sankaku.Shape( x, y, width, height, colors[ n ], fillMode );
+      layer1.add( rect );
+
+      actor = new Actor( rect, i, 0.2, 4.1 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+
+    // triangle
+    colors = pattern[ 3 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i;// + subHalf;
+      tripod = new Tripod2( x, y, width, height, colors[ n ], fillMode );
+      layer2.add( tripod );
+
+      actor = new Actor( tripod, i, 0.1, 4.1 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    // rect 3
+    y = height+height+height*0.5;
+    colors = pattern[ 0 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i;// + subHalf;
+      rect = new Sankaku.Shape( x, y, width, height, colors[ n ], fillMode );
+      layer1.add( rect );
+
+      actor = new Actor( rect, i, 0.15, 4.15 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    // triangle
+    colors = pattern[ 1 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i + widthHalf;// + subHalf;
+      tripod = new Tripod2( x, y, width, height, colors[ n ], fillMode );
+      layer2.add( tripod );
+
+      actor = new Actor( tripod, i, 0.0, 4.15 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    // rect 4
+    y = height+height+height+height*0.5;
+    colors = pattern[ 2 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i + widthHalf;// + subHalf;
+      rect = new Sankaku.Shape( x, y, width, height, colors[ n ], fillMode );
+      layer1.add( rect );
+
+      actor = new Actor( rect, i, 0.2, 4.3 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+
+    // triangle
+    colors = pattern[ 3 ];
+    limit = colors.length;
+    n = 0;
+
+    for ( i = prevDivide, end = add + prevDivide; i <= end; i = i + 1 ) {
+
+      x = width * i;// + subHalf;
+      tripod = new Tripod2( x, y, width, height, colors[ n ], fillMode );
+      layer2.add( tripod );
+
+      actor = new Actor( tripod, i, 0.1, 4.3 );
+      actor.start();
+
+      ++n;
+      if ( n >= limit ) {
+
+        n = 0;
+
+      }
+
+    }
+
+    prevDivide = divide;
+
+    // debug
+//    var circle = new Sankaku.Circle( fixW*0.5, 320, 6, "#ff0000", Sankaku.Shape.FILL );
+//    scene.add( circle );
+
+  }
+
+  function init () {
+    paint();
+    loop();
+  }
+
+  init();
+
+}( window ) );
+</script>
+</body>
+</html>

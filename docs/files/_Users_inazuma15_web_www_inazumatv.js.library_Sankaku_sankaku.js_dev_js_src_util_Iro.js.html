@@ -153,6 +153,13 @@
     var Sankaku = window.Sankaku;
 
     Sankaku.Iro = ( function (){
+        var
+          _round = Math.round,
+          _floor = Math.floor,
+          _max = Math.max,
+          _min = Math.min,
+          _int = window.parseInt;
+
         /**
          * 色設定 utility
          * https://github.com/less/less.js/blob/master/lib/less/functions.js
@@ -183,8 +190,9 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
-              min = Math.min( r, g, b ),
+            var
+              max = _max( r, g, b ),
+              min = _min( r, g, b ),
               h, s, l, d;
 
             l = ( max + min ) / 2;
@@ -245,9 +253,9 @@
             }
 
             return {
-                r: r * 255,
-                g: g * 255,
-                b: b * 255
+                r: _int( r * 255, 10 ),
+                g: _int( g * 255, 10 ),
+                b: _int( b * 255, 10 )
             };
         };
 
@@ -264,8 +272,9 @@
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
-              min = Math.min( r, g, b ),
+            var
+              max = _max( r, g, b ),
+              min = _min( r, g, b ),
               h, s, v = max,
               d = max - min;
 
@@ -296,7 +305,7 @@
          */
         iro.hsv2rgb = function ( h, s, v ) {
             var r, g, b,
-              i = Math.floor( h * 6 ),
+              i = _floor( h * 6 ),
               f = h * 6 - i,
               p = v * ( 1 - s ),
               q = v * ( 1 - f * s ),
@@ -312,9 +321,9 @@
             }
 
             return {
-                r: parseInt( r * 255, 10),
-                g: parseInt( g * 255, 10),
-                b: parseInt( b * 255, 10)
+                r: _int( r * 255, 10),
+                g: _int( g * 255, 10),
+                b: _int( b * 255, 10)
             };
         };
 
@@ -339,9 +348,9 @@
 
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
             return result ? {
-                r: parseInt( result[1], 16 ),
-                g: parseInt( result[2], 16 ),
-                b: parseInt( result[3], 16 )
+                r: _int( result[ 1 ], 16 ),
+                g: _int( result[ 2 ], 16 ),
+                b: _int( result[ 3 ], 16 )
             } : null;
         };
 
@@ -370,7 +379,7 @@
          * @return {string}
          */
         iro.int2hex = function ( num ) {
-            num = Math.floor( num );
+            num = _floor( num );
 
             var hex = num.toString( 16 );
 

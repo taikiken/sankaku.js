@@ -22,7 +22,17 @@
          * @constructor
          */
         function Zanzo ( limit ) {
+            /**
+             * @property _limit
+             * @type {Number}
+             * @protected
+             */
             this._limit = limit;
+            /**
+             * @property _objects
+             * @type {Array}
+             * @protected
+             */
             this._objects = [];
         }
 

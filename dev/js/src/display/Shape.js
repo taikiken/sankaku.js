@@ -36,8 +36,15 @@
 
             this.setX( x );
             this.setY( y );
-
+            /**
+             * @property width
+             * @type {number}
+             */
             this.width = width || 20;
+            /**
+             * @property height
+             * @type {number}
+             */
             this.height = height || 10;
 
             /**
@@ -77,7 +84,7 @@
             this._color = color;
             this.setColor( color );
 
-            this.setBorder( this.setLine, this._color );
+            this.setBorder( this._line, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );

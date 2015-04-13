@@ -727,6 +727,13 @@ Sankaku.build = "@@buildTime";
     var Sankaku = window.Sankaku;
 
     Sankaku.Iro = ( function (){
+        var
+          _round = Math.round,
+          _floor = Math.floor,
+          _max = Math.max,
+          _min = Math.min,
+          _int = window.parseInt;
+
         /**
          * 色設定 utility
          * https://github.com/less/less.js/blob/master/lib/less/functions.js
@@ -757,8 +764,9 @@ Sankaku.build = "@@buildTime";
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
-              min = Math.min( r, g, b ),
+            var
+              max = _max( r, g, b ),
+              min = _min( r, g, b ),
               h, s, l, d;
 
             l = ( max + min ) / 2;
@@ -819,9 +827,9 @@ Sankaku.build = "@@buildTime";
             }
 
             return {
-                r: r * 255,
-                g: g * 255,
-                b: b * 255
+                r: _int( r * 255, 10 ),
+                g: _int( g * 255, 10 ),
+                b: _int( b * 255, 10 )
             };
         };
 
@@ -838,8 +846,9 @@ Sankaku.build = "@@buildTime";
             g /= 255;
             b /= 255;
 
-            var max = Math.max( r, g, b ),
-              min = Math.min( r, g, b ),
+            var
+              max = _max( r, g, b ),
+              min = _min( r, g, b ),
               h, s, v = max,
               d = max - min;
 
@@ -870,7 +879,7 @@ Sankaku.build = "@@buildTime";
          */
         iro.hsv2rgb = function ( h, s, v ) {
             var r, g, b,
-              i = Math.floor( h * 6 ),
+              i = _floor( h * 6 ),
               f = h * 6 - i,
               p = v * ( 1 - s ),
               q = v * ( 1 - f * s ),
@@ -886,9 +895,9 @@ Sankaku.build = "@@buildTime";
             }
 
             return {
-                r: parseInt( r * 255, 10),
-                g: parseInt( g * 255, 10),
-                b: parseInt( b * 255, 10)
+                r: _int( r * 255, 10),
+                g: _int( g * 255, 10),
+                b: _int( b * 255, 10)
             };
         };
 
@@ -913,9 +922,9 @@ Sankaku.build = "@@buildTime";
 
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
             return result ? {
-                r: parseInt( result[1], 16 ),
-                g: parseInt( result[2], 16 ),
-                b: parseInt( result[3], 16 )
+                r: _int( result[ 1 ], 16 ),
+                g: _int( result[ 2 ], 16 ),
+                b: _int( result[ 3 ], 16 )
             } : null;
         };
 
@@ -944,7 +953,7 @@ Sankaku.build = "@@buildTime";
          * @return {string}
          */
         iro.int2hex = function ( num ) {
-            num = Math.floor( num );
+            num = _floor( num );
 
             var hex = num.toString( 16 );
 
@@ -983,7 +992,8 @@ Sankaku.build = "@@buildTime";
     var Sankaku = window.Sankaku;
 
     Sankaku.List = ( function (){
-        var _rand = Math.random,
+        var
+          _rand = Math.random,
           _floor = Math.floor,
           _max = Math.max;
 
@@ -996,8 +1006,6 @@ Sankaku.build = "@@buildTime";
             throw new Error( "List can't create instance" );
         }
 
-        var l = List;
-
         // http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
         // http://jsperf.com/zerofill-2d-array
         /**
@@ -1008,7 +1016,7 @@ Sankaku.build = "@@buildTime";
          * @param {int|string} word
          * @return {Array}
          */
-        l.word = function ( length, word ) {
+        List.word = function ( length, word ) {
             var arr = [], i;
 
             for ( i = 0; i < length; i++ ) {
@@ -1025,10 +1033,11 @@ Sankaku.build = "@@buildTime";
          * @param {int} length
          * @return {Array}
          */
-        l.zero = function ( length ) {
+        List.zero = function ( length ) {
             return this.word( length, 0 );
         };
 
+        // http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         /**
          * 配列をシャッフルします
          * @method shuffle
@@ -1036,22 +1045,24 @@ Sankaku.build = "@@buildTime";
          * @param {Array} array
          * @return {Array} シャッフル後の配列を返します
          */
-        l.shuffle = function ( array ) {
-            var copy = [], n = array.length, i;
+        List.shuffle = function ( array ) {
+            var
+              copy = array.slice( 0 ),
+              currentIndex = copy.length,
+              temporaryValue,
+              randomIndex ;
 
-            // While there remain elements to shuffle…
-            while ( n ) {
+            // While there remain elements to shuffle...
+            while ( 0 !== currentIndex ) {
 
-                // Pick a remaining element…
-                i = _floor( _rand() * array.length );
+                // Pick a remaining element...
+                randomIndex = _floor( _rand() * currentIndex );
+                currentIndex -= 1;
 
-                // If not already shuffled, move it to the new array.
-                if ( i in array ) {
-
-                    copy.push( array[ i ] );
-                    delete array[ i ];
-                    --n;
-                }
+                // And swap it with the current element.
+                temporaryValue = copy[ currentIndex ];
+                copy[ currentIndex ] = copy[ randomIndex ];
+                copy[ randomIndex ] = temporaryValue;
             }
 
             return copy;
@@ -1064,7 +1075,7 @@ Sankaku.build = "@@buildTime";
          * @param {Array} arr 検証対象の配列、内部は全部数値 [Number, [Number]]
          * @return {number} 配列内の最大数値を返します
          */
-        l.max = function ( arr ) {
+        List.max = function ( arr ) {
             return _max.apply( null, arr );
         };
 
@@ -1089,7 +1100,8 @@ Sankaku.build = "@@buildTime";
     var Sankaku = window.Sankaku;
 
     Sankaku.Num = ( function (){
-        var parseFloat = window.parseFloat,
+        var
+          _float = window.parseFloat,
           _rand = Math.random,
           _floor = Math.floor,
           _PI = Math.PI;
@@ -1103,50 +1115,48 @@ Sankaku.build = "@@buildTime";
             throw new Error( "Num can't create instance" );
         }
 
-        var n = Num;
-
         /**
          * @const ONE_DEG
          * @static
          * @type {number}
          * @default Math.PI / 180
          */
-        n.ONE_DEG = _PI / 180;
+        Num.ONE_DEG = _PI / 180;
         /**
          * @const ONE_RAD
          * @static
          * @type {number}
          * @default 180 / Math.PI
          */
-        n.ONE_RAD = 180 / _PI;
+        Num.ONE_RAD = 180 / _PI;
         /**
          * @const FORTY_FIVE
          * @static
          * @type {number}
          * @default Math.PI / 4
          */
-        n.FORTY_FIVE = _PI / 4;
+        Num.FORTY_FIVE = _PI / 4;
         /**
          * @const NINETY
          * @static
          * @type {number}
          * @default Math.PI / 2
          */
-        n.NINETY = _PI / 2;
+        Num.NINETY = _PI / 2;
         /**
          * @const ONE_EIGHTY
          * @static
          * @type {number}
          * @default Math.PI
          */
-        n.ONE_EIGHTY = _PI;
+        Num.ONE_EIGHTY = _PI;
         /**
          * @const THREE_SIXTY
          * @static
          * @type {number}
          * @default Math.PI * 2
          */
-        n.THREE_SIXTY = _PI * 2;
+        Num.THREE_SIXTY = _PI * 2;
 
         /**
          * 数値か否かをチェックします
@@ -1155,8 +1165,8 @@ Sankaku.build = "@@buildTime";
          * @param {Object} obj
          * @return {boolean} true: 数値
          */
-        n.is = function ( obj ) {
-            return !isNaN( parseFloat( obj ) ) && isFinite( obj );
+        Num.is = function ( obj ) {
+            return !isNaN( _float( obj ) ) && isFinite( obj );
         };
 
         /**
@@ -1169,13 +1179,16 @@ Sankaku.build = "@@buildTime";
          * @param {number} [max]
          * @return {int} 乱数を返します
          */
-        n.random = function ( min, max ) {
-            if ( !n.is( max ) ) {
+        Num.random = function ( min, max ) {
+            if ( !Num.is( max ) ) {
 
                 max = min;
                 min = 0;
+
             }
+
             return min + _floor( _rand() * ( max - min + 1 ) );
+
         };
 
         /**
@@ -1185,8 +1198,10 @@ Sankaku.build = "@@buildTime";
          * @param {number} degree degree 0 ~ 360
          * @return {number} radian 0 ~ 2 * PI
          */
-        n.deg2rad = function ( degree ) {
-            return degree * n.ONE_DEG;
+        Num.deg2rad = function ( degree ) {
+
+            return degree * Num.ONE_DEG;
+
         };
 
         /**
@@ -1196,8 +1211,8 @@ Sankaku.build = "@@buildTime";
          * @param {number} radian
          * @return {number} degree 0 ~ 360
          */
-        n.rad2deg = function ( radian ) {
-            return radian * n.ONE_RAD;
+        Num.rad2deg = function ( radian ) {
+            return radian * Num.ONE_RAD;
         };
 
         return Num;
@@ -1298,7 +1313,17 @@ Sankaku.build = "@@buildTime";
          * @constructor
          */
         function Vector2D ( x, y ) {
+            /**
+             * @property x
+             * @type {number}
+             * @default 0
+             */
             this.x = x || 0;
+            /**
+             * @property y
+             * @type {number}
+             * @default 0
+             */
             this.y = y || 0;
         }
 
@@ -1969,43 +1994,70 @@ Sankaku.build = "@@buildTime";
          * @constructor
          */
         function Triangle ( a, b, c ) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
+          /**
+           * @property a
+           * @type {Object}
+           */
+          this.a = a;
+          /**
+           * @property b
+           * @type {Object}
+           */
+          this.b = b;
+          /**
+           * @property c
+           * @type {Object}
+           */
+          this.c = c;
+          /**
+           * @property x
+           * @type {number}
+           */
+          this.x = 0;
+          /**
+           * @property y
+           * @type {number}
+           */
+          this.y = 0;
+          /**
+           * @property r
+           * @type {number}
+           */
+          this.r = 0;
 
-            var A = b.x - a.x,
-              B = b.y - a.y,
-              C = c.x - a.x,
-              D = c.y - a.y,
-              E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
-              F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
-              G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
-              minx, miny, dx, dy,
-              x, y;
+          var A = b.x - a.x,
+            B = b.y - a.y,
+            C = c.x - a.x,
+            D = c.y - a.y,
+            E = A * ( a.x + b.x ) + B * ( a.y + b.y ),
+            F = C * ( a.x + c.x ) + D * ( a.y + c.y ),
+            G = 2 * ( A * ( c.y - b.y ) - B * ( c.x - b.x ) ),
+            minx, miny, dx, dy,
+            x, y;
 
-            // If the points of the triangle are collinear, then just find the
-            // extremes and use the midpoint as the center of the circumcircle.
-            if( _abs( G ) < 0.000001 ) {
-                // under
-                minx = _min( a.x, b.x, c.x );
-                miny = _min( a.y, b.y, c.y );
-                dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
-                dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
+          // If the points of the triangle are collinear, then just find the
+          // extremes and use the midpoint as the center of the circumcircle.
+          if( _abs( G ) < 0.000001 ) {
+            // under
+            minx = _min( a.x, b.x, c.x );
+            miny = _min( a.y, b.y, c.y );
+            dx   = ( _max( a.x, b.x, c.x ) - minx ) * 0.5;
+            dy   = ( _max( a.y, b.y, c.y ) - miny ) * 0.5;
 
-                this.x = minx + dx;
-                this.y = miny + dy;
-                this.r = dx * dx + dy * dy;
-            } else {
-                // over
-                x = ( D*E - B*F ) / G;
-                y = ( A*F - C*E ) / G;
-                dx = x - a.x;
-                dy = y - a.y;
+            this.x = minx + dx;
+            this.y = miny + dy;
+            this.r = dx * dx + dy * dy;
+          } else {
+            // over
+            x = ( D*E - B*F ) / G;
+            y = ( A*F - C*E ) / G;
+            dx = x - a.x;
+            dy = y - a.y;
 
-                this.x = x;
-                this.y = y;
-                this.r = dx * dx + dy * dy;
-            }
+            this.x = x;
+            this.y = y;
+            this.r = dx * dx + dy * dy;
+          }
         }
 
         var p = Triangle.prototype;
@@ -2486,13 +2538,19 @@ Sankaku.build = "@@buildTime";
 
             }
 
-
             return this;
+        };
+        /**
+         * @method color
+         * @return {String|*}
+         */
+        p.color = function () {
+            return this._color;
         };
 
         /**
          * @method setRGB
-         * @param {Object} rgb
+         * @param {{r: number, g: number, b: number}} rgb
          * @return {Object2D}
          */
         p.setRGB = function ( rgb ) {
@@ -2505,13 +2563,20 @@ Sankaku.build = "@@buildTime";
 
             return this;
         };
-
         /**
          * @method rgba
-         * @return {Object|*|Object2D._rgb}
+         * @return {{r: number, g: number, b: number, a: number}}
          */
         p.rgba = function () {
             return this._rgb;
+        };
+        /**
+         * alias rgba()
+         * @method rgb
+         * @return {{r: number, g: number, b: number, a: number}|Object|*|Object2D._rgb}
+         */
+        p.rgb = function () {
+          return this.rgba();
         };
 
         /**
@@ -2825,6 +2890,12 @@ Sankaku.build = "@@buildTime";
             return this;
         };
 
+        p.removeChildren = function () {
+
+            this.children = [];
+
+        };
+
         /**
          * @method draw
          * @param {CanvasRenderingContext2D} ctx
@@ -3074,7 +3145,10 @@ Sankaku.build = "@@buildTime";
          */
         function Scene () {
             Object2D.call( this );
-
+            /**
+             * @property scene
+             * @type {Scene}
+             */
             this.scene = this;
         }
 
@@ -3097,6 +3171,13 @@ Sankaku.build = "@@buildTime";
          */
         p.removeChild = function ( target ) {
             target.scene = null;
+        };
+        /**
+         * draw object を全て削除します
+         * @method removeAll
+         */
+        p.removeAll = function () {
+          this.children = [];
         };
 
         /**
@@ -3160,8 +3241,15 @@ Sankaku.build = "@@buildTime";
 
             this.setX( x );
             this.setY( y );
-
+            /**
+             * @property width
+             * @type {number}
+             */
             this.width = width || 20;
+            /**
+             * @property height
+             * @type {number}
+             */
             this.height = height || 10;
 
             /**
@@ -3201,7 +3289,7 @@ Sankaku.build = "@@buildTime";
             this._color = color;
             this.setColor( color );
 
-            this.setBorder( this.setLine, this._color );
+            this.setBorder( this._line, this._color );
         }
 
         Sankaku.extend( Object2D, Shape );
@@ -3442,10 +3530,10 @@ Sankaku.build = "@@buildTime";
     var Sankaku = window.Sankaku;
 
     Sankaku.Circle = ( function (){
-        var PI2 = Math.PI * 2,
-          //_sin = Math.sin,
-          //_cos = Math.cos,
+        var
+          PI2 = Math.PI * 2,
           _pow = Math.pow,
+          _sqrt = Math.sqrt,
 
           Shape = Sankaku.Shape,
           Vector2D = Sankaku.Vector2D;
@@ -3620,14 +3708,7 @@ Sankaku.build = "@@buildTime";
             AB = v1_v.distance( center );
             BC = v2_v.distance( center );
             AC = v1_v.distance( v2_v );
-            BD = Math.sqrt( ( ( AC+BC+AB )*( AC-BC+AB )*( -AC+BC+AB )*( AC+BC-AB ) ) / ( 4*AC*AC ) );
-
-//            if ( BD <= radius ) {
-//                // contain
-//                return true;
-//            }
-//
-//            return false;
+            BD = _sqrt( ( ( AC+BC+AB )*( AC-BC+AB )*( -AC+BC+AB )*( AC+BC-AB ) ) / ( 4*AC*AC ) );
 
             return BD <= radius;
         };
@@ -4886,15 +4967,50 @@ Sankaku.build = "@@buildTime";
         function SteeredVehicle ( viewModel ) {
             Vehicle.call( this, viewModel );
 
+            /**
+             * @property _force
+             * @protected
+             * @type {Vector2D}
+             */
             this._force = new Vector2D();
             // setMax setForce
+            /**
+             * @property _force_max
+             * @type {number}
+             * @protected
+             */
             this._force_max = 1.0;
+            /**
+             * @property _force_arrival
+             * @type {number}
+             * @protected
+             */
             this._force_arrival = 100;
 
             // for avoid
+            /**
+             * @property _avoid_distance
+             * @type {number}
+             * @protected
+             */
             this._avoid_distance = 300;
+            /**
+             * @property _avoid_buffer
+             * @type {number}
+             * @protected
+             */
             this._avoid_buffer = 20;
+            /**
+             * @property _avoid_insight
+             * @type {number}
+             * @protected
+             */
             this._avoid_insight = 200;
+            /**
+             * @property _avoid_close
+             * @type {number}
+             * @protected
+             */
             this._avoid_close = 60;
         }
 
@@ -5250,10 +5366,35 @@ Sankaku.build = "@@buildTime";
         function Wander ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
 
+            /**
+             * @property _wander_angle
+             * @type {number}
+             * @protected
+             */
             this._wander_angle = 0;
+            /**
+             * @property _wander_distance
+             * @type {number}
+             * @protected
+             */
             this._wander_distance = 10;
+            /**
+             * @property _wnder_radius
+             * @type {number}
+             * @protected
+             */
             this._wnder_radius = 5;
+            /**
+             * @property _wander_range
+             * @type {number}
+             * @protected
+             */
             this._wander_range = 1;
+            /**
+             * @property _wander_range2
+             * @type {number}
+             * @protected
+             */
             this._wander_range2 = this._wander_range * 0.5;
         }
 
@@ -5444,8 +5585,24 @@ Sankaku.build = "@@buildTime";
             SteeredVehicle.call( this, viewModel );
 
             // for flock
+            /**
+             * @property _flock_flockInsight
+             * @type {number}
+             * @protected
+             */
             this._flock_flockInsight = 200;
+            /**
+             * @property _flock_flockClose
+             * @type {number}
+             * @protected
+             */
             this._flock_flockClose = 60;
+            /**
+             * @property _flocks
+             * @type {Array}
+             * @protected
+             */
+            this._flocks = [];
         }
 
         Sankaku.extend( SteeredVehicle, Flock );
@@ -5605,6 +5762,11 @@ Sankaku.build = "@@buildTime";
             return this._position.distance( v._position ) < this._flock_flockClose;
         };
 
+        /**
+         * @method setFlocks
+         * @param {Array} flocks
+         * @return {Flock}
+         */
         p.setFlocks = function ( flocks ) {
             this._flocks = flocks;
 
@@ -5656,8 +5818,17 @@ Sankaku.build = "@@buildTime";
          */
         function FollowPath ( viewModel ) {
             SteeredVehicle.call( this, viewModel );
-
+            /**
+             * @property _index
+             * @type {number}
+             * @protected
+             */
             this._index = 0;
+            /**
+             * @property _threshold
+             * @type {number}
+             * @protected
+             */
             this._threshold = 20;
         }
 
@@ -5815,7 +5986,17 @@ Sankaku.build = "@@buildTime";
          * @constructor
          */
         function Zanzo ( limit ) {
+            /**
+             * @property _limit
+             * @type {Number}
+             * @protected
+             */
             this._limit = limit;
+            /**
+             * @property _objects
+             * @type {Array}
+             * @protected
+             */
             this._objects = [];
         }
 
